@@ -1,0 +1,106 @@
+<body class="gray-bg">
+<div class="ibox-content">
+    <form class="form-horizontal" method="post" action="{:url('SkTeam/add')}">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">日期</label>
+            <div class="col-sm-8">
+                <input  type="text"  name="team_date" class="form-control datepicker" placeholder="请输入散客分团名称" value="{$next_date_s}"/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">线路</label>
+            <div class="col-sm-8 ">
+                <div class="input-group none">
+                    <input name="line_id" class="form-control" type="hidden"  id="line_id"/>
+                    <input type="text" class="form-control ajax-search-select-line" data-url="{:url('Line/show_json')}" name="line_name" value="">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        </ul>
+                    </div>
+                </div>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">行程</label>
+            <div class="col-sm-8 ">
+                <div class="input-group">
+                    <input name="trip_id" class="form-control" type="hidden"   value="{$info.trip_id|default=''}"/>
+                    <input type="text" class="form-control ajax-search-select-trip" data-url="{:url('Trip/show_json')}" name="trip_name"  value="{$info.trip_name|default=''}">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        </ul>
+                    </div>
+                </div>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">导游</label>
+            <div class="col-sm-8 ">
+                <div class="input-group none">
+                    <input name="guide_id" class="form-control" type="hidden"   id="guide_id"/>
+                    <input type="text" class="form-control ajax-search-select-guide" data-url="{:url('Guide/show_json')}" name="guide_name" value="">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        </ul>
+                    </div>
+                </div>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">导服费</label>
+            <div class="col-sm-8">
+                <input name="guide_price" class="form-control" type="text" placeholder="请输入导服费（必须大于等0）" />
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">预付团费</label>
+            <div class="col-sm-8">
+                <input name="guide_advance" class="form-control" type="text" placeholder="请输入预付团费（必须大于等0）" />
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">司机</label>
+            <div class="col-sm-8 ">
+                <div class="input-group none">
+                    <input name="driver_id" class="form-control" type="hidden"  />
+                    <input type="text" class="form-control ajax-search-select-guide" data-url="{:url('Driver/show_json')}" name="driver_name" >
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        </ul>
+                    </div>
+                </div>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">车费</label>
+            <div class="col-sm-8">
+                <input name="driver_price" class="form-control" type="text" placeholder="请输入导车费（必须大于等0）"/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">排序</label>
+            <div class="col-sm-8">
+                <input name="sort" class="form-control" type="text" placeholder="请输排序" value="100"/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">备注</label>
+            <div class="col-sm-8">
+                <textarea name="remark" class="form-control" cols="80" rows="2" placeholder="请输备注"></textarea>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                {include file="admin@layout/save_btn"}
+            </div>
+        </div>
+    </form>
+</div>

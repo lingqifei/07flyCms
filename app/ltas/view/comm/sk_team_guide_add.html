@@ -1,0 +1,369 @@
+<script>
+    //导游散客团记帐
+    $(document).ready(function () {
+
+        $('.sk_guide_fare').each(function(){
+            ajaxSkGuideFareData($(this));
+        });
+
+        $('.sk_guide_food').each(function(){
+            ajaxSkGuideFoodData($(this));
+        });
+
+        $('.sk_guide_scenic').each(function(){
+            ajaxSkGuideScenicData($(this));
+        });
+
+        $('.sk_guide_head').each(function(){
+            ajaxSkGuideHeadData($(this));
+        });
+
+        $('.sk_guide_travel').each(function(){
+            ajaxSkGuideTravelData($(this));
+        });
+
+        $('.sk_guide_receipt').each(function(){
+            ajaxSkGuideReceiptData($(this));
+        });
+
+        $('.sk_guide_paid').each(function(){
+            ajaxSkGuidePaidData($(this));
+        });
+        
+        $('.sk_guide_coll').each(function(){
+            ajaxSkGuideCollData($(this));
+        });
+
+        $('.sk_guide_sginbill').each(function(){
+            ajaxSkGuideSignbillData($(this));
+        });
+        
+    })
+
+    //统计面板数据处理
+    function ajaxUpdateTotalMoney(){
+        
+        summary=$('.sk_guide_summary');
+        
+        fare=$('.sk_guide_fare').find(".ibox-title label").html();
+        food=$('.sk_guide_food').find(".ibox-title label").html();
+        scenic=$('.sk_guide_scenic').find(".ibox-title label").html();
+        head=$('.sk_guide_head').find(".ibox-title label").html();
+        travel=$('.sk_guide_travel').find(".ibox-title label").html();
+        receipt=$('.sk_guide_receipt').find(".ibox-title label").html();
+        paid=$('.sk_guide_paid').find(".ibox-title label").html();
+        coll=$('.sk_guide_coll').find(".ibox-title label").html();
+        
+        summary.find(".guide_fare label").html(parseFloat(fare).toFixed(2));
+        summary.find(".guide_food label").html(parseFloat(food).toFixed(2));
+        summary.find(".guide_scenic label").html(parseFloat(scenic).toFixed(2));
+        summary.find(".guide_head label").html(parseFloat(-head).toFixed(2));
+        summary.find(".guide_travel label").html(parseFloat(-travel).toFixed(2));
+        summary.find(".guide_receipt label").html(parseFloat(receipt).toFixed(2));
+        summary.find(".guide_paid label").html(parseFloat(paid).toFixed(2));
+        summary.find(".guide_coll label").html(parseFloat(-coll).toFixed(2));
+
+        guideMoney=summary.find(".guide_money label").html();//导服费
+        guideAdvance=summary.find(".guide_advance label").html();//导服费
+        //log(parseFloat(guideMoney));
+        
+        //报帐单=导服费+代付车费+代付餐费+代付景点门票+代付其它-交社金额-代收款-预收团费-购物店收
+        total_money=parseFloat(guideMoney)+parseFloat(fare)+parseFloat(food)+parseFloat(scenic)+parseFloat(paid)-parseFloat(travel)-parseFloat(coll)-parseFloat(guideAdvance)-parseFloat(head);
+        
+        summary.find(".total_money label").html(total_money);//导服费
+
+        sumUrl = summary.attr('data-url');
+        $.ajax({
+            type: "POST",
+            url: sumUrl,
+            data:{"money":total_money},
+            dataType:"json",
+            success: function(data){
+                log(data);
+            }
+        });
+        log(total_money);
+        
+        
+    }
+
+    //加载导服费
+    function  ajaxSkGuideMoneyData(object){
+        target=object.attr("data-url");
+        log(target);
+        var html="";
+        $.get(target).success(function (jsonData) {
+
+            object.find("label").html(jsonData.guide_price);//得到当前导游的费用
+
+            ajaxUpdateTotalMoney();
+
+        },"json");
+    }
+    
+    //加载代付车费
+    function  ajaxSkGuideFareData(object){
+        target=object.attr("data-url");
+        log(target);
+        var html="";
+        $.get(target).success(function (jsonData) {
+            $.each(jsonData.data,function(key,row){
+                html +='<tr>';
+                html +='<td>'+row.guide_name+'</td>';
+                html +='<td>'+row.driver_name+'</td>';
+                html +='<td>'+row.money+'</td>';
+                html +='<td>'+row.remark+'</td>';
+                html +='<td>';
+                html +='    <lqf_link><a class="ajax-open" data-url="{:url(\'SkGuideFare/edit\')}"  data-ids="{\'id\':\''+row.id+'\'}" data-title="修改" data-calback="ajaxSkGuideFareData($(\'.sk_guide_fare\'))">修改</a></lqf_link>';
+                html +='    <lqf_link><a class="ajax-del" data-url="{:url(\'SkGuideFare/del\')}"  data-ids="{\'id\':\''+row.id+'\'}"  data-calback="ajaxSkGuideFareData($(\'.sk_guide_fare\'))">删除</a></lqf_link>';
+                html +='</td>';
+                html +='</tr>';
+            })
+            object.find(".show_list_data tbody").html(html);
+            object.find(".ibox-title label").html(jsonData.total_money);
+
+            ajaxUpdateTotalMoney();
+            
+        },"json");
+    }
+
+    //加载代付餐费
+    function  ajaxSkGuideFoodData(object){
+        target=object.attr("data-url");
+        log(target);
+        var html="";
+        $.get(target).success(function (jsonData) {
+            $.each(jsonData.data,function(key,row){
+                html +='<tr>';
+                html +='<td>'+row.restaurant_name+'</td>';
+                html +='<td>'+row.adult_num+'</td>';
+                html +='<td>'+row.adult_price+'</td>';
+                html +='<td>'+row.child_num+'</td>';
+                html +='<td>'+row.child_price+'</td>';
+                html +='<td>'+row.total_price+'</td>';
+                html +='<td>'+row.remark+'</td>';
+                html +='<td>';
+                html +='    <lqf_link><a class="ajax-open" data-url="{:url(\'SkGuideFood/edit\')}"  data-ids="{\'id\':\''+row.id+'\'}" data-title="修改" data-calback="ajaxSkGuideFoodData($(\'.sk_guide_food\'))">修改</a></lqf_link>';
+                html +='    <lqf_link><a class="ajax-del" data-url="{:url(\'SkGuideFood/del\')}"  data-ids="{\'id\':\''+row.id+'\'}"  data-calback="ajaxSkGuideFoodData($(\'.sk_guide_food\'))">删除</a></lqf_link>';
+                html +='</td>';
+                html +='</tr>';
+            })
+            object.find(".show_list_data tbody").html(html);
+            object.find(".ibox-title label").html(jsonData.total_money);
+
+            ajaxUpdateTotalMoney();
+
+        },"json");
+    }
+
+    //加载代付景点门票
+    function  ajaxSkGuideScenicData(object){
+        target=object.attr("data-url");
+        log(target);
+        var html="";
+        $.get(target).success(function (jsonData) {
+            $.each(jsonData.data,function(key,row){
+                html +='<tr>';
+                html +='<td>'+row.scenic_name+'</td>';
+                html +='<td>'+row.aged_num+'</td>';
+                html +='<td>'+row.aged_price+'</td>';
+                html +='<td>'+row.adult_num+'</td>';
+                html +='<td>'+row.adult_price+'</td>';
+                html +='<td>'+row.child_num+'</td>';
+                html +='<td>'+row.child_price+'</td>';
+                html +='<td>'+row.total_price+'</td>';
+                html +='<td>'+row.remark+'</td>';
+                html +='<td>';
+                html +='    <lqf_link><a class="ajax-open" data-url="{:url(\'SkGuideScenic/edit\')}"  data-ids="{\'id\':\''+row.id+'\'}" data-title="修改" data-calback="ajaxSkGuideScenicData($(\'.sk_guide_scenic\'))">修改</a></lqf_link>';
+                html +='    <lqf_link><a class="ajax-del" data-url="{:url(\'SkGuideScenic/del\')}"  data-ids="{\'id\':\''+row.id+'\'}"  data-calback="ajaxSkGuideScenicData($(\'.sk_guide_scenic\'))">删除</a></lqf_link>';
+                html +='</td>';
+                html +='</tr>';
+            })
+            object.find(".show_list_data tbody").html(html);
+            object.find(".ibox-title label").html(jsonData.total_money);
+
+            ajaxUpdateTotalMoney();
+
+        },"json");
+    }
+
+    //加载补人头费
+    function  ajaxSkGuideHeadData(object){
+        target=object.attr("data-url");
+        log(target);
+        var html="";
+        $.get(target).success(function (jsonData) {
+            $.each(jsonData.data,function(key,row){
+                html +='<tr>';
+                html +='<td>'+row.store_name+'</td>';
+                html +='<td>'+row.price+'</td>';
+                html +='<td>'+row.into_num+'</td>';
+                html +='<td>'+row.fill_num+'</td>';
+                html +='<td>'+row.total_price+'</td>';
+                html +='<td>'+row.normal_money+'</td>';
+                html +='<td>'+row.normal_rebate+'</td>';
+                html +='<td>'+row.special_money+'</td>';
+                html +='<td>'+row.special_rebate+'</td>';
+                html +='<td>'+row.flow_money+'</td>';
+                html +='<td>'+row.rebate_money+'</td>';
+                html +='<td>'+row.guide_already_money+'</td>';
+                html +='<td>'+row.guide_divide_money+'</td>';
+                html +='<td>'+row.total_money+'</td>';
+                html +='<td>'+row.remark+'</td>';
+                html +='<td>';
+                html +='    <lqf_link><a class="ajax-open" data-url="{:url(\'SkGuideHead/edit\')}"  data-ids="{\'id\':\''+row.id+'\'}" data-title="修改" data-calback="ajaxSkGuideHeadData($(\'.sk_guide_head\'))">修改</a></lqf_link>';
+                html +='    <lqf_link><a class="ajax-del" data-url="{:url(\'SkGuideHead/del\')}"  data-ids="{\'id\':\''+row.id+'\'}"  data-calback="ajaxSkGuideHeadData($(\'.sk_guide_head\'))">删除</a></lqf_link>';
+                html +='</td>';
+                html +='</tr>';
+            })
+            object.find(".show_list_data tbody").html(html);
+            object.find(".ibox-title label").html(jsonData.total_money);
+
+            ajaxUpdateTotalMoney();
+
+        },"json");
+    }
+
+    //加载交社金额费
+    function  ajaxSkGuideTravelData(object){
+        target=object.attr("data-url");
+        log(target);
+        var html="";
+        $.get(target).success(function (jsonData) {
+            $.each(jsonData.data,function(key,row){
+                html +='<tr>';
+                html +='<td>'+row.item_travel_name+'</td>';
+                html +='<td>'+row.price+'</td>';
+                html +='<td>'+row.number+'</td>';
+                html +='<td>'+row.total_price+'</td>';
+                html +='<td>'+row.remark+'</td>';
+                html +='<td>';
+                html +='    <lqf_link><a class="ajax-open" data-url="{:url(\'SkGuideTravel/edit\')}"  data-ids="{\'id\':\''+row.id+'\'}" data-title="修改" data-calback="ajaxSkGuideTravelData($(\'.sk_guide_travel\'))">修改</a></lqf_link>';
+                html +='    <lqf_link><a class="ajax-del" data-url="{:url(\'SkGuideTravel/del\')}"  data-ids="{\'id\':\''+row.id+'\'}"  data-calback="ajaxSkGuideTravelData($(\'.sk_guide_travel\'))">删除</a></lqf_link>';
+                html +='</td>';
+                html +='</tr>';
+            })
+            object.find(".show_list_data tbody").html(html);
+            object.find(".ibox-title label").html(jsonData.total_money);
+
+            ajaxUpdateTotalMoney();
+
+        },"json");
+    }
+
+    //加载回执单
+    function  ajaxSkGuideReceiptData(object){
+        target=object.attr("data-url");
+        log(target);
+        var html="";
+        $.get(target).success(function (jsonData) {
+            $.each(jsonData.data,function(key,row){
+                html +='<tr>';
+                html +='<td>'+row.item_receipt_name+'</td>';
+                html +='<td>'+row.adult_num+'</td>';
+                html +='<td>'+row.adult_price+'</td>';
+                html +='<td>'+row.child_num+'</td>';
+                html +='<td>'+row.child_price+'</td>';
+                html +='<td>'+row.total_price+'</td>';
+                html +='<td>'+row.remark+'</td>';
+                html +='<td>';
+                html +='    <lqf_link><a class="ajax-open" data-url="{:url(\'SkGuideReceipt/edit\')}"  data-ids="{\'id\':\''+row.id+'\'}" data-title="修改" data-calback="ajaxSkGuideReceiptData($(\'.sk_guide_receipt\'))">修改</a></lqf_link>';
+                html +='    <lqf_link><a class="ajax-del" data-url="{:url(\'SkGuideReceipt/del\')}"  data-ids="{\'id\':\''+row.id+'\'}"  data-calback="ajaxSkGuideReceiptData($(\'.sk_guide_receipt\'))">删除</a></lqf_link>';
+                html +='</td>';
+                html +='</tr>';
+            })
+            object.find(".show_list_data tbody").html(html);
+            object.find(".ibox-title label").html(jsonData.total_money);
+
+            ajaxUpdateTotalMoney();
+
+        },"json");
+    }
+
+    //加载代付其它费用
+    function  ajaxSkGuidePaidData(object){
+        target=object.attr("data-url");
+        log(target);
+        var html="";
+        $.get(target).success(function (jsonData) {
+            $.each(jsonData.data,function(key,row){
+                html +='<tr>';
+                html +='<td>'+row.item_name+'</td>';
+                html +='<td>'+row.tourist_name+'</td>';
+                html +='<td>'+row.money+'</td>';
+                html +='<td>'+row.remark+'</td>';
+                html +='<td>';
+                html +='    <lqf_link><a class="ajax-open" data-url="{:url(\'SkGuidePaid/edit\')}"  data-ids="{\'id\':\''+row.id+'\'}" data-title="修改" data-calback="ajaxSkGuidePaidData($(\'.sk_guide_paid\'))">修改</a></lqf_link>';
+                html +='    <lqf_link><a class="ajax-del" data-url="{:url(\'SkGuidePaid/del\')}"  data-ids="{\'id\':\''+row.id+'\'}"  data-calback="ajaxSkGuidePaidData($(\'.sk_guide_paid\'))">删除</a></lqf_link>';
+                html +='</td>';
+                html +='</tr>';
+            })
+            object.find(".show_list_data tbody").html(html);
+            object.find(".ibox-title label").html(jsonData.total_money);
+
+            ajaxUpdateTotalMoney();
+
+        },"json");
+    }
+
+    //加载代收其它费用
+    function  ajaxSkGuideCollData(object){
+        target=object.attr("data-url");
+        log(target);
+        var html="";
+        $.get(target).success(function (jsonData) {
+            $.each(jsonData.data,function(key,row){
+                html +='<tr>';
+                html +='<td>'+row.item_name+'</td>';
+                html +='<td>'+row.tourist_name+'</td>';
+                html +='<td>'+row.money+'</td>';
+                html +='<td>'+row.remark+'</td>';
+                html +='<td>';
+                html +='    <lqf_link><a class="ajax-open" data-url="{:url(\'SkGuideColl/edit\')}"  data-ids="{\'id\':\''+row.id+'\'}" data-title="修改" data-calback="ajaxSkGuideCollData($(\'.sk_guide_coll\'))">修改</a></lqf_link>';
+                html +='    <lqf_link><a class="ajax-del" data-url="{:url(\'SkGuideColl/del\')}"  data-ids="{\'id\':\''+row.id+'\'}"  data-calback="ajaxSkGuideCollData($(\'.sk_guide_coll\'))">删除</a></lqf_link>';
+                html +='</td>';
+                html +='</tr>';
+            })
+            object.find(".show_list_data tbody").html(html);
+            object.find(".ibox-title label").html(jsonData.total_money);
+
+            ajaxUpdateTotalMoney();
+
+        },"json");
+    }
+
+    //加载签单费用
+    function  ajaxSkGuideSignbillData(object){
+        target=object.attr("data-url");
+        log(target);
+        var html="";
+        $.get(target).success(function (jsonData) {
+            $.each(jsonData.data,function(key,row){
+                html +='<tr>';
+                html +='<td>'+row.sign_date+'</td>';
+                html +='<td>'+row.sign_no+'</td>';
+                html +='<td>'+row.restaurant_name+'</td>';
+                html +='<td>'+row.adult_num+'</td>';
+                html +='<td>'+row.adult_price+'</td>';
+                html +='<td>'+row.child_num+'</td>';
+                html +='<td>'+row.child_price+'</td>';
+                html +='<td>'+row.sibu_num+'</td>';
+                html +='<td>'+row.sibu_price+'</td>';
+                html +='<td>'+row.rebate+'</td>';
+                html +='<td>'+row.total_price+'</td>';
+                html +='<td>'+row.remark+'</td>';
+                html +='<td>';
+                html +='    <lqf_link><a class="ajax-open" data-url="{:url(\'SkTeamSignbill/edit\')}"  data-ids="{\'id\':\''+row.id+'\'}" data-title="修改" data-calback="ajaxSkGuideSignbillData($(\'.sk_guide_sginbill\'))">修改</a></lqf_link>';
+                html +='    <lqf_link><a class="ajax-del" data-url="{:url(\'SkTeamSignbill/del\')}"  data-ids="{\'id\':\''+row.id+'\'}"  data-calback="ajaxSkGuideSignbillData($(\'.sk_guide_sginbill\'))">删除</a></lqf_link>';
+                html +='</td>';
+                html +='</tr>';
+            })
+            object.find(".show_list_data tbody").html(html);
+            object.find(".ibox-title label").html(jsonData.total_money);
+
+            ajaxUpdateTotalMoney();
+
+        },"json");
+    }
+
+</script>

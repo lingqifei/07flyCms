@@ -1,0 +1,133 @@
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><i class="fa fa-home"></i>散客酒店分配</h5>
+                    <div class="ibox-tools">
+                        <a href="javascript:void(0);" class="btn btn-xs btn-default btn-field-set" data-id="sk_order_hotel"> <i class="fa fa-question-circle"> 字段设置</i></a>
+                        <a href="?"  class="btn btn-xs btn-danger"><i class="fa fa-refresh"></i>刷新</a>
+                    </div>
+                </div>
+                <div class="ibox-content table-responsive">
+                    <div class="row">
+                        <form id="pagerForm" method="post" class="form-inline searchForm">
+                            <div class="col-sm-3 m-b-xs">
+                                <lqf_link><a class="btn btn-default export ajax-goto" target-form="form-inline" data-url="{:url('SkOrderHotel/down')}"><i class="fa fa-download"></i> 下载 </a></lqf_link>
+                            </div>
+                            <div class="col-sm-9 m-b-xs text-right">
+                                <div class="form-group text-left">
+                                    <select class="form-control" name="date_type" >
+                                        <option value="1">到达日期</option>
+                                        <option value="2">离开日期</option>
+                                        <option value="3">创建日期</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" name="date_s" class="form-control datepicker" style="width: 100px;" value="{$next_date_s}">
+                                </div>
+                                至
+                                <div class="input-group">
+                                    <input type="text" name="date_e" class="form-control datepicker" style="width: 100px;" value="{$next_date_e}">
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input name="line_id" class="form-control" type="hidden" id="line_id"/>
+                                        <input type="text" class="form-control  ajax-search-select-line"
+                                               data-url="{:url('Line/show_json')}"
+                                               name="line_name" placeholder="请输入关键字选择线路">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-default dropdown-toggle"
+                                                    data-toggle="dropdown">
+                                                <span class="caret"></span></button>
+                                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn"> <button type="button" class="btn btn-primary ajaxSearchForm"><i class="fa fa-search"></i> 搜索</button></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table class="table table-hover sorttable ajax-list-table" data-url="{:url('SkOrderHotel/show_json')}" width="2000px">
+                        <thead>
+                        <tr>
+                            <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+                            <th width="100" orderField="by_arrive_date" class="sort-filed"><span>到达日期</span></th>
+                            <th width="100" orderField="by_line" class="sort-filed"><span>线路</span></th>
+                            <th width="80" orderField="by_days" class="sort-filed"><span>日期</span></th>
+                            <th width="80" orderField="by_tourist_name" class="sort-filed"><span>姓名/电话</span></th>
+                            <th width="60" orderField="by_all_num" class="sort-filed"><span>人数</span></th>
+                            <th width="100" orderField="by_agency" class="sort-filed"><span>办事处</span></th>
+                            <th width="100" orderField="by_arrive_train" class="sort-filed"><span>到达车次/站台</span></th>
+                            <th width="100" orderField="by_arrive_time" class="sort-filed"><span>到达时间</span></th>
+                            <th width="100"  orderField="by_hotel_std" class="sort-filed"><span>标准</span></th>
+                            <th width="100"  orderField="by_hotel_room" class="sort-filed"><span>房数</span></th>
+                            <th width="120"><span>酒店</span></th>
+                            <th width="200"><span>备注</span></th>
+                            <th width="100" orderField="by_saleman" class="sort-filed"><span>业务员</span></th>
+                            <th width="80">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <table class="table ajax-list-table">
+                        <tfoot class="ibox-content">
+                    <tr>
+                        <td colspan="7" align="center"></td>
+                    </tr>
+                    </tfoot></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="tableListTpl" type="text/html">
+    <%for(var i=0;i<data.length;i++) { %>
+    <tr>
+        <td><input name="user_id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
+        <td><p><%=data[i]['arrive_date']%></p></td>
+        <td><%=data[i]['line_name']%></td>
+        <td><%=data[i]['days_name']%></td>
+        <td>
+            <%=data[i]['tourist_name']%><br> <%=data[i]['tourist_mobile']%>
+        </td>
+        <td><%=data[i]['all_num']%> <small>(<%=data[i]['adult_num']%>.<%=data[i]['child_num']%>)</small> </td>
+        <td><%=data[i]['agency_name']%></td>
+        <td>
+            <p><%=data[i]['arrive_train_name']%><br>
+            <%=data[i]['arrive_station_name']%></p>
+        </td>
+        <td><%=data[i]['arrive_time']%></td>
+        <td><%=data[i]['hotel_std']%></td>
+        <td><%=data[i]['hotel_room']%></td>
+        <td>
+            
+            <%
+                var hotel_list=null2zero(data[i]['hotel_list']);
+                for(var j=0;j<hotel_list.length;j++) {
+                if(hotel_list[j]['hotel_name']!=0){
+            %>
+                <%=hotel_list[j]['hotel_name']%>(<%=hotel_list[j]['total_price']%> )<br>
+            <% }} %>
+            
+        </td>
+        <td><%=data[i]['remark']%></td>
+        <td><%=data[i]['saleman_name']%></td>
+        <td><lqf_link><a class="ajax-open" data-url="{:url('SkOrderHotel/arrangeEdit')}"  data-ids="{'id':'<%=data[i]['id']%>'}" data-title="分配酒店">分配酒店</a></lqf_link>
+        </td>
+    </tr>
+    <% } %>
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        turnPage(1);//页面加载时初始化分页
+    });
+</script>

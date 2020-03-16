@@ -1,0 +1,112 @@
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><i class="fa fa-home"></i>送散客司机分配</h5>
+                    <div class="ibox-tools">
+                        <a href="javascript:void(0);" class="btn btn-xs btn-default btn-field-set" data-id="sk_order_driver_leave"> <i class="fa fa-question-circle"> 字段设置</i></a>
+                        <a href="?"  class="btn btn-xs btn-danger"><i class="fa fa-refresh"></i>刷新</a>
+                    </div>
+                </div>
+                <div class="ibox-content table-responsive">
+                    <div class="row">
+                        <form id="pagerForm" method="post" class="form-inline searchForm">
+                            <div class="col-sm-3 m-b-xs"> </div>
+                            <div class="col-sm-9 m-b-xs text-right">
+                                <div class="form-group text-left">
+                                    <select class="form-control" name="date_type" >
+                                        <option value="2">离开日期</option>
+                                        <option value="1">到达日期</option>
+                                        <option value="3">创建日期</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" name="date_s" class="form-control datepicker" style="width: 100px;" value="{$next_date_s}">
+                                </div>
+                                至
+                                <div class="input-group">
+                                    <input type="text" name="date_e" class="form-control datepicker" style="width: 100px;" value="{$next_date_e}">
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn"> <button type="button" class="btn btn-primary ajaxSearchForm"><i class="fa fa-search"></i> 搜索</button></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table class="table table-hover sorttable ajax-list-table" data-url="{:url('TmOrderDriver/send_json',array('type'=>'2'))}" width="100%">
+                        <thead>
+                        <tr>
+                            <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+                            <th width="100" orderField="by_arrive_date" class="sort-filed"><span>离开日期</span></th>
+                            <th width="100" orderField="by_escort_name" class="sort-filed"><span>全陪</span></th>
+                            <th width="100" orderField="by_escort_name" class="sort-filed"><span>电话</span></th>
+                            <th width="100" orderField="by_all_num" class="sort-filed"><span>人数</span></th>
+                            <th width="100" orderField="by_arrive_train" class="sort-filed"><span>离开车次</span></th>
+                            <th width="100" orderField="by_arrive_station" class="sort-filed"><span>离开站台</span></th>
+                            <th width="100" orderField="by_arrive_time" class="sort-filed"><span>离开时间</span></th>
+                            <th width="100"  orderField="by_hotel_std" class="sort-filed"><span>标准</span></th>
+                            <th width="150"><span>入住酒店</span></th>
+                            <th width="100"><span>送站方式</span></th>
+                            <th width="100"  orderField="by_driver" class="sort-filed"><span>送站司机</span></th>
+                            <th width="100"  orderField="by_driver_fee" class="sort-filed"><span>送站费</span></th>
+                            <th width="150"><span>接站备注</span></th>
+                            <th width="100">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <table class="table ajax-list-table">
+                        <tfoot class="ibox-content">
+                    <tr>
+                        <td colspan="7" align="center"></td>
+                    </tr>
+                    </tfoot></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="tableListTpl" type="text/html">
+    <%
+    data =null2str(data);
+    for(var i=0;i<data.length;i++) {
+    %>
+    <tr>
+        <td><input name="user_id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
+        <td><%=data[i]['leave_date']%></td>
+        <td><%=data[i]['escort_name']%></td>
+        <td><%=data[i]['escort_mobile']%></td>
+        <td><%=data[i]['all_num']%>  </td>
+        <td><%=data[i]['leave_train_name']%></td>
+        <td><%=data[i]['leave_station_name']%></td>
+        <td><%=data[i]['leave_time']%></td>
+        <td><%=data[i]['hotel_std']%></td>
+        <td>
+            <%
+                var hotel_list=data[i]['hotel_list'];
+                for(var j=0;j<hotel_list.length;j++) {
+            %>
+                <%=hotel_list[j]['hotel_name']%><br>
+            <% } %>
+            
+        </td>
+        <td><%=data[i]['send_mode_text']%></td>
+        <td><%=data[i]['driver_name']%></td>
+        <td><%=data[i]['driver_fee']%></td>
+        <td><%=data[i]['driver_remark']%></td>
+        <td><lqf_link><a class="ajax-open" data-url="{:url('TmOrderDriver/sendEdit')}"  data-ids="{'id':'<%=data[i]['id']%>'}" data-title="安排送站">安排送站</a></lqf_link>
+        </td>
+    </tr>
+    <% } %>
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        turnPage(1);//页面加载时初始化分页
+    });
+</script>

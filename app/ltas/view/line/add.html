@@ -1,0 +1,53 @@
+<body class="gray-bg">
+<div class="ibox-content">
+    <form class="form-horizontal" method="post" action="{:url('Line/add')}">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">名称</label>
+            <div class="col-sm-8">
+                <input name="name" class="form-control" type="text" placeholder="请输入线路名称" required/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">缩写</label>
+            <div class="col-sm-8">
+                <input name="abbr" class="form-control" type="text" placeholder="请输入线路名称缩写" required/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">天数</label>
+            <div class="col-sm-8">
+                <input name="days" class="form-control" type="text" placeholder="请输入天数" required/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">类型</label>
+            <div class="col-sm-8">
+                <input type="radio" name="type" value="1" checked>散客
+                <input type="radio" name="type" value="2">团队
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">接团注意事项及标准</label>
+            <div class="col-sm-8">
+                <textarea name="standard" class="form-control" cols="80" rows="2" placeholder="请输入接团注意事项及标准"></textarea>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">排序</label>
+            <div class="col-sm-8">
+                <input name="sort" class="form-control" type="text" placeholder="请输排序" value="100"/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">备注</label>
+            <div class="col-sm-8">
+                <textarea name="remark" class="form-control" cols="80" rows="2" placeholder="请输备注"></textarea>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                {include file="admin@layout/save_btn"}
+            </div>
+        </div>
+    </form>
+</div>

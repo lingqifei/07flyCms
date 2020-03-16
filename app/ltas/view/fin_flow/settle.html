@@ -1,0 +1,124 @@
+<body class="gray-bg">
+<div class="ibox-content">
+    <form class="form-horizontal" method="post" action="{:url('FinFlow/settle')}">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">账户类型</label>
+            <div class="col-sm-8">
+                <select class="form-control chosen-select account-type-select" name="account_type" data-url="{:url('FinFlow/settle_change',array('account'=>'type'))}" >
+                    <option value="">选择账户类型</option>
+                    {volist name='search.account_type' id='vo' key="k" }
+                    <option value="{$key}">{$vo}</option>
+                    {/volist}
+                </select>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">账户</label>
+            <div class="col-sm-8">
+                <input type="hidden" name="account_name" class="account_name">
+                <select class="form-control chosen-select account-id-select" name="account_id" data-url="{:url('FinFlow/settle_change',array('account'=>'id'))}" >
+                
+                </select>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">可结算金额</label>
+            <div class="col-sm-8 text-right">
+                <p class="form-control-static settle_money"><label class="text-success">0</label>￥</p>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">已结算</label>
+            <div class="col-sm-8 text-right">
+                <p class="form-control-static already_money">（收）<label class="text-success">0</label>￥</p>
+                <p class="form-control-static not_money">（支）<label class="text-success">0</label>￥</p>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">支付或收入</label>
+            <div class="col-sm-8">
+                <select class="form-control " name="type" >
+                    <option value="">未选择</option>
+                    <option value="1">支出</option>
+                    <option value="2">收入</option>
+                </select>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">结算金额</label>
+            <div class="col-sm-8">
+                <input class="form-control" name="money" type="text" placeholder="请输入结算金额">
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">备注</label>
+            <div class="col-sm-8">
+                <textarea name="remark" class="form-control" cols="80" rows="2" placeholder="请输入备注"></textarea>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                {include file="admin@layout/save_btn"}
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        //选择用户跳出联系人
+        $('.account-type-select').on('change', function (e, params) {
+            var change_val = $(this).val();
+            var target = $(this).attr('data-url');
+            var postdata={
+                "account_type":change_val,
+            };
+            $('.account-id-select').empty();
+            $.ajax({
+                type: "POST",
+                url: target,
+                data: postdata,
+                dataType: "json",
+                success: function (jsonData) {
+                    html ='<option value="">选择账户</option>';
+                    $.each(jsonData.data,function(key,row){
+                        html +='<option value="'+row.id+'">'+row.name+'</option>';
+                    })
+                    log(html);
+                    $('.account-id-select').append(html);
+                    $('.account-id-select').trigger('chosen:updated');
+                }
+            });
+        });
+
+        //选择帐户
+        $('.account-id-select').on('change', function (e, params) {
+            var account_id = $(this).val();
+            var account_type = $('.account-type-select').val();
+            var target = $(this).attr('data-url');
+
+            var text=$(this).find("option:selected").text();
+            $('.account_name').val(text);
+            
+            var postdata={
+                "account_type":account_type,
+                "account_id":account_id,
+            };
+            
+            $.ajax({
+                type: "POST",
+                url: target,
+                data: postdata,
+                dataType: "json",
+                success: function (jsonData) {
+                    $('.settle_money label').html(jsonData.settle_money);
+                    $('.already_money label').html(jsonData.already_money);
+                    $('.not_money label').html(jsonData.not_money);
+                    
+                    //  $('.account-id-select').append(html);
+                    // $('.account-id-select').trigger('chosen:updated');
+                }
+            });
+        });
+        
+    });
+</script>

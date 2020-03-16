@@ -1,0 +1,18 @@
+<body class="gray-bg">
+<div class="ibox-content">
+    <form class="form-horizontal" method="post" action="{:url('Guestbook/ext_reply')}">
+        <input type="hidden" name="id" value="{$info['id']|default='0'}">
+        <input type="hidden" name="gid" value="{$info['gid']|default='0'}">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">回复信息</label>
+            <div class="col-sm-8">
+                <textarea name="reply" class="form-control">{$info['reply']|default=''}</textarea>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                {include file="admin@layout/save_btn"}
+            </div>
+        </div>
+    </form>
+</div>

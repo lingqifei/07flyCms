@@ -1,0 +1,91 @@
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox">
+        <div class="ibox-content">
+            <div class="row">
+                <form id="pagerForm" method="post" class="form-inline" action="{:url('SkTeam/allot')}">
+                    <div class="col-sm-4 m-b-xs ">
+                        日期：
+                        <div class="input-group">
+                            <input type="text" name="date_s" class="form-control datepicker" style="width: 150px;"  placeholder="选择开始日期" value="{$nowDate}">
+                        </div>
+                        至
+                        <div class="input-group">
+                            <input type="text" name="date_e" class="form-control datepicker" style="width: 150px;"  placeholder="选择开结日期" value="{$nowDate}">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <input name="line_id" class="form-control" type="hidden" value="{$info.line_id|default=''}"/>
+                            <input type="text" class="form-control ajax-search-select-line" data-url="{:url('Line/show_json')}" name="line_name" value="{$info.line_name|default=''}">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-btn"> <button type="button" class="btn btn-primary ajaxSearchForm"><i class="fa fa-search"></i> 搜索</button></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="ibox">
+        <table class="table table-hover sorttable ajax-list-table" data-url="{:url('SkTeam/show_json')}" width="100%">
+            <thead>
+            <tr>
+                <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+                <th width="100" orderField="by_date" class="sort-filed"><span>日期</span></th>
+                <th width="200" orderField="by_line" class="sort-filed"><span>线路</span></th>
+                <th width="100" orderField="by_trip" class="sort-filed"><span>行程</span></th>
+                <th width="100" orderField="by_guide" class="sort-filed"><span>导游</span></th>
+                <th width="100" orderField="by_guide_price" class="sort-filed"><span>导服费</span></th>
+                <th width="100" orderField="by_driver" class="sort-filed"><span>司机</span></th>
+                <th width="100" orderField="by_driver_price" class="sort-filed"><span>车费</span></th>
+                <th  width="200">备注</th>
+                <th width="100">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <table class="table ajax-list-table"><tfoot class="ibox-content"><tr><td align="center" class="pagestring"></td></tr></tfoot></table>
+    </div>
+</div>
+<script id="tableListTpl" type="text/html">
+    <% for(var i=0;i<data.length;i++) { %>
+    <tr>
+        <td><input name="user_id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
+        <td><%=data[i]['team_date']%></td>
+        <td><%=data[i]['line_name']%></td>
+        <td><%=data[i]['trip_name']%></td>
+        <td><%=data[i]['guide_name']%></td>
+        <td><%=data[i]['guide_price']%></td>
+        <td><%=data[i]['driver_name']%></td>
+        <td><%=data[i]['driver_price']%></td>
+        <td><%=data[i]['remark']%></td>
+        <td>
+            <p>
+                <lqf_link><a class="ajax-open" data-url="{:url('SkTeam/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改">修改</a></lqf_link>
+                <lqf_link><a class="ajax-del confirm" data-url="{:url('SkTeam/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
+            </p>
+        </td>
+    </tr>
+    <% } %>
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        turnPage(1);//页面加载时初始化分页
+    });
+</script>

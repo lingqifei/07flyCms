@@ -1,0 +1,126 @@
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><i class="fa fa-home"></i>购物店统计（散客）</h5>
+                    <div class="ibox-tools"><a href="?"  class="btn btn-xs btn-danger"><i class="fa fa-refresh"></i>刷新</a></div>
+                </div>
+                <div class="ibox-content table-responsive">
+                    <div class="row">
+                        <form id="pagerForm" method="post" class="form-inline searchForm">
+                            <div class="col-sm-3">
+                                <lqf_link><a class="btn btn-default export ajax-goto" target-form="form-inline" data-url="{:url('Statistics/sk_store_down')}"><i class="fa fa-download"></i> 导 出</a></lqf_link>
+                            </div>
+                            <div class="col-sm-9 text-right">
+                                <div class="input-group">
+                                    <input type="text" name="date_s" class="form-control datepicker" style="width: 100px;" placeholder="开始时间">
+                                </div>
+                                至
+                                <div class="input-group">
+                                    <input type="text" name="date_e" class="form-control datepicker" style="width: 100px;" placeholder="结束时间">
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input name="store_id" class="form-control" type="hidden"/>
+                                        <input type="text" class="form-control  ajax-search-select-store" data-url="{:url('Store/show_json')}"
+                                            name="store_name" placeholder="请输入关键字选择店铺">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span></button>
+                                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn"> <button type="button" class="btn btn-primary ajaxSearchForm"><i class="fa fa-search"></i> 搜索</button></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <hr>
+                    <table class="table table-hover sorttable ajax-list-table" data-url="{:url('Statistics/sk_store_json',array('order_type'=>'1'))}" width="100%">
+                        <thead>
+                        <tr>
+                            <th width="100" orderField="by_name" class="sort-filed"><span>店铺名称</span></th>
+                            <th width="100" orderField="by_date" class="sort-filed"><span>日期</span></th>
+                            <th width="100" orderField="by_guide" class="sort-filed"><span>导游</span></th>
+                            <th width="100" orderField="by_line" class="sort-filed"><span>线路</span></th>
+                            <th width="80"><span>人头费</span></th>
+                            <th width="80"><span>进店人数</span></th>
+                            <th width="80"><span>补人头数</span></th>
+                            <th width="80"><span>补人头总价格</span></th>
+                            <th width="80"><span>正价流水</span></th>
+                            <th width="80"><span>正价回扣</span></th>
+                            <th width="80"><span>特价流水</span></th>
+                            <th width="80"><span>特价回扣</span></th>
+                            <th width="80"><span>总流水</span></th>
+                            <th width="80"><span>总回扣</span></th>
+                            <th width="80"><span>导游现提</span></th>
+                            <th width="80"><span>导游分成</span></th>
+                            <th width="80"><span>返社金额</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot class="ibox-content">
+                        <tr>
+                            <td colspan="17" align="center"></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="tableListTpl" type="text/html">
+    <%
+    data=null2zero(data);
+    for(var i=0;i<data.length;i++) { %>
+    <tr>
+        <td><%=data[i]['store_name']%></td>
+        <td><%=data[i]['team_date']%></td>
+        <td><%=data[i]['guide_name']%></td>
+        <td><%=data[i]['line_name']%></td>
+        <td><%=data[i]['price']%></td>
+        <td><%=data[i]['into_num']%></td>
+        <td><%=data[i]['fill_num']%></td>
+        <td><%=data[i]['total_price']%></td>
+        <td><%=data[i]['normal_money']%></td>
+        <td><%=data[i]['normal_rebate']%></td>
+        <td><%=data[i]['special_money']%></td>
+        <td><%=data[i]['special_rebate']%></td>
+        <td><%=data[i]['flow_money']%></td>
+        <td><%=data[i]['rebate_money']%></td>
+        <td><%=data[i]['guide_already_money']%></td>
+        <td><%=data[i]['guide_divide_money']%></td>
+        <td><%=data[i]['total_money']%></td>
+    </tr>
+    <% } %>
+    <tr class="text-danger">
+        <td colspan="5">合计</td>
+        <td><%=total_into_num%></td>
+        <td><%=total_fill_num%></td>
+        <td><%=total_ptrice_money%></td>
+        <td><%=total_normal_money%></td>
+        <td></td>
+        <td><%=total_special_money%></td>
+        <td></td>
+        <td><%=total_flow_money%></td>
+        <td><%=total_rebate_money%></td>
+        <td><%=total_guide_already_money%></td>
+        <td><%=total_guide_divide_money%></td>
+        <td><%=total_money%></td>
+    </tr>
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        turnPage(1);//页面加载时初始化分页
+    });
+</script>

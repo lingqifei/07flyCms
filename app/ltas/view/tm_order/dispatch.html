@@ -1,0 +1,184 @@
+<body class="gray-bg">
+<div class="ibox-content table-responsive">
+    <!--    订单明细-->
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>线路</th>
+                    <th>全陪人员姓名</th>
+                    <th>全陪人员手机</th>
+                    <th>人数</th>
+                    <th>返程地</th>
+                    <th>票务状态</th>
+                    <th>座席</th>
+                    <th>订票数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{$info.line_name}</td>
+                    <td>{$info.escort_name}</td>
+                    <td>{$info.escort_mobile}</td>
+                    <td>{$info.all_num}</td>
+                    <td>{$info.return_place}</td>
+                    <td>{$info.ticket_status_text}</td>
+                    <td>{$info.ticket_type}</td>
+                    <td>{$info.ticket_num}</td>
+                </tr>
+                <tr>
+                    <td>行程时间</td>
+                    <td colspan="7">{$info.arrive_date} 到  {$info.leave_date} </td>
+                </tr>
+                <tr>
+                    <td>身份证信息</td>
+                    <td colspan="7">{$info.idcards}</td>
+                </tr>
+                
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--    票务明细-->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel blank-panel">
+                <div class="panel-heading">
+                    <div class="panel-options">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="?#tab-1" data-toggle="tab">导游跟团</a></li>
+                            <li><a href="?#tab-2" data-toggle="tab">司机跟团</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-1">
+                            <div class="alert alert-success alert-dismissable">
+                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                全线路行程默认为一个导游.开始日期为抵达日期，如果团队行程中导游有变动,请单独增加一条记录
+                            </div>
+                            <table class="table table-hover ajax-list-table-guide" width="100%"
+                                data-url="{:url('TmOrderGuide/show_json', array('order_id' => $info['id']))}">
+                                <thead>
+                                <tr>
+                                    <th width="80"><span>日期</span></th>
+                                    <th width="80"><span>导游</span></th>
+                                    <th width="60"><span>导服费</span></th>
+                                    <th width="60"><span>预付团费</span></th>
+                                    <th width="120"><span>备注</span></th>
+                                    <th width="80"><span>操作</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="ibox-content">
+                                    <button data-url="{:url('TmOrderGuide/add', array('order_id' => $info['id'],'arrive_date' => $info['arrive_date']))}"
+                                        class=" btn btn-xs btn-primary ajax-open"
+                                        data-calback="ajaxOrderGuideData($('.ajax-list-table-guide'))">
+                                        <i class="fa fa-plus"></i> 添加导游
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-2">
+                            <div class="row"></div>
+                            <div class="alert alert-success alert-dismissable">
+                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                全线路行程默认为一个司机.开始日期为抵达日期，如果团队行程中司机有变动,请单独增加一条
+                            </div>
+                            <table class="table table-hover sorttable ajax-list-table-driver" width="100%"
+                                data-url="{:url('TmOrderDriver/show_dispatch_json', array('order_id' => $info['id']))}">
+                                <thead>
+                                <tr>
+                                    <th width="80"><span>日期</span></th>
+                                    <th width="80"><span>司机</span></th>
+                                    <th width="60"><span>车费</span></th>
+                                    <th width="120"><span>备注</span></th>
+                                    <th width="80"><span>操作</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="ibox-content">
+                                    <button data-url="{:url('TmOrderDriver/add', array('order_id' => $info['id'],'arrive_date' => $info['arrive_date']))}"
+                                        class=" btn btn-xs btn-info ajax-open"
+                                        data-calback="ajaxOrderDriverData($('.ajax-list-table-driver'))">
+                                        <i class="fa fa-plus"></i> 添加司机
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.ajax-list-table-guide').each(function () {
+            ajaxOrderGuideData($(this));
+        })
+
+        $('.ajax-list-table-driver').each(function () {
+            ajaxOrderDriverData($(this));
+        })
+    })
+
+    //加载应收款
+    function ajaxOrderGuideData(object) {
+        target = object.attr("data-url");
+        log(target);
+        var html = "";
+        $.get(target).success(function (jsonData) {
+            $.each(jsonData.data, function (key, row) {
+                html += '<tr>';
+                html += '<td>' + row.guide_date + '</td>';
+                html += '<td>' + row.guide_name + '</td>';
+                html += '<td>' + row.guide_fee + '</td>';
+                html += '<td>' + row.guide_advance + '</td>';
+                html += '<td>' + row.remark + '</td>';
+                html += '<td>';
+                html += '    <lqf_link><a class="ajax-open" data-url="{:url(\'TmOrderGuide/edit\')}"  data-ids="{\'id\':\'' + row.id + '\'}" data-title="修改" data-calback="ajaxOrderGuideData($(\'.ajax-list-table-guide\'))">修改</a></lqf_link>';
+                html += '    <lqf_link><a class="ajax-del" data-url="{:url(\'TmOrderGuide/del\')}"  data-ids="{\'id\':\'' + row.id + '\'}"  data-calback="ajaxOrderGuideData($(\'.ajax-list-table-guide\'))">删除</a></lqf_link>';
+                html += '</td>';
+                html += '</tr>';
+            })
+            object.find("tbody").html(html);
+        }, "json");
+    }
+
+    //加载代收款
+    function ajaxOrderDriverData(object) {
+        target = object.attr("data-url");
+        log(target);
+        var html = "";
+        $.get(target).success(function (jsonData) {
+            $.each(jsonData.data, function (key, row) {
+                html += '<tr>';
+                html += '<td>' + row.driver_date + '</td>';
+                html += '<td>' + row.driver_name + '</td>';
+                html += '<td>' + row.driver_fee + '</td>';
+                html += '<td>' + row.remark + '</td>';
+                html += '<td>';
+                html += '    <lqf_link><a class="ajax-open" data-url="{:url(\'TmOrderDriver/edit\')}"  data-ids="{\'id\':\'' + row.id + '\'}" data-title="修改" data-calback="ajaxOrderDriverData($(\'.ajax-list-table-driver\'))">修改</a></lqf_link>';
+                html += '    <lqf_link><a class="ajax-del" data-url="{:url(\'TmOrderDriver/del\')}"  data-ids="{\'id\':\'' + row.id + '\'}"  data-calback="ajaxOrderDriverData($(\'.ajax-list-table-driver\'))">删除</a></lqf_link>';
+                html += '</td>';
+                html += '</tr>';
+            })
+            object.find("tbody").html(html);
+        }, "json");
+    }
+
+
+</script>

@@ -1,0 +1,162 @@
+<script src="__STATIC__/admin/js/jquery-migrate-1.2.1.js"></script>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content table-responsive">
+                    <div class="row">
+                        <form id="pagerForm" method="post" class="form-inline searchForm">
+                            <div class="col-sm-2">
+                                <button type="button" class="btn  btn-info guide-print"><i class="fa fa-print"></i> 打印</button>
+                                <lqf_link><a class="btn btn-default export ajax-goto" target-form="form-inline" data-url="{:url('SkTeam/guide_json_down')}"><i class="fa fa-download"></i> 下载 </a></lqf_link>
+                            </div>
+                            <div class="col-sm-8 m-b-xs text-left">
+                                <input type="hidden" name="team_date" class="form-control datepicker"  style="width: 150px;" placeholder="选择开始日期" value="{$team_date}">
+                                <input type="hidden" name="guide_id" class="form-control " value="{$guide_id}">
+                            </div>
+                            <div class="col-sm-2"><button type="button" class="btn  btn-danger btn-back-reply"><i class="fa fa-reply"></i> 返回</button></div>
+                        </form>
+                    </div>
+                    <hr>
+                    <table id="guide-content" class="ajax-list-table" data-url="{:url('SkTeam/guide_json',array('team_date'=>$team_date,'guide_id'=>$guide_id))}" width="100%">
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="tableListTpl" type="text/html">
+    <tr>
+        <td width="100%">
+    <div class="panel panel-default">
+            <div class="ibox-content">
+                <div class="row border-bottom ">
+                    <div class="col-xs-3"><h3>日期：{$team_date} &nbsp; &nbsp;</h3></div>
+                    <div class="col-xs-3"><h3>人数：<%=team_right_cnt%> 人</h3></div>
+                    <div class="col-xs-3"><h3></h3></div>
+                    <div class="col-xs-3"> </div>
+                </div>
+            </div>
+            <!--循环显示线路-->
+            <%
+            for(var i=0;i <data.length;i++) {
+            var team_id=data[i]['id'];
+            if(data[i]['remark']==''){
+                var remark='无备注(点击设置)';
+            }else{
+                var remark=data[i]['remark'];
+            }
+            %>
+            <div class=" ">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-3"><h3>线路：<%=data[i]['line_name']%> （<%=data[i]['trip_name']%>）</h3> </div>
+                        <div class="col-sm-3  col-xs-3"><h3>导游：（<%=data[i]['guide_name']%> <%=data[i]['guide_mobile']%>）</h3></div>
+                        <div class="col-sm-3  col-xs-3"><h3>司机：（<%=data[i]['driver_name']%> <%=data[i]['driver_mobile']%>）</h3></div>
+                        <div class="col-sm-3  col-xs-3"><h3>人数：（<%=data[i]['order_trip_r_cnt']%>）</h3></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p><small>
+                                行程内容：<%=data[i]['trip_content']%></small></p>
+                           <p> <small>
+                            分团备注：<a  data-url="{:url('SkTeam/edit')}"  data-ids="{'id':'<%=data[i]['id']%>','type':'team'}" class="ajax-open"> <%=remark%></a>
+                        </small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    
+                            <table class="table table-bordered table-panel" style="font-size: 12px; table-layout: fixed;border: 0;word-break:break-all; word-wrap:break-all;">
+                                <thead>
+                                <tr>
+                                    <th width="100"><span>酒店</span></th>
+                                    <th width="100"><span>办事处</span></th>
+                                    <th width="100"><span>姓名</span></th>
+                                    <th width="80"><span>人数</span></th>
+                                    <th width="100"><span>行程</span></th>
+                                    <th width="100"><span>电话</span></th>
+                                    <th width="100"><span>抵达日期</span></th>
+                                    <th width="100"><span>抵达车次</span></th>
+                                    <th width="100"><span>抵达站</span></th>
+                                    <th width="100"><span>抵达时间</span></th>
+                                    <th width="100"><span>离团日期</span></th>
+                                    <th width="100"><span>离团车次</span></th>
+                                    <th width="100"><span>离开站</span></th>
+                                    <th width="100"><span>离开时间</span></th>
+                                    <th width="100"><span>返程票</span></th>
+                                    <th width="100"><span>备注</span></th>
+                                </tr>
+                                </thead>
+                                <tbody class="  ">
+                                <%
+                                var triplist=data[i]['order_trip_r_list'];
+                                for(var j=0;j<triplist.length;j++) {
+                                
+                                if(data[i]['team_date']==triplist[j]['arrive_date']){
+                                    var arrive_time=triplist[j]['arrive_time']
+                                }else{
+                                    var arrive_time='---';
+                                }
+
+                                if(triplist[j]['remark']==''){
+                                    var remark1='无备注(点击设置)';
+                                }else{
+                                    var remark1=triplist[j]['remark'];
+                                }
+
+                                if(triplist[j]['ticket_status']=='1'){
+                                    var ticket_status_text='问社里';
+
+                                }else{
+                                    var ticket_status_text='客自带';
+
+                                }
+
+                                %>
+                                <tr data-url="{:url('SkTeam/allotEdit')}" data-id="<%=triplist[j]['id']%>" data-ids="{'id':'<%=triplist[j]['id']%>','team_id':'0'}">
+                                    <td><%=triplist[j]['hotel_name']%></td>
+                                    <td><%=triplist[j]['agency_name']%></td>
+                                    <td><%=triplist[j]['tourist_name']%></td>
+                                    <td><%=triplist[j]['all_num']%>(<%=triplist[j]['adult_num']%>.<%=triplist[j]['child_num']%>)<br><%=triplist[j]['arrive_time']%></td>
+                                    <td><%=triplist[j]['pass_trip_days']%></td>
+                                    <td><%=triplist[j]['tourist_mobile']%></td>
+                                    <td><%=triplist[j]['arrive_date']%></td>
+                                    <td><%=triplist[j]['arrive_train_name']%></td>
+                                    <td><%=triplist[j]['arrive_station_name']%></td>
+                                    <td><%=triplist[j]['arrive_time']%></td>
+                                    <td><%=triplist[j]['leave_date']%></td>
+                                    <td><%=triplist[j]['leave_train_name']%></td>
+                                    <td><%=triplist[j]['leave_station_name']%></td>
+                                    <td><%=triplist[j]['leave_time']%></td>
+                                    <td><%=ticket_status_text%></td>
+                                    <td><a  data-url="{:url('SkOrder/edit')}"  data-ids="{'id':'<%=triplist[j]['order_id']%>','type':'skorder'}" class=" ajax-open" title="订单修改"> <%=remark1%></a></td>
+                                </tr>
+                                <%}%>
+                                </tbody>
+                            </table>
+                </div>
+            </div>
+            <% } %>
+    </div>
+        </td>
+    </tr>
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        turnPage(1);//页面加载时初始化分页
+
+        $("body").on("click", ".guide-print", function () {
+            $("#guide-content").jqprint(
+                {
+                    importCSS: true
+                }
+            );
+        });
+      
+        
+    });
+</script>
+<script src="__STATIC__/admin/js/jquery.browser.js"></script>

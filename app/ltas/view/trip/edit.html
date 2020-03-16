@@ -1,0 +1,105 @@
+<body class="gray-bg">
+<div class="ibox-content">
+    <form class="form-horizontal" method="post" action="{:url('Trip/edit')}">
+        <input type="hidden" name="id" value="{$info['id']|default='0'}">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">名称</label>
+            <div class="col-sm-8">
+                <input name="name" class="form-control" type="text" placeholder="请输入行程名称" value="{$info['name']|default=''}"/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">行程名称缩写</label>
+            <div class="col-sm-8">
+                <input name="abbr" class="form-control" type="text" placeholder="请输入行程名称缩写" value="{$info['abbr']|default=''}"/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">所属线路</label>
+            <div class="col-sm-8 ">
+                <div class="input-group">
+                    <input name="line_id" class="form-control" type="hidden" value="{$info['line_id']|default=''}"/>
+                    <input type="text" class="form-control ajax-search-select-line" data-url="{:url('Line/show_json')}" name="line_name" value="{$info['line_name']|default=''}">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        </ul>
+                    </div>
+                </div>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">早餐</label>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <input type="text" class="form-control ajax-search-select-restaurant" data-url="{:url('Restaurant/show_json')}" name="breakfast"   placeholder="请输入选择餐厅模板" value="{$info['breakfast']|default=''}">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <input type="text" class="form-control"  name="breakfast_std" placeholder="请输入早餐标准" value="{$info['breakfast_std']|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">午餐</label>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <input type="text" class="form-control ajax-search-select-restaurant" data-url="{:url('Restaurant/show_json')}" name="lunch"   placeholder="请输入选择餐厅模板" value="{$info['lunch']|default=''}">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4"><input type="text" class="form-control"  name="lunch_std" placeholder="请输入午餐标准" value="{$info['lunch_std']|default=''}"></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">晚餐</label>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <input type="text" class="form-control ajax-search-select-restaurant" data-url="{:url('Restaurant/show_json')}" name="dinner"   placeholder="请输入选择餐厅模板" value="{$info['dinner']|default=''}">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <input type="text" class="form-control"  name="dinner_std" placeholder="请输入晚餐标准" value="{$info['dinner_std']|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">行程内容</label>
+            <div class="col-sm-8">
+                <textarea name="content" class="form-control" cols="80" rows="2" placeholder="请输行程内容">{$info['content']|default=''}</textarea>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">排序</label>
+            <div class="col-sm-8">
+                <input name="sort" class="form-control" type="text" placeholder="请输排序"  value="{$info['sort']|default=''}"/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">备注</label>
+            <div class="col-sm-8">
+                <textarea name="remark" class="form-control" cols="80" rows="2">{$info['remark']|default=''}</textarea>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                {include file="admin@layout/save_btn"}
+            </div>
+        </div>
+    </form>
+</div>

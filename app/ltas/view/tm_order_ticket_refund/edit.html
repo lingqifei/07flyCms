@@ -1,0 +1,109 @@
+<div class="ibox-content">
+    <form class="form-horizontal" method="post" action="{:url('TmOrderTicketRefund/edit')}">
+        <input type="hidden" name="id" value="{$info.id}">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">目的地</label>
+            <div class="col-sm-8">
+                <input name="destination" class="form-control" type="text" placeholder="请输入目的" value="{$info.destination}" required />
+                <span class="help-block m-b-none"></span></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">航班车次</label>
+            <div class="col-sm-8 ">
+                <div class="input-group">
+                    <input type="hidden" name="train_id" value="{$info.train_id}">
+                    <input type="text" class="form-control ajax-search-select-train"
+                        data-url="{:url('Train/show_json')}" name="train_name" placeholder="请输入关键字选择到达航班车次" value="{$info.train_name}">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        </ul>
+                    </div>
+                </div>
+                <span class="help-block m-b-none"></span></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">票日期</label>
+            <div class="col-sm-8">
+                <div class="input-group" data-autoclose="true">
+                    <input type="text" class="form-control datepicker" name="ticket_date"  placeholder="票日期" value="{$info.ticket_date}">
+                    <span class="input-group-addon"> <span class="fa fa-clock-o"></span> </span>
+                </div>
+                <span class="help-block m-b-none"></span></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">坐席</label>
+            <div class="col-sm-8">
+                <input name="train_type" class="form-control" type="text" placeholder="请输入坐席类型" value="{$info.train_type}"/>
+                <span class="help-block m-b-none"></span></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">票数</label>
+            <div class="col-sm-8">
+                <input name="number" class="form-control calculate" type="text" placeholder="请输入票数" value="{$info.number}"/>
+                <span class="help-block m-b-none"></span></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">票损</label>
+            <div class="col-sm-8">
+                <input name="loss_fee" class="form-control calculate" type="text" placeholder="请输入票损" value="{$info.loss_fee}"/>
+                <span class="help-block m-b-none"></span></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">总票损</label>
+            <div class="col-sm-8">
+                <input name="total_loss_fee" class="form-control" type="text" placeholder="请输入总票损" value="{$info.loss_fee}"/>
+                <span class="help-block m-b-none"></span></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">成本</label>
+            <div class="col-sm-8">
+                <input name="cost" class="form-control" type="text" placeholder="请输入成本" value="{$info.cost}"/>
+                <span class="help-block m-b-none"></span></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">退返金额</label>
+            <div class="col-sm-8">
+                <input name="refund_fee" class="form-control" type="text" placeholder="请输入退返金额" value="{$info.refund_fee}"/>
+                <span class="help-block m-b-none"></span></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">票务公司</label>
+            <div class="col-sm-8 ">
+                <div class="input-group">
+                    <input type="hidden" name="ticket_id"  value="{$info.ticket_id}">
+                    <input type="text" class="form-control ajax-search-select-ticket"
+                        data-url="{:url('Ticket/show_json')}" name="ticket_name" placeholder="请输入关键字选择票务公司" value="{$info.ticket_name}">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        </ul>
+                    </div>
+                </div>
+                <span class="help-block m-b-none"></span></div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-2 control-label">备注</label>
+            <div class="col-sm-8">
+                <textarea name="remark" class="form-control" cols="80" placeholder="请输入备注">{$info.remark}</textarea>
+                <span class="help-block m-b-none"></span></div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                {include file="admin@layout/save_btn"}
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("body").on("keyup", ".calculate", function() {
+        var obj=$(this).parents("form");
+        //自动计算总价格
+        calc_ticket_buy_money(obj);
+        
+    });
+</script>
