@@ -1,0 +1,124 @@
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><i class="fa fa-home"></i>流水财务</h5>
+                    <div class="ibox-tools"><a href="?"  class="btn btn-xs btn-danger"><i class="fa fa-refresh"></i>刷新</a></div>
+                </div>
+                <div class="ibox-content table-responsive">
+                    <div class="row">
+                        <form id="pagerForm" method="post" class="form-inline searchForm">
+                            <div class="col-sm-3 m-b-xs">
+                                <lqf_link><a class="btn btn-info ajax-open"  data-url="{:url('FinFlow/settle')}" data-title="财务结算" ><i class="fa fa-jpy"></i> 结算</a></lqf_link>
+                            </div>
+                            <div class="col-sm-9 m-b-xs text-right">
+                                <div class="form-group text-left">
+                                    <select class="form-control" name="account_type" >
+                                        <option value="">全部账户类型</option>
+                                        {volist name='search.account_type' id='vo' key="k" }
+                                        <option value="{$key}">{$vo}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" name="account_name" placeholder="账户搜索" class="form-control">
+                                </div>
+                                <div class="form-group text-left">
+                                    <select class="form-control" name="order_type" >
+                                        <option value="">全部订单类型</option>
+                                        {volist name='search.order_type' id='vo' key="k" }
+                                        <option value="{$key}">{$vo}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                                <div class="form-group text-left">
+                                    <select class="form-control" name="fun_type" >
+                                        <option value="">全部功能类型</option>
+                                        {volist name='search.fun_type' id='vo' key="k" }
+                                        <option value="{$key}">{$vo}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                                <div class="form-group text-left">
+                                    <select class="form-control" name="exchange_type" >
+                                        <option value="">全部交易类型</option>
+                                        {volist name='search.exchange_type' id='vo' key="k" }
+                                        <option value="{$key}">{$vo}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn"> <button type="button" class="btn btn-primary ajaxSearchForm"><i class="fa fa-search"></i> 搜索</button></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table class="table table-hover sorttable ajax-list-table" data-url="{:url('FinFlow/show_json')}" width="100%">
+                        <thead>
+                        <tr>
+                            <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+                            <th width="150"  orderField="by_date" class="sort-filed"><span>确认时间</span></th>
+                            <th width="100" orderField="by_code" class="sort-filed"><span>	编号 </span></th>
+                            <th width="100" orderField="by_account_type" class="sort-filed"><span>账户类型</span></th>
+                            <th width="100"  orderField="by_account_name" class="sort-filed"><span>账户</span></th>
+                            <th width="100" orderField="by_order_type" class="sort-filed"><span>订单类型</span></th>
+                            <th width="150" orderField="by_fun_type" class="sort-filed"><span>功能类型</span></th>
+                            <th width="100" orderField="by_money" class="sort-filed"><span>交易额</span></th>
+                            <th width="100" orderField="by_balance" class="sort-filed"><span>可结算金额</span></th>
+                            <th width="100" orderField="by_user" class="sort-filed"><span>确认人</span></th>
+                            <th width="100" orderField="by_exchange" class="sort-filed"><span>类型</span></th>
+<!--                            <th width="100">操作</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot class="ibox-content">
+                        <tr>
+                            <td colspan="11" align="center"></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="tableListTpl" type="text/html">
+    <%
+    for(var i=0;i<data.length;i++) {
+    bg='bg-danger';
+    if(data[i]['type']=='收'){
+        bg='bg-success';
+    }
+    %>
+    <tr class="<%=bg%>">
+        <td><input name="user_id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
+        <td><%=data[i]['create_time']%></td>
+        <td><%=data[i]['code']%></td>
+        <td><%=data[i]['account_type']%></td>
+        <td><%=data[i]['account_name']%></td>
+        <td><%=data[i]['order_type']%></td>
+        <td><%=data[i]['fun_type']%></td>
+        <td><%=data[i]['money']%></td>
+        <td><%=data[i]['balance']%></td>
+        <td><%=data[i]['sys_user_id']%></td>
+        <td><%=data[i]['exchange_type']%>(<%=data[i]['type']%>)</td>
+<!--        <td>-->
+<!--            <p>-->
+<!--                <lqf_link><a class="ajax-open" data-url="{:url('Driver/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改">修改</a></lqf_link>-->
+<!--                <lqf_link><a class="ajax-del confirm" data-url="{:url('Driver/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>-->
+<!--            </p>-->
+<!--        </td>-->
+    </tr>
+    <% } %>
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        turnPage(1);//页面加载时初始化分页
+    });
+</script>

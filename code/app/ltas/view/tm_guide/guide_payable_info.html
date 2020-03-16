@@ -1,0 +1,212 @@
+<div class="ibox-content table-responsive">
+    <!--    票务明细-->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel blank-panel">
+                <div class="panel-heading">
+                    <div class="panel-options">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="?#tab-4" data-toggle="tab">导游报账单</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+
+                        <!--导游-->
+                        <div class="tab-pane active" id="tab-4">
+                            <table class="table table-hover table-bordered ajax-list-table trust " width="100%" data-url="{:url('TmGuide/guide_payable_list_json', array('id' => $info['id'],'type'=>'guide'))}">
+                                <thead>
+                                <tr>
+                                    <th width="80"><span>日期</span></th>
+                                    <th width="80"><span>导游</span></th>
+                                    <th width="80"><span>导服</span></th>
+                                    <th width="80"><span>报帐金额</span></th>
+                                    <th width="120"><span>备注</span></th>
+                                    <th width="80"><span>操作</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <!--导游代付车费-->
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12 "><span class="bg-info">代付车费</span></div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-guide fare" width="100%"
+                                   data-url="{:url('TmGuide/guide_payable_info_json', array('id' => $info['id'],'type'=>'fare'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100">导游</th>
+                                    <th width="100">收钱人</th>
+                                    <th width="100">代付金额</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <!--导游代付餐费-->
+                            <div class="row">
+                                <div class="col-sm-12 "><span class="bg-info">代付餐费</span></div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-guide food" width="100%"
+                                   data-url="{:url('TmGuide/guide_payable_info_json', array('id' => $info['id'],'type'=>'food'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100">导游</th>
+                                    <th width="100">餐厅</th>
+                                    <th width="100">成人数</th>
+                                    <th width="100">成人餐费￥</th>
+                                    <th width="100">儿童数</th>
+                                    <th width="100">儿童餐费￥</th>
+                                    <th width="100">合计￥</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <!--代付景点费-->
+                            <div class="row">
+                                <div class="col-sm-12 "><span class="bg-info">代付景点费</span></div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-guide scenic" width="100%"
+                                   data-url="{:url('TmGuide/guide_payable_info_json', array('id' => $info['id'],'type'=>'scenic'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100">导游</th>
+                                    <th width="100">景点</th>
+                                    <th width="100">老人数</th>
+                                    <th width="100">老人餐费￥</th>
+                                    <th width="100">成人数</th>
+                                    <th width="100">成人餐费￥</th>
+                                    <th width="100">儿童数</th>
+                                    <th width="100">儿童餐费￥</th>
+                                    <th width="100">合计￥</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <!--补人头费-->
+                            <div class="row">
+                                <div class="col-sm-12 "><span class="bg-info">补人头费</span></div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-guide head" width="100%"
+                                   data-url="{:url('TmGuide/guide_payable_info_json', array('id' => $info['id'],'type'=>'head'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100">导游</th>
+                                    <th width="100">店铺</th>
+                                    <th width="100">人头费</th>
+                                    <th width="100">进店人数</th>
+                                    <th width="100">补人头数</th>
+                                    <th width="100">补人头费￥</th>
+                                    <th width="100">正价流水￥</th>
+                                    <th width="100">正价回扣￥</th>
+                                    <th width="100">特价流水￥</th>
+                                    <th width="100">特价回扣￥</th>
+                                    <th width="100">总提金额￥</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <!--交社费用-->
+                            <div class="row">
+                                <div class="col-sm-12 "><span class="bg-info">交社费用</span></div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-guide travel" width="100%"
+                                   data-url="{:url('TmGuide/guide_payable_info_json', array('id' => $info['id'],'type'=>'travel'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100">导游</th>
+                                    <th width="100">选项</th>
+                                    <th width="100">人头费</th>
+                                    <th width="100">人数</th>
+                                    <th width="100">合计</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <!--回执单费用-->
+                            <div class="row">
+                                <div class="col-sm-12 "><span class="bg-info">回执单费用</span></div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-guide receipt" width="100%"
+                                   data-url="{:url('TmGuide/guide_payable_info_json', array('id' => $info['id'],'type'=>'receipt'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100">导游</th>
+                                    <th width="100">回执选项</th>
+                                    <th width="100">成人数</th>
+                                    <th width="100">成人餐费￥</th>
+                                    <th width="100">儿童数</th>
+                                    <th width="100">儿童餐费￥</th>
+                                    <th width="100">合计￥</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <!--其它代付费用-->
+                            <div class="row">
+                                <div class="col-sm-12 "><span class="bg-info">其它代付费用</span></div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-guide paid" width="100%"
+                                   data-url="{:url('TmGuide/guide_payable_info_json', array('id' => $info['id'],'type'=>'paid'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100">导游</th>
+                                    <th width="100">项目</th>
+                                    <th width="100">金额￥</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <!--其它代收费用-->
+                            <div class="row">
+                                <div class="col-sm-12 "><span class="bg-info">其它代收费用</span></div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-guide coll" width="100%"
+                                   data-url="{:url('TmGuide/guide_payable_info_json', array('id' => $info['id'],'type'=>'coll'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100">导游</th>
+                                    <th width="100">项目</th>
+                                    <th width="100">金额￥</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--加载数据模板-->
+{include file="comm/tm_guide_payable"/}

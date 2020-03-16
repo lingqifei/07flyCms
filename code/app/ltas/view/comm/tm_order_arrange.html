@@ -1,0 +1,172 @@
+<script>
+//团队安排加载模板
+
+    $(document).ready(function () {
+        $('.ajax-list-table-ticket').each(function () {
+            ajaxTicketData($(this));
+        })
+
+        $('.ajax-list-table-rece').each(function () {
+            ajaxOrderReceData($(this));
+        })
+
+        $('.ajax-list-table-trust').each(function () {
+            ajaxOrderTrustData($(this));
+        })
+
+        $('.ajax-list-table-buy').each(function(){
+            ajaxTicketBuyData($(this));
+        })
+        $('.ajax-list-table-refund').each(function(){
+            ajaxTicketRefundData($(this));
+        })
+
+    });
+
+//加载票务数据
+function ajaxTicketData(object) {
+    target = object.attr("data-url");
+    log(target);
+    var html = "";
+    $.get(target).success(function (data) {
+        $.each(data, function (key, row) {
+            html += '<tr>';
+            html += '<td>' + row.destination + '</td>';
+            html += '<td>' + row.train_name + '</td>';
+            html += '<td>' + row.train_type + '</td>';
+            html += '<td>' + row.number + '</td>';
+            html += '<td>' + row.ticket_time + '</td>';
+            html += '<td>' + row.idcards + '</td>';
+            html += '<td>' + row.remark + '</td>';
+            html += '<td>';
+            html += '    <lqf_link><a class="ajax-open" data-url="{:url(\'TmOrderTicket/edit\')}"  data-ids="{\'id\':\'' + row.id + '\'}" data-title="修改" data-calback="ajaxTicketData($(\'.ajax-list-table-ticket\'))">修改</a></lqf_link>';
+            html += '    <lqf_link><a class="ajax-del" data-url="{:url(\'TmOrderTicket/del\')}"  data-ids="{\'id\':\'' + row.id + '\'}"  data-calback="ajaxTicketData($(\'.ajax-list-table-ticket\'))">删除</a></lqf_link>';
+            html += '</td>';
+            html += '</tr>';
+        })
+        object.find("tbody").html(html);
+    }, "json");
+}
+
+//加载应收款
+function ajaxOrderReceData(object) {
+    target = object.attr("data-url");
+    log(target);
+    var html = "";
+    $.get(target).success(function (jsonData) {
+        $.each(jsonData.data, function (key, row) {
+            html += '<tr>';
+            html += '<td>' + row.adult_price + '</td>';
+            html += '<td>' + row.adult_num + '</td>';
+            html += '<td>' + row.child_car_price + '</td>';
+            html += '<td>' + row.child_car_num + '</td>';
+            html += '<td>' + row.child_ticket_price + '</td>';
+            html += '<td>' + row.child_ticket_num + '</td>';
+            html += '<td>' + row.other_price + '</td>';
+            html += '<td>' + row.other_num + '</td>';
+
+            html += '<td>' + row.food_price + '</td>';
+            html += '<td>' + row.food_num + '</td>';
+            html += '<td>' + row.guide_price + '</td>';
+            html += '<td>' + row.guide_num + '</td>';
+            html += '<td>' + row.room_price + '</td>';
+            html += '<td>' + row.room_num + '</td>';
+            html += '<td>' + row.ticket_price + '</td>';
+            html += '<td>' + row.ticket_num + '</td>';
+            html += '<td>' + row.driver_price + '</td>';
+            html += '<td>' + row.driver_num + '</td>';
+
+            html += '<td>' + row.rebate + '</td>';
+            html += '<td>' + row.total_price + '</td>';
+            html += '<td>' + row.remark + '</td>';
+            html += '<td>';
+            html += '    <lqf_link><a class="ajax-open" data-url="{:url(\'TmOrderRece/edit\')}"  data-ids="{\'id\':\'' + row.id + '\'}" data-title="修改" data-calback="ajaxOrderReceData($(\'.ajax-list-table-rece\'))">修改</a></lqf_link>';
+            html += '    <lqf_link><a class="ajax-del" data-url="{:url(\'TmOrderRece/del\')}"  data-ids="{\'id\':\'' + row.id + '\'}"  data-calback="ajaxOrderReceData($(\'.ajax-list-table-rece\'))">删除</a></lqf_link>';
+            html += '</td>';
+            html += '</tr>';
+        })
+        object.find("tbody").html(html);
+    }, "json");
+}
+
+//加载代收款
+function ajaxOrderTrustData(object) {
+    target = object.attr("data-url");
+    log(target);
+    var html = "";
+    $.get(target).success(function (jsonData) {
+        $.each(jsonData.data, function (key, row) {
+            html += '<tr>';
+            html += '<td>' + row.item_name + '</td>';
+            html += '<td>' + row.price + '</td>';
+            html += '<td>' + row.number + '</td>';
+            html += '<td>' + row.total_price + '</td>';
+            html += '<td>' + row.remark + '</td>';
+            html += '<td>';
+            html += '    <lqf_link><a class="ajax-open" data-url="{:url(\'TmOrderTrust/edit\')}"  data-ids="{\'id\':\'' + row.id + '\'}" data-title="修改" data-calback="ajaxOrderTrustData($(\'.ajax-list-table-trust\'))">修改</a></lqf_link>';
+            html += '    <lqf_link><a class="ajax-del" data-url="{:url(\'TmOrderTrust/del\')}"  data-ids="{\'id\':\'' + row.id + '\'}"  data-calback="ajaxOrderTrustData($(\'.ajax-list-table-trust\'))">删除</a></lqf_link>';
+            html += '</td>';
+            html += '</tr>';
+        })
+        object.find("tbody").html(html);
+    }, "json");
+}
+
+//加载买票
+function  ajaxTicketBuyData(object){
+    target=object.attr("data-url");
+    log(target);
+    var html="";
+    $.get(target).success(function (data) {
+        $.each(data,function(key,row){
+            html +='<tr>';
+            html +='<td>'+row.destination+'</td>';
+            html +='<td>'+row.train_name+'</td>';
+            html +='<td>'+row.train_type+'</td>';
+            html +='<td>'+row.number+'</td>';
+            html +='<td>'+row.price+'</td>';
+            html +='<td>'+row.total_price+'</td>';
+            html +='<td>'+row.ticket_time+'</td>';
+            html +='<td>'+row.idcards+'</td>';
+            html +='<td>'+row.ticket_name+'</td>';
+            html +='<td>'+row.remark+'</td>';
+            html +='<td>';
+            html +='    <lqf_link><a class="ajax-open" data-url="{:url(\'TmOrderTicketBuy/edit\')}"  data-ids="{\'id\':\''+row.id+'\'}" data-title="修改" data-calback="ajaxTicketBuyData($(\'.ajax-list-table-buy\'))">修改</a></lqf_link>';
+            html +='    <lqf_link><a class="ajax-del" data-url="{:url(\'TmOrderTicketBuy/del\')}"  data-ids="{\'id\':\''+row.id+'\'}"  data-calback="ajaxTicketBuyData($(\'.ajax-list-table-buy\'))">删除</a></lqf_link>';
+            html +='</td>';
+            html +='</tr>';
+        })
+        object.find("tbody").html(html);
+    },"json");
+}
+
+//加载退票
+function  ajaxTicketRefundData(object){
+    target=object.attr("data-url");
+    log(target);
+    var html="";
+    $.get(target).success(function (data) {
+        $.each(data,function(key,row){
+            html +='<tr>';
+            html +='<td>'+row.destination+'</td>';
+            html +='<td>'+row.train_name+'</td>';
+            html +='<td>'+row.train_type+'</td>';
+            html +='<td>'+row.number+'</td>';
+            html +='<td>'+row.loss_fee+'</td>';
+            html +='<td>'+row.total_loss_fee+'</td>';
+            html +='<td>'+row.cost+'</td>';
+            html +='<td>'+row.refund_fee+'</td>';
+            html +='<td>'+row.ticket_date+'</td>';
+            html +='<td>'+row.ticket_name+'</td>';
+            html +='<td>'+row.remark+'</td>';
+            html +='<td>';
+            html +='    <lqf_link><a class="ajax-open" data-url="{:url(\'TmOrderTicketRefund/edit\')}"  data-ids="{\'id\':\''+row.id+'\'}" data-title="修改" data-calback="ajaxTicketRefundData($(\'.ajax-list-table-refund\'))">修改</a></lqf_link>';
+            html +='    <lqf_link><a class="ajax-del" data-url="{:url(\'TmOrderTicketRefund/del\')}"  data-ids="{\'id\':\''+row.id+'\'}"  data-calback="ajaxTicketRefundData($(\'.ajax-list-table-refund\'))">删除</a></lqf_link>';
+            html +='</td>';
+            html +='</tr>';
+        })
+        object.find("tbody").html(html);
+    },"json");
+}
+
+</script>

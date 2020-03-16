@@ -1,0 +1,276 @@
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content table-responsive">
+                    <form id="pagerForm" method="post" class="form-inline searchForm">
+                        <div class="row ibox-content">
+                            <div class="col-sm-3">
+                                <button type="button" class="btn  btn-primary btn-back-reply"><i class="fa fa-reply"></i> 返回 </button>
+                                <lqf_link><a class="btn btn-default "  href="{:url('SkTeam/search')}" data-title="搜索团" ><i class="fa fa-search"></i> 搜索团</a></lqf_link>
+                                <lqf_link><a class="btn btn-info"  href="{:url('SkTeam/show')}"><i class="fa fa-list"></i> 团行程</a></lqf_link>
+                            </div>
+                            <div class="col-sm-2 col-xs-12">
+                                日期：
+                                <div class="input-group">
+                                    <input type="text" name="team_date" class="form-control" id="team-date-set"
+                                        style="width: 150px;" placeholder="选择开始日期" value="{$next_date_s}">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <select name="guide_id" class="guide-list form-control" data-url="{:url('SkTeam/allot_json')}" style="width: 200px;">
+                                </select>
+                            </div>
+                            <div class="col-sm-3 m-b-xs text-right">
+                                <div class="input-group">
+                                    <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
+                                </div>
+                                <div class="input-group">
+                                <span class="input-group-btn"> <button type="button"
+                                    class="btn btn-primary ajaxSearchForm"><i
+                                    class="fa fa-search"></i> 搜索</button></span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table class="ajax-list-table" data-url="{:url('SkTeam/allot_json')}" width="100%">
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <table class="table ajax-list-table">
+                        <tfoot class="ibox-content">
+                        <tr>
+                            <td align="center" class="pagestring"></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="tableListTpl" type="text/html">
+    <tr>
+        <td>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="ibox-title allot-title bg-success">
+                        <div class="col-sm-3">未分配总人数：<span class="allot-num"><%=team_left_cnt%></span> 人</div>
+                        <div class="col-sm-6 allot-type text-center">颜色含义：<span class="bg-success">行程未满</span>
+                            <span class="bg-warning">行程已满</span>
+                            <span class="bg-danger">行程超限</span>
+                            <span class="bg-info">选中项</span></div>
+                        <div class="col-sm-3">已分配总人数：<span
+                            class="allot-num"><%=team_right_cnt%></span class="allot-num"> 人
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td width="100%">
+            <!--循环显示线路-->
+            <%
+            for(var i=0;i <data.length;i++) {
+                var team_id=data[i]['id'];
+            %>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-sm-6"> <%=data[i]['line_name']%> <small>【<%=data[i]['trip_name']%>】</small> </div>
+                        <div class="col-sm-3">导游：<small>【<%=data[i]['guide_name']%>】</small>  </small></div>
+                        <div class="col-sm-3"> 司机：<small>【<%=data[i]['driver_name']%>】</small></div>
+                    </div>
+                    
+                </div>
+                <div class="panel-body">
+                    <div class="row allot-box">
+                        <div class="allot_content allot_left">
+                            <div class="allot_title">未分配散客：<%=data[i]['order_trip_l_cnt']%> 人</div>
+                            <table width="100%" style="table-layout: fixed; width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th width="80"><span>当天到</span></th>
+                                    <th width="100"><span>办事处</span></th>
+                                    <th width="100"><span>酒店</span></th>
+                                    <th width="100"><span>姓名</span></th>
+                                    <th width="100"><span>人数</span></th>
+                                    <th width="100"><span>行程</span></th>
+                                    <th width="100"><span>离团日期</span></th>
+                                    <th width="100"><span>备注</span></th>
+                                </tr>
+                                </thead>
+                                <tbody class="allot_list allot_list_left" >
+                                <%
+                                    var triplist=data[i]['order_trip_l_list'];
+                                    for(var j=0;j<triplist.length;j++) {
+                                        var tripday=triplist[j]['pass_trip_num'];
+                                        var totalday=triplist[j]['trip_days'];
+
+                                        if( tripday < totalday ){
+                                        var bg="bg-success";
+                                        }
+        
+                                        if( tripday == totalday ){
+                                        var bg="bg-warning";
+                                        }
+
+                                        if( tripday > totalday ){
+                                        var bg="bg-danger";
+                                        }
+                                        
+                                        if(data[i]['team_date']==triplist[j]['arrive_date']){
+                                            var arrive_time=triplist[j]['arrive_time']
+                                        }else{
+                                            var arrive_time='---';
+                                        }
+                                %>
+                                <tr class="<%=bg%>" data-id="<%=triplist[j]['id']%>">
+                                    <td title="到期日期：<%=triplist[j]['arrive_date']%>"><%=arrive_time%></td>
+                                    <td><%=triplist[j]['agency_name']%></td>
+                                    <td><%=triplist[j]['hotel_name']%></td>
+                                    <td><%=triplist[j]['tourist_name']%></td>
+                                    <td><%=triplist[j]['all_num']%></td>
+                                    <td><%=triplist[j]['pass_trip_num']%>/<%=triplist[j]['trip_days']%>(<%=triplist[j]['pass_trip_name']%>)</td>
+                                    <td  title="车次：<%=triplist[j]['leave_train_name']%> 站点：<%=triplist[j]['leave_station_name']%>"><%=triplist[j]['leave_date']%></td>
+                                    <td title="<%=triplist[j]['remark']%>"><%=triplist[j]['remark']%></td>
+                                </tr>
+                                <%}%>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="allot_center text-center">
+                            <div class="allot_hand">
+                                <p>
+                                    <button class="btn  btn-primary btn-bg  goto-right"
+                                        data-url="{:url('SkTeam/allotEdit')}" data-id="<%=data[i]['id']%>"><i
+                                        class="fa fa-angle-right"> </i></button>
+                                </p>
+                                <p>
+                                    <button class="btn  btn-primary btn-bg goto-left"
+                                        data-url="{:url('SkTeam/allotEdit')}" data-id="<%=data[i]['id']%>"><i
+                                        class="fa fa-angle-left"> </i></button>
+                                </p>
+                                <p>
+                                    <button class="btn  btn-primary btn-bg goto-all-right"
+                                        data-url="{:url('SkTeam/allotEdit')}" data-id="<%=data[i]['id']%>"><i
+                                        class="fa fa-angle-double-right"> </i></button>
+                                </p>
+                                <p>
+                                    <button class="btn  btn-primary btn-bg goto-all-left"
+                                        data-url="{:url('SkTeam/allotEdit')}" data-id="<%=data[i]['id']%>"><i
+                                        class="fa fa-angle-double-left"> </i></button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="allot_content allot_right">
+                            <div class="allot_title">已分配散客：<%=data[i]['order_trip_r_cnt']%>人</div>
+                            <table style="table-layout: fixed; width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th width="100"><span>当天到</span></th>
+                                    <th width="100"><span>办事处</span></th>
+                                    <th width="100"><span>酒店</span></th>
+                                    <th width="100"><span>姓名</span></th>
+                                    <th width="100"><span>人数</span></th>
+                                    <th width="100"><span>行程</span></th>
+                                    <th width="100"><span>离团日期</span></th>
+                                    <th width="100"><span>备注</span></th>
+                                </tr>
+                                </thead>
+                                <tbody class=" allot_list allot_list_right">
+                                <%
+                                var triplist=data[i]['order_trip_r_list'];
+                                for(var j=0;j<triplist.length;j++) {
+
+                                var tripday=triplist[j]['pass_trip_num'];
+                                var totalday=triplist[j]['trip_days'];
+
+                                if( tripday < totalday ){
+                                var bg="bg-success";
+                                }
+
+                                if( tripday == totalday ){
+                                var bg="bg-warning";
+                                }
+
+                                if( tripday > totalday ){
+                                var bg="bg-danger";
+                                }
+                                
+                                if(data[i]['team_date']==triplist[j]['arrive_date']){
+                                var arrive_time=triplist[j]['arrive_time']
+                                }else{
+                                var arrive_time='---';
+                                }
+                                
+                                %>
+                                <tr class="<%=bg%>"data-id="<%=triplist[j]['id']%>">
+                                    <td><%=arrive_time%></td>
+                                    <td><%=triplist[j]['agency_name']%></td>
+                                    <td><%=triplist[j]['hotel_name']%></td>
+                                    <td><%=triplist[j]['tourist_name']%></td>
+                                    <td><%=triplist[j]['all_num']%></td>
+                                    <td><%=triplist[j]['pass_trip_num']%>/<%=triplist[j]['trip_days']%>(<%=triplist[j]['pass_trip_name']%>)</td>
+                                    <td title="车次：<%=triplist[j]['leave_train_name']%> 站点：<%=triplist[j]['leave_station_name']%>"><%=triplist[j]['leave_date']%></td>
+                                    <td><%=triplist[j]['remark']%></td>
+                                </tr>
+                                <%}%>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        
+        </td>
+    </tr>
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#team-date-set').datepicker({
+            language: "zh-CN",
+            minView : 'month',
+            todayHighlight:true,
+            autoclose: true,//选中之后自动隐藏日期选择框
+            clearBtn: true,//清除按钮
+            todayBtn: "linked",//今日按钮
+            format: "yyyy-mm-dd"
+            //onSelect: gotoDate
+        }).on('changeDate',ajaxGuideList);
+
+        function ajaxGuideList(ev){
+            ajaxGuideListData($('.guide-list'));
+            turnPage(1);//页面加载时初始化分页
+        }
+
+        turnPage(1);//页面加载时初始化分页
+
+        ajaxGuideListData($('.guide-list'));
+
+    });
+
+    //订单详细数据加载
+    function  ajaxGuideListData(object){
+        target=object.attr("data-url");
+        team_date=object.parents('form').find("input[name='team_date']").val();
+        target = target +'?team_date='+team_date;
+        log(target);
+        $.ajaxSettings.async = false;
+        $.get(target).success(function (jsonData) {
+            var html='<option value="">选择导游</option>';
+            $.each(jsonData.data,function(key,row){
+                html +='<option value="'+row.guide_id+'">'+row.guide_name+' > '+row.line_name+' > '+row.trip_name+'</option>';
+            })
+            object.html(html);
+        },"json");
+
+        $.ajaxSettings.async = true;
+
+    }
+   
+</script>

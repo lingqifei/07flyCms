@@ -1,0 +1,86 @@
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><i class="fa fa-home"></i>身份证信息</h5>
+                    <div class="ibox-tools"><a href="?"  class="btn btn-xs btn-danger"><i class="fa fa-refresh"></i>刷新</a></div>
+                </div>
+                <div class="ibox-content table-responsive">
+                    <div class="row">
+                        <form id="pagerForm" method="post" class="form-inline searchForm">
+                            <div class="col-sm-3">
+                                <lqf_link><a class="btn btn-default export ajax-goto" target-form="form-inline" data-url="{:url('TmOrderIdcard/down')}"><i class="fa fa-download"></i> 下载 </a></lqf_link>
+                            </div>
+                            <div class="col-sm-9 m-b-xs text-right">
+                                到达日期
+                                <div class="input-group">
+                                    <input type="text" name="date_s" class="form-control datepicker" style="width: 100px;" placeholder="开始时间" value="{$next_date_s}">
+                                </div>
+                                至
+                                <div class="input-group">
+                                    <input type="text" name="date_e" class="form-control datepicker" style="width: 100px;" placeholder="结束时间" value="{$next_date_e}">
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input name="guide_id" class="form-control" type="hidden"/>
+                                        <input type="text" class="form-control  ajax-search-select-line" data-url="{:url('Guide/show_json')}"
+                                            name="guide_name" placeholder="请输入关键字选择导游">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span></button>
+                                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn"> <button type="button" class="btn btn-primary ajaxSearchForm"><i class="fa fa-search"></i> 搜索</button></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table class="table table-hover sorttable ajax-list-table" data-url="{:url('TmOrderIdcard/show_json')}" width="100%">
+                        <thead>
+                        <tr>
+                            <th width="200"><span>导游</span></th>
+                            <th width="200"><span>游客</span></th>
+                            <th width="200"><span>电话</span></th>
+                            <th width="200"><span>线路</span></th>
+                            <th width="200"><span>门票类型</span></th>
+                            <th width="200"><span>证件类型</span></th>
+                            <th width="200"><span>证件号码</span></th>
+                            <th width="200"><span>证件名称</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="tableListTpl" type="text/html">
+    <% for(var i=0;i<data.length;i++) { %>
+    <tr>
+        <td><%=data[i]['guide_name']%></td>
+        <td><%=data[i]['tourist_name']%></td>
+        <td><%=data[i]['tourist_mobile']%></td>
+        <td><%=data[i]['line_name']%></td>
+        <td><%=data[i]['ticket']%></td>
+        <td><%=data[i]['type']%></td>
+        <td><%=data[i]['idcard']%></td>
+        <td><%=data[i]['name']%></td>
+    </tr>
+    <% } %>
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        turnPage(1);//页面加载时初始化分页
+    });
+</script>

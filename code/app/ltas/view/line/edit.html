@@ -1,0 +1,54 @@
+<body class="gray-bg">
+<div class="ibox-content">
+    <form class="form-horizontal" method="post" action="{:url('Line/edit')}">
+        <input type="hidden" name="id" value="{$info['id']|default='0'}">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">名称</label>
+            <div class="col-sm-8">
+                <input name="name" class="form-control" type="text" placeholder="请输入名称"  value="{$info['name']|default=''}"/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">缩写</label>
+            <div class="col-sm-8">
+                <input name="abbr" class="form-control" type="text" placeholder="请输入线路名称缩写" value="{$info['abbr']|default=''}"/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">天数</label>
+            <div class="col-sm-8">
+                <input name="days" class="form-control" type="text" placeholder="请输入天数"  value="{$info['days']|default=''}"/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">类型</label>
+            <div class="col-sm-8">
+                <input type="radio" name="type" value="1" {eq name="$info['type']" value='1'} checked{/eq}>散客
+                <input type="radio" name="type" value="2" {eq name="$info['type']" value='2'} checked{/eq}>团队
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">接团注意事项及标准</label>
+            <div class="col-sm-8">
+                <textarea name="standard" class="form-control" cols="80" rows="2" placeholder="请输入接团注意事项及标准">{$info['standard']|default=''}</textarea>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">排序</label>
+            <div class="col-sm-8">
+                <input name="sort" class="form-control" type="text" placeholder="请输排序"  value="{$info['sort']|default=''}"/>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">介绍</label>
+            <div class="col-sm-8">
+                <textarea name="remark" class="form-control" cols="80" rows="2">{$info['remark']|default=''}</textarea>
+                <span class="help-block m-b-none"></span> </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                {include file="admin@layout/save_btn"}
+            </div>
+        </div>
+    </form>
+</div>

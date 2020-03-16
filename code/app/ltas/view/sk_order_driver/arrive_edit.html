@@ -1,0 +1,120 @@
+<body class="gray-bg">
+<div class="ibox-content table-responsive">
+    <!--    订单明细-->
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>接站日期</th>
+                    <th>名称</th>
+                    <th>手机</th>
+                    <th>人数</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{$info.arrive_date}</td>
+                    <td>{$info.tourist_name}</td>
+                    <td>{$info.tourist_mobile}</td>
+                    <td>{$info.all_num}</td>
+                </tr>
+                <tr>
+                    <td>备注信息</td>
+                    <td colspan="6">{$info.remark}</td>
+                
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="ibox-content">
+        <form class="form-horizontal" method="post" action="{:url('SkOrderDriver/arriveEdit')}">
+            <input type="hidden" name="id" value="{$info.id}">
+            <input type="hidden" name="order_id" value="{$info.id}">
+            <input type="hidden" name="arrive_date" value="{$info.arrive_date}">
+            <input type="hidden" name="order_driver_id" value="{$info.order_driver_id|default=''}">
+            <div class="form-group">
+            <label class="col-sm-2 control-label">航班车次</label>
+            <div class="col-sm-8 ">
+                <div class="input-group">
+                    <input type="hidden" name="arrive_train_id" value="{$info.arrive_train_id}">
+                    <input type="text" class="form-control ajax-search-select-train"
+                        data-url="{:url('Train/show_json')}" name="arrive_train_name" placeholder="请输入关键字选择到达航班车次" value="{$info.arrive_train_name}">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        </ul>
+                    </div>
+                </div>
+                <span class="help-block m-b-none"></span></div>
+        </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">站点</label>
+                <div class="col-sm-8 ">
+                    <div class="input-group">
+                        <input type="hidden" name="arrive_station_id" value="{$info.arrive_station_id}">
+                        <input type="text" class="form-control ajax-search-select-station"
+                            data-url="{:url('Station/show_json')}" name="arrive_station_name" placeholder="请输入关键字选择到站点" value="{$info.arrive_station_name}">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            </ul>
+                        </div>
+                    </div>
+                    <span class="help-block m-b-none"></span></div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">时间</label>
+                <div class="col-sm-8">
+                    <div class="input-group" data-autoclose="true">
+                        <input type="text" class="form-control datetimepicker-clock" name="arrive_time"  placeholder="到达时间" value="{$info.arrive_time}">
+                        <span class="input-group-addon"> <span class="fa fa-clock-o"></span> </span>
+                    </div>
+                    <span class="help-block m-b-none"></span></div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">司机</label>
+                <div class="col-sm-8 ">
+                    <div class="input-group">
+                        <input type="hidden" name="driver_id" value="{$info.driver_id}">
+                        <input type="text" class="form-control ajax-search-select-driver"
+                            data-url="{:url('Driver/show_json')}" name="driver_name" placeholder="请输入关键字选司机" value="{$info.driver_name}">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            </ul>
+                        </div>
+                    </div>
+                    <span class="help-block m-b-none"></span></div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">车费</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control " name="driver_fee"  placeholder="车费" value="{$info.driver_fee|default='0'}">
+                    <span class="help-block m-b-none"></span></div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">备注</label>
+                <div class="col-sm-8">
+                    <textarea name="remark" class="form-control" cols="80" placeholder="请输入备注">{$info.driver_remark}</textarea>
+                    <span class="help-block m-b-none"></span></div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-8">
+                    {include file="admin@layout/save_btn"}
+                </div>
+            </div>
+        </form>
+    </div>
+    
+
+    
+    
+</div>
+

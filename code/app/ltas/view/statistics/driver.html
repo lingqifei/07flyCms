@@ -1,0 +1,112 @@
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><i class="fa fa-home"></i>司机统计</h5>
+                    <div class="ibox-tools"><a href="?"  class="btn btn-xs btn-danger"><i class="fa fa-refresh"></i>刷新</a></div>
+                </div>
+                <div class="ibox-content table-responsive">
+                    <div class="row">
+                        <form id="pagerForm" method="post" class="form-inline searchForm">
+                            <div class="col-sm-12 m-b-xs text-right">
+                                    <div class="input-group">
+                                        <input type="text" name="date_s" class="form-control datepicker" style="width: 100px;" placeholder="开始时间">
+                                    </div>
+                                    至
+                                    <div class="input-group">
+                                        <input type="text" name="date_e" class="form-control datepicker" style="width: 100px;" placeholder="结束时间">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input name="driver_id" class="form-control" type="hidden"/>
+                                            <input type="text" class="form-control  ajax-search-select-line" data-url="{:url('Driver/show_json')}"
+                                                name="driver_name" placeholder="请输入关键字选择司机">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    <span class="caret"></span></button>
+                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input name="line_id" class="form-control" type="hidden"  id="line_id"/>
+                                            <input type="text" class="form-control  ajax-search-select-line" data-url="{:url('Line/show_json')}"
+                                                name="line_name" placeholder="请输入关键字选择线路">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    <span class="caret"></span></button>
+                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="form-group text-left">
+                                    <select class="form-control" name="driver_type">
+                                        <option value="">全部</option>
+                                        <option value="1">接</option>
+                                        <option value="2">送</option>
+                                        <option value="3">跟团</option>
+                                    </select>
+                                </div>
+                                <div class="form-group text-left">
+                                    <select class="form-control" name="order_type">
+                                        <option value="1">散客</option>
+                                        <option value="2">团队</option>
+                                    </select>
+                                </div>
+                                <div class="input-group pd-b-5">
+                                    <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn"> <button type="button" class="btn btn-primary ajaxSearchForm"><i class="fa fa-search"></i> 搜索</button></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table class="table table-hover sorttable ajax-list-table" data-url="{:url('Statistics/driver_json')}" width="100%">
+                        <thead>
+                        <tr>
+                            <th width="100"><span>日期</span></th>
+                            <th width="100"><span>线路</span></th>
+                            <th width="80"><span>司机</span></th>
+                            <th width="80"><span>类型</span></th>
+                            <th width="80"><span>车费</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot class="ibox-content">
+                        <tr>
+                            <td colspan="7" align="center"></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="tableListTpl" type="text/html">
+    <% for(var i=0;i<data.length;i++) { %>
+    <tr>
+        <td><%=data[i]['driver_date']%></td>
+        <td><%=data[i]['line_name']%></td>
+        <td><%=data[i]['driver_name']%></td>
+        <td><%=data[i]['type_text']%></td>
+        <td><%=data[i]['driver_fee']%></td>
+    </tr>
+    <% } %>
+    <tr class="text-danger bg-success">
+        <td colspan="4">合计</td>
+        <td><%=total_driver_money%></td>
+    </tr>
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        turnPage(1);//页面加载时初始化分页
+    });
+</script>

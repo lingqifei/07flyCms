@@ -1,0 +1,101 @@
+<body class="gray-bg">
+<div class="ibox-content table-responsive">
+    <form class="form-horizontal" method="post" action="{:url('SkOrderHotel/arrangeEdit')}">
+        <input type="hidden" name="id" value="{$info['id']|default='0'}">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>线路</th>
+                        <th>旅客名称</th>
+                        <th>人数</th>
+                        <th>入住酒店标准</th>
+                        <th>用房数量</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{$info.line_name}</td>
+                        <td>{$info.tourist_name} {$info.tourist_mobile}</td>
+                        <td>{$info.all_num}({$info.adult_num} . {$info.child_num})</td>
+                        <td>{$info.hotel_std}</td>
+                        <td>{$info.hotel_room}</td>
+                    </tr>
+                    <tr>
+                        <td>备注</td>
+                        <td colspan="4">{$info.remark}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-12">
+                <table class="table table-hover" width="100%">
+                    <thead>
+                    <tr>
+                        <th width="100"><span>日期</span></th>
+                        <th width="200"><span>酒店</span></th>
+                        <th width="100"><span>房间数量</span></th>
+                        <th width="100"><span>单价</span></th>
+                        <th width="100"><span>其它费用</span></th>
+                        <th width="100"><span>总价</span></th>
+                        <th width="100"><span>备注</span></th>
+                        <th width="100"><span>操作</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {notempty name='info.hotel_list'}
+                            {volist name='info.hotel_list' id='vo'}
+                            <tr>
+                                <td>{$vo.hotel_date}<input type="hidden" name="sk_order_hotel_id[]" value="{$vo.id|default='0'}"></td>
+                                <td>
+                                    <div class="input-group">
+                                    <input name="hotel_id[]" class="form-control hotel_id" type="hidden" value="{$vo.hotel_id|default='0'}"/>
+                                    <input type="text" class="form-control hotel_name ajax-search-select-hotel sync_next_all"
+                                        data-url="{:url('Hotel/show_json')}" name="hotel_name[]" placeholder="请输入关键字选择酒店"  value="{$vo.hotel_name|default=''}">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span></button>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                        </ul>
+                                    </div>
+                                </div>
+                                </td>
+                                <td><input name="number[]" type="text" class="form-control calculate room_number"  value=" {$vo.number|default='1'}"/> </td>
+                                <td><input name="price[]" type="text" class="form-control calculate hotel_price"  value=" {$vo.price|default='0'}"/></td>
+                                <td><input name="other_money[]" type="text" class="form-control calculate other_money"  value=" {$vo.other_money|default='0'}"/></td>
+                                <td><input name="total_price[]" type="text" class="form-control calculate hotel_total_price"  value=" {$vo.total_price|default='0'}"/></td>
+                                <td><input name="remark[]" type="text" class="form-control"  value=" {$vo.remark|default=''}" placeholder="备注"/></td>
+                                <td><a href="javascript:void(0);" class="sync_next">同步下一天</a></td>
+                            </tr>
+                            {/volist}
+                        {else/}
+                    <tr class="odd"><td colspan="8" class="text-center" valign="top">{:config('empty_list_describe')}</td></tr>
+                    {/notempty}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-10 col-sm-2">
+                <button  type="submit" class="btn  btn-info ladda-button ajax-post" data-style="slide-up" target-form="form-horizontal">
+                    <span class="ladda-label"><i class="fa fa-send"></i> 保存数据</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("body").on("keyup", ".calculate", function() {
+        var obj=$(this).parents("tr");
+        //自动计算总价格
+        calc_hotel_root_money(obj);
+    });
+    $("body").on("click", ".sync_next", function() {
+        var obj=$(this).parents("tr");
+        log(obj);
+        //自动计算总价格
+        sync_hotel_root_money(obj);
+    });
+</script>

@@ -1,0 +1,569 @@
+<div class="ibox-content table-responsive">
+    <!--    订单明细-->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">订单详细</div>
+        
+                <div class="panel-body ">
+                    <table class="table table-bordered ">
+                        <tbody>
+                        <tr>
+                            <td width="100"><label>线路:</label>{$info.line_name}</td>
+                            <td width="100"><label>名称:</label>{$info.tourist_name}</td>
+                            <td width="100"><label>手机:</label>{$info.tourist_mobile}</td>
+                            <td width="100"><label>人数:</label>{$info.all_num}</td>
+                        </tr>
+                        <tr>
+                            <td><label>返程地:</label>{$info.return_place}</td>
+                            <td><label>票务状态:</label>{$info.ticket_status_text}</td>
+                            <td><label>座席:</label>{$info.ticket_type}</td>
+                            <td><label>订票数:</label>{$info.ticket_num}</td>
+                        </tr>
+                        <tr>
+                            <td>身份证信息</td>
+                            <td colspan="3">{$info.idcards}</td>
+                        </tr>
+                        <tr>
+                            <td>备注信息</td>
+                            <td colspan="3">{$info.remark}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    <!--    票务明细-->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">散客支出</div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <!--应收款-->
+                        <div class="tab-pane active" id="tab-2">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button data-url="{:url('SkOrderRece/add', array('order_id' => $info['id']))}"
+                                        class=" btn btn-xs btn-default ajax-open"
+                                        data-calback="ajaxSkOrderInfoData($('.ajax-list-table.rece'))">
+                                        <i class="fa fa-plus"></i> 添加应收款
+                                    </button>
+                                </div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-table rece" width="100%"
+                                data-url="{:url('Finance/skorder_info_json', array('id' => $info['id'],'type'=>'rece'))}">
+                                <thead>
+                                <tr>
+                                    <th width="80"><span>成人价格</span></th>
+                                    <th width="80"><span>成人数量</span></th>
+                                    <th width="80"><span>儿童车餐</span></th>
+                                    <th width="80"><span>儿童车餐数量</span></th>
+                                    <th width="80"><span>儿童门票</span></th>
+                                    <th width="80"><span>儿童门票数量</span></th>
+                                    <th width="80"><span>其它价格</span></th>
+                                    <th width="80"><span>其它价格数量</span></th>
+                                    <th width="60"><span>总价</span></th>
+                                    <th><span>备注</span></th>
+                                    <th width="80"><span>操作</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+    
+                        <!--其它收入-->
+                        <div class="tab-pane active" id="tab-10">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button data-url="{:url('SkOrderRevenue/add', array('order_id' => $info['id']))}"
+                                        class=" btn btn-xs btn-default ajax-open"
+                                        data-calback="ajaxSkOrderInfoData($('.ajax-list-table.revenue'))">
+                                        <i class="fa fa-plus"></i> 添加其它收入
+                                    </button>
+                                </div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-table revenue" width="100%"
+                                data-url="{:url('Finance/skorder_info_json', array('id' => $info['id'],'type'=>'revenue'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100"><span>项目名称</span></th>
+                                    <th width="100"><span>价格</span></th>
+                                    <th width="100"><span>数量</span></th>
+                                    <th width="100"><span>总价</span></th>
+                                    <th><span>备注</span></th>
+                                    <th width="100"><span>操作</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+    
+                        <!--退票-->
+                        <div class="tab-pane active" id="tab-8">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button data-url="{:url('SkOrderTicketRefund/add', array('order_id' => $info['id']))}"
+                                        class=" btn btn-xs btn-default ajax-open"
+                                        data-calback="ajaxSkOrderInfoData($('.ajax-list-table.refund'))">
+                                        <i class="fa fa-plus"></i> 添加退票
+                                    </button>
+                                </div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-table refund" width="100%"
+                                data-url="{:url('Finance/skorder_info_json', array('id' => $info['id'],'type'=>'refund'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100"><span>目的地</span></th>
+                                    <th width="100"><span>航班车次</span></th>
+                                    <th width="100"><span>类型</span></th>
+                                    <th width="100"><span>票数</span></th>
+                                    <th width="100"><span>票损</span></th>
+                                    <th width="100"><span>总票损</span></th>
+                                    <th width="100"><span>成本</span></th>
+                                    <th width="100"><span>退回金额</span></th>
+                                    <th width="100"><span>票日期</span></th>
+                                    <th width="100"><span>票务公司</span></th>
+                                    <th width="100"><span>备注</span></th>
+                                    <th width="100"><span>操作</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">散客支出</div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <!--代收款-->
+<!--                        <div class="tab-pane active" id="tab-3">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-sm-12">-->
+<!--                                <button data-url="{:url('SkOrderTrust/add', array('order_id' => $info['id']))}"-->
+<!--                                    class=" btn btn-xs btn-default ajax-open"-->
+<!--                                    data-calback="ajaxSkOrderInfoData($('.ajax-list-table.trust'))">-->
+<!--                                    <i class="fa fa-plus"></i> 添加代收款-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <table class="table table-hover table-bordered ajax-list-table trust" width="100%"-->
+<!--                            data-url="{:url('Finance/skorder_info_json', array('id' => $info['id'],'type'=>'trust'))}">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th width="100"><span>项目名称</span></th>-->
+<!--                                <th width="100"><span>价格</span></th>-->
+<!--                                <th width="100"><span>数量</span></th>-->
+<!--                                <th width="100"><span>总价</span></th>-->
+<!--                                <th><span>备注</span></th>-->
+<!--                                <th width="100"><span>操作</span></th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+    
+<!--                        &lt;!&ndash;导游&ndash;&gt;-->
+<!--                        <div class="tab-pane active" id="tab-4">-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-sm-12 "><span class="btn btn-xs btn-default">导游报账</span></div>-->
+<!--                            </div>-->
+<!--                            -->
+<!--                            <table class="table table-hover table-bordered ajax-list-table guide" width="100%"-->
+<!--                                data-url="{:url('Finance/skorder_info_json', array('id' => $info['id'],'type'=>'guide'))}">-->
+<!--                                <thead>-->
+<!--                                <tr>-->
+<!--                                    <th width="100"><span>日期</span></th>-->
+<!--                                    <th width="100"><span>导游</span></th>-->
+<!--                                    <th width="100"><span>导服</span></th>-->
+<!--                                    <th width="100"><span>报帐金额</span></th>-->
+<!--                                    <th><span>备注</span></th>-->
+<!--                                    <th width="100"><span>操作</span></th>-->
+<!--                                </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                            -->
+<!--                            <div class="panel panel-default">-->
+<!--                                <div class="panel-heading"><a data-toggle="collapse" data-parent="#accordion" href="tabs_panels.html#collapseTwo" class="collapsed" aria-expanded="false">导游报账明细 </a></div>-->
+<!--                                <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false">-->
+<!--                                <div class="panel-body">-->
+<!--&lt;!&ndash;                            &lt;!&ndash;导游代付车费&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="row"><div class="col-sm-12 "><span class="bg-success">导游代付车费</span></div></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <table class="table table-hover table-bordered ajax-list-guide fare" width="100%"&ndash;&gt;-->
+<!--&lt;!&ndash;                                data-url="{:url('Finance/skorder_guide_info_json', array('id' => $info['id'],'type'=>'fare'))}">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">导游</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">收钱人</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">代付金额</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th>备注</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">操作</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </table>&ndash;&gt;-->
+<!--&lt;!&ndash;    &ndash;&gt;-->
+<!--&lt;!&ndash;                            &lt;!&ndash;导游代付餐费&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="row"><div class="col-sm-12 "><span class="bg-success">导游代付餐费</span></div></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <table class="table table-hover table-bordered ajax-list-guide food" width="100%"&ndash;&gt;-->
+<!--&lt;!&ndash;                                data-url="{:url('Finance/skorder_guide_info_json', array('id' => $info['id'],'type'=>'food'))}">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">导游</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">餐标</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">成人数</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">成人餐费￥</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">儿童数</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">儿童餐费￥</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">合计￥</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th >备注</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">操作</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </table>&ndash;&gt;-->
+<!--&lt;!&ndash;    &ndash;&gt;-->
+<!--&lt;!&ndash;                            &lt;!&ndash;代付景点费&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="row"><div class="col-sm-12 "><span class="bg-success">导游代付景点费</span></div></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <table class="table table-hover table-bordered ajax-list-guide scenic" width="100%"&ndash;&gt;-->
+<!--&lt;!&ndash;                                data-url="{:url('Finance/skorder_guide_info_json', array('id' => $info['id'],'type'=>'scenic'))}">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">导游</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">景点</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">老人数</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">老人餐费￥</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">成人数</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">成人餐费￥</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">儿童数</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">儿童餐费￥</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">合计￥</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th >备注</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">操作</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </table>&ndash;&gt;-->
+<!--&lt;!&ndash;    &ndash;&gt;-->
+<!--&lt;!&ndash;                            &lt;!&ndash;补人头费&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="row"><div class="col-sm-12 "><span class="bg-success">导游补人头费</span></div></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <table class="table table-hover table-bordered ajax-list-guide head" width="100%"&ndash;&gt;-->
+<!--&lt;!&ndash;                                data-url="{:url('Finance/skorder_guide_info_json', array('id' => $info['id'],'type'=>'head'))}">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">导游</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">店铺</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">人头费</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">进店人数</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">补人头数</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">补人头费￥</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">流水￥</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th >备注</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">操作</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </table>&ndash;&gt;-->
+<!--&lt;!&ndash;    &ndash;&gt;-->
+<!--&lt;!&ndash;                            &lt;!&ndash;交社费用&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="row"><div class="col-sm-12 "><span class="bg-success">导游交社费用</span></div></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <table class="table table-hover table-bordered ajax-list-guide travel" width="100%"&ndash;&gt;-->
+<!--&lt;!&ndash;                                data-url="{:url('Finance/skorder_guide_info_json', array('id' => $info['id'],'type'=>'travel'))}">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">导游</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">选项</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">人头费</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">人数</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">合计</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th >备注</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">操作</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </table>&ndash;&gt;-->
+<!--&lt;!&ndash;    &ndash;&gt;-->
+<!--&lt;!&ndash;                            &lt;!&ndash;回执单费用&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="row"><div class="col-sm-12 "><span class="bg-success">导游回执单费用</span></div></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <table class="table table-hover table-bordered ajax-list-guide receipt" width="100%"&ndash;&gt;-->
+<!--&lt;!&ndash;                                data-url="{:url('Finance/skorder_guide_info_json', array('id' => $info['id'],'type'=>'receipt'))}">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">导游</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">回执选项</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">成人数</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">成人餐费￥</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">儿童数</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">儿童餐费￥</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">合计￥</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th >备注</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <th width="100">操作</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </table>&ndash;&gt;-->
+<!--    -->
+<!--                            &lt;!&ndash;其它代付费用&ndash;&gt;-->
+<!--                            <div class="row"><div class="col-sm-12 "><span class="bg-success">导游其它代付费用</span></div></div>-->
+<!--                            <table class="table table-hover table-bordered ajax-list-guide paid" width="100%"-->
+<!--                                data-url="{:url('Finance/skorder_guide_info_json', array('id' => $info['id'],'type'=>'paid'))}">-->
+<!--                                <thead>-->
+<!--                                <tr>-->
+<!--                                    <th width="100">导游</th>-->
+<!--                                    <th width="100">项目</th>-->
+<!--                                    <th width="100">金额￥</th>-->
+<!--                                    <th >备注</th>-->
+<!--                                    <th width="100">操作</th>-->
+<!--                                </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--    -->
+<!--                            &lt;!&ndash;其它代收费用&ndash;&gt;-->
+<!--                            <div class="row"><div class="col-sm-12 "><span class="bg-success">导游其它代收费用</span></div></div>-->
+<!--                            <table class="table table-hover table-bordered ajax-list-guide coll" width="100%"-->
+<!--                                data-url="{:url('Finance/skorder_guide_info_json', array('id' => $info['id'],'type'=>'coll'))}">-->
+<!--                                <thead>-->
+<!--                                <tr>-->
+<!--                                    <th width="100">导游</th>-->
+<!--                                    <th width="100">项目</th>-->
+<!--                                    <th width="100">金额￥</th>-->
+<!--                                    <th >备注</th>-->
+<!--                                    <th width="100">操作</th>-->
+<!--                                </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                            </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            -->
+<!--                        </div>-->
+<!--    -->
+                        <!--车费-->
+                        <div class="tab-pane active" id="tab-5">
+                            <div class="row">
+                                <div class="col-sm-12 "><span class="btn btn-xs btn-default">车费</span></div>
+                            </div>
+                            <table class="table table-hover table-bordered  ajax-list-table driver" width="100%"
+                                data-url="{:url('Finance/skorder_info_json', array('id' => $info['id'],'type'=>'driver'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100"><span>日期</span></th>
+                                    <th width="100"><span>司机</span></th>
+                                    <th width="100"><span>车费</span></th>
+                                    <th width="100"><span>类型</span></th>
+                                    <th><span>备注</span></th>
+                                    <th width="100"><span>操作</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+    
+                        <!--房费-->
+                        <div class="tab-pane active" id="tab-6">
+                            <div class="row">
+                                <div class="col-sm-12 "><span class="btn btn-xs btn-default">酒店费用</span></div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-table hotel" width="100%"
+                                data-url="{:url('Finance/skorder_info_json', array('id' => $info['id'],'type'=>'hotel'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100"><span>日期</span></th>
+                                    <th width="100"><span>酒店</span></th>
+                                    <th width="100"><span>价格</span></th>
+                                    <th width="100"><span>数量</span></th>
+                                    <th width="100"><span>总价</span></th>
+                                    <th><span>备注</span></th>
+                                    <th width="100"><span>操作</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!--买票-->
+                        <div class="tab-pane active" id="tab-7">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button data-url="{:url('SkOrderTicketBuy/add', array('id' => $info['id']))}"
+                                        class=" btn btn-xs btn-default ajax-open"
+                                        data-calback="ajaxSkOrderInfoData($('.ajax-list-table.buy'))">
+                                        <i class="fa fa-plus"></i> 添加购票
+                                    </button>
+                                </div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-table buy" width="100%"
+                                data-url="{:url('Finance/skorder_info_json', array('id' => $info['id'],'type'=>'buy'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100"><span>目的地</span></th>
+                                    <th width="100"><span>航班车次</span></th>
+                                    <th width="100"><span>类型</span></th>
+                                    <th width="100"><span>票数</span></th>
+                                    <th width="100"><span>单价</span></th>
+                                    <th width="100"><span>总价</span></th>
+                                    <th width="100"><span>时间</span></th>
+                                    <th width="120"><span>身份证信息</span></th>
+                                    <th width="100"><span>票务公司</span></th>
+                                    <th width="120"><span>备注</span></th>
+                                    <th width="100"><span>操作</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!--签单支出-->
+                        <div class="tab-pane active" id="tab-9">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button data-url="{:url('SkOrderSignbill/add', array('order_id' => $info['id']))}"
+                                        class=" btn btn-xs btn-default ajax-open"
+                                        data-calback="ajaxSkOrderInfoData($('.ajax-list-table.signbill'))">
+                                        <i class="fa fa-plus"></i> 添加签单支出
+                                    </button>
+                                </div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-table signbill" width="100%"
+                                data-url="{:url('Finance/skorder_info_json', array('id' => $info['id'],'type'=>'signbill'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100"><span>日期</span></th>
+                                    <th width="100"><span>单号</span></th>
+                                    <th width="100"><span>单位</span></th>
+                                    <th width="100"><span>项目</span></th>
+                                    <th width="100"><span>成人数</span></th>
+                                    <th width="100"><span>标准</span></th>
+                                    <th width="100"><span>儿童数</span></th>
+                                    <th width="100"><span>标准</span></th>
+                                    <th width="100"><span>回扣</span></th>
+                                    <th width="100"><span>总价</span></th>
+                                    <th width="120"><span>备注</span></th>
+                                    <th width="100"><span>操作</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                        </div>
+    
+                        <!--其它支出-->
+                        <div class="tab-pane active" id="tab-11">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button data-url="{:url('SkOrderExpend/add', array('order_id' => $info['id']))}"
+                                        class=" btn btn-xs btn-default ajax-open"
+                                        data-calback="ajaxSkOrderInfoData($('.ajax-list-table.expend'))">
+                                        <i class="fa fa-plus"></i> 添加其它支出
+                                    </button>
+                                </div>
+                            </div>
+                            <table class="table table-hover table-bordered ajax-list-table expend" width="100%"
+                                data-url="{:url('Finance/skorder_info_json', array('id' => $info['id'],'type'=>'expend'))}">
+                                <thead>
+                                <tr>
+                                    <th width="100"><span>项目名称</span></th>
+                                    <th width="100"><span>价格</span></th>
+                                    <th width="100"><span>数量</span></th>
+                                    <th width="100"><span>总价</span></th>
+                                    <th><span>备注</span></th>
+                                    <th width="100"><span>操作</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+    
+            <!--金额统计-->
+            <div class="order_total_content bg-success">
+                <table class="table table-bordered text-center ">
+                    <thead>
+                    <tr>
+                        <th class="text-center ">应收款</th>
+                        <th class="text-center ">其它收入</th>
+                        <th class="text-center ">退票</th>
+                        <th class="text-center ">导游报账</th>
+                        <th class="text-center ">酒店</th>
+                        <th class="text-center ">车费</th>
+                        <th class="text-center ">购票</th>
+                        <th class="text-center ">签单支出</th>
+                        <th class="text-center ">其它支出</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="rece"><label>0</label></td>
+                        <td class="revenue"><label>0</label></td>
+                        <td class="refund"><label>0</label></td>
+                        <td class="guide"><label>0</label></td>
+                        <td class="hotel"><label>0</label></td>
+                        <td class="driver"><label>0</label></td>
+                        <td class="buy"><label>0</label></td>
+                        <td class="signbill"><label>0</label></td>
+                        <td class="expend"><label>0</label></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="ibox-title  income ">
+                    收入明细：
+                    <span class="rece">应收款(<label>0.00</label>)</span> +
+                    <span class="revenue">其它收入(<label>0.00</label>)</span> +
+                    <span class="refund">退票(<label>0.00</label>)</span>
+        
+                </div>
+                <div class="ibox-title  out ">支出明细：
+                    <span class="guide">导游报账(<label>0.00</label>)</span> +
+                    <span class="hotel">酒店(<label>0.00</label>)</span> +
+                    <span class="driver">车费(<label>0.00</label>)</span>+
+                    <span class="buy">购票(<label>0.00</label>)</span>+
+                    <span class="signbill">签单(<label>0.00</label>)</span>+
+                    <span class="expend">其它支出(<label>0.00</label>)</span>
+                </div>
+                <div class="ibox-title  profit text-success ">总利润：
+                    <span class="in">总收入(<label>0.00</label>)</span> -
+                    <span class="out">总支出(<label>0.00</label>)</span>
+                    <span class="rtn"> =  总毛利：(<label>0.00</label>)</span>
+                </div>
+            </div>
+            
+            <div class="ibox-content">
+                <a class="btn btn-info ajax-get" data-url="{:url('Finance/skorder_confirm', array('order_id' => $info['id']))}"  data-title="确认结算入账">确认结算入账</a>
+            </div>
+            
+        </div>
+    </div>
+
+</div>
+
+<!--加载数据模板-->
+{include file="comm/sk_order_load_fun"/}

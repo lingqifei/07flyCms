@@ -1,0 +1,217 @@
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><i class="fa fa-home"></i>接送团队司机分配</h5>
+                    <div class="ibox-tools">
+                        <a href="?"  class="btn btn-xs btn-danger"><i class="fa fa-refresh"></i>刷新</a>
+                    </div>
+                </div>
+                <div class="ibox-content table-responsive">
+                    <div class="row">
+                        <form id="pagerForm" method="post" class="form-inline searchForm">
+                            <input  type="hidden" name="orderField">
+                            <input  type="hidden" name="orderDirection">
+                            <div class="col-sm-3">
+                                <lqf_link><a class="btn btn-default export ajax-goto" target-form="form-inline" data-url="{:url('TmOrderDriver/arrivesend_json_down')}"><i class="fa fa-download"></i> 下载 </a></lqf_link>
+                            </div>
+                            <div class="col-sm-9 m-b-xs text-right">
+                                接送站日期：
+                                <div class="input-group">
+                                    <input type="text" name="date_s" class="form-control datepicker" style="width: 100px;" value="{$next_date_s}">
+                                </div>
+                                至
+                                <div class="input-group">
+                                    <input type="text" name="date_e" class="form-control datepicker" style="width: 100px;" value="{$next_date_e}">
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn"> <button type="button" class="btn btn-primary searchForm"><i class="fa fa-search"></i> 搜索</button></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="ibox-title">接</div>
+                    <table class="table table-hover ajax-list-table-driver arrive" data-url="{:url('TmOrderDriver/arrivesend_json',array('type'=>'1'))}" width="100%">
+                        <thead>
+                        <tr>
+                            <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+                            <th width="100" orderField="by_driver_date" class="sort-filed"><span>到达日期</span></th>
+                            <th width="100" orderField="by_driver_type" class="sort-filed"><span>类型</span></th>
+                            <th width="100" orderField="by_tourist_name" class="sort-filed"><span>姓名</span></th>
+                            <th width="100" orderField="by_tourist_mobile" class="sort-filed"><span>电话</span></th>
+                            <th width="100" orderField="by_all_num" class="sort-filed"><span>人数</span></th>
+                            <th width="100" orderField="by_train_name" class="sort-filed"><span>车次</span></th>
+                            <th width="100" orderField="by_station_name" class="sort-filed"><span>站台</span></th>
+                            <th width="100" orderField="by_driver_time" class="sort-filed"><span>时间</span></th>
+                            <th width="150"><span>酒店</span></th>
+                            <th width="100"  orderField="by_driver_name" class="sort-filed"><span>司机</span></th>
+                            <th width="100"  orderField="by_driver_fee" class="sort-filed"><span>车费</span></th>
+                            <th width="150"><span>备注</span></th>
+                            <th width="150"><span>操作</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div class="ibox-title">送</div>
+                    <table class="table table-hover  ajax-list-table-driver send" data-url="{:url('TmOrderDriver/arrivesend_json',array('type'=>'2'))}" width="100%">
+                        <thead>
+                        <tr>
+                            <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+                            <th width="100" orderField="by_driver_date" class="sort-filed"><span>离开日期</span></th>
+                            <th width="100" orderField="by_driver_type" class="sort-filed"><span>类型</span></th>
+                            <th width="100" orderField="by_tourist_name" class="sort-filed"><span>姓名</span></th>
+                            <th width="100" orderField="by_tourist_mobile" class="sort-filed"><span>电话</span></th>
+                            <th width="100" orderField="by_all_num" class="sort-filed"><span>人数</span></th>
+                            <th width="100" orderField="by_train_name" class="sort-filed"><span>车次</span></th>
+                            <th width="100" orderField="by_station_name" class="sort-filed"><span>站台</span></th>
+                            <th width="100" orderField="by_driver_time" class="sort-filed"><span>时间</span></th>
+                            <th width="150"><span>酒店</span></th>
+                            <th width="100"  orderField="by_driver_name" class="sort-filed"><span>司机</span></th>
+                            <th width="100"  orderField="by_driver_fee" class="sort-filed"><span>车费</span></th>
+                            <th width="150"><span>备注</span></th>
+                            <th width="150"><span>操作</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        window.onload=ajaxInitData();
+        //数据排序操作
+        $("body").on("click", ".ajax-list-table-driver .sort-filed", function () {
+            $(this).toggleClass(function () {
+                orderField = $(this).attr('orderField');
+                $('form.searchForm').find("input[name='orderField']").val(orderField);
+                if ($(this).hasClass('asc')) {
+                    $(this).removeClass('asc');
+                    orderDirection = 'desc';
+                    $('form.searchForm').find("input[name='orderDirection']").val(orderDirection);
+                    ajaxInitData();
+                    return 'desc';
+                } else {
+                    $(this).removeClass('desc');
+                    orderDirection = 'asc';
+                    $('form.searchForm').find("input[name='orderDirection']").val(orderDirection);
+                    ajaxInitData();
+                    return 'asc';
+                }
+
+            })
+        });
+
+        //查询数据，刷新
+        $('button.searchForm').click(function () {
+            ajaxInitData();
+        });
+
+
+
+    });
+
+    //初始化数据
+    function ajaxInitData(){
+        ajaxArriveData($('table.arrive'));
+        ajaxSendData($('table.send'));
+    }
+
+    //加载应收款
+    function ajaxArriveData(object) {
+        target = object.attr("data-url");
+        ajaxSearchFormData = $("form").serialize();
+        log(target);
+
+        var html = "";
+        $.ajax({
+            type: "POST",
+            url: target,
+            data:ajaxSearchFormData,
+            dataType: "json",
+            success: function (jsonData) {
+                $.each(jsonData.data, function (key, row) {
+                    var row=null2str(row);
+                    var hotel="";
+                    $.each(row.hotel_list, function (kh, rh) {
+                        if(rh.hotel_name!=null) hotel += rh.hotel_name +'<br>';
+                    });
+                    html += '<tr>';
+                    html += '<td><input name="ids" class="checkboxCtrlId" value="' + row.id + '" type="checkbox"></td>';
+                    html += '<td>' + row.arrive_date + '</td>';
+                    html += '<td> 接 </td>';
+                    html += '<td>' + row.tourist_name + '</td>';
+                    html += '<td>' + row.tourist_mobile + '</td>';
+                    html += '<td>' + row.all_num + '</td>';
+                    html += '<td>' + row.arrive_train_name + '</td>';
+                    html += '<td>' + row.arrive_station_name + '</td>';
+                    html += '<td>' + row.arrive_time + '</td>';
+                    html += '<td>' + hotel + '</td>';
+                    html += '<td>' + row.driver_name + '</td>';
+                    html += '<td>' + row.driver_fee + '</td>';
+                    html += '<td>' + row.remark + '</td>';
+                    html += '<td>';
+                    html += '    <lqf_link><a class="ajax-open" data-url="{:url(\'TmOrderDriver/arriveEdit\')}"  data-ids="{\'id\':\'' + row.id + '\'}" data-title="修改" data-calback="ajaxArriveData($(\'.arrive\'))">安排司机</a></lqf_link>';
+                    html += '</td>';
+                    html += '</tr>';
+                })
+                object.find("tbody").html(html);
+
+            }
+        });
+
+
+    }
+
+    //加载应收款
+    function ajaxSendData(object) {
+        target = object.attr("data-url");
+        ajaxSearchFormData = $("form").serialize();
+        log(target);
+        var html = "";
+        $.ajax({
+            type: "POST",
+            url: target,
+            data:ajaxSearchFormData,
+            dataType: "json",
+            success: function (jsonData) {
+                $.each(jsonData.data, function (key, row) {
+                    var row=null2str(row);
+                    var hotel="";
+                    $.each(row.hotel_list, function (kh, rh) {
+                        if(rh.hotel_name!=null) hotel += rh.hotel_name +'<br>';
+                    });
+                    html += '<tr>';
+                    html += '<td><input name="ids" class="checkboxCtrlId" value="' + row.id + '" type="checkbox"></td>';
+                    html += '<td>' + row.leave_date + '</td>';
+                    html += '<td> 送 </td>';
+                    html += '<td>' + row.tourist_name + '</td>';
+                    html += '<td>' + row.tourist_mobile + '</td>';
+                    html += '<td>' + row.all_num + '</td>';
+                    html += '<td>' + row.leave_train_name + '</td>';
+                    html += '<td>' + row.leave_station_name + '</td>';
+                    html += '<td>' + row.leave_time + '</td>';
+                    html += '<td>' + hotel + '</td>';
+                    html += '<td>' + row.driver_name + '</td>';
+                    html += '<td>' + row.driver_fee + '</td>';
+                    html += '<td>' + row.remark + '</td>';
+                    html += '<td>';
+                    html += '    <lqf_link><a class="ajax-open" data-url="{:url(\'TmOrderDriver/sendEdit\')}"  data-ids="{\'id\':\'' + row.id + '\'}" data-title="修改" data-calback="ajaxSendData($(\'.send\'))">安排司机</a></lqf_link>';
+                    html += '</td>';
+                    html += '</tr>';
+                })
+                object.find("tbody").html(html);
+            }
+        });
+    }
+
+</script>
