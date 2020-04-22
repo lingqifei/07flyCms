@@ -29,15 +29,20 @@
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-white " href="#"><i class="fa fa-bars"></i> </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
-                    <li class="dropdown"> <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#"> <i class="fa fa-chevron-down">{$sys_user_info['realname']}</i>  </a>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#"> <i class="fa fa-chevron-down">{$sys_user_info['realname']}</i>  </a>
                         <ul class="dropdown-menu dropdown-alerts">
-                            <li> <a data-url="{:url('SysUser/editInfo',array('id'=>$sys_user_info['id']))}" class="ajax-open" title="个人资料" data-calback="window.location.reload();">
+                            <li>
+                                <a data-url="{:url('SysUser/editInfo',array('id'=>$sys_user_info['id']))}" class="ajax-open" title="个人资料" data-calback="window.location.reload();">
                                 <div> <i class="fa fa-envelope fa-fw"></i> 个人资料</div>
-                            </a> </li>
+                            </a>
+                            </li>
                             <li class="divider"></li>
-                            <li> <a href="{:url('SysUser/editPwd',array('id'=>$sys_user_info['id']))}" class="ajax-open" title="个人资料" data-calback="window.location.reload();">
+                            <li>
+                                <a href="{:url('SysUser/editPwd',array('id'=>$sys_user_info['id']))}" class="ajax-open" title="个人资料" data-calback="window.location.reload();">
                                 <div> <i class="fa fa-qq fa-fw"></i> 密码修改 </div>
-                            </a> </li>
+                            </a>
+                            </li>
                             <li class="divider"></li>
                             <li>
                                 <div class="text-center link-block"> <a class="ajax-get"  href="{:url('Login/logout')}"> <strong>退出登录 </strong> <i class="fa fa-angle-right"></i> </a> </div>

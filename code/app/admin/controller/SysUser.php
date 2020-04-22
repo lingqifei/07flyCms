@@ -26,6 +26,7 @@ class SysUser extends AdminBase
      */
     public function show()
     {
+
         return $this->fetch('show');
     }
 

@@ -81,6 +81,12 @@
                     <input name="click" class="form-control" value="100" type="text" placeholder="请输入点击次数"/>
                     <span class="help-block m-b-none">这功能是提供给管理员作弊用的。不过尽量不要用呀！^_^</span></div>
             </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">发布时间</label>
+            <div class="col-sm-10">
+                <input name="pubdate" class="form-control datetimepicker-now" id="datetimeStart"  type="text" placeholder="选择发布时间"/>
+                <span class="help-block m-b-none">文档发布时间</span></div>
+        </div>
             {$ext_field}
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-8">
@@ -89,3 +95,9 @@
         </div>
     </form>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#datetimeStart").datetimepicker("setDate", new Date());
+    });
+</script>

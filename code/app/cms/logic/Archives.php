@@ -34,21 +34,18 @@ class Archives extends CmsBase
     }
 
     /**
-     * 模型管理处列表
+     * 文档管理处列表
      */
     public function getArchivesList($where = [], $field = 'a.*,t.typename', $order = 'a.sort asc', $paginate = DB_LIST_ROWS)
     {
 
         $this->modelArchives->alias('a');
-
         $join = [
             [SYS_DB_PREFIX . 'arctype t', 't.id = a.type_id','LEFT'],
         ];
-
         $this->modelArchives->join = $join;
 
         $list=$this->modelArchives->getList($where, $field, $order, $paginate)->toArray();
-
         if($paginate===false) $list['data']=$list;
 
         foreach ($list['data'] as &$row){
@@ -58,27 +55,25 @@ class Archives extends CmsBase
     }
     
     /**
-     * 模型添加
+     * 文档添加
      */
     public function archivesAdd($data = [])
     {
         
         $validate_result = $this->validateArchives->scene('add')->check($data);
-        
         if (!$validate_result) {
             return [RESULT_ERROR, $this->validateArchives->getError()];
         }
 
-        //1、调用栏目和模型
+        //1、关键字处理
         $arctype=$this->logicArctype->getArctypeInfoDetail($data['type_id']);
-
         if(!empty($data['keywords'])){
             $keywords=$data['keywords'];
         }else{
             $keywords=getKeywords($data['title'],html_msubstr($data['body'],0));
             $keywords && $keywords=arr2str($keywords,',');
         }
-
+        //简介处理
         if(!empty($data['description'])){
             $description=$data['description'];
         }else{
@@ -99,10 +94,11 @@ class Archives extends CmsBase
             'click'=>$data['click'],
             'writer'=>$data['writer'],
             'source'=>$data['source'],
+            'pubdate'=>$data['pubdate'],
         ];
         $aid = $this->modelArchives->setInfo($main_data);
 
-        //2、添加附加表
+        //3、添加附加表
         $ext_field=$this->logicChannelField->getExtTableFieldList($arctype['maintable'],$arctype['addtable']);
         $ext_data=array(
             "id"=>$aid,
@@ -119,26 +115,22 @@ class Archives extends CmsBase
 
         $url = url('show');
         $result && action_log('新增', '新增文档，name：' . $data['title']);
-        
         return $result ? [RESULT_SUCCESS, '添加成功', $url] : [RESULT_ERROR, $this->modelArchives->getError()];
     }
     
     /**
-     * 模型编辑
+     * 文档编辑
      */
     public function archivesEdit($data = [])
     {
         
         $validate_result = $this->validateArchives->scene('edit')->check($data);
-        
         if (!$validate_result) {
-         
             return [RESULT_ERROR, $this->validateArchives->getError()];
         }
 
-        //1、调用栏目和模型
+        //1、关键字处理
         $arctype=$this->logicArctype->getArctypeInfoDetail($data['type_id']);
-
         if(!empty($data['keywords'])){
             $keywords=$data['keywords'];
         }else{
@@ -146,6 +138,7 @@ class Archives extends CmsBase
             $keywords && $keywords=arr2str($keywords,',');
         }
 
+        //简介处理
         if(!empty($data['description'])){
             $description=$data['description'];
         }else{
@@ -166,16 +159,17 @@ class Archives extends CmsBase
             'description'=>$description,
             'click'=>$data['click'],
             'writer'=>$data['writer'],
-            'source'=>$data['source'],
+            'pubdate'=>$data['pubdate'],
         ];
         $this->modelArchives->setInfo($main_data);
+
 
         //2、添加附加表
         $ext_field=$this->logicChannelField->getExtTableFieldList($arctype['maintable'],$arctype['addtable']);
         $ext_data=array(
             "id"=>$data['id'],
             "type_id"=>$data['type_id'],
-            "body"=>$data['body'],
+            "body"=>get_picture_body($data['body']),
         );
         foreach($ext_field as $row){
             $field=$row['field_name'];
@@ -189,25 +183,39 @@ class Archives extends CmsBase
         action_log('编辑', '编辑文档，name：' . $data['title']);
         return [RESULT_SUCCESS, '编辑成功', $url];
     }
+
+    /**
+     * 文档移动
+     */
+    public function archivesMove($data=[])
+    {
+        $where['id']=['in',$data['id']];
+        $post_data=[
+            'type_id'=>$data['type_id'],
+        ];
+        $result=$this->modelArchives->setInfo($post_data,$where);
+        $url = url('show');
+        $result && action_log('移动', '移动文档，name：' . $data['id']);
+        return $result ? [RESULT_SUCCESS, '操作成功', $url] : [RESULT_ERROR, $this->modelArchives->getError()];
+    }
     
     /**
-     * 模型删除
+     * 文档删除
      */
     public function archivesDel($where = [])
     {
         $arclist=$this->modelArchives->getList($where,true,true,false);
         foreach ($arclist as $row){
             $arctype=$this->logicArctype->getArctypeInfoDetail($row['type_id']);
-            Db::table($arctype['addtable'])->delete($row['id']);
+            Db::table($arctype['addtable'])->delete($row['id'],true);
             $result = $this->modelArchives->deleteInfo($where,true);
         }
         $result && action_log('删除', '删除文档，where：' . http_build_query($where));
-        
         return $result ? [RESULT_SUCCESS, '删除成功'] : [RESULT_ERROR, $this->modelArchives->getError()];
     }
     
     /**
-     * 模型管理处信息
+     * 文档信息
      */
     public function getArchivesInfo($where = [], $field = true)
     {
@@ -233,12 +241,15 @@ class Archives extends CmsBase
         $where = '';
         //关键字查
         !empty($data['keywords']) && $where['a.title'] = ['like', '%'.$data['keywords'].'%'];
-        !empty($data['type_id']) && $where['a.type_id'] = ['=', $data['type_id']];
+        if(!empty($data['type_id'])){
+            $typeid=$this->logicArctype->getArctypeAllSon($data['type_id']);
+            $typeid[]=$data['type_id'];
+            $where['a.type_id'] = ['in', $typeid];
+        }
 
         !empty($data['date_s']) && $where['a.driver_date'] = ['>=', $data['date_s']];
         !empty($data['date_e']) && $where['a.driver_date'] = ['<', $data['date_e']];
         !empty($data['date_s']) &&  !empty($data['date_e']) && $where['a.driver_date'] = ['between', [$data['date_s'],$data['date_e']]];
-
         return $where;
     }
 

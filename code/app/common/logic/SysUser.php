@@ -42,4 +42,63 @@ class SysUser extends LogicBase
         return $this->modelSysUser->getValue($where, $field);
     }
 
+
+    /**获取指定用户下属员工
+     * @param int $id
+     * @return array ex:[1,2,3,4]
+     * Author: lingqifei created by at 2020/3/29 0029
+     */
+    public function getSysUserDeptSon($id=0){
+        $ids=[];
+        $info=$this->modelSysUser->getInfo(['id'=>$id]);
+        if($info){
+            $dept_son=$this->logicSysDept->getDeptAllSon($info['dept_id']);
+            $map['dept_id']=['in',$dept_son];
+            $ids=$this->modelSysUser->getColumn($map,'id');
+        }
+        return $ids;
+    }
+
+
+    /**获取指定用户下属员工
+     * @param int $id
+     * @return array  ex:[1,2,3,4]
+     * Author: lingqifei created by at 2020/3/29 0029
+     */
+    public function getSysUserDeptSelfSon($id=SYS_USER_ID){
+        $ids=[];
+        $dept_id=$this->modelSysUser->getValue(['id'=>$id],'dept_id');
+        if($dept_id){
+            $dept_son=$this->logicSysDept->getDeptAllSon($dept_id);
+            $dept_son[]=$dept_id;
+            $map['dept_id']=['in',$dept_son];
+            $ids=$this->modelSysUser->getColumn($map,'id');
+        }
+        return $ids;
+    }
+
+    /**获取指定用户下属员工列表信息
+     * @param $stype
+     * @return array （[0]=array(''1)）
+     * Author: lingqifei created by at 2020/3/29 0029
+     */
+    public function  getSysUserSubList($stype=''){
+        $where='';
+        $ids='';
+        switch ($stype){
+            case "selfson":
+                $ids=$this->getSysUserDeptSelfSon();
+                break;
+            case "son":
+                $ids=$this->getSysUserDeptSon();
+                break;
+            default:
+
+                break;
+        }
+        $ids && $where['id']=['in',$ids];
+        $list= $this->modelSysUser->getList($where, true, true, false)->toArray();
+        return  $list;
+    }
+
 }

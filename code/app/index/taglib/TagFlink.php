@@ -32,7 +32,7 @@ class TagFlink extends Base
      * @param string $aid
      * Author: lingqifei created by at 2020/2/28 0028
      */
-    public function getFlink($type = '', $limit = '')
+    public function getFlink($type = '', $limit = '20')
     {
         $where['visible'] = ['=', 1];
 
@@ -41,10 +41,9 @@ class TagFlink extends Base
         } elseif ($type == 'image') {
             $where['type'] = ['=', 2];
         }
-
         /*获取文档列表*/
         $logicFriendLink = new \app\index\logic\FriendLink;
-        $result = $logicFriendLink->getFriendlinkTaglibList($where, true, '', $limit);
+        $result = $logicFriendLink->getFriendlinkTaglibList($where, $limit);
         return $result;
     }
 }

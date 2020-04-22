@@ -37,7 +37,11 @@ class TagChannel extends Base
             $cacheKey .= "_{$aid}";
             $this->tid = cache($cacheKey);
             if ($this->tid == false) {
-                $this->tid = M('archives')->where('aid', $aid)->getField('typeid');
+                /*文档信息*/
+                $logicArchives = new \app\index\logic\Archives();
+                $map['id']=['=',$aid];
+                $result=$logicArchives->getArchivesInfo($map);
+                $this->tid = $result['type_id'];
                 cache($cacheKey, $this->tid);
             }
         }
@@ -56,8 +60,7 @@ class TagChannel extends Base
     public  function getChannel($typeid = '', $type = 'top', $currentstyle = '', $notypeid = '')
     {
         $this->currentstyle = $currentstyle;
-        $typeid  = !empty($typeid) ? $typeid : input("param.tid", '');
-
+        //$typeid  = !empty($typeid) ? $typeid : input("param.tid", '');
 //        if (empty($typeid)) {
 //            /*应用于没有指定tid的列表，默认获取该控制器下的第一级栏目ID*/
 //            $controller_name = request()->controller();
@@ -88,9 +91,11 @@ class TagChannel extends Base
         $result = array();
         switch ($type) {
             case 'son': // 下级栏目
+                $typeid  = !empty($typeid) ? $typeid : $this->tid;
                 $result = $this->getSon($typeid, false);
                 break;
             case 'self': // 同级栏目
+                $typeid  = !empty($typeid) ? $typeid : $this->tid;
                 $result = $this->getSelf($typeid);
                 break;
 
@@ -99,10 +104,12 @@ class TagChannel extends Base
                 break;
 
             case 'sonself': // 下级、同级栏目
+                $typeid  = !empty($typeid) ? $typeid : $this->tid;
                 $result = $this->getSon($typeid, true);
                 break;
 
             case 'first': // 第一级栏目
+                $typeid  = !empty($typeid) ? $typeid : $this->tid;
                 $result = $this->getFirst($typeid);
                 break;
         }

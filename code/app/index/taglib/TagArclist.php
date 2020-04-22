@@ -38,7 +38,7 @@ class TagArclist extends Base
         if ($aid > 0) {
             //引用文档逻辑
             $this->logicArchives= new \app\index\logic\Archives();
-            $this->tid = $this->logicArchives->getArchivesFieldValue(['id'=>$aid],'typeid');
+            $this->tid = $this->logicArchives->getArchivesFieldValue(['id'=>$aid],'type_id');
         }
         /*--end*/
 
@@ -65,10 +65,11 @@ class TagArclist extends Base
      */
     public function getArclist($param = array(),  $row = 15, $orderby = '', $addfields = '', $orderway = '', $tagid = '', $tag = '', $pagesize = 0, $thumb = '')
     {
-        $result = false;
 
+        $result = false;
         $param['channelid'] = ("" != $param['channelid'] && is_numeric($param['channelid'])) ? intval($param['channelid']) : '';
         $param['typeid'] = !empty($param['typeid']) ? $param['typeid'] : $this->tid;
+
         empty($orderway) && $orderway = 'desc';
         $pagesize = empty($pagesize) ? intval($row) : intval($pagesize);
         $limit = $row;
@@ -93,7 +94,6 @@ class TagArclist extends Base
                 echo '标签arclist报错：typeid属性值语法错误，请正确填写栏目ID。';
                 return false;
             }
-
             // 过滤typeid中含有空值的栏目ID
             $typeidArr_tmp = explode(',', $param['typeid']);
             $typeidArr_tmp = array_unique($typeidArr_tmp);
@@ -110,11 +110,14 @@ class TagArclist extends Base
         }
 
         if(!empty($param['typeid'])){
-            $where['a.type_id']=['in',$param['channelid']];
+            $where['a.type_id']=['in',$param['typeid']];
         }
 
-        $reg_txt=str_replace(",","|",$param['flag']);
-        $where['a.flag']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
+        if(!empty($param['flag'])){
+            $reg_txt=str_replace(",","|",$param['flag']);
+            $where['a.flag']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
+        }
+
 
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
@@ -123,7 +126,6 @@ class TagArclist extends Base
 
         //获取文档栏目信息
         $logicArctype = new \app\index\logic\Arctype();
-
         foreach ($result['data'] as &$row){
             $typeinfo=$logicArctype->getArctypeInfo(['id'=>$row['type_id']]);
             if($typeinfo){

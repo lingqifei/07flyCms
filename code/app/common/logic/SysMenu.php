@@ -21,7 +21,7 @@ class SysMenu extends LogicBase
     /**
      * 获取菜单列表
      */
-    public function getMenuList($where = [], $field = true, $order = '', $paginate = false)
+    public function getSysMenuList($where = [], $field = true, $order = '', $paginate = false)
     {
         $where['org_id'] = ['>',0];
         return $this->modelSysMenu->getList($where, $field, $order, $paginate);

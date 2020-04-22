@@ -95,6 +95,19 @@ class Archives extends CmsBase
     }
 
     /**
+     * 编辑
+     */
+    public function move()
+    {
+        IS_POST && $this->jump($this->logicArchives->archivesMove($this->param));
+        if (!empty($this->param['id'])) {
+            $this->assign('id', $this->param['id']);
+        }
+        $this->comm();
+        return $this->fetch('move');
+    }
+
+    /**
      * 删除
      */
     public function del()

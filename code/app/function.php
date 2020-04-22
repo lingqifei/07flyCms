@@ -110,7 +110,6 @@ if (!function_exists('msubstr'))
         if ($slice_len < $str_len) {
             $slice = $suffix ? $slice.'...' : $slice;
         }
-
         return $slice;
     }
 }

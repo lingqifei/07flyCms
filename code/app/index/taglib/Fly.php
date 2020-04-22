@@ -26,8 +26,11 @@ class Fly extends TagLib
         'arclist' => ['attr' => 'channelid,typeid,notypeid,row,offset,titlelen,limit,orderby,orderway,noflag,flag,infolen,empty,mod,name,id,key,addfields,tagid,pagesize,thumb,joinaid'],
         'arcview' => ['attr' => 'aid,empty,id,addfields,joinaid'],
         'arcclick'   => ['attr' => 'aid,value,type', 'close' => 0],
+        'type' => ['attr' => 'typeid,empty,id,addfields,joinaid'],
+
         // 相关文档
         'likearticle'    => ['attr' => 'channelid,limit,row,titlelen,infolen,typeid,empty,mod,name,id,key,thumb'],
+        'prenext'    => ['attr' => 'get,titlelen,id,empty'],
         //文档列表
         'list' => ['attr' => 'channelid,typeid,notypeid,pagesize,titlelen,orderby,orderway,noflag,flag,infolen,empty,mod,id,key,addfields,thumb'],
         'pagelist' => ['attr' => 'listitem,listsize', 'close' => 0],
@@ -164,6 +167,62 @@ class Fly extends TagLib
         }
         return;
 
+    }
+
+    /**
+     * type标签解析 指定的单个栏目的链接
+     * 格式：
+     * {fly:type typeid='' empty=''}
+     *  <a href="{$field:typeurl}">{$field:title}</a>
+     * {/fly:type}
+     * @access public
+     * @param array $tag 标签属性
+     * @param string $content 标签内容
+     * @return string|void
+     */
+    public function tagType($tag, $content)
+    {
+        $typeid_tmp = isset($tag['typeid']) ? $tag['typeid'] : '0';
+        $typeid = $this->varOrvalue($typeid_tmp);
+
+        $empty = isset($tag['empty']) ? $tag['empty'] : '';
+        $empty = htmlspecialchars($empty);
+        $id = isset($tag['id']) ? $tag['id'] : 'field';
+        $addfields = isset($tag['addfields']) ? $tag['addfields'] : '';
+        $addfields = $this->varOrvalue($addfields);
+
+        $joinaid = isset($tag['joinaid']) ? $tag['joinaid'] : '';
+        $joinaid = $this->varOrvalue($joinaid);
+
+        $parseStr = '<?php ';
+        // 声明变量
+        if (!empty($typeid_tmp)) {
+            $parseStr .= ' $typeid = ' . $typeid . ';';
+        } else {
+            $parseStr .= ' if(!isset($typeid) || empty($typeid)) : $typeid = ' . $typeid . '; endif;';
+        }
+
+        $parseStr .= ' $tagType = new \app\index\taglib\TagType;';
+        $parseStr .= ' $_result = $tagType->getType($typeid, ' . $addfields . ',' . $joinaid . ');';
+        $parseStr .= ' ?>';
+
+        /*方式一*/
+        $parseStr .= '<?php if(is_array($_result) || $_result instanceof \think\Collection || $_result instanceof \think\Paginator): ';
+        $parseStr .= ' $__LIST__ = $_result;';
+        $parseStr .= 'if( count($__LIST__)==0 ) : echo htmlspecialchars_decode("' . $empty . '");';
+        $parseStr .= 'else: ';
+        $parseStr .= '$' . $id . ' = $__LIST__;';
+        $parseStr .= '?>';
+        $parseStr .= $content;
+        $parseStr .= '<?php endif; else: echo htmlspecialchars_decode("' . $empty . '");endif; ?>';
+        $parseStr .= '<?php unset($typeid); ?>';
+        $parseStr .= '<?php $' . $id . ' = []; ?>'; // 清除变量值，只限于在标签内部使用
+        /*--end*/
+
+        if (!empty($parseStr)) {
+            return $parseStr;
+        }
+        return;
     }
 
     /**
@@ -458,6 +517,71 @@ class Fly extends TagLib
         return;
     }
 
+
+    /**
+     * prenext 标签解析
+     * 在模板中获取内容页的上下篇
+     * 格式：
+     * {eyou:prenext get='pre'}
+     *  <a href="{$field:arcurl}">{$field:title}</a>
+     * {/eyou:prenext}
+     * @access public
+     * @param array $tag 标签属性
+     * @return string
+     */
+    public function tagPrenext($tag, $content)
+    {
+        $get  =  !empty($tag['get']) ? $tag['get'] : 'pre';
+        $titlelen = !empty($tag['titlelen']) && is_numeric($tag['titlelen']) ? intval($tag['titlelen']) : 100;
+        $id     = isset($tag['id']) ? $tag['id'] : 'field';
+
+        if (isset($tag['empty'])) {
+            $style = 1; // 第一种默认标签写法，带属性empty
+        } else {
+            $style = 2; // 第二种支持判断写法，可以 else
+        }
+
+
+        if (1 == $style) {
+//            $empty     = isset($tag['empty']) ? $tag['empty'] : '暂无';
+//            $empty  = htmlspecialchars($empty);
+//            $parseStr = '<?php ';
+//            $parseStr .= ' $tagPrenext = new \app\index\taglib\TagPrenext;';
+//            $parseStr .= ' $_result = $tagPrenext->getPrenext("'.$get.'");';
+//            $parseStr .= 'if(is_array($_result) || $_result instanceof \think\Collection || $_result instanceof \think\Paginator): ';
+//            $parseStr .= ' $__LIST__ = $_result;';
+//            $parseStr .= 'if( empty($__LIST__) ) : echo htmlspecialchars_decode("' . $empty . '");';
+//            $parseStr .= 'else: ';
+//            $parseStr .= '$'.$id.' = $__LIST__;';
+//            $parseStr .= '$' . $id . '["title"] = text_msubstr($' . $id . '["title"], 0, '.$titlelen.', false);';
+//
+/*            $parseStr .= '?>';*/
+//            $parseStr .= $content;
+/*            $parseStr .= '<?php endif; else: echo htmlspecialchars_decode("' . $empty . '");endif; ?>';*/
+
+        } else {
+
+            $parseStr = '<?php ';
+            $parseStr .= ' $tagPrenext = new \app\index\taglib\TagPrenext;';
+            $parseStr .= ' $_result = $tagPrenext->getPrenext("'.$get.'");';
+            $parseStr .= '?>';
+
+            $parseStr .= '<?php if(!empty($_result) || (($_result instanceof \think\Collection || $_result instanceof \think\Paginator ) && $_result->isEmpty())): ?>';
+            $parseStr .= '<?php $'.$id.' = $_result; ?>';
+            $parseStr .= '<?php $' . $id . '["title"] = text_msubstr($' . $id . '["title"], 0, '.$titlelen.', false); ?>';
+            $parseStr .= $content;
+            $parseStr .= '<?php endif; ?>';
+        }
+
+        $parseStr .= '<?php $'.$id.' = []; ?>'; // 清除变量值，只限于在标签内部使用
+
+        if (!empty($parseStr)) {
+            return $parseStr;
+        }
+        return;
+    }
+
+
     /**
      * list 标签解析 获取指定文档分页列表（兼容tp的volist标签语法）
      * 格式：
@@ -746,7 +870,7 @@ class Fly extends TagLib
         $mod = !empty($tag['mod']) && is_numeric($tag['mod']) ? $tag['mod'] : '2';
         $titlelen = !empty($tag['titlelen']) && is_numeric($tag['titlelen']) ? intval($tag['titlelen']) : 100;
         $row = !empty($tag['row']) ? intval($tag['row']) : 0;
-        $limit = !empty($tag['limit']) ? $tag['limit'] : '';
+        $limit = !empty($tag['limit']) ? $tag['limit'] : '20';
         if (empty($limit) && !empty($row)) {
             $limit = "0,{$row}";
         }

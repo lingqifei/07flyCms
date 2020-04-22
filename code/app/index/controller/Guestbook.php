@@ -21,12 +21,10 @@ class Guestbook extends IndexBase{
      * created by Administrator at 2020/2/24 0024 15:15
      */
     public function add(){
-
         if(empty($this->param['tid']) || empty($this->param['addfield'])){
             $this->tid=$this->param['tid'];
         }else{
             $this->jump($this->logicGuestbook->guestbookAdd($this->param));
         }
-
     }
 }

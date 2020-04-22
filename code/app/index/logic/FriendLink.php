@@ -52,11 +52,9 @@ class FriendLink extends IndexBase
      */
     public function getFriendlinkTaglibList($where = [], $limit = '')
     {
-
         $this->modelFriendlink->alias('a');
         $this->modelFriendlink->limit=$limit;
         $list= $this->modelFriendlink->getList($where, '', '', false)->toArray();
-
         foreach ($list as &$row){
             $row['links'] =$row['url'];
             $row['logo'] =get_picture_url($row['logo']);

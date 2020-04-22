@@ -22,7 +22,7 @@ return [
         // 默认模板渲染规则 1 解析为小写+下划线 2 全部转换小写
         'auto_rule'    => 1,
         // 模板路径
-        'view_path'    => PATH_PUBLIC.DS.'theme/'.config('web_theme').'/',
+        'view_path'    => PATH_PUBLIC.'theme'.DS,
         // 模板后缀
         'view_suffix'  => 'html',
         // 模板文件名分隔符

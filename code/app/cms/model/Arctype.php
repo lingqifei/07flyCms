@@ -24,7 +24,7 @@ class Arctype extends CmsBase
             "1" => '频道封面',
             "2" => '外部连接'
         );
-        return ( $key ) ? $data[ $key ] : $data;
+        return ( array_key_exists($key,$data) ) ? $data[ $key ] : $data;
     }
 
 }

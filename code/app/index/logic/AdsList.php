@@ -29,6 +29,7 @@ class AdsList extends IndexBase
      */
     public function getAdsListList($where = [], $field = true, $order = '', $paginate = 15)
     {
+
         $this->modelAdsList->alias('a');
         $list= $this->modelAdsList->getList($where, $field, $order, $paginate)->toArray();
 

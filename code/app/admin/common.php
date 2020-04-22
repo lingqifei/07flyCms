@@ -35,3 +35,46 @@ function clear_login_session()
     session('sys_user_auth',      null);
     session('sys_user_auth_sign', null);
 }
+
+//得到把列表数据=》数形参数
+function list2tree($list, $pId = 0, $level = 0, $pk='id', $pidk = 'pid',$name='name')
+{
+    $tree = '';
+    foreach ($list as $k => $v) {
+        if ($v[$pidk] == $pId) { //父亲找到儿子
+            $v['nodes']       =  list2tree($list, $v[$pk], $level + 1, $pk, $pidk,$name);
+            $v['level']          = $level + 1;
+            $v['treename'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $level) . '|--' . $v[$name];
+            $v['tags']           = $v['id'];
+            $v['text']           = $v[$name];
+            $tree[] = $v;
+        }
+    }
+    return $tree;
+}
+
+if (!function_exists("list2select")) {
+
+    /**r把列表数据转为树形下拉
+     * @param $list
+     * @param int $pId
+     * @param int $level
+     * @param string $pk
+     * @param string $pidk
+     * @param string $name
+     * @return array|string
+     * Author: lingqifei created by at 2020/4/1 0001
+     */
+    function list2select($list, $pId = 0, $level = 0, $pk = 'id', $pidk = 'pid', $name = 'name',$data=[])
+    {
+        foreach ($list as $k => $v) {
+            $v['treename'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $level) . '|--' . $v[$name];
+            if ($v[$pidk] == $pId) { //父亲找到儿子
+                $data[] =$v;
+                $data   = list2select($list, $v[$pk], $level + 1, $pk, $pidk, $name,$data);
+            }
+        }
+        return $data;
+    }
+}
+

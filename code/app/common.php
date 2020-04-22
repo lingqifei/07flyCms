@@ -90,7 +90,6 @@ function get_org_info()
  */
 function data_md5($str, $key = 'lingqifei')
 {
-
     return '' === $str ? '' : md5(sha1($str) . $key);
 }
 
@@ -265,7 +264,6 @@ function format_bytes($size, $delimiter = '')
     $units = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
 
     for ($i = 0; $size >= 1024 && $i < 5; $i++) {
-
         $size /= 1024;
     }
 
@@ -620,6 +618,18 @@ function get_file_url($id = 0)
     $fileLogic = get_sington_object('fileLogic', LogicFile::class);
 
     return $fileLogic->getFileUrl($id);
+}
+
+
+/**
+ * 下载内容中图片
+ */
+function get_picture_body($body = '')
+{
+
+    $fileLogic = get_sington_object('fileLogic', LogicFile::class);
+
+    return $fileLogic->pictureDown($body);
 }
 
 /**

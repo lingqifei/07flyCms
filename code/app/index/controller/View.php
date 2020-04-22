@@ -29,51 +29,33 @@ class View extends IndexBase{
         }else{
             $this->aid=$aid;
         }
-
         if(empty($this->aid)){
             echo "aid不能为空~";
             exit;
         }else{
-
             /**文档处理**/
             $archives=$this->logicArchives->getArchivesInfo(['id'=>$this->aid]);
             if(empty($archives)){
                 echo "aid错误~";
                 exit;
             }
+            $archives['litpic']=get_picture_url($archives['litpic']);
 
             //栏目处理
             $type=$this->logicArctype->getArctypeInfo(['id'=>$archives['type_id']]);
             //模型处理
             $this->nid=$this->logicChannel->getChannelValue(['id'=>$type['channel_id']],'nid');
-
             //字段封装
             $rtnArray  = array(
                 'type' => $type,
                 'field' => $archives,
             );
-
         }
 
         /*模板文件*/
         $tpfile= !empty($type['temp_article'])?$type['temp_article']:'view_' . $this->nid.'.html';
-        $tptype=cut_str($tpfile,'.',-1);
-
-        if($tptype!='html'){
-            echo "模板文件名称后缀必须为 .html ";
-            exit;
-        }
-        $viewfile = !empty($tpfile)? str_replace('.html' , '', strtolower($tpfile)):$tpfile;
-        $tpfilepath=PATH_THEME.$viewfile.'.html';
-        if (!file_exists($tpfilepath)) {
-            echo "$viewfile.html 模板文件不存在~~";
-            exit;
-        }
-        /*--end*/
-
         $this->typeinfo =$rtnArray ;
         $this->assign('fly', $this->typeinfo);
-
-        return $this->fetch('/'.$viewfile);
+        return $this->fetch($tpfile);
     }
 }

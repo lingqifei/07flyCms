@@ -38,10 +38,34 @@ class Arctype extends CmsBase
     /**
      * 列表
      */
+    public function show_json()
+    {
+        $where = "";
+        if (!empty($this->param['keywords'])) {
+            $where['name'] = ['like', '%' . $this->param['keywords'] . '%'];
+        }
+        if (!empty($this->param['pid'])) {
+            //$ids=$this->logicSysDept->getDeptAllSon($this->param['pid']);
+            $where['parent_id'] = ['in', $this->param['pid']];
+        }else{
+            $where['parent_id'] = ['in', '0'];
+        }
+        $list=$this->logicArctype->getArctypeList($where);
+        return $list;
+    }
+
+    /**
+     * 列表
+     */
     public function info()
     {
         $info = $this->logicArctype->getArctypeInfo(['id' => $this->param['id']]);
         return $info;
+    }
+
+    public function  get_list_tree(){
+        $tree = $this->logicArctype->getArctypeListTree();
+        return $tree;
     }
 
     /**
@@ -49,7 +73,6 @@ class Arctype extends CmsBase
      */
     public function add()
     {
-
         IS_POST && $this->jump($this->logicArctype->arctypeAdd($this->param));
         $this->comm();
         return $this->fetch('add');
@@ -73,7 +96,7 @@ class Arctype extends CmsBase
     }
 
     /**
-     * 编辑
+     * 编辑内容
      */
     public function edit_content()
     {
@@ -90,7 +113,7 @@ class Arctype extends CmsBase
     }
 
     /**
-     * 数据状态设置
+     * 删除
      */
     public function del()
     {
@@ -103,7 +126,15 @@ class Arctype extends CmsBase
      */
     public function set_sort()
     {
-        $this->jump($this->logicLtasBase->setSort('Arctype', $this->param));
+        $this->jump($this->logicCmsBase->setSort('Arctype', $this->param));
+    }
+
+    /**
+     * 排序
+     */
+    public function set_visible()
+    {
+        $this->jump($this->logicCmsBase->setField('Arctype', $this->param));
     }
 
     public function comm(){

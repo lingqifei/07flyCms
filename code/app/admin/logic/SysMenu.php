@@ -25,52 +25,6 @@ class SysMenu extends AdminBase
     // 菜单Select结构
     public static $menuSelect   = [];
 
-    //得到数形参数
-    public function getTree($data, $pId = 0, $level = 0)
-    {
-        $tree = '';
-        foreach ($data as $k => $v) {
-            if ($v['pid'] == $pId) { //父亲找到儿子
-                $v['nodes'] = $this->getTree($data, $v['id'], $level + 1);
-                $v['level'] = $level + 1;
-                $v['treename'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $level) . '|--' . $v['name'];
-                $v['text'] = $v['name'];
-                $tree[] = $v;
-            }
-        }
-        return $tree;
-    }
-
-
-    //输出树形参数
-    public function getTreeSelect($tree,$sid) {
-        $html = '';
-        if(!empty($tree)){
-            foreach ( $tree as $key=>$t ) {
-                $selected=($t['id']==$sid)?"selected":"";
-                if ( $t[ 'nodes' ] == '' ) {
-                    $html .="<option value='".$t['id']."' $selected>".$t['treename']."</option>";
-                } else {
-                    $html .="<option value='".$t['id']."' $selected>".$t['treename']."</option>";
-                    $html .= $this->getTreeSelect( $t[ 'nodes' ],$sid);
-                }
-            }
-        }
-        return $html;
-    }
-
-    //输出树形参数
-    public function getTreeSelectHtml($optid,$sid=0) {
-        $where    =[];
-        $list         =$this->getMenuList($where, true, 'sort', false)->toArray();
-        $tree =$this->getTree($list, 0);
-        $html = "<select name='$optid' id='$optid' class=\"form-control\"><option value='0'>请选上一级</option>";
-        $html .=$this->getTreeSelect($tree,$sid);
-        $html .="</select>";
-        return $html;
-    }
-
-
     /**
      * 左侧菜单转视图
      */
@@ -116,16 +70,6 @@ class SysMenu extends AdminBase
         return $menu_view;
     }
 
-
-
-    /**
-     * 菜单转Select
-     */
-    public function menuToSelect($pid,$sid=0)
-    {
-        $select =$this->getTreeSelectHtml($pid,$sid);
-        return $select;
-    }
     
     /**
      * 菜单转Checkbox,用于菜单授权勾选
@@ -184,7 +128,7 @@ class SysMenu extends AdminBase
         $map['url']    = URL;
         $map['module'] = MODULE_NAME;
                 
-        $menu_info = $this->getMenuInfo($map);
+        $menu_info = $this->getSysMenuInfo($map);
         
         // 获取自己及父菜单列表
         $this->getParentMenuList($menu_info['id']);
@@ -206,7 +150,7 @@ class SysMenu extends AdminBase
     public function getParentMenuList($menu_id = 0)
     {
         
-        $menu_info = $this->getMenuInfo(['id' => $menu_id]);
+        $menu_info = $this->getSysMenuInfo(['id' => $menu_id]);
         
         !empty($menu_info['pid']) && $this->getParentMenuList($menu_info['pid']);
 
@@ -221,7 +165,7 @@ class SysMenu extends AdminBase
         $map['url']    = URL;
         $map['module'] = MODULE_NAME;
 
-        $menu_info = $this->getMenuInfo($map);
+        $menu_info = $this->getSysMenuInfo($map);
 
         // 获取自己及父菜单列表
         $this->getParentMenuList($menu_info['id']);
@@ -246,26 +190,32 @@ class SysMenu extends AdminBase
     /**
      * 获取菜单列表
      */
-    public function getMenuList($where = [], $field = true, $order = '', $paginate = false)
+    public function getSysMenuList($where = [], $field = true, $order = '', $paginate = false)
     {
         $where['org_id'] = ['>',0];
         return $this->modelSysMenu->getList($where, $field, $order, $paginate);
     }
 
     //得到tree的数据
-    public function getMenuListTree($where = [], $field = "id,name,pid", $order = 'sort asc', $paginate = false){
+    public function getSysMenuListTree($where = [], $field = "id,name,pid", $order = 'sort asc', $paginate = false){
 
-        $list=$this->getMenuList($where,$field,$order,$paginate)->toArray();
+        $list=$this->getSysMenuList($where,$field,$order,$paginate)->toArray();
 
-        $tree=$this->getTree($list);
+        $tree=list2tree($list);
         return $tree;
     }
 
+    //得到tree的数据
+    public function getSysDeptTreeSelect($where = [], $field = "id,name,pid", $order = 'sort asc', $paginate = false){
+        $list=$this->getSysMenuList($where,$field,$order,$paginate)->toArray();
+        $data=list2select($list);
+        return $data;
+    }
 
     /**
      * 获取菜单信息
      */
-    public function getMenuInfo($where = [], $field = true)
+    public function getSysMenuInfo($where = [], $field = true)
     {
         return $this->modelSysMenu->getInfo($where, $field);
     }
@@ -273,7 +223,7 @@ class SysMenu extends AdminBase
     /**
      * 菜单添加
      */
-    public function menuAdd($data = [])
+    public function sysMenuAdd($data = [])
     {
 
         $validate_result = $this->validateSysMenu->scene('add')->check($data);
@@ -293,7 +243,7 @@ class SysMenu extends AdminBase
     /**
      * 菜单编辑
      */
-    public function menuEdit($data = [])
+    public function sysMenuEdit($data = [])
     {
         
         $validate_result = $this->validateSysMenu->scene('edit')->check($data);
@@ -315,7 +265,7 @@ class SysMenu extends AdminBase
     /**
      * 菜单删除
      */
-    public function menuDel($where = [])
+    public function sysMenuDel($where = [])
     {
         
         $result = $this->modelSysMenu->deleteInfo($where,true);

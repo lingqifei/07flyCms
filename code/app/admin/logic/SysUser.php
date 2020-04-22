@@ -199,7 +199,7 @@ class SysUser extends AdminBase
     }
 
     /**
-     * 修改密码
+     * 重置密码
      */
     public function ResetPassword($data = [])
     {
@@ -231,5 +231,7 @@ class SysUser extends AdminBase
 
         return $this->modelSysUser->setFieldValue($where, $field, $value);
     }
+
+
 
 }

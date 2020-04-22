@@ -36,6 +36,7 @@ class Arctype extends IndexBase
             $row['litpic'] =get_picture_url($row['litpic']);
             $row['typeurl']=$this->getArctypeUrl($row);
         }
+
         return $list;
 
     }

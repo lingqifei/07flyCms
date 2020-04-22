@@ -1,13 +1,4 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
 
 return [
     // 数据库类型
@@ -15,7 +6,7 @@ return [
     // 服务器地址
     'hostname'        => '127.0.0.1',
     // 数据库名
-    'database'        => '07fly_erp_v3',
+    'database'        => '20420_guanggao',
     // 用户名
     'username'        => 'root',
     // 密码
@@ -40,22 +31,18 @@ return [
     'master_num'      => 1,
     // 指定从服务器序号
     'slave_no'        => '',
-    // 自动读取主库数据
-    'read_master'     => false,
     // 是否严格检查字段是否存在
-    'fields_strict'   => true,
+    'fields_strict'   => false,
     // 数据集返回类型
     'resultset_type'  => 'array',
     // 自动写入时间戳字段
     'auto_timestamp'  => true,
     // 时间字段取出后的默认时间格式
     'datetime_format' => 'Y-m-d H:i:s',
-//    'datetime_format' => false,
-
     // 是否需要进行SQL性能分析
-    'sql_explain'     => false,
-    // 系统数据加密key
-    'sys_data_key'    => 'q]>BlD(~SeJrj5hm@vKk_cZ^:6?#g4.u{}nW/pft',
+    'sql_explain'     => true,
     //对象类型转换数组
     'resultset_type' => '\think\Collection',
+    // 系统数据加密key
+    'sys_data_key'    => 'T04)!h.<Lzc9iwOt1&P;?ajbBp/u%ZIERQU$kK,x'
 ];

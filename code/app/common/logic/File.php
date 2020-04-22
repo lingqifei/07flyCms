@@ -210,4 +210,38 @@ class File extends LogicBase
     public function checkFileExists($param = []) {
         return $this->modelFile->where('sha1',$param['sha1'])->find();
     }
+
+    /* 远程图片本地化 $body为html原内容 */
+    public function pictureDown($body){
+        $img_array = explode('&',$body);
+        $root_url = get_file_root_path();
+        $img_array = array();
+        preg_match_all("/(src)=[\"|\'| ]{0,}(http:\/\/(.*)\.(gif|jpg|jpeg|bmp|png|JPEG|GIF|PNG))[\"|\'| ]{0,}/isU", $body, $img_array);
+        $img_array = array_unique($img_array[2]);//也可以自动匹配
+
+        set_time_limit(0);
+        $picture_dir=date("Ymd")."/";
+        $imgPath = PATH_PICTURE.$picture_dir;
+        $milliSecond = strftime("%H%M%S",time());
+        if(!is_dir($imgPath)) @mkdir($imgPath,0777);
+
+        foreach($img_array as $key =>$value)
+        {
+            $value = trim($value);
+            $get_file = @file_get_contents($value);
+            $filename=$milliSecond.$key.".".substr($value,-3,3);
+            $saveName = $imgPath."/".$filename;
+            if($get_file)
+            {
+                $fp = @fopen($saveName,"w");
+                @fwrite($fp,$get_file);
+                @fclose($fp);
+            }
+
+            $file_path= $root_url.'upload/picture/'.$picture_dir.$filename;
+            $body =sr($body,$value, $file_path );
+        }
+        return $body;
+    }
+
 }

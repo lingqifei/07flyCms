@@ -25,6 +25,24 @@ class SysMenu extends AdminBase
     {
         return  $this->fetch('show');
     }
+    /**
+     * 菜单列表
+     */
+    public function show_json()
+    {
+        $where = "";
+        if (!empty($this->param['keywords'])) {
+            $where['name'] = ['like', '%' . $this->param['keywords'] . '%'];
+        }
+        if (!empty($this->param['pid'])) {
+            //$ids=$this->logicSysDept->getDeptAllSon($this->param['pid']);
+            $where['pid'] = ['in', $this->param['pid']];
+        }else{
+            $where['pid'] = ['in', '0'];
+        }
+        $list=$this->logicSysMenu->getSysMenuList($where,true,'sort asc',DB_LIST_ROWS);
+        return $list;
+    }
 
     /**
      * 菜单列表
@@ -32,7 +50,7 @@ class SysMenu extends AdminBase
     public function get_list_tree()
     {
 
-        $tree=$this->logicSysMenu->getMenuListTree();
+        $tree=$this->logicSysMenu->getSysMenuListTree();
         return $tree;
     }
 
@@ -50,16 +68,19 @@ class SysMenu extends AdminBase
      */
     public function add()
     {
-        
-        //$this->param['module'] = MODULE_NAME;
-        if(IS_POST){
-            $rtn=$this->logicSysMenu->menuAdd($this->param);
-            if($rtn[0]=='success'){
-                return ['code'=>1,'msg'=> '菜单添加成功', 'id'=>$rtn[2]];
-            }else{
-                return ['code'=>0,'msg'=> $rtn[1]];
-            }
+        IS_POST && $this->jump($this->logicSysMenu->sysMenuAdd($this->param));
+
+        //获取菜单Select结构数据
+        $menu_select=$this->logicSysMenu->getSysDeptTreeSelect();
+
+        $this->assign('menu_select', $menu_select);
+        if (!empty($this->param['id'])) {
+            $this->assign('pid', $this->param['id']);
+        }else{
+            $this->assign('pid', '0');
         }
+
+        return $this->fetch('add');
     }
     
     /**
@@ -67,17 +88,16 @@ class SysMenu extends AdminBase
      */
     public function edit()
     {
-        if(IS_POST){
-            $rtn=$this->logicSysMenu->menuEdit($this->param);
-            if($rtn[0]=='success'){
-                return ['code'=>1,'msg'=> '编辑成功', 'id'=>'0'];
-            }else{
-                return ['code'=>0,'msg'=> $rtn[1]];
-            }
-        }
-        $info = $this->logicSysMenu->getMenuInfo(['id' => $this->param['id']]);
+        IS_POST && $this->jump($this->logicSysMenu->sysMenuEdit($this->param));
 
-        return $info;
+        $info = $this->logicSysMenu->getSysMenuInfo(['id' => $this->param['id']]);
+        //获取菜单Select结构数据
+        $menu_select=$this->logicSysMenu->getSysDeptTreeSelect();
+
+        $this->assign('menu_select', $menu_select);
+        $this->assign('info', $info);
+
+        return $this->fetch('edit');
     }
     /**
      * 数据状态设置
@@ -87,37 +107,19 @@ class SysMenu extends AdminBase
         $where = empty($this->param['id']) ? ['id' => 0] : ['id' => $this->param['id']];
         $this->jump($this->logicSysMenu->menuDel($where));
     }
-    /**
-     * 数据状态设置
-     */
-    public function setStatus()
-    {
-        
-        $this->jump($this->logicAdminBase->setStatus('SysMenu', $this->param));
-    }
 
     /**
-     * 数据状态设置
+     * 启用
      */
-    public function setName()
+    public function set_visible()
     {
-        $where = empty($this->param['id']) ? ['id' => 0] : ['id' => $this->param['id']];
-        $this->jump($this->logicSysMenu->setName($where,$this->param));
-    }
-
-    /**
-     * 数据状态设置
-     */
-    public function setUrl()
-    {
-        $where = empty($this->param['id']) ? ['id' => 0] : ['id' => $this->param['id']];
-        $this->jump($this->logicSysMenu->setUrl($where,$this->param));
+        $this->jump($this->logicAdminBase->setField('SysMenu', $this->param));
     }
 
     /**
      * 排序
      */
-    public function setSort()
+    public function set_sort()
     {
         $this->jump($this->logicAdminBase->setSort('SysMenu', $this->param));
     }

@@ -21,7 +21,6 @@ class Lists extends IndexBase{
      * created by Administrator at 2020/2/24 0024 15:15
      */
     public function index($tid=0){
-
         if(empty($tid)){
             if(empty($this->param['tid'])){
                 $this->tid=$this->param['tid'];
@@ -29,7 +28,6 @@ class Lists extends IndexBase{
         }else{
             $this->tid=$tid;
         }
-
         if(empty($this->tid)){
             echo "tid不能为空~";
             exit;
@@ -53,18 +51,9 @@ class Lists extends IndexBase{
         }else if ($type['ispart'] == 1){
             $tpfile=$type['temp_index'];
         }
-
-        $viewfile = !empty($tpfile)? str_replace('.html' , '', strtolower($tpfile)):$tpfile;
-        $tpfilepath=PATH_THEME.$viewfile.'.html';
-        if (!file_exists($tpfilepath)) {
-            echo "$viewfile.html 模板文件不存在~~";
-            exit;
-        }
-        /*--end*/
-
+        $viewfile = !empty($tpfile)?strtolower($tpfile):$tpfile;
         $this->typeinfo =$rtnArray ;
         $this->assign('fly', $this->typeinfo);
-
-        return $this->fetch('/'.$viewfile);
+        return $this->fetch($viewfile);
     }
 }

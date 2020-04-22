@@ -36,16 +36,14 @@ class Arctype extends CmsBase
     /**
      * 模型管理处列表
      */
-    public function getArctypeList($where = [], $field = true, $order = '', $paginate = DB_LIST_ROWS)
+    public function getArctypeList($where = [], $field = true, $order = 'sort asc', $paginate = DB_LIST_ROWS)
     {
         $list=$this->modelArctype->getList($where, $field, $order, $paginate)->toArray();
-
         if($paginate===false) $list['data']=$list;
-
         foreach ($list['data'] as &$row){
             $row['ispart_text']=$this->modelArctype->ispart_text($row['ispart']);
+            $row['channel_text']=$this->modelChannel->getValue(['id'=>$row['channel_id']],'name');
         }
-
         return $list;
     }
     
@@ -80,10 +78,8 @@ class Arctype extends CmsBase
         if (!$validate_result) {
             return [RESULT_ERROR, $this->validateArctype->getError()];
         }
-
         $result = $this->modelArctype->setInfo($data);
         $result && action_log('编辑', '编辑栏目，name：' . $data['typename']);
-
         $url = url('show');
         return $result ? [RESULT_SUCCESS, '栏目编辑成功', $url] : [RESULT_ERROR, $this->modelArctype->getError()];
     }
@@ -130,9 +126,9 @@ class Arctype extends CmsBase
 
 
     //得到数形参数
-    public function getArctypeListTree($where)
+    public function getArctypeListTree($where='')
     {
-        $list = $this->getArctypeList($where,'','',false);
+        $list = $this->getArctypeList($where,'','sort asc',false);
         $tree= list2tree($list['data'],0,0,'id','parent_id','typename');
         return $tree;
     }
@@ -201,6 +197,59 @@ class Arctype extends CmsBase
             }
         }
         return self::$dataSelect;
+    }
+
+    /**获得所有指定id所有父级
+     * @param int $typeid
+     * @param array $data
+     * @return array
+     */
+    public function getArctypeAllPid($typeid=0, $data=[])
+    {
+        $where['id']=['=',$typeid];
+        $info = $this->modelArctype->getInfo($where,true);
+        if(!empty($info) && $info['parent_id']){
+            $data[]=$info['parent_id'];
+            return $this->getArctypeAllPid($info['parent_id'],$data);
+        }
+        return $data;
+    }
+
+    /**获得所有指定id所有子级
+     * @param int $typeid
+     * @param array $data
+     * @return array
+     */
+    public function getArctypeAllSon($typeid=0, $data=[])
+    {
+        $where['parent_id']=['=',$typeid];
+        $sons = $this->modelArctype->getList($where,true,'sort asc',false);
+        if (count($sons) > 0) {
+            foreach ($sons as $v) {
+                $data[] = $v['id'];
+                $data = $this->getArctypeAllSon($v['id'], $data); //注意写$data 返回给上级
+            }
+        }
+        if (count($data) > 0) {
+            return $data;
+        } else {
+            return false;
+        }
+        return $data;
+    }
+
+    /**获得所有指定id 所有同级
+     * @param int $typeid
+     * @param array $data
+     * @return array
+     */
+    public function getArctypeAllSelf($typeid=0, $data=[])
+    {
+
+        $pid = $this->modelArctype->getValue(['id'=>$typeid],'parent_id');
+        $where['parent_id']=['=',$typeid];
+        $data = $this->modelArctype->getColumn(['parent_id'=>$pid],'id');
+        return $data;
     }
 
 }

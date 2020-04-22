@@ -13,6 +13,7 @@
 * @version ：1.0
 * @link ：http://www.07fly.top
 */
+
 namespace app\index\controller;
 
 use app\common\controller\ControllerBase;
@@ -31,14 +32,43 @@ class IndexBase extends ControllerBase
      */
     public function __construct()
     {
-
         // 执行父类构造方法
         parent::__construct();
 
-        define('PATH_THEME' , PATH_PUBLIC.'theme'.DS.config('web_theme').DS);
+        $this->initBaseInfo();
 
     }
 
 
+    /**
+     * 初始化基础数据
+     */
+    final private function initBaseInfo()
+    {
+
+        $web_theme = $this->logicWebsite->getWebsiteConfig('web_theme');
+        define('THEME_NAME', $web_theme );
+        define('THEME_PATH', PATH_PUBLIC.$web_theme );
+
+        //
+        $this->assign('template_dir', STATIC_DOMAIN . SYS_DS_PROS . 'public/theme/' . $web_theme.'/');
+    }
+
+    /**
+     * 重写fetch方法
+     */
+    final protected function fetch($template = '', $vars = [], $replace = [], $config = [])
+    {
+        $template=THEME_NAME.DS.$template;
+        $tpfilepath=PATH_PUBLIC.'theme'.DS.$template;
+        if (!file_exists($tpfilepath)) {
+            echo "$tpfilepath 模板文件不存在~~";
+            exit;
+        }
+
+        $template=str_replace('.html' , '', strtolower($template));
+        $template=str_replace('.htm' , '', strtolower($template));
+        return parent::fetch($template, $vars, $replace, $config);
+    }
 
 }

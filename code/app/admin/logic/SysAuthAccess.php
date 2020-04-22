@@ -28,7 +28,7 @@ class SysAuthAccess extends AdminBase
         
         $sort = 'sort';
         if (IS_ROOT) {
-            return $this->logicSysMenu->getMenuList([], true, $sort);
+            return $this->logicSysMenu->getSysMenuList([], true, $sort);
         }
 
         // 获取用户组列表
@@ -59,7 +59,7 @@ class SysAuthAccess extends AdminBase
         // 查询条件
         $where = ['id' => ['in', $menu_ids]];
 
-        return $this->logicSysMenu->getMenuList($where, true, $sort)->toArray();
+        return $this->logicSysMenu->getSysMenuList($where, true, $sort)->toArray();
     }
 
     /**
