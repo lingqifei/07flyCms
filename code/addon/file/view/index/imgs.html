@@ -5,7 +5,6 @@
 <input type="hidden" name="{$addons_data['name']}" id="{$addons_data['name']}" value="{$addons_data['value']}"/>
 <div class="upload-img-box{$addons_data['name']}">
     {notempty name="$info[$addons_data['name']]"}
-    
         {assign name="img_ids_list" value="$info[$addons_data['name'] . '_array']" /}
         {volist name="img_ids_list" id='vo'}
             <div class="upload-pre-item" style="float:left; margin: 10px;">
