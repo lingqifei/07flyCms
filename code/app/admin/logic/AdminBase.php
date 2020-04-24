@@ -30,10 +30,9 @@ class AdminBase extends LogicBase
     {
 
         $pass_data = [RESULT_SUCCESS, '权限检查通过'];
-
         $allow_url = config('allow_url');
-
         $allow_url_list = parse_config_attr($allow_url);
+
         if (IS_ROOT) {
             return $pass_data;
         }

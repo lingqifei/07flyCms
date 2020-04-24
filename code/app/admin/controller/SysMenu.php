@@ -105,7 +105,7 @@ class SysMenu extends AdminBase
     public function del()
     {
         $where = empty($this->param['id']) ? ['id' => 0] : ['id' => $this->param['id']];
-        $this->jump($this->logicSysMenu->menuDel($where));
+        $this->jump($this->logicSysMenu->sysMenuDel($where));
     }
 
     /**
