@@ -23,12 +23,13 @@
                         <thead>
                         <tr>
                             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
-                            <th width="22"><span>ID</span></th>
-                            <th width="100"><span>广告位</span></th>
-                            <th width="50"><span>宽度</span></th>
-                            <th width="50"><span>高度</span></th>
-                            <th width="200"><span>介绍</span></th>
-                            <th width="100">操作</th>
+                            <th width="120">字段标题</th>
+                            <th width="100">字段名称</th>
+                            <th width="120">类型</th>
+                            <th width="80">分组</th>
+                            <th width="100" orderField="by_sort" class="sort-filed"><span>排序</span></th>
+                            <th width="80">启用</th>
+                            <th width="80">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -45,18 +46,23 @@
     </div>
 </div>
 <script id="tableListTpl" type="text/html">
-    <% for(var i=0;i<data.length;i++) { %>
+    <% for(var i=0;i<data.length;i++) {
+    visible='';
+    if(data[i]['visible']=='1') visible='checked';
+    %>
     <tr>
-        <td><input name="user_id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
-        <td><%=data[i]['id']%></td>
-        <td><a class="ajax-goto" data-url="{:url('WebsiteList/show')}" data-ids="{'id':'<%=data[i]['id']%>'}"><%=data[i]['title']%></a></td>
-        <td><%=data[i]['width']%></td>
-        <td><%=data[i]['height']%></td>
-        <td><%=data[i]['intro']%></td>
+        <td><input name="id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
+        <td><%=data[i]['title']%></td>
+        <td><%=data[i]['name']%></td>
+        <td><%=data[i]['type']%></td>
+        <td><%=data[i]['group']%></td>
+        <td><input type="text" name="sort" value="<%=data[i]['sort']%>" class="form-control w50 ajax-sort" data-url="{:url('Website/set_sort',array('name'=>'sort'))}" data-id="<%=data[i]['id']%>" size="5"></td>
+        <td>
+            <input name="visible" class="ajax-checkbox" type="checkbox"   data-url="{:url('Website/set_visible',array('name'=>'visible'))}"  data-id="<%=data[i]['id']%>"  <%=visible%> />
+        </td>
         <td>
             <p>
-                <lqf_link><a class="ajax-goto" data-url="{:url('WebsiteList/show')}" data-ids="{'id':'<%=data[i]['id']%>'}">图片</a></lqf_link>
-                <lqf_link><a class="ajax-open" data-url="{:url('Website/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}">修改</a></lqf_link>
+                <lqf_link><a class="ajax-open" data-url="{:url('Website/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改">修改</a></lqf_link>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('Website/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
             </p>
         </td>

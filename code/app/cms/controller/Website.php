@@ -22,8 +22,17 @@ namespace app\cms\controller;
 class Website extends CmsBase
 {
 
+
+    public function comm_data(){
+        $group=$this->logicWebsite->getWebsiteGroup();
+        $this->assign('group_list', $group);
+
+        $type=$this->logicWebsite->getWebsiteType();
+        $this->assign('type_list', $type);
+    }
+
     /**
-     * 广告列表=》模板
+     * 网站配置列表=》模板
      * @return mixed|string
      */
     public function setting()
@@ -36,14 +45,24 @@ class Website extends CmsBase
             $this->assign('groupid',1);
         }
         $html=$this->logicWebsite->getWebsiteInfoHtml($this->param);
-        $group=$this->logicWebsite->getWebsiteGroup();
-        $this->assign('group', $group);
         $this->assign('html', $html);
+
+        $this->comm_data();
+
         return $this->fetch('setting');
     }
 
     /**
-     * 广告列表-》json数据
+     * 网站配置列表-》json数据
+     * @return
+     */
+    public function show()
+    {
+        return $this->fetch('show');
+    }
+
+    /**
+     * 网站配置列表-》json数据
      * @return
      */
     public function show_json()
@@ -52,47 +71,66 @@ class Website extends CmsBase
         if (!empty($this->param['keywords'])) {
             $where['title|intro'] = ['like', '%' . $this->param['keywords'] . '%'];
         }
-        $list = $this->logicAds->getAdsList($where);
+        $list = $this->logicWebsite->getWebsiteList($where);
         return $list;
     }
 
 
     /**
-     * 广告添加
+     * 网站配置添加
      * @return mixed|string
      */
     public function add()
     {
 
-        IS_POST && $this->jump($this->logicAds->adsAdd($this->param));
+        IS_POST && $this->jump($this->logicWebsite->websiteAdd($this->param));
+
+        $this->comm_data();
 
         return $this->fetch('add');
     }
 
     /**
-     * 广告编辑
+     * 网站配置编辑
      * @return mixed|string
      */
 
     public function edit()
     {
 
-        IS_POST && $this->jump($this->logicAds->adsEdit($this->param));
+        IS_POST && $this->jump($this->logicWebsite->websiteEdit($this->param));
 
-        $info = $this->logicAds->getAdsInfo(['id' => $this->param['id']]);
-
+        $info = $this->logicWebsite->getWebsiteInfo(['id' => $this->param['id']]);
         $this->assign('info', $info);
+
+        $this->comm_data();
 
         return $this->fetch('edit');
     }
 
     /**
-     * 广告删除
+     * 网站配置删除
      */
     public function del()
     {
         $where = empty($this->param['id']) ? ['id' => 0] : ['id' => $this->param['id']];
-        $this->jump($this->logicAds->adsDel($where));
+        $this->jump($this->logicWebsite->adsDel($where));
+    }
+
+    /**
+     * 排序
+     */
+    public function set_visible()
+    {
+        $this->jump($this->logicCmsBase->setField('Website', $this->param));
+    }
+
+    /**
+     * 排序
+     */
+    public function set_sort()
+    {
+        $this->jump($this->logicCmsBase->setSort('Website', $this->param));
     }
 
 }

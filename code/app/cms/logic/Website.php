@@ -16,12 +16,12 @@ namespace app\cms\logic;
 use app\common\logic\TableField;
 
 /**
- * 广告管理=》逻辑层
+ * 网站管理=》逻辑层
  */
 class Website extends CmsBase
 {
     /**
-     * 广告列表
+     * 网站列表
      * @param array $where
      * @param bool $field
      * @param string $order
@@ -34,7 +34,7 @@ class Website extends CmsBase
     }
 
     /**
-     * 广告编辑
+     * 网站编辑
      * @param array $data
      * @return array
      */
@@ -80,6 +80,13 @@ class Website extends CmsBase
         return $string;
     }
 
+
+    /**
+     * 根据字段创建展示代码
+     * @param $row
+     * @return string
+     * Author: lingqifei created by at 2020/4/24 0024
+     */
     public function getCreateHtml($row){
         $htmltxt='';
         switch ( $row[ 'type' ] ) {
@@ -147,9 +154,82 @@ class Website extends CmsBase
     }
 
 
-    //得到系统配置参数
+
+    /**
+     * 配置添加
+     */
+    public function websiteAdd($data = [])
+    {
+
+        $validate_result = $this->validateWebsite->scene('add')->check($data);
+
+        if (!$validate_result) {
+
+            return [RESULT_ERROR, $this->validateWebsite->getError()];
+        }
+
+        $result = $this->modelWebsite->setInfo($data);
+
+        $result && action_log('新增', '新增配置，name：' . $data['name']);
+        $url = url('websiteList', array('group' => $data['group'] ? $data['group'] : 0));
+        return $result ? [RESULT_SUCCESS, '配置添加成功', $url] : [RESULT_ERROR, $this->modelWebsite->getError()];
+    }
+
+    /**
+     * 配置编辑
+     */
+    public function websiteEdit($data = [])
+    {
+
+        $validate_result = $this->validateWebsite->scene('edit')->check($data);
+
+        if (!$validate_result) {
+
+            return [RESULT_ERROR, $this->validateWebsite->getError()];
+        }
+
+        $result = $this->modelWebsite->setInfo($data);
+
+        $result && action_log('编辑', '编辑配置，name：' . $data['name']);
+        $url = url('websiteList', array('group' => $data['group'] ? $data['group'] : 0));
+        return $result ? [RESULT_SUCCESS, '配置编辑成功', $url] : [RESULT_ERROR, $this->modelWebsite->getError()];
+    }
+
+    /**
+     * 配置删除
+     */
+    public function websiteDel($where = [])
+    {
+
+        $result = $this->modelWebsite->deleteInfo($where);
+
+        $result && action_log('删除', '删除配置，where：' . http_build_query($where));
+
+        return $result ? [RESULT_SUCCESS, '菜单删除成功'] : [RESULT_ERROR, $this->modelWebsite->getError()];
+    }
+
+    public function getWebsiteInfo($where = [],$field=true){
+        return $this->modelWebsite->getInfo($where, $field);
+    }
+
+
+    /**
+     * 参数分组
+     * @return mixed
+     * Author: lingqifei created by at 2020/4/24 0024
+     */
     public function getWebsiteGroup(){
         $list=$this->modelWebsite->getGroup();
+        return $list;
+    }
+
+    /**
+     * 参数字段类型
+     * @return mixed
+     * Author: lingqifei created by at 2020/4/24 0024
+     */
+    public function getWebsiteType(){
+        $list=$this->modelWebsite->getType();
         return $list;
     }
 
