@@ -36,6 +36,7 @@ class Website extends CmsBase
     public static function getGroup($sType = '')
     {
         $arr = array('1' => '网站配置', '2' => '核心设置', '3' => '附件设置', '4' => '接口设置');
+        $arr = array('1' => '网站配置');
         if (!empty($sType)) {
             if (!in_array($sType[0], array_keys($arr))) {
                 return $sType;

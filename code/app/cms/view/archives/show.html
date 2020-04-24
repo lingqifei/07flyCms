@@ -67,7 +67,7 @@
     <tr>
         <td><input name="id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
         <td><%=data[i]['id']%></td>
-        <td><a href="javascript:void(0)" class="single_operation" data-id="<%=data[i]['aid']%>" data-act="detail"><%=data[i]['title']%></a>
+        <td><a class="ajax-goto" href="{:url('index/view/index')}" data-ids="{'aid':'<%=data[i]['id']%>'}" target="_blank"><%=data[i]['title']%></a>
             <% if(data[i]['flag_name'] != ''){ %>
             [ <span class="text-danger"><%:=data[i]['flag_name']%></span>]
             <%}%>

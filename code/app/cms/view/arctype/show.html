@@ -75,7 +75,7 @@
     <tr>
         <td><input name="id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
         <td><%=data[i]['id']%></td>
-        <td><%=data[i]['typename']%></td>
+        <td><a class="ajax-goto" href="{:url('index/lists/index')}" data-ids="{'tid':'<%=data[i]['id']%>'}" target="_blank"><%=data[i]['typename']%></a></td>
         <td><%=data[i]['ispart_text']%></td>
         <td><%=data[i]['channel_text']%></td>
         <td><input type="text" name="sort" value="<%=data[i]['sort']%>" class="form-control w50 ajax-sort"
@@ -88,12 +88,9 @@
         </td>
         <td>
             <p>
-                <lqf_link><a class="ajax-open" data-url="{:url('Arctype/add')}" data-ids="{'pid':'<%=data[i]['id']%>'}">添加下级</a>
-                </lqf_link>
-                <lqf_link><a class="ajax-open" data-url="{:url('Arctype/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}">修改</a>
-                </lqf_link>
-                <lqf_link><a class="ajax-del confirm" data-url="{:url('Arctype/del')}"
-                             data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
+                <lqf_link><a class="ajax-open" data-url="{:url('Arctype/add')}" data-ids="{'pid':'<%=data[i]['id']%>'}">添加下级</a></lqf_link>
+                <lqf_link><a class="ajax-open" data-url="{:url('Arctype/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}">修改</a></lqf_link>
+                <lqf_link><a class="ajax-del confirm" data-url="{:url('Arctype/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
             </p>
         </td>
     </tr>
