@@ -20,12 +20,28 @@ class Config extends LogicBase
     /**
      * 获取配置列表
      */
-    public function getConfigList($where = [], $field = true, $order = '', $paginate = 0)
+    public function getConfigList($where = [], $field = true, $order = '', $paginate = DB_LIST_ROWS)
     {
         
-        return $this->modelConfig->getList($where, $field, $order, $paginate);
+        $list=$this->modelConfig->getList($where, $field, $order, $paginate)->toArray();
+        if($paginate===false) $list['data']=$list;
+        foreach ($list['data'] as &$row){
+            $row['group_text']=$this->getConfigGroup($row['group']);
+            $row['type_text']=$this->getConfigType($row['type']);
+        }
+        return $list;
     }
-    
+
+    /**
+     * 获取配置列表
+     */
+    public function getConfigListAll($where = [], $field = true, $order = '', $paginate = DB_LIST_ROWS)
+    {
+
+        $list=$this->modelConfig->getList($where, $field, $order, $paginate)->toArray();
+        return $list;
+    }
+
     /**
      * 获取配置列表过滤
      */
@@ -43,8 +59,7 @@ class Config extends LogicBase
         $sort = 'sort asc, create_time desc';
         
         if (!empty($param['order_field'])) {
-            
-            
+
             $sort = empty($param['order_val']) ? $param['order_field'] . ' asc' : $param['order_field'] . ' desc';
         }
         
@@ -95,13 +110,11 @@ class Config extends LogicBase
             
             return [RESULT_ERROR, $this->validateConfig->getError()];
         }
-        
-        $url = url('configList', array('group' => $data['group'] ? $data['group'] : 0));
-        
+
         $result = $this->modelConfig->setInfo($data);
         
         $result && action_log('新增', '新增配置，name：' . $data['name']);
-        
+        $url = url('configList', array('group' => $data['group'] ? $data['group'] : 0));
         return $result ? [RESULT_SUCCESS, '配置添加成功', $url] : [RESULT_ERROR, $this->modelConfig->getError()];
     }
     
@@ -117,13 +130,11 @@ class Config extends LogicBase
             
             return [RESULT_ERROR, $this->validateConfig->getError()];
         }
-        
-        $url = url('configList', array('group' => $data['group'] ? $data['group'] : 0));
-        
+
         $result = $this->modelConfig->setInfo($data);
         
         $result && action_log('编辑', '编辑配置，name：' . $data['name']);
-        
+        $url = url('configList', array('group' => $data['group'] ? $data['group'] : 0));
         return $result ? [RESULT_SUCCESS, '配置编辑成功', $url] : [RESULT_ERROR, $this->modelConfig->getError()];
     }
     
@@ -133,10 +144,23 @@ class Config extends LogicBase
     public function configDel($where = [])
     {
         
-        $result = $this->modelConfig->deleteInfo($where);
+        $result = $this->modelConfig->deleteInfo($where,true);
         
         $result && action_log('删除', '删除配置，where：' . http_build_query($where));
         
         return $result ? [RESULT_SUCCESS, '菜单删除成功'] : [RESULT_ERROR, $this->modelConfig->getError()];
     }
+
+    public function getConfigGroup($key=null){
+
+        $data = parse_config_array('config_group_list');
+        return array_key_exists($key,$data)?$data[$key]:'';
+    }
+
+    public function getConfigType($key=null){
+        $data = parse_config_array('config_type_list');
+        return array_key_exists($key,$data)?$data[$key]:'';
+    }
+
+
 }
