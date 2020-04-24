@@ -34,7 +34,6 @@ class IndexBase extends ControllerBase
     {
         // 执行父类构造方法
         parent::__construct();
-
         $this->initBaseInfo();
 
     }
@@ -50,8 +49,10 @@ class IndexBase extends ControllerBase
         define('THEME_NAME', $web_theme );
         define('THEME_PATH', PATH_PUBLIC.$web_theme );
 
-        //
-        $this->assign('template_dir', STATIC_DOMAIN . SYS_DS_PROS . 'public/theme/' . $web_theme.'/');
+        $root_url = get_file_root_path();
+        //$this->assign('template_dir', STATIC_DOMAIN . SYS_DS_PROS . 'public/theme/' . $web_theme.'/');
+        $this->assign('root_url', $root_url);
+        $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/');
     }
 
     /**
