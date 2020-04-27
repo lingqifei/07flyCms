@@ -11,7 +11,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table 20420_guanggao.action_log
+-- Dumping structure for table 20410_dgm.action_log
 CREATE TABLE IF NOT EXISTS `action_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `sys_user_id` int(10) unsigned DEFAULT '0' COMMENT '执行会员id',
@@ -24,14 +24,27 @@ CREATE TABLE IF NOT EXISTS `action_log` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '执行行为的时间',
   `org_id` int(11) NOT NULL DEFAULT '1' COMMENT '组织',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1209 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=1221 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
--- Dumping data for table 20420_guanggao.action_log: 0 rows
+-- Dumping data for table 20410_dgm.action_log: 5 rows
 DELETE FROM `action_log`;
 /*!40000 ALTER TABLE `action_log` DISABLE KEYS */;
+INSERT INTO `action_log` (`id`, `sys_user_id`, `username`, `ip`, `name`, `describe`, `url`, `update_time`, `create_time`, `org_id`) VALUES
+	(1209, 1, 'admin', '0.0.0.0', '编辑', '编辑网站配置', '/public/index.php/cms/Website/setting.html', 0, 1587981065, 1),
+	(1210, 1, 'admin', '0.0.0.0', '编辑', '编辑组织机构，name：admin', '/public/index.php/admin/SysOrg/edit.html', 0, 1587981084, 1),
+	(1211, 1, 'admin', '0.0.0.0', '登录', '登录操作，username：admin', '/public/index.php/admin/Login/login.html', 0, 1587983684, 1),
+	(1212, 1, 'admin', '0.0.0.0', '编辑', '编辑网站配置', '/public/index.php/cms/Website/setting.html', 0, 1587991034, 1),
+	(1213, 1, 'admin', '0.0.0.0', '登录', '登录操作，username：admin', '/public/index.php/admin/Login/login.html', 0, 1587991104, 1),
+	(1214, 1, 'admin', '0.0.0.0', '登录', '登录操作，username：admin', '/public/index.php/admin/Login/login.html', 0, 1587991147, 1),
+	(1215, 1, 'admin', '0.0.0.0', '编辑', '编辑组织机构，name：admin', '/public/index.php/admin/SysOrg/edit.html', 0, 1587991183, 1),
+	(1216, 1, 'admin', '0.0.0.0', '登录', '登录操作，username：admin', '/public/index.php/admin/Login/login.html', 0, 1587991196, 1),
+	(1217, 1, 'admin', '0.0.0.0', '编辑', '编辑组织机构，name：admin', '/public/index.php/admin/SysOrg/edit.html', 0, 1587991217, 1),
+	(1218, 1, 'admin', '0.0.0.0', '编辑', '编辑组织机构，name：admin', '/public/index.php/admin/SysOrg/edit.html', 0, 1587991301, 1),
+	(1219, 1, 'admin', '0.0.0.0', '登录', '登录操作，username：admin', '/public/index.php/admin/Login/login.html', 0, 1587991328, 1),
+	(1220, 1, 'admin', '0.0.0.0', '删除', '数据库备份文件删除，path：E:\\WebSite\\projectWeb\\20200410_scdgm.com\\code\\data\\20200427-203724-*.sql*', '/public/index.php/admin/Database/backupDel/time/1587991044.html', 0, 1587991451, 1);
 /*!40000 ALTER TABLE `action_log` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.addon
+-- Dumping structure for table 20410_dgm.addon
 CREATE TABLE IF NOT EXISTS `addon` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(40) NOT NULL DEFAULT '' COMMENT '插件名或标识',
@@ -47,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `addon` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
--- Dumping data for table 20420_guanggao.addon: 4 rows
+-- Dumping data for table 20410_dgm.addon: 4 rows
 DELETE FROM `addon`;
 /*!40000 ALTER TABLE `addon` DISABLE KEYS */;
 INSERT INTO `addon` (`id`, `name`, `title`, `describe`, `config`, `author`, `version`, `status`, `create_time`, `update_time`, `org_id`) VALUES
@@ -57,7 +70,7 @@ INSERT INTO `addon` (`id`, `name`, `title`, `describe`, `config`, `author`, `ver
 	(6, 'Region', '区域选择', '区域选择插件', '', 'Bigotry', '1.0', 1, 0, 0, 1);
 /*!40000 ALTER TABLE `addon` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.ads
+-- Dumping structure for table 20410_dgm.ads
 CREATE TABLE IF NOT EXISTS `ads` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(60) NOT NULL DEFAULT '' COMMENT '广告位置名称',
@@ -75,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `ads` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='广告位置表';
 
--- Dumping data for table 20420_guanggao.ads: 2 rows
+-- Dumping data for table 20410_dgm.ads: 2 rows
 DELETE FROM `ads`;
 /*!40000 ALTER TABLE `ads` DISABLE KEYS */;
 INSERT INTO `ads` (`id`, `title`, `width`, `height`, `litpic`, `links`, `intro`, `visible`, `target`, `lang`, `sys_user_id`, `create_time`, `update_time`) VALUES
@@ -83,7 +96,7 @@ INSERT INTO `ads` (`id`, `title`, `width`, `height`, `litpic`, `links`, `intro`,
 	(2, 'en首页-大幻灯片', 1920, 550, '0', '0', '广告图片的宽高度随着浏览器大小而改变', 1, 0, 'en', 0, 1524209276, 1524209365);
 /*!40000 ALTER TABLE `ads` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.ads_list
+-- Dumping structure for table 20410_dgm.ads_list
 CREATE TABLE IF NOT EXISTS `ads_list` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '广告id',
   `ads_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '广告位置ID',
@@ -111,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `ads_list` (
   KEY `status` (`visible`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='广告列表';
 
--- Dumping data for table 20420_guanggao.ads_list: 4 rows
+-- Dumping data for table 20410_dgm.ads_list: 4 rows
 DELETE FROM `ads_list`;
 /*!40000 ALTER TABLE `ads_list` DISABLE KEYS */;
 INSERT INTO `ads_list` (`id`, `ads_id`, `media_type`, `title`, `links`, `litpic`, `start_time`, `end_time`, `intro`, `link_man`, `link_email`, `link_phone`, `click`, `bgcolor`, `visible`, `sort`, `target`, `sys_user_id`, `lang`, `create_time`, `update_time`) VALUES
@@ -121,7 +134,7 @@ INSERT INTO `ads_list` (`id`, `ads_id`, `media_type`, `title`, `links`, `litpic`
 	(5, 1, 1, '大1-1', 'http://wd.s5.07fly.com', '36', 0, 0, '234234', '', '', '', 0, '', 1, 2, '1', 1, 'cn', 1553046945, 1587623748);
 /*!40000 ALTER TABLE `ads_list` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.arcatt
+-- Dumping structure for table 20410_dgm.arcatt
 CREATE TABLE IF NOT EXISTS `arcatt` (
   `sortid` smallint(6) NOT NULL DEFAULT '0',
   `att` char(10) NOT NULL DEFAULT '' COMMENT '属性标志',
@@ -129,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `arcatt` (
   PRIMARY KEY (`att`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章属性表';
 
--- Dumping data for table 20420_guanggao.arcatt: 8 rows
+-- Dumping data for table 20410_dgm.arcatt: 8 rows
 DELETE FROM `arcatt`;
 /*!40000 ALTER TABLE `arcatt` DISABLE KEYS */;
 INSERT INTO `arcatt` (`sortid`, `att`, `attname`) VALUES
@@ -143,7 +156,7 @@ INSERT INTO `arcatt` (`sortid`, `att`, `attname`) VALUES
 	(6, 'b', '加粗');
 /*!40000 ALTER TABLE `arcatt` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.archives
+-- Dumping structure for table 20410_dgm.archives
 CREATE TABLE IF NOT EXISTS `archives` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `channel_id` smallint(6) NOT NULL DEFAULT '1' COMMENT '频道',
@@ -183,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `archives` (
   KEY `lastpost` (`lastpost`,`scores`,`goodpost`,`badpost`,`notpost`)
 ) ENGINE=MyISAM AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COMMENT='文章信息主表';
 
--- Dumping data for table 20420_guanggao.archives: 11 rows
+-- Dumping data for table 20410_dgm.archives: 11 rows
 DELETE FROM `archives`;
 /*!40000 ALTER TABLE `archives` DISABLE KEYS */;
 INSERT INTO `archives` (`id`, `channel_id`, `type_id`, `type_id2`, `sortrank`, `flag`, `is_jump`, `jump_url`, `ismake`, `arcrank`, `click`, `money`, `title`, `keywords`, `shorttitle`, `description`, `color`, `writer`, `source`, `litpic`, `member_id`, `lastpost`, `scores`, `goodpost`, `badpost`, `notpost`, `filename`, `weight`, `sort`, `create_time`, `update_time`, `pubdate`) VALUES
@@ -200,7 +213,7 @@ INSERT INTO `archives` (`id`, `channel_id`, `type_id`, `type_id2`, `sortrank`, `
 	(114, 1, 31, '0', 0, 'p', 0, '', 0, 0, 100, 0, '风靡千年的疯狂味道——风小厨', '风小,品牌,nbsp,时而,女性,我们', '', ' | 风小厨的DNA——风小厨是谁？ 我们跳出餐饮红海打开脑路试图找到属于风小厨的品牌路。品牌名称是第一联想。风——联想丰富，差异化所在，值得挖掘；小厨——明确的美食属性，兼具亲和力。什么是风呢？它存在于可感与无感之间，时而温柔、时而激烈；时而性感、时而调皮；时而暖心、时而高冷。风的个性与风小厨有什么联系？中国线上零食市场65%为女性消费者，女性代理商占80%（第一财经商业数据', '', '管理员', '原创', '32', 0, 0, 0, 0, 0, 0, '', 0, 100, 1587460694, 1587460881, '2020-04-21 17:21:00');
 /*!40000 ALTER TABLE `archives` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.archives_article
+-- Dumping structure for table 20410_dgm.archives_article
 CREATE TABLE IF NOT EXISTS `archives_article` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目id',
@@ -211,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `archives_article` (
   KEY `typeid` (`type_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COMMENT='文章扩展表';
 
--- Dumping data for table 20420_guanggao.archives_article: 21 rows
+-- Dumping data for table 20410_dgm.archives_article: 21 rows
 DELETE FROM `archives_article`;
 /*!40000 ALTER TABLE `archives_article` DISABLE KEYS */;
 INSERT INTO `archives_article` (`id`, `type_id`, `body`, `redirecturl`, `ks_name`) VALUES
@@ -238,7 +251,7 @@ INSERT INTO `archives_article` (`id`, `type_id`, `body`, `redirecturl`, `ks_name
 	(114, 31, '<h2 style="text-align:start;">\r\n	&nbsp;\r\n</h2>\r\n<h2 style="text-align:start;">\r\n	| 风小厨的DNA——风小厨是谁？\r\n</h2>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	我们跳出餐饮红海打开脑路试图找到属于风小厨的品牌路。品牌名称是第一联想。风——联想丰富，差异化所在，值得挖掘；小厨——明确的美食属性，兼具亲和力。什么是风呢？它存在于可感与无感之间，时而温柔、时而激烈；时而性感、时而调皮；时而暖心、时而高冷。\r\n</p>\r\n<p style="text-align:start;">\r\n	风的个性与风小厨有什么联系？中国线上零食市场65%为女性消费者，女性代理商占80%（第一财经商业数据中心（CBNData）《中国线上零食消费趋势报告》）针对女性审美/女性认同男性化的人格更具有优势，且在大众普遍接受中有造诣的厨师以男性为主。将风小厨人格化展开，如风般丝丝入心。\r\n</p>\r\n<p style="text-align:start;">\r\n	我们用偶像剧的手法去塑造一个风度翩翩的、风狂如痴的风趣有度的风小厨。基于品牌个性的品牌形象化。我们注入快时尚的Low poly视觉表现手法，设计出“风一样的美男子”形象。\r\n</p>\r\n<p style="text-align:start;">\r\n	<img src="/public/upload/picture/20200421/1720390.jpg" alt="" style="border:0px;height:auto;" width="1200" height="675" /> \r\n</p>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	<img src="/public/upload/picture/20200421/1720393.jpg" alt="" style="border:0px;height:auto;" width="1200" height="675" /> \r\n</p>\r\n<h2 style="text-align:start;">\r\n	&nbsp;\r\n</h2>\r\n<h2 style="text-align:start;">\r\n	|&nbsp;风小厨的故事——如何狂飚人生？\r\n</h2>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	我们开始思考，如何丰富风小厨的故事。从风开始回到历史中去，风姓是中国最古老姓，传说“伏羲”及其父“燧人氏”为风姓鼻祖。由此风姓被称“中华第一姓”。\r\n</p>\r\n<p style="text-align:start;">\r\n	——品牌烙印一：伏羲后人。\r\n</p>\r\n<p style="text-align:start;">\r\n	春秋战国时期，御厨风伯为秦国烹饪，辅佐建秦统一中国\r\n</p>\r\n<p style="text-align:start;">\r\n	——品牌烙印二：御厨 盐帮\r\n</p>\r\n<p style="text-align:start;">\r\n	自明清以来，万商云集，盐船漫合。京、鲁、豫、苏等各省名厨麇集沱江流域（内江、自贡、宜宾）形成川菜一派“盐帮菜”。\r\n</p>\r\n<p style="text-align:start;">\r\n	——品牌烙印三：变身 超能力\r\n</p>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	从历史结合现代的主旋律。传承与创新，开脑洞，结合时下流行元素——变身与超能力。\r\n</p>\r\n<p style="text-align:start;">\r\n	白昼——御厨天赋，风狂厨痴；\r\n</p>\r\n<p style="text-align:start;">\r\n	夜晚——风度翩翩，风趣公子。\r\n</p>', '', '');
 /*!40000 ALTER TABLE `archives_article` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.archives_case
+-- Dumping structure for table 20410_dgm.archives_case
 CREATE TABLE IF NOT EXISTS `archives_case` (
   `id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `typeid` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -251,12 +264,12 @@ CREATE TABLE IF NOT EXISTS `archives_case` (
   KEY `typeid` (`typeid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='扩展表';
 
--- Dumping data for table 20420_guanggao.archives_case: 0 rows
+-- Dumping data for table 20410_dgm.archives_case: 0 rows
 DELETE FROM `archives_case`;
 /*!40000 ALTER TABLE `archives_case` DISABLE KEYS */;
 /*!40000 ALTER TABLE `archives_case` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.archives_online
+-- Dumping structure for table 20410_dgm.archives_online
 CREATE TABLE IF NOT EXISTS `archives_online` (
   `id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `typeid` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -268,12 +281,12 @@ CREATE TABLE IF NOT EXISTS `archives_online` (
   KEY `typeid` (`typeid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='扩展表';
 
--- Dumping data for table 20420_guanggao.archives_online: 0 rows
+-- Dumping data for table 20410_dgm.archives_online: 0 rows
 DELETE FROM `archives_online`;
 /*!40000 ALTER TABLE `archives_online` DISABLE KEYS */;
 /*!40000 ALTER TABLE `archives_online` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.arctype
+-- Dumping structure for table 20410_dgm.arctype
 CREATE TABLE IF NOT EXISTS `arctype` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '父级id',
@@ -314,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `arctype` (
   KEY `sortrank` (`sort`)
 ) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='文章栏目表';
 
--- Dumping data for table 20420_guanggao.arctype: 17 rows
+-- Dumping data for table 20410_dgm.arctype: 17 rows
 DELETE FROM `arctype`;
 /*!40000 ALTER TABLE `arctype` DISABLE KEYS */;
 INSERT INTO `arctype` (`id`, `parent_id`, `top_id`, `sort`, `typename`, `typedir`, `litpic`, `isdefault`, `defaultname`, `issend`, `channel_id`, `maxpage`, `ispart`, `corank`, `temp_index`, `temp_list`, `temp_article`, `name_rule_article`, `name_rule_list`, `modname`, `description`, `keywords`, `seotitle`, `moresite`, `sitepath`, `siteurl`, `visible`, `cross`, `crossid`, `content`, `smalltypes`, `create_time`, `update_time`, `sys_user_id`) VALUES
@@ -337,7 +350,7 @@ INSERT INTO `arctype` (`id`, `parent_id`, `top_id`, `sort`, `typename`, `typedir
 	(42, 1, 0, 1, '公司简介', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1587522764, 1587522769, 0);
 /*!40000 ALTER TABLE `arctype` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.channel
+-- Dumping structure for table 20410_dgm.channel
 CREATE TABLE IF NOT EXISTS `channel` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `nid` varchar(20) NOT NULL DEFAULT '' COMMENT '模型ID',
@@ -372,7 +385,7 @@ CREATE TABLE IF NOT EXISTS `channel` (
   KEY `nid` (`nid`,`isshow`,`arcsta`,`sendrank`)
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='频道栏目表';
 
--- Dumping data for table 20420_guanggao.channel: 2 rows
+-- Dumping data for table 20410_dgm.channel: 2 rows
 DELETE FROM `channel`;
 /*!40000 ALTER TABLE `channel` DISABLE KEYS */;
 INSERT INTO `channel` (`id`, `nid`, `name`, `maintable`, `addtable`, `addcon`, `mancon`, `editcon`, `useraddcon`, `usermancon`, `usereditcon`, `fieldset`, `listfields`, `allfields`, `issystem`, `isshow`, `issend`, `arcsta`, `usertype`, `sendrank`, `isdefault`, `needdes`, `needpic`, `titlename`, `onlyone`, `dfcid`, `create_time`, `update_time`, `sort`) VALUES
@@ -380,7 +393,7 @@ INSERT INTO `channel` (`id`, `nid`, `name`, `maintable`, `addtable`, `addcon`, `
 	(24, 'case', '案例模块', 'archives', 'archives_case', '', '', '', '', '', '', '', '', '', 0, 1, 0, -1, '', 10, 0, 1, 1, '标题', 0, 0, 1581771591, 1581774343, 0);
 /*!40000 ALTER TABLE `channel` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.channel_field
+-- Dumping structure for table 20410_dgm.channel_field
 CREATE TABLE IF NOT EXISTS `channel_field` (
   `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
   `main_table` varchar(50) NOT NULL COMMENT '关联主表',
@@ -402,7 +415,7 @@ CREATE TABLE IF NOT EXISTS `channel_field` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='字段扩展表';
 
--- Dumping data for table 20420_guanggao.channel_field: 2 rows
+-- Dumping data for table 20410_dgm.channel_field: 2 rows
 DELETE FROM `channel_field`;
 /*!40000 ALTER TABLE `channel_field` DISABLE KEYS */;
 INSERT INTO `channel_field` (`id`, `main_table`, `ext_table`, `show_name`, `field_name`, `field_type`, `default_value`, `maxlength`, `desc`, `visible`, `is_system`, `is_must`, `sort`, `create_time`, `update_time`, `sys_user_id`, `channel_id`) VALUES
@@ -410,7 +423,7 @@ INSERT INTO `channel_field` (`id`, `main_table`, `ext_table`, `show_name`, `fiel
 	(18, 'archives', 'archives_case', '跳转网址', 'goto_url', 'varchar', 'http://www.baidu.com', '250', '0', 1, 0, 0, 100, 1581772028, 1581772050, 0, 24);
 /*!40000 ALTER TABLE `channel_field` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.config
+-- Dumping structure for table 20410_dgm.config
 CREATE TABLE IF NOT EXISTS `config` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '配置ID',
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT '配置名称',
@@ -430,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `config` (
   KEY `group` (`group`)
 ) ENGINE=MyISAM AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COMMENT='配置表';
 
--- Dumping data for table 20420_guanggao.config: 27 rows
+-- Dumping data for table 20410_dgm.config: 27 rows
 DELETE FROM `config`;
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
 INSERT INTO `config` (`id`, `name`, `type`, `title`, `group`, `extra`, `describe`, `create_time`, `update_time`, `visible`, `value`, `sort`) VALUES
@@ -463,7 +476,7 @@ INSERT INTO `config` (`id`, `name`, `type`, `title`, `group`, `extra`, `describe
 	(69, '121212', 3, '1212', 0, '', '', 1587720082, 0, 1, '', 0);
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.friendlink
+-- Dumping structure for table 20410_dgm.friendlink
 CREATE TABLE IF NOT EXISTS `friendlink` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` tinyint(1) DEFAULT '1' COMMENT '类型：1=文字链接，2=图片链接',
@@ -481,14 +494,14 @@ CREATE TABLE IF NOT EXISTS `friendlink` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='友情链接表';
 
--- Dumping data for table 20420_guanggao.friendlink: 1 rows
+-- Dumping data for table 20410_dgm.friendlink: 1 rows
 DELETE FROM `friendlink`;
 /*!40000 ALTER TABLE `friendlink` DISABLE KEYS */;
 INSERT INTO `friendlink` (`id`, `type`, `title`, `url`, `logo`, `sort`, `target`, `email`, `intro`, `visible`, `lang`, `create_time`, `update_time`) VALUES
 	(1, 1, '07FLY.com', 'http://www.07fly.com', '10', 50, 1, '', '', 1, 'cn', 1524975826, 1587869798);
 /*!40000 ALTER TABLE `friendlink` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.guestbook_field
+-- Dumping structure for table 20410_dgm.guestbook_field
 CREATE TABLE IF NOT EXISTS `guestbook_field` (
   `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
   `main_table` varchar(50) NOT NULL COMMENT '关联主表',
@@ -510,7 +523,7 @@ CREATE TABLE IF NOT EXISTS `guestbook_field` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='字段扩展表';
 
--- Dumping data for table 20420_guanggao.guestbook_field: 2 rows
+-- Dumping data for table 20410_dgm.guestbook_field: 2 rows
 DELETE FROM `guestbook_field`;
 /*!40000 ALTER TABLE `guestbook_field` DISABLE KEYS */;
 INSERT INTO `guestbook_field` (`id`, `main_table`, `ext_table`, `show_name`, `field_name`, `field_type`, `default_value`, `maxlength`, `desc`, `visible`, `is_system`, `is_must`, `sort`, `create_time`, `update_time`, `sys_user_id`, `channel_id`) VALUES
@@ -518,7 +531,7 @@ INSERT INTO `guestbook_field` (`id`, `main_table`, `ext_table`, `show_name`, `fi
 	(20, 'guestbook', 'guestbook_online', '箱内地址', 'email', 'varchar', '', '250', '', 1, 0, 0, 50, 1583115091, 1583115113, 0, 25);
 /*!40000 ALTER TABLE `guestbook_field` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.guestbook_online
+-- Dumping structure for table 20410_dgm.guestbook_online
 CREATE TABLE IF NOT EXISTS `guestbook_online` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `gid` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -533,7 +546,7 @@ CREATE TABLE IF NOT EXISTS `guestbook_online` (
   KEY `typeid` (`gid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='扩展表';
 
--- Dumping data for table 20420_guanggao.guestbook_online: 4 rows
+-- Dumping data for table 20410_dgm.guestbook_online: 4 rows
 DELETE FROM `guestbook_online`;
 /*!40000 ALTER TABLE `guestbook_online` DISABLE KEYS */;
 INSERT INTO `guestbook_online` (`id`, `gid`, `content`, `reply`, `mobile`, `realname`, `create_time`, `update_time`, `email`) VALUES
@@ -543,7 +556,7 @@ INSERT INTO `guestbook_online` (`id`, `gid`, `content`, `reply`, `mobile`, `real
 	(5, 25, '', '这不是一个好的现象哟', '', '我的名字', 1583805658, 1583805658, 'goodmuzi@qq.com');
 /*!40000 ALTER TABLE `guestbook_online` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.guestbook_type
+-- Dumping structure for table 20410_dgm.guestbook_type
 CREATE TABLE IF NOT EXISTS `guestbook_type` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT '栏目名称',
@@ -555,12 +568,12 @@ CREATE TABLE IF NOT EXISTS `guestbook_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='留言表';
 
--- Dumping data for table 20420_guanggao.guestbook_type: 0 rows
+-- Dumping data for table 20410_dgm.guestbook_type: 0 rows
 DELETE FROM `guestbook_type`;
 /*!40000 ALTER TABLE `guestbook_type` DISABLE KEYS */;
 /*!40000 ALTER TABLE `guestbook_type` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.hook
+-- Dumping structure for table 20410_dgm.hook
 CREATE TABLE IF NOT EXISTS `hook` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(40) NOT NULL DEFAULT '' COMMENT '钩子名称',
@@ -573,7 +586,7 @@ CREATE TABLE IF NOT EXISTS `hook` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='钩子表';
 
--- Dumping data for table 20420_guanggao.hook: 4 rows
+-- Dumping data for table 20410_dgm.hook: 4 rows
 DELETE FROM `hook`;
 /*!40000 ALTER TABLE `hook` DISABLE KEYS */;
 INSERT INTO `hook` (`id`, `name`, `describe`, `addon_list`, `status`, `update_time`, `create_time`, `org_id`) VALUES
@@ -583,7 +596,7 @@ INSERT INTO `hook` (`id`, `name`, `describe`, `addon_list`, `status`, `update_ti
 	(39, 'RegionSelect', '区域选择', 'Region', 1, 0, 0, 1);
 /*!40000 ALTER TABLE `hook` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.picture
+-- Dumping structure for table 20410_dgm.picture
 CREATE TABLE IF NOT EXISTS `picture` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id自增',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '图片名称',
@@ -596,7 +609,7 @@ CREATE TABLE IF NOT EXISTS `picture` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='图片表';
 
--- Dumping data for table 20420_guanggao.picture: 36 rows
+-- Dumping data for table 20410_dgm.picture: 36 rows
 DELETE FROM `picture`;
 /*!40000 ALTER TABLE `picture` DISABLE KEYS */;
 INSERT INTO `picture` (`id`, `name`, `path`, `url`, `sha1`, `create_time`, `update_time`, `status`) VALUES
@@ -638,7 +651,7 @@ INSERT INTO `picture` (`id`, `name`, `path`, `url`, `sha1`, `create_time`, `upda
 	(36, '8906f2a16c7fb86917b3deb343833d7a.jpg', '20200422/8906f2a16c7fb86917b3deb343833d7a.jpg', '', 'c8e87330a150264f904f52aaa8e38717cacac0d6', 1587521634, 0, 1);
 /*!40000 ALTER TABLE `picture` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.region
+-- Dumping structure for table 20410_dgm.region
 CREATE TABLE IF NOT EXISTS `region` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '' COMMENT '地区名称',
@@ -647,7 +660,7 @@ CREATE TABLE IF NOT EXISTS `region` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=910007 DEFAULT CHARSET=utf8 COMMENT='省市县数据表';
 
--- Dumping data for table 20420_guanggao.region: 3,548 rows
+-- Dumping data for table 20410_dgm.region: 3,548 rows
 DELETE FROM `region`;
 /*!40000 ALTER TABLE `region` DISABLE KEYS */;
 INSERT INTO `region` (`id`, `name`, `level`, `pid`) VALUES
@@ -4201,7 +4214,7 @@ INSERT INTO `region` (`id`, `name`, `level`, `pid`) VALUES
 	(910006, '东莞市', 3, 441900);
 /*!40000 ALTER TABLE `region` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.sequence
+-- Dumping structure for table 20410_dgm.sequence
 CREATE TABLE IF NOT EXISTS `sequence` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '前缀',
@@ -4214,7 +4227,7 @@ CREATE TABLE IF NOT EXISTS `sequence` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='唯一序号生成表';
 
--- Dumping data for table 20420_guanggao.sequence: 32 rows
+-- Dumping data for table 20410_dgm.sequence: 32 rows
 DELETE FROM `sequence`;
 /*!40000 ALTER TABLE `sequence` DISABLE KEYS */;
 INSERT INTO `sequence` (`id`, `name`, `current_date`, `current_value`, `increment`, `create_time`, `update_time`, `org_id`) VALUES
@@ -4252,7 +4265,7 @@ INSERT INTO `sequence` (`id`, `name`, `current_date`, `current_value`, `incremen
 	(32, 'C', '20200417', 14, 1, 1587109916, 1587114360, 1);
 /*!40000 ALTER TABLE `sequence` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.sys_auth
+-- Dumping structure for table 20410_dgm.sys_auth
 CREATE TABLE IF NOT EXISTS `sys_auth` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '用户组id,自增主键',
   `module` varchar(20) NOT NULL DEFAULT '' COMMENT '用户组所属模块',
@@ -4268,14 +4281,14 @@ CREATE TABLE IF NOT EXISTS `sys_auth` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='权限组表';
 
--- Dumping data for table 20420_guanggao.sys_auth: 1 rows
+-- Dumping data for table 20410_dgm.sys_auth: 1 rows
 DELETE FROM `sys_auth`;
 /*!40000 ALTER TABLE `sys_auth` DISABLE KEYS */;
 INSERT INTO `sys_auth` (`id`, `module`, `name`, `intro`, `status`, `rules`, `sys_user_id`, `sort`, `update_time`, `create_time`, `org_id`) VALUES
 	(1, '', '企业超级管理', '本权限为企业帐号注册初次的权限列表', 1, '1,333,334,466,522,478,463,472,473,464,479,417,418,462,470,471,475,488,487,494,489,490,521,493,492,491,474,496,497,498,495,499,504,503,500,501,502,414,520,508,507,506,505,416,511,510,509,512,516,515,514,513,517,519,518', 1, 0, 1587610703, 1569638911, 1);
 /*!40000 ALTER TABLE `sys_auth` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.sys_auth_access
+-- Dumping structure for table 20410_dgm.sys_auth_access
 CREATE TABLE IF NOT EXISTS `sys_auth_access` (
   `sys_user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `sys_auth_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户组id',
@@ -4284,7 +4297,7 @@ CREATE TABLE IF NOT EXISTS `sys_auth_access` (
   `org_id` int(10) unsigned NOT NULL DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户组授权表';
 
--- Dumping data for table 20420_guanggao.sys_auth_access: 18 rows
+-- Dumping data for table 20410_dgm.sys_auth_access: 18 rows
 DELETE FROM `sys_auth_access`;
 /*!40000 ALTER TABLE `sys_auth_access` DISABLE KEYS */;
 INSERT INTO `sys_auth_access` (`sys_user_id`, `sys_auth_id`, `update_time`, `create_time`, `org_id`) VALUES
@@ -4308,7 +4321,7 @@ INSERT INTO `sys_auth_access` (`sys_user_id`, `sys_auth_id`, `update_time`, `cre
 	(84, 1, 1587610611, 1587610611, 1);
 /*!40000 ALTER TABLE `sys_auth_access` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.sys_dept
+-- Dumping structure for table 20410_dgm.sys_dept
 CREATE TABLE IF NOT EXISTS `sys_dept` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT NULL COMMENT '部门名称',
@@ -4321,7 +4334,7 @@ CREATE TABLE IF NOT EXISTS `sys_dept` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='部门表';
 
--- Dumping data for table 20420_guanggao.sys_dept: 5 rows
+-- Dumping data for table 20410_dgm.sys_dept: 5 rows
 DELETE FROM `sys_dept`;
 /*!40000 ALTER TABLE `sys_dept` DISABLE KEYS */;
 INSERT INTO `sys_dept` (`id`, `name`, `pid`, `sort`, `visible`, `create_time`, `update_time`, `org_id`) VALUES
@@ -4332,7 +4345,7 @@ INSERT INTO `sys_dept` (`id`, `name`, `pid`, `sort`, `visible`, `create_time`, `
 	(5, '销售部01', 1, 2, 1, 0, 1584771236, 1);
 /*!40000 ALTER TABLE `sys_dept` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.sys_menu
+-- Dumping structure for table 20410_dgm.sys_menu
 CREATE TABLE IF NOT EXISTS `sys_menu` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT '菜单名称',
@@ -4351,7 +4364,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=547 DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
--- Dumping data for table 20420_guanggao.sys_menu: 113 rows
+-- Dumping data for table 20410_dgm.sys_menu: 113 rows
 DELETE FROM `sys_menu`;
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
 INSERT INTO `sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visible`, `is_shortcut`, `is_menu`, `icon`, `status`, `update_time`, `create_time`, `org_id`) VALUES
@@ -4470,7 +4483,7 @@ INSERT INTO `sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visible`,
 	(484, '插件列表', 20, 91, 'admin', 'addon/addon_list', 1, 0, 1, '', 1, 1582082099, 1577352700, 1);
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.sys_org
+-- Dumping structure for table 20410_dgm.sys_org
 CREATE TABLE IF NOT EXISTS `sys_org` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) DEFAULT NULL COMMENT '用户名',
@@ -4489,14 +4502,14 @@ CREATE TABLE IF NOT EXISTS `sys_org` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=123 DEFAULT CHARSET=utf8 COMMENT='系统组织表';
 
--- Dumping data for table 20420_guanggao.sys_org: 1 rows
+-- Dumping data for table 20410_dgm.sys_org: 1 rows
 DELETE FROM `sys_org`;
 /*!40000 ALTER TABLE `sys_org` DISABLE KEYS */;
 INSERT INTO `sys_org` (`id`, `username`, `password`, `company`, `start_date`, `stop_date`, `sort`, `visible`, `linkman`, `mobile`, `remark`, `create_time`, `update_time`, `org_id`) VALUES
-	(1, 'admin', 'c929dd40244b90f89ea78348bfdfcfb9', '勿道管理中心', '2020-03-10', '2020-04-10', 0, 1, '李大哥', 'admin', '', 1583806365, 1587621503, 1);
+	(1, 'admin', 'c929dd40244b90f89ea78348bfdfcfb9', '07FLY-CMS', '2020-03-10', '2020-04-10', 0, 1, '李大哥', '18030402705', '零起飞内容管理系统(07FLY-CMS) ，以模板多、易优化、开源而闻名，是国内新锐的PHP开源网站管理系统，也是受广大用户好评的PHP类CMS系统。', 1583806365, 1587991300, 1);
 /*!40000 ALTER TABLE `sys_org` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.sys_postion
+-- Dumping structure for table 20410_dgm.sys_postion
 CREATE TABLE IF NOT EXISTS `sys_postion` (
   `id` int(11) DEFAULT NULL,
   `name` varchar(64) DEFAULT NULL COMMENT '职位名称',
@@ -4508,12 +4521,12 @@ CREATE TABLE IF NOT EXISTS `sys_postion` (
   `org_id` int(11) DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='系统职位表';
 
--- Dumping data for table 20420_guanggao.sys_postion: 0 rows
+-- Dumping data for table 20410_dgm.sys_postion: 0 rows
 DELETE FROM `sys_postion`;
 /*!40000 ALTER TABLE `sys_postion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_postion` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.sys_user
+-- Dumping structure for table 20410_dgm.sys_user
 CREATE TABLE IF NOT EXISTS `sys_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL COMMENT '用户名',
@@ -4534,15 +4547,15 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=85 DEFAULT CHARSET=utf8 COMMENT='系统用户表';
 
--- Dumping data for table 20420_guanggao.sys_user: 2 rows
+-- Dumping data for table 20410_dgm.sys_user: 2 rows
 DELETE FROM `sys_user`;
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
 INSERT INTO `sys_user` (`id`, `username`, `password`, `realname`, `gender`, `dept_id`, `email`, `qicq`, `mobile`, `intro`, `rules`, `create_time`, `update_time`, `sort`, `visible`, `org_id`) VALUES
-	(1, 'admin', 'c929dd40244b90f89ea78348bfdfcfb9', '开发人生', 0, 1, 'admin@admin', '1871720801', '18030402705', '', '', 1587348600, 1587881832, 1, 1, 1),
+	(1, 'admin', '86bff07dcd4056430bb3695adfbb7e3c', '零起飞', 0, 1, 'admin@admin', '1871720801', '18030402705', '', '', 1587980698, 1587991328, 1, 1, 1),
 	(84, 'manage', 'd4762d05bc7d5d3b1a43d8e67774f4dc', '匆道', 1, 0, '', '', '', '', '', 1587610606, 1587621461, 0, 1, 1);
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.taglist
+-- Dumping structure for table 20410_dgm.taglist
 CREATE TABLE IF NOT EXISTS `taglist` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'tagid',
@@ -4557,7 +4570,7 @@ CREATE TABLE IF NOT EXISTS `taglist` (
   KEY `aid` (`aid`,`typeid`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章标签表';
 
--- Dumping data for table 20420_guanggao.taglist: 20 rows
+-- Dumping data for table 20410_dgm.taglist: 20 rows
 DELETE FROM `taglist`;
 /*!40000 ALTER TABLE `taglist` DISABLE KEYS */;
 INSERT INTO `taglist` (`id`, `tid`, `aid`, `typeid`, `tag`, `arcrank`, `lang`, `add_time`, `update_time`) VALUES
@@ -4583,7 +4596,7 @@ INSERT INTO `taglist` (`id`, `tid`, `aid`, `typeid`, `tag`, `arcrank`, `lang`, `
 	(1, 49, 42, 64, '网络优化', 0, 'cn', 1565234124, 0);
 /*!40000 ALTER TABLE `taglist` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.tags
+-- Dumping structure for table 20410_dgm.tags
 CREATE TABLE IF NOT EXISTS `tags` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'tagid',
   `tag` varchar(50) NOT NULL DEFAULT '' COMMENT 'tag内容',
@@ -4603,7 +4616,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
   KEY `tag` (`tag`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COMMENT='标签索引表';
 
--- Dumping data for table 20420_guanggao.tags: 27 rows
+-- Dumping data for table 20410_dgm.tags: 27 rows
 DELETE FROM `tags`;
 /*!40000 ALTER TABLE `tags` DISABLE KEYS */;
 INSERT INTO `tags` (`id`, `tag`, `typeid`, `count`, `total`, `weekcc`, `monthcc`, `weekup`, `monthup`, `lang`, `create_time`, `update_time`) VALUES
@@ -4636,7 +4649,7 @@ INSERT INTO `tags` (`id`, `tag`, `typeid`, `count`, `total`, `weekcc`, `monthcc`
 	(50, '推广服务', 64, 0, 0, 0, 0, 0, 0, 'cn', 1565161106, 0);
 /*!40000 ALTER TABLE `tags` ENABLE KEYS */;
 
--- Dumping structure for table 20420_guanggao.website
+-- Dumping structure for table 20410_dgm.website
 CREATE TABLE IF NOT EXISTS `website` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '配置ID',
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT '配置名称',
@@ -4656,19 +4669,19 @@ CREATE TABLE IF NOT EXISTS `website` (
   KEY `group` (`group`)
 ) ENGINE=MyISAM AUTO_INCREMENT=76 DEFAULT CHARSET=utf8 COMMENT='网站配置表';
 
--- Dumping data for table 20420_guanggao.website: 9 rows
+-- Dumping data for table 20410_dgm.website: 9 rows
 DELETE FROM `website`;
 /*!40000 ALTER TABLE `website` DISABLE KEYS */;
 INSERT INTO `website` (`id`, `name`, `type`, `title`, `value`, `group`, `extra`, `describe`, `create_time`, `update_time`, `visible`, `sort`) VALUES
-	(67, 'web_name', 'varchar', '网站名称', '勿道官网', '1', '', '这是输入是网站的描述', 0, 1587724083, 1, 0),
+	(67, 'web_name', 'varchar', '网站名称', '成都零起飞内容管理系统', '1', '', '这是输入是网站的描述', 0, 1587991034, 1, 0),
 	(68, 'web_title', 'varchar', '网站标题', '勿道官网', '1', '', '这是输入是网站的描述', 0, 1587698500, 1, 0),
-	(69, 'web_keywords', 'varchar', '网站关键字', '广告设计', '1', '', '这是输入是网站的描述', 0, 1587724083, 1, 0),
-	(70, 'web_content', 'textarea', '网站描述', '勿道官网', '0', '', '网站的描述信息', 0, 1587701182, 1, 0),
-	(71, 'web_copyright', 'textarea', '网站版权', '2020 勿道版权所有', '1', '', '这是输入是网站的描述', 0, 1587724083, 1, 0),
-	(1, 'web_visible', 'bool', '网站状态', '1', '1', '', '', 0, 1587724083, 1, 0),
-	(73, 'web_icp', 'varchar', '网站备案号', '蜀08008865号', '1', '', '', 0, 1587724083, 1, 0),
-	(74, 'web_theme', 'varchar', '网站主题', 'wudao', '1', '', '', 0, 1587724083, 1, 0),
-	(75, 'web_address', 'varchar', '联系地址', '成都市校园路', '1', '', '', 1587699544, 1587724083, 1, 0);
+	(69, 'web_keywords', 'varchar', '网站关键字', '零起飞cms,cms,内容管理系统', '1', '', '这是输入是网站的描述', 0, 1587991034, 1, 0),
+	(70, 'web_content', 'textarea', '网站描述', '07FLY企业建站系统是国内首款完全基于SEO友好性开发的营销型企业网站系统，让企业网络营销从此易如反掌。', '0', '', '网站的描述信息', 0, 1587991034, 1, 0),
+	(71, 'web_copyright', 'textarea', '网站版权', '2020 零起飞网络', '1', '', '这是输入是网站的描述', 0, 1587991034, 1, 0),
+	(1, 'web_visible', 'bool', '网站状态', '1', '1', '', '', 0, 1587991034, 1, 0),
+	(73, 'web_icp', 'varchar', '网站备案号', '蜀08008865号', '1', '', '', 0, 1587991034, 1, 0),
+	(74, 'web_theme', 'varchar', '网站主题', 'default', '1', '', '', 0, 1587991034, 1, 0),
+	(75, 'web_address', 'varchar', '联系地址', '成都零起飞内容管理系统', '1', '', '', 1587699544, 1587991034, 1, 0);
 /*!40000 ALTER TABLE `website` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
