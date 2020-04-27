@@ -37,7 +37,7 @@ class Channel extends CmsBase
      */
     public function show_json()
     {
-        $where = "";
+        $where = [];
         if (!empty($this->param['keywords'])) {
             $where['name|remark'] = ['like', '%' . $this->param['keywords'] . '%'];
         }

@@ -31,7 +31,7 @@ class Archives extends CmsBase
     {
         //请求页左边栏目数据
         if (!empty($this->param['typelist'])) {
-            $where='';
+            $where=[];
             $listtree=$this->logicArctype->getArctypeListTree($where);
             return $listtree;
         }

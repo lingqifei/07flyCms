@@ -238,7 +238,7 @@ class Archives extends CmsBase
     public function getWhere($data = [])
     {
 
-        $where = '';
+        $where = [];
         //关键字查
         !empty($data['keywords']) && $where['a.title'] = ['like', '%'.$data['keywords'].'%'];
         if(!empty($data['type_id'])){

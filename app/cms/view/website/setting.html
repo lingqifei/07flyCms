@@ -4,10 +4,10 @@
 
             <div class="ibox-content">
                 <ul class="nav nav-tabs m-b-lg">
-                    <li><h3>系统配置</h3></li>
                     {volist name='group_list' id='vo'}
                     <li {noempty name="key"} {if condition="$key eq $groupid " }  class="active" {/if} {/noempty}><a href="{:url('website/setting',array('groupid'=>$key))}" >{$vo}</a></li>
                     {/volist}
+                    <li><a href="{:url('website/show')}">配置列表</a></li>
                 </ul>
                 <form class="form-horizontal" method="post" action="{:url('Website/setting')}">
                    {$html}
@@ -18,8 +18,6 @@
                     </div>
                 </form>
             </div>
-
-
     </div>
 </div>
 </body>

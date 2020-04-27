@@ -45,7 +45,7 @@ class AdsList extends CmsBase
      */
     public function show_json()
     {
-        $where = "";
+        $where = [];
         if (!empty($this->param['ads_id'])) {
             $where['ads_id'] = ['=', $this->param['ads_id']];
         }

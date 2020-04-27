@@ -83,7 +83,7 @@ class SysUser extends LogicBase
      * Author: lingqifei created by at 2020/3/29 0029
      */
     public function  getSysUserSubList($stype=''){
-        $where='';
+        $where=[];
         $ids='';
         switch ($stype){
             case "selfson":

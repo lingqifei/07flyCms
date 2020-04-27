@@ -41,7 +41,7 @@ class ChannelField extends CmsBase
      */
     public function show_json()
     {
-        $where = "";
+        $where = [];
         if (!empty($this->param['id'])) {
             $where['channel_id'] = ['=', $this->param['id']];
         }

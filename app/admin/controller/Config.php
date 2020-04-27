@@ -60,7 +60,7 @@ class Config extends AdminBase
      */
     public function show_json()
     {
-        $where = "";
+        $where = [];
         if (!empty($this->param['keywords'])) {
             $where['title|name'] = ['like', '%' . $this->param['keywords'] . '%'];
         }

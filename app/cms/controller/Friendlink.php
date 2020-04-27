@@ -37,7 +37,7 @@ class Friendlink extends CmsBase
      */
     public function show_json()
     {
-        $where = "";
+        $where = [];
         if (!empty($this->param['keywords'])) {
             $where['title|intro'] = ['like', '%' . $this->param['keywords'] . '%'];
         }

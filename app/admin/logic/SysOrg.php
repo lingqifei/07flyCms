@@ -99,7 +99,7 @@ class SysOrg extends AdminBase
      */
     public function create_user($data)
     {
-        $where='';
+        $where=[];
         !empty($data['username'])?$where['username']=['=',$data['username']]:'';
         !empty($data['id'])?$where['org_id']=['=',$data['id']]:'';
         $userinfo=$this->logicSysUser->getUserInfo($where);

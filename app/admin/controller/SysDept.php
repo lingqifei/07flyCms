@@ -32,7 +32,7 @@ class SysDept extends AdminBase
      */
     public function show_json()
     {
-        $where = "";
+        $where = [];
         if (!empty($this->param['keywords'])) {
             $where['name'] = ['like', '%' . $this->param['keywords'] . '%'];
         }

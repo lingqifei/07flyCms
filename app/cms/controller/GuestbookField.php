@@ -41,7 +41,7 @@ class GuestbookField extends CmsBase
      */
     public function show_json()
     {
-        $where = "";
+        $where = [];
         if (!empty($this->param['main_table:'])) {
             $where['main_table'] = ['=', $this->param['main_table']];
         }

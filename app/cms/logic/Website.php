@@ -68,7 +68,7 @@ class Website extends CmsBase
 
     //得到系统配置参数
     public function getWebsiteInfoHtml($data){
-        $where='';
+        $where=[];
         $string ='';
         if(!empty($data['groupid'])){
             $where['group']=['=',$data['groupid']];

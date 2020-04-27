@@ -28,7 +28,7 @@ function action_log($name = '', $describe = '')
 //得到把列表数据=》数形参数
  function list2tree($list, $pId = 0, $level = 0, $pk='id', $pidk = 'pid',$name='name')
 {
-    $tree = '';
+    $tree = [];
     foreach ($list as $k => $v) {
         if ($v[$pidk] == $pId) { //父亲找到儿子
             $v['nodes']       =  list2tree($list, $v[$pk], $level + 1, $pk, $pidk,$name);

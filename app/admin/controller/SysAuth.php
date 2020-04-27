@@ -31,7 +31,7 @@ class SysAuth extends AdminBase
      */
     public function show_json()
     {
-        $where = "";
+        $where = [];
         if(!empty($this->param['keywords'])){
             $where['name|intro']=['like','%'.$this->param['keywords'].'%'];
         }

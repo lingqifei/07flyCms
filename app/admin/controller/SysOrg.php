@@ -29,7 +29,7 @@ class SysOrg extends AdminBase
 
     public function show_json()
     {
-        $where = "";
+        $where = [];
         if(!empty($this->param['keywords'])){
            $where['username|mobile|realname']=['like','%'.$this->param['keywords'].'%'];
         }

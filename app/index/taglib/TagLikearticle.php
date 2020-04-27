@@ -57,7 +57,7 @@ class TagLikearticle extends Base
     public function getLikearticle($channelid = '', $typeid = '', $limit = 12)
     {
         $result = false;
-        $where = '';
+        $where = [];
         if($channelid){
             $where['a.channelid']=['in',$channelid];
         }

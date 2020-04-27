@@ -31,7 +31,7 @@ class Guestbook extends CmsBase
     {
 
         if(IS_POST){
-            $where='';
+            $where=[];
             if (!empty($this->param['keywords'])) {
                 $where['name'] = ['like', '%' . $this->param['keywords'] . '%'];
             }

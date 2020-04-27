@@ -100,7 +100,7 @@ class TagList extends Base
             // end
         }
 
-        $where = '';
+        $where = [];
         if (!empty($param['channelid'])) {
             $where['a.channelid'] = ['in', $param['channelid']];
         }
