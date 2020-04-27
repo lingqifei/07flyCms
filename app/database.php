@@ -6,7 +6,7 @@ return [
     // 服务器地址
     'hostname'        => '127.0.0.1',
     // 数据库名
-    'database'        => '20420_guanggao',
+    'database'        => '20410_dgm',
     // 用户名
     'username'        => 'root',
     // 密码
@@ -44,5 +44,5 @@ return [
     //对象类型转换数组
     'resultset_type' => '\think\Collection',
     // 系统数据加密key
-    'sys_data_key'    => 'T04)!h.<Lzc9iwOt1&P;?ajbBp/u%ZIERQU$kK,x'
+    'sys_data_key'    => '%r-X$<`|WS,mTZ19CH)n@RbKgaf}~Eex^hq[(pcY'
 ];

@@ -11,7 +11,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table 07fly_frame.action_log
+-- Dumping structure for table 20420_guanggao.action_log
 CREATE TABLE IF NOT EXISTS `action_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `sys_user_id` int(10) unsigned DEFAULT '0' COMMENT '执行会员id',
@@ -24,9 +24,14 @@ CREATE TABLE IF NOT EXISTS `action_log` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '执行行为的时间',
   `org_id` int(11) NOT NULL DEFAULT '1' COMMENT '组织',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=990 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=1209 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
--- Dumping structure for table 07fly_frame.addon
+-- Dumping data for table 20420_guanggao.action_log: 0 rows
+DELETE FROM `action_log`;
+/*!40000 ALTER TABLE `action_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `action_log` ENABLE KEYS */;
+
+-- Dumping structure for table 20420_guanggao.addon
 CREATE TABLE IF NOT EXISTS `addon` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(40) NOT NULL DEFAULT '' COMMENT '插件名或标识',
@@ -42,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `addon` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
--- Dumping data for table 07fly_frame.addon: 4 rows
+-- Dumping data for table 20420_guanggao.addon: 4 rows
 DELETE FROM `addon`;
 /*!40000 ALTER TABLE `addon` DISABLE KEYS */;
 INSERT INTO `addon` (`id`, `name`, `title`, `describe`, `config`, `author`, `version`, `status`, `create_time`, `update_time`, `org_id`) VALUES
@@ -52,7 +57,7 @@ INSERT INTO `addon` (`id`, `name`, `title`, `describe`, `config`, `author`, `ver
 	(6, 'Region', '区域选择', '区域选择插件', '', 'Bigotry', '1.0', 1, 0, 0, 1);
 /*!40000 ALTER TABLE `addon` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.ads
+-- Dumping structure for table 20420_guanggao.ads
 CREATE TABLE IF NOT EXISTS `ads` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(60) NOT NULL DEFAULT '' COMMENT '广告位置名称',
@@ -70,18 +75,15 @@ CREATE TABLE IF NOT EXISTS `ads` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='广告位置表';
 
--- Dumping data for table 07fly_frame.ads: 5 rows
+-- Dumping data for table 20420_guanggao.ads: 2 rows
 DELETE FROM `ads`;
 /*!40000 ALTER TABLE `ads` DISABLE KEYS */;
 INSERT INTO `ads` (`id`, `title`, `width`, `height`, `litpic`, `links`, `intro`, `visible`, `target`, `lang`, `sys_user_id`, `create_time`, `update_time`) VALUES
 	(1, '首页-大幻灯片', 1920, 550, '19', 'http://www.07fly.com', '广告图片的宽高度随着浏览器大小而改变', 1, 0, 'cn', 0, 1524209276, 1582859018),
-	(2, 'en首页-大幻灯片', 1920, 550, '0', '0', '广告图片的宽高度随着浏览器大小而改变', 1, 0, 'en', 0, 1524209276, 1524209365),
-	(3, '手机端首页头部幻灯', 0, 0, '0', '0', '', 1, 0, 'cn', 1, 1563764323, 1563764739),
-	(4, 'en手机端首页头部幻灯', 0, 0, '0', '0', '', 1, 0, 'en', 1, 1563764323, 1563764323),
-	(5, '首页关于我们左侧图片', 0, 0, '0', '0', '', 1, 0, 'cn', 1, 1565225126, 1565225126);
+	(2, 'en首页-大幻灯片', 1920, 550, '0', '0', '广告图片的宽高度随着浏览器大小而改变', 1, 0, 'en', 0, 1524209276, 1524209365);
 /*!40000 ALTER TABLE `ads` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.ads_list
+-- Dumping structure for table 20420_guanggao.ads_list
 CREATE TABLE IF NOT EXISTS `ads_list` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '广告id',
   `ads_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '广告位置ID',
@@ -107,30 +109,19 @@ CREATE TABLE IF NOT EXISTS `ads_list` (
   PRIMARY KEY (`id`),
   KEY `position_id` (`ads_id`) USING BTREE,
   KEY `status` (`visible`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='广告列表';
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='广告列表';
 
--- Dumping data for table 07fly_frame.ads_list: 15 rows
+-- Dumping data for table 20420_guanggao.ads_list: 4 rows
 DELETE FROM `ads_list`;
 /*!40000 ALTER TABLE `ads_list` DISABLE KEYS */;
 INSERT INTO `ads_list` (`id`, `ads_id`, `media_type`, `title`, `links`, `litpic`, `start_time`, `end_time`, `intro`, `link_man`, `link_email`, `link_phone`, `click`, `bgcolor`, `visible`, `sort`, `target`, `sys_user_id`, `lang`, `create_time`, `update_time`) VALUES
-	(1, 1, 1, '共展蓝图', 'http://www.eyoucms.com', '10', 1524215594, 0, '这里广告内容的填写哟', '', '', '', 0, '', 1, 5, '0', 0, 'cn', 1524215652, 1582375123),
-	(15, 7, 0, '这是测试的吧', 'http://www.07fly.com', '14', 0, 0, '', '', '', '', 0, '', 1, 0, '', 0, 'cn', 1582376141, 0),
-	(2, 1, 1, '易优模板库', 'http://www.eyoucms.com', '18', 0, 0, '<p>填写广告的备注信息，方便于后期的跟进</p>', '', '', '', 0, '', 1, 3, '0', 0, 'cn', 1524214017, 1582375083),
-	(3, 2, 1, 'en共展蓝图', 'http://www.eyoucms.com', '/uploads/allimg/20190320/ef04db4998198aa3dfdf3e503ae9f22e.jpg', 1524215594, 0, '&lt;p&gt;填写广告的备注信息，方便于后期的跟进&lt;/p&gt;', '', '', '', 0, '', 1, 100, '0', 0, 'en', 1524215652, 1527824535),
-	(4, 2, 1, 'en易优模板库', 'http://www.eyoucms.com', '/uploads/allimg/20190320/def47fdd6212ad6f7f037b9dbb9cd63e.jpg', 0, 0, '&lt;p&gt;填写广告的备注信息，方便于后期的跟进&lt;/p&gt;', '', '', '', 0, '', 1, 100, '0', 0, 'en', 1524214017, 1531724625),
-	(5, 1, 1, '第三组广告', 'http://www.eyoucms.com', '14', 0, 0, '234234', '', '', '', 0, '', 1, 1, '1', 1, 'cn', 1553046945, 1584762068),
-	(6, 2, 1, '第三组广告', 'http://www.eyoucms.com', '/uploads/allimg/20190320/364ec7c31e6068cd49afb2e84445fb0c.jpg', 0, 0, '', '', '', '', 0, '', 1, 100, '1', 1, 'en', 1553046945, 1553046945),
-	(7, 3, 1, '', '', '/uploads/allimg/20190722/8735c46928779e1f3057d4859aa22be9.jpg', 0, 0, '', '', '', '', 0, '', 1, 2, '0', 1, 'cn', 1563764411, 1563764739),
-	(8, 4, 1, 'en', 'http://www.07fly.com', '10', 0, 0, '', '', '', '', 0, '', 1, 1, '0', 1, 'en', 1563764323, 1582375762),
-	(9, 3, 1, '', '', '/uploads/allimg/20190722/08536d1944213a1632dde5489c0f2e1a.jpg', 0, 0, '', '', '', '', 0, '', 1, 1, '0', 1, 'cn', 1563764411, 1563764739),
-	(10, 4, 1, 'en', '', '/uploads/allimg/20190722/08536d1944213a1632dde5489c0f2e1a.jpg', 0, 0, '', '', '', '', 0, '', 1, 2, '0', 1, 'en', 1563764323, 1563764323),
-	(11, 3, 1, '', '', '/uploads/allimg/20190722/21550a2a81a09d8bf109bcaa826ec487.jpg', 0, 0, '', '', '', '', 0, '', 1, 3, '0', 1, 'cn', 1563764411, 1563764739),
-	(12, 4, 1, 'en', '', '/uploads/allimg/20190722/21550a2a81a09d8bf109bcaa826ec487.jpg', 0, 0, '', '', '', '', 0, '', 1, 1, '0', 1, 'en', 1563764411, 1563764411),
-	(13, 5, 1, '', '', '/uploads/allimg/20190719/822c2b26ca76dc393b36ae4f8addc108.jpg', 0, 0, '', '', '', '', 0, '', 1, 1, '0', 1, 'cn', 1565225126, 1565225126),
-	(14, 6, 1, 'en', '', '/uploads/allimg/20190719/822c2b26ca76dc393b36ae4f8addc108.jpg', 0, 0, '', '', '', '', 0, '', 1, 1, '0', 1, 'en', 1565225126, 1565225126);
+	(1, 1, 1, '大1-3', 'http://wd.s5.07fly.com', '35', 1524215594, 0, '这里广告内容的填写哟', '', '', '', 0, '', 1, 4, '0', 0, 'cn', 1524215652, 1587623758),
+	(16, 2, 1, '大2-1', 'http://www.07fly.com', '33', 0, 0, '234234', '', '', '', 0, '', 1, 1, '1', 1, 'cn', 1553046945, 1587521413),
+	(2, 1, 1, '大1-2', 'http://wd.s5.07fly.com', '34', 0, 0, '<p>填写广告的备注信息，方便于后期的跟进</p>', '', '', '', 0, '', 1, 3, '0', 0, 'cn', 1524214017, 1587623753),
+	(5, 1, 1, '大1-1', 'http://wd.s5.07fly.com', '36', 0, 0, '234234', '', '', '', 0, '', 1, 2, '1', 1, 'cn', 1553046945, 1587623748);
 /*!40000 ALTER TABLE `ads_list` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.arcatt
+-- Dumping structure for table 20420_guanggao.arcatt
 CREATE TABLE IF NOT EXISTS `arcatt` (
   `sortid` smallint(6) NOT NULL DEFAULT '0',
   `att` char(10) NOT NULL DEFAULT '' COMMENT '属性标志',
@@ -138,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `arcatt` (
   PRIMARY KEY (`att`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章属性表';
 
--- Dumping data for table 07fly_frame.arcatt: 8 rows
+-- Dumping data for table 20420_guanggao.arcatt: 8 rows
 DELETE FROM `arcatt`;
 /*!40000 ALTER TABLE `arcatt` DISABLE KEYS */;
 INSERT INTO `arcatt` (`sortid`, `att`, `attname`) VALUES
@@ -152,7 +143,7 @@ INSERT INTO `arcatt` (`sortid`, `att`, `attname`) VALUES
 	(6, 'b', '加粗');
 /*!40000 ALTER TABLE `arcatt` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.archives
+-- Dumping structure for table 20420_guanggao.archives
 CREATE TABLE IF NOT EXISTS `archives` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `channel_id` smallint(6) NOT NULL DEFAULT '1' COMMENT '频道',
@@ -185,32 +176,31 @@ CREATE TABLE IF NOT EXISTS `archives` (
   `sort` int(10) NOT NULL DEFAULT '100' COMMENT '排序',
   `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '录入时间',
   `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `senddate` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '发布时间',
+  `pubdate` datetime NOT NULL COMMENT '发布时间',
   PRIMARY KEY (`id`),
   KEY `sortrank` (`sortrank`),
   KEY `mainindex` (`arcrank`,`type_id`,`channel_id`,`flag`,`member_id`),
   KEY `lastpost` (`lastpost`,`scores`,`goodpost`,`badpost`,`notpost`)
-) ENGINE=MyISAM AUTO_INCREMENT=113 DEFAULT CHARSET=utf8 COMMENT='文章信息主表';
+) ENGINE=MyISAM AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COMMENT='文章信息主表';
 
--- Dumping data for table 07fly_frame.archives: 12 rows
+-- Dumping data for table 20420_guanggao.archives: 11 rows
 DELETE FROM `archives`;
 /*!40000 ALTER TABLE `archives` DISABLE KEYS */;
-INSERT INTO `archives` (`id`, `channel_id`, `type_id`, `type_id2`, `sortrank`, `flag`, `is_jump`, `jump_url`, `ismake`, `arcrank`, `click`, `money`, `title`, `keywords`, `shorttitle`, `description`, `color`, `writer`, `source`, `litpic`, `member_id`, `lastpost`, `scores`, `goodpost`, `badpost`, `notpost`, `filename`, `weight`, `sort`, `create_time`, `update_time`, `senddate`) VALUES
-	(94, 1, 3, '0', 0, 'h', NULL, NULL, 0, 0, 100, 0, 'o2o电子商务的优点有哪些？', '网站建设', '', '', '', '', '还可以吧', '', 0, 0, 0, 0, 0, 0, '', 0, 100, 0, 0, 0),
-	(99, 1, 4, '0', 0, '', NULL, NULL, 0, 0, 100, 0, '12323123', '用来查找相关文', '', '', '', '', '', '10', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582090860, 0, 0),
-	(100, 1, 4, '0', 0, '', NULL, NULL, 0, 0, 100, 0, '12323123', '用来查找相关文', '', '', '', '', '', '10', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582090878, 0, 0),
-	(111, 1, 3, '0', 0, '', 0, NULL, 0, 0, 100, 0, '成都做网站要多少钱?成都网站建设公司哪一家好', '企业,nbsp,成都,公司,网站建设,网站', '', '么做好一个网 站的，流程是怎样的。', '', '管理员', '原创', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582982230, 1582984487, 0),
-	(103, 1, 3, '0', 0, '', NULL, NULL, 0, 0, 100, 0, '用来查找相关文章，可输入多个关键字从44444', '网站建设', '', '用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字', '', '', '', '10', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582091070, 1582100367, 0),
-	(104, 1, 3, '0', 0, 'c,h', NULL, NULL, 0, 0, 100, 0, '这是来测试的哇', '还是不错的哟', '', '这个文件还是可以的', '', '', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582095205, 0, 0),
-	(105, 1, 3, '0', 0, '', NULL, NULL, 0, 0, 100, 0, '网站建设完成后，为什么每年都要进行续费', '网站,续费,每年,支付,什么,费用', '', '对于这个问题，零起飞网络的很多客户都曾经问过，下面小编就具体谈一谈网站什么要续费，续费内容都包含什么，不续费会有什么后果。 网站为什么要续费？ 网站建设完成后，并不是放在网上以后什么都不用管了。首先，为了使网站能够被访问，要保证域名可以正常使用，而域名是按年来交费的，所以域名是每年续费之一；其次，网站的程序、内容及图片是保存在服务器上的，而现在大部分网站都是租用的服务器，为了保证网站的正常运行，所', '', '', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582095666, 1582984449, 0),
-	(106, 1, 3, '0', 0, 'c,h', NULL, NULL, 0, 0, 100, 0, '用来查找相关文章，可输入多个关键字', '用来,相关,文章,可输入,多个,关键字', '', '用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字', '', '', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582096856, 1582982527, 0),
-	(107, 1, 3, '0', 0, '', NULL, NULL, 0, 0, 100, 0, 'thinkphp5的vendor和extend的区别', 'thinkphp5,extend,区别,vendor,h1,', '', '用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字', '', '', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 50, 1582096931, 1582982514, 0),
-	(108, 1, 4, '0', 0, 's', NULL, NULL, 0, 0, 100, 0, '网站建设，静态页面和动态页面如何选择', '网站建设', '', '网站建设，静态页面和动态页面如何选择　　电商网站建设为什么要使用静态页面制作。我们都知道，网站制作有分为静态页面制作和动态网页制作，那么建设电商网站采用哪种网站设计技术更好呢?　　我们建设网站最终目的是为了给用户浏览，所以从用户的角度出发进行思考才是最实际的，使用动态网页制作技术虽然网页美观度大大提升了，但是却不利于网站优化，今天小编重点和大家谈谈，网站建设为什么要使用静态页面制作。 　　做静态网', '', '李大哥', '零起飞', '10', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582097252, 1582984284, 0),
-	(109, 1, 3, '0', 0, '', 0, NULL, 0, 0, 100, 0, '网站设计师怎么脱颖而出？', '网站,设计师,怎么,脱颖而出,设计,拥有', '', '没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。', '', '管理员', '原创', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582981815, 1582982503, 0),
-	(110, 1, 3, '0', 0, '', 0, NULL, 0, 0, 100, 0, '2020年网站设计师怎么脱颖而出？', '0px,style,font-style,#ffffff,b', '', '没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。', '', '管理员', '原创', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582981874, 1582982490, 0);
+INSERT INTO `archives` (`id`, `channel_id`, `type_id`, `type_id2`, `sortrank`, `flag`, `is_jump`, `jump_url`, `ismake`, `arcrank`, `click`, `money`, `title`, `keywords`, `shorttitle`, `description`, `color`, `writer`, `source`, `litpic`, `member_id`, `lastpost`, `scores`, `goodpost`, `badpost`, `notpost`, `filename`, `weight`, `sort`, `create_time`, `update_time`, `pubdate`) VALUES
+	(94, 1, 40, '0', 0, 'h', 0, '', 0, 0, 100, 0, 'o2o电子商务的优点有哪些？', '网站建设', '', '111这个东西还是不错的哟', '', '管理员', '还可以吧', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 0, 1587538017, '2020-04-22 14:46:00'),
+	(99, 1, 40, '0', 0, '', 0, '', 0, 0, 100, 0, '12323123', '用来查找相关文', '', '', '', '', '', '10', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582090860, 1587550714, '0000-00-00 00:00:00'),
+	(111, 1, 38, '0', 0, 'p', 0, '', 0, 0, 100, 0, '成都做网站要多少钱?成都网站建设公司哪一家好', '企业,nbsp,成都,公司,网站建设,网站', '', '么做好一个网 站的，流程是怎样的。', '', '管理员', '原创', '28', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582982230, 1587453789, '2020-04-21 15:22:00'),
+	(105, 1, 40, '0', 0, '', 0, '', 0, 0, 100, 0, '网站建设完成后，为什么每年都要进行续费', '网站,续费,每年,支付,什么,费用', '', '对于这个问题，零起飞网络的很多客户都曾经问过，下面小编就具体谈一谈网站什么要续费，续费内容都包含什么，不续费会有什么后果。 网站为什么要续费？ 网站建设完成后，并不是放在网上以后什么都不用管了。首先，为了使网站能够被访问，要保证域名可以正常使用，而域名是按年来交费的，所以域名是每年续费之一；其次，网站的程序、内容及图片是保存在服务器上的，而现在大部分网站都是租用的服务器，为了保证网站的正常运行，所', '', '', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582095666, 1587451647, '0000-00-00 00:00:00'),
+	(106, 1, 40, '0', 0, 'c,h', 0, '', 0, 0, 100, 0, '用来查找相关文章，可输入多个关键字', '用来,相关,文章,可输入,多个,关键字', '', '用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字', '', '管理员', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582096856, 1587538008, '2020-04-22 14:46:00'),
+	(107, 1, 38, '0', 0, '', 0, '', 0, 0, 100, 0, 'thinkphp5的vendor和extend的区别', 'thinkphp5,extend,区别,vendor,h1,', '', '用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字', '', '管理员', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 50, 1582096931, 1587550745, '2020-04-22 11:32:00'),
+	(108, 1, 38, '0', 0, 's', 0, '', 0, 0, 100, 0, '网站建设，静态页面和动态页面如何选择', '网站建设', '', '网站建设，静态页面和动态页面如何选择　　电商网站建设为什么要使用静态页面制作。我们都知道，网站制作有分为静态页面制作和动态网页制作，那么建设电商网站采用哪种网站设计技术更好呢?　　我们建设网站最终目的是为了给用户浏览，所以从用户的角度出发进行思考才是最实际的，使用动态网页制作技术虽然网页美观度大大提升了，但是却不利于网站优化，今天小编重点和大家谈谈，网站建设为什么要使用静态页面制作。 　　做静态网', '', '李大哥', '零起飞', '10', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582097252, 1587550745, '0000-00-00 00:00:00'),
+	(109, 1, 38, '0', 0, '', 0, '', 0, 0, 100, 0, '网站设计师怎么脱颖而出？', '网站,设计师,怎么,脱颖而出,设计,拥有', '', '没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。', '', '管理员', '原创', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582981815, 1587451858, '0000-00-00 00:00:00'),
+	(110, 1, 38, '0', 0, '', 0, '', 0, 0, 100, 0, '2020年网站设计师怎么脱颖而出？', '0px,style,font-style,#ffffff,b', '', '没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。', '', '管理员', '原创', '30', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582981874, 1587452766, '0000-00-00 00:00:00'),
+	(113, 1, 38, '0', 0, 'p,b', 0, '', 0, 0, 100, 0, '如何进行品牌设计？品牌设计误区有哪些？', '品牌,nbsp,企业,产品,品牌设计,消费者', '', ' 一个好的品牌设计关乎着这个品牌是否能受到大众的青睐，在市场上赢得一席位置，品牌设计已发展成一种由商品与消费者之间一种复杂的关系，那么如何进行品牌设计?品牌设计误区有哪些?下面小编为大家详细介绍。 一、如何进行品牌设计? 1、树立现代品牌策略意识 (1)企业的领导一方面要树立现代品牌策略意识，重视品牌工作;另一方面，要对品牌策略有一个正确的认识，企业在激烈的', '', '管理员', '原创', '29', 0, 0, 0, 0, 0, 0, '', 0, 100, 1587451719, 1587457803, '2020-04-21 16:12:00'),
+	(114, 1, 31, '0', 0, 'p', 0, '', 0, 0, 100, 0, '风靡千年的疯狂味道——风小厨', '风小,品牌,nbsp,时而,女性,我们', '', ' | 风小厨的DNA——风小厨是谁？ 我们跳出餐饮红海打开脑路试图找到属于风小厨的品牌路。品牌名称是第一联想。风——联想丰富，差异化所在，值得挖掘；小厨——明确的美食属性，兼具亲和力。什么是风呢？它存在于可感与无感之间，时而温柔、时而激烈；时而性感、时而调皮；时而暖心、时而高冷。风的个性与风小厨有什么联系？中国线上零食市场65%为女性消费者，女性代理商占80%（第一财经商业数据', '', '管理员', '原创', '32', 0, 0, 0, 0, 0, 0, '', 0, 100, 1587460694, 1587460881, '2020-04-21 17:21:00');
 /*!40000 ALTER TABLE `archives` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.archives_article
+-- Dumping structure for table 20420_guanggao.archives_article
 CREATE TABLE IF NOT EXISTS `archives_article` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目id',
@@ -219,37 +209,36 @@ CREATE TABLE IF NOT EXISTS `archives_article` (
   `ks_name` varchar(250) DEFAULT NULL COMMENT '这是科室',
   PRIMARY KEY (`id`),
   KEY `typeid` (`type_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=113 DEFAULT CHARSET=utf8 COMMENT='文章扩展表';
+) ENGINE=MyISAM AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COMMENT='文章扩展表';
 
--- Dumping data for table 07fly_frame.archives_article: 22 rows
+-- Dumping data for table 20420_guanggao.archives_article: 21 rows
 DELETE FROM `archives_article`;
 /*!40000 ALTER TABLE `archives_article` DISABLE KEYS */;
 INSERT INTO `archives_article` (`id`, `type_id`, `body`, `redirecturl`, `ks_name`) VALUES
-	(5, 4, '<p>完了那我那个老卡<img src="/upload/image/20190703/1562161648306558.gif" title="1562161648306558.gif" alt="TB2xTh.z9FmpuFjSZFrXXayOXXa_!!1809307101.gif"/></p><p><br/></p><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">1）使用join 和 rand() 耗时 0.009</p><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><pre style="margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word; font-family: &quot;Courier New&quot; !important; font-size: 12px !important;">SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;*FROM\r\n&nbsp;&nbsp;&nbsp;&nbsp;`t_topic`&nbsp;AS&nbsp;t1JOIN&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROUND(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RAND()&nbsp;*&nbsp;(\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(SELECT&nbsp;MAX(id)&nbsp;FROM&nbsp;`t_topic`)&nbsp;-&nbsp;(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;+&nbsp;(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;AS&nbsp;id\r\n)&nbsp;AS&nbsp;t2WHERE\r\n&nbsp;&nbsp;&nbsp;&nbsp;t1.id&nbsp;&gt;=&nbsp;t2.idORDER&nbsp;BY\r\n&nbsp;&nbsp;&nbsp;&nbsp;t1.id\r\nLIMIT&nbsp;10;</pre><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">&nbsp;</p><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">2) 下面这条比上面那个还要慢几秒</p><pre style="margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word; font-family: &quot;Courier New&quot; !important; font-size: 12px !important;">SELECT&nbsp;*&nbsp;FROM&nbsp;`t_topic`&nbsp;\r\nWHERE&nbsp;id&nbsp;&gt;=&nbsp;(SELECT&nbsp;floor(&nbsp;RAND()&nbsp;*&nbsp;((SELECT&nbsp;MAX(id)&nbsp;FROM&nbsp;`t_topic`)-(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`))&nbsp;+&nbsp;(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`)))&nbsp;&nbsp;\r\nORDER&nbsp;BY&nbsp;id&nbsp;LIMIT&nbsp;10;</pre><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">3）或者使用下面这个也可以测试也是 耗时0.0012</p><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><pre style="margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word; font-family: &quot;Courier New&quot; !important; font-size: 12px !important;">SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;*FROM\r\n&nbsp;&nbsp;&nbsp;&nbsp;`t_topic`WHERE\r\n&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;&gt;=&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;floor(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RAND()&nbsp;*&nbsp;(SELECT&nbsp;MAX(id)&nbsp;FROM&nbsp;`t_topic`)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)\r\n&nbsp;&nbsp;&nbsp;&nbsp;)ORDER&nbsp;BY\r\n&nbsp;&nbsp;&nbsp;&nbsp;id\r\nLIMIT&nbsp;10;</pre><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><p><br/></p>', '', NULL),
-	(91, 4, '<p>这是那里呀</p><p>摇篮<br/></p>', '', NULL),
-	(92, 2, '<p>1111111111</p>', '', NULL),
-	(93, 2, '<p>1112222222222</p>', '', NULL),
-	(94, 3, '<p>111这个东西还是不错的哟<br/></p>', '', NULL),
-	(95, 4, '散去革，这是一具好的东西啊，还是真不错的哟，你要不要来的哟<br />', '', NULL),
-	(96, 3, '散去革，这是一具好的东西啊，还是真不错的哟，你要不要来的哟<br />', '', NULL),
-	(97, 3, '散去革，这是一具好的东西啊，还是真不错的哟，你要不要来的哟<br />', '', NULL),
-	(104, 0, NULL, '', NULL),
+	(5, 4, '<p>完了那我那个老卡<img src="/upload/image/20190703/1562161648306558.gif" title="1562161648306558.gif" alt="TB2xTh.z9FmpuFjSZFrXXayOXXa_!!1809307101.gif"/></p><p><br/></p><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">1）使用join 和 rand() 耗时 0.009</p><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><pre style="margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word; font-family: &quot;Courier New&quot; !important; font-size: 12px !important;">SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;*FROM\r\n&nbsp;&nbsp;&nbsp;&nbsp;`t_topic`&nbsp;AS&nbsp;t1JOIN&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROUND(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RAND()&nbsp;*&nbsp;(\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(SELECT&nbsp;MAX(id)&nbsp;FROM&nbsp;`t_topic`)&nbsp;-&nbsp;(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;+&nbsp;(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;AS&nbsp;id\r\n)&nbsp;AS&nbsp;t2WHERE\r\n&nbsp;&nbsp;&nbsp;&nbsp;t1.id&nbsp;&gt;=&nbsp;t2.idORDER&nbsp;BY\r\n&nbsp;&nbsp;&nbsp;&nbsp;t1.id\r\nLIMIT&nbsp;10;</pre><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">&nbsp;</p><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">2) 下面这条比上面那个还要慢几秒</p><pre style="margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word; font-family: &quot;Courier New&quot; !important; font-size: 12px !important;">SELECT&nbsp;*&nbsp;FROM&nbsp;`t_topic`&nbsp;\r\nWHERE&nbsp;id&nbsp;&gt;=&nbsp;(SELECT&nbsp;floor(&nbsp;RAND()&nbsp;*&nbsp;((SELECT&nbsp;MAX(id)&nbsp;FROM&nbsp;`t_topic`)-(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`))&nbsp;+&nbsp;(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`)))&nbsp;&nbsp;\r\nORDER&nbsp;BY&nbsp;id&nbsp;LIMIT&nbsp;10;</pre><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">3）或者使用下面这个也可以测试也是 耗时0.0012</p><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><pre style="margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word; font-family: &quot;Courier New&quot; !important; font-size: 12px !important;">SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;*FROM\r\n&nbsp;&nbsp;&nbsp;&nbsp;`t_topic`WHERE\r\n&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;&gt;=&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;floor(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RAND()&nbsp;*&nbsp;(SELECT&nbsp;MAX(id)&nbsp;FROM&nbsp;`t_topic`)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)\r\n&nbsp;&nbsp;&nbsp;&nbsp;)ORDER&nbsp;BY\r\n&nbsp;&nbsp;&nbsp;&nbsp;id\r\nLIMIT&nbsp;10;</pre><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><p><br/></p>', '', ''),
+	(91, 4, '<p>这是那里呀</p><p>摇篮<br/></p>', '', ''),
+	(92, 2, '<p>1111111111</p>', '', ''),
+	(93, 2, '<p>1112222222222</p>', '', ''),
+	(94, 40, '<p>\r\n	111这个东西还是不错的哟\r\n</p>', '', ''),
+	(95, 4, '散去革，这是一具好的东西啊，还是真不错的哟，你要不要来的哟<br />', '', ''),
+	(96, 3, '散去革，这是一具好的东西啊，还是真不错的哟，你要不要来的哟<br />', '', ''),
+	(97, 3, '散去革，这是一具好的东西啊，还是真不错的哟，你要不要来的哟<br />', '', ''),
 	(99, 3, '<div style="color:#333333;font-family:&quot;font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp; &nbsp; 软件系统投入使用，通过验收并超过免费维护期，公司每年向用户单位收取一定的维护费，这点得到越来越多的用户单位领导认可。可是，这维护费到底该怎么收，该收多少，收了维护费公司该给用户什么样的服务，这些问题常常让用户单位感到疑惑。\r\n</div>\r\n<div style="color:#333333;font-family:&quot;font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="color:#333333;font-family:&quot;font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp; &nbsp; 不久前我就因为一个新开发的项目，跟客户单位的林主任洽谈有关合同条款，双方就合同上的条款基本上都达成了一致，可就是在软件系统免费维护期后的维护费产生了分岐。我原先提出一万多元的维护费，他给改成了一千多元，对此我提出异议。因为我们原先就熟识，既是老朋友说话也就直来直去，以下是我们的一段对话：\r\n</div>', '', '零起飞科技'),
-	(100, 3, '<div style="color:#333333;font-family:&quot;font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp; &nbsp; 软件系统投入使用，通过验收并超过免费维护期，公司每年向用户单位收取一定的维护费，这点得到越来越多的用户单位领导认可。可是，这维护费到底该怎么收，该收多少，收了维护费公司该给用户什么样的服务，这些问题常常让用户单位感到疑惑。\r\n</div>\r\n<div style="color:#333333;font-family:&quot;font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="color:#333333;font-family:&quot;font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp; &nbsp; 不久前我就因为一个新开发的项目，跟客户单位的林主任洽谈有关合同条款，双方就合同上的条款基本上都达成了一致，可就是在软件系统免费维护期后的维护费产生了分岐。我原先提出一万多元的维护费，他给改成了一千多元，对此我提出异议。因为我们原先就熟识，既是老朋友说话也就直来直去，以下是我们的一段对话：\r\n</div>', '', '零起飞科技'),
 	(101, 3, '<span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span>', '', '2去234234'),
-	(102, 3, '<span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span>', '', NULL),
-	(103, 3, '<span class="help-block m-b-none">11111</span><span class="help-block m-b-none"></span>', '', '24234'),
+	(102, 3, '<span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span>', '', ''),
 	(108, 4, '<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	网站建设，静态页面和动态页面如何选择\r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　电商网站建设为什么要使用静态页面制作。我们都知道，网站制作有分为静态页面制作和动态网页制作，那么建设电商网站采用哪种网站设计技术更好呢?\r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　我们建设网站最终目的是为了给用户浏览，所以从用户的角度出发进行思考才是最实际的，使用动态网页制作技术虽然网页美观度大大提升了，但是却不利于网站优化，今天小编重点和大家谈谈，网站建设为什么要使用静态页面制作。\r\n</p>\r\n<p>\r\n	<img style="height:auto!important;" src="http://localhost:8011/uploads/ueditor/20190114/47caf8cc457ff50c8a66f4c4a23cfeb1.png" title="网站建设，静态页面和动态页面如何选择(图1)" alt="网站建设，静态页面和动态页面如何选择(图1)" /> \r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　做静态网站建设所采用的技术原理是一对一的形式，也就是说这样的网站上面，一个内容对应的就是一个页面，无论网站访问者如何操作都只是让服务器把固有的数据传送给请求者，没有脚本计算和后台数据库读取过程，大大降低了部分安全隐患。静态网站设计除了拥有上述的速度快，安全性高这两个特点之外还具有跨平台，跨服务器功能。\r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　现在熟悉搜索引擎原理工作原理的朋友应该都知道，它所提供给广大用户的信息是本身就存在于数据库当中的信息而不是实时的信息，固定的信息内容更容易接受和保存。我们可能常常会遇到这样的问题，当我们搜索自己所需要的信息时得出来的结果可能已经失效，这就是静态页面网站设计的不足之处，但又因为它的稳定，所以久久不会被删除。\r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　与静态页面网站设计不同，生成的动态页面信息不但不易被搜索引擎所检索，而且打开速度慢，再者也不稳定，这就是为什么这么多专业网站建设公司都一再建议客户使用静态形式的网站设计的原因，有些网站建设公司会考虑把页面进行伪静态处理，但不知道大家有没有注意过，伪静态处理的URL通常是不规则的。\r\n</p>\r\n<br />', '', '23234234'),
-	(106, 3, '为什么这个没的内容的呢<br />', '', NULL),
-	(107, 3, '<h1 class="title-article" style="font-size:28px;font-family:" color:#000000;font-style:normal;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	thinkphp5的vendor和extend的区别\r\n	</h1>\r\n<h1 class="title-article" style="font-size:28px;font-family:" color:#000000;font-style:normal;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	thinkphp5的vendor和extend的区别\r\n</h1>', '', NULL),
-	(110, 3, '<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	1.&nbsp;了解当前和最新的设计发展的趋势\r\n	</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。\r\n</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-indent:0px;background-color:#ffffff;text-align:center;"=""> <img alt="网站设计" src="http://www.07fly.com/uploads/allimg/200227/105R12627-0.jpg" title="网站设计" style="border:1px solid #E0E0E0;" /> \r\n	</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	2.&nbsp;从成功的案例中获得灵感\r\n</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	每一个成功的案例都有其值得学习的地方，善于发现，善于学习，善于分析和思考，不但要从自己的成功的案例中获得灵感，还要了解竞争对手的成功案例。尤其是一些大型的成功的网站。\r\n	</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	3.&nbsp;为小型企业取得成功提供优势\r\n</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	小型企业的市场更加宽广，如果您能为小型的企业提供在繁忙的市场中取得成功所需的优势，那您就或得到更多的机会，争取更多的业务，久而久之，您的口碑在小型企业中广为流传，赢得客户的信任，让您在人群中脱颖而出。\r\n	</p>\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	本文零起飞网络为您整理编辑,版权归原作者所有，转载请注明原文来源出处。<br />\r\n本文章链接：<a href="http://www.07fly.com/News/trends/9747.html">http://www.07fly.com/News/trends/9747.html</a><br />\r\n07FLY专业做网站，网站建设，网站优化，主机托管，网站推广一条龙服务，让您省心到底\r\n		</div>', '', NULL),
-	(109, 3, '没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。', '', NULL),
-	(111, 3, '<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">导读:” 做网站要多少钱?”，有关于网站价格问题，这是无法避免的，很多企业都会咨询这个问题，在这里我很想知道一个问题， 企业在咨询之前，有没有认真的考虑过企业做网站的目的，网站该设计成什么风格，具备哪些功能，是否具备营销力，是否容易优化推广,这些企业都没有考虑，在他们眼中，所有的网站类型，都是一样，没有区别，认为弄出各种叫法，这是建站公司的包装，真实情况真的是这样吗?</span><br />\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 关心</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">价格，这个可以理解，但是什么都没有聊，一上来就问“你们做网站要多少钱”,对于这种问题，如果是做模板网站的，那肯定是有固定价格，都有现成的网站，随便选择，如果是做个性化定制，那就需要做市场调研、营销策划、网站结构、网站设计、网站程序、内容编辑等，这些都是需要针对企业重新定制，这是得根据企业的要求，投入的成本，来收取费用的，如果什么都没有聊，就直接报价，那这是对企业的不负责任，如果能直接给你报价，要么就是做模板网站，要么就是制作中，会增加费用，在资讯</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">公司之前，还是建议企业先自己思考以下三点。</span><br />\r\n<br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;text-align:center;"=""> <img alt="成都做网站要多少钱?成都网站建设公司哪一家好" src="http://www.07fly.com/uploads/allimg/200227/1021201G4-0.jpg" title="成都做网站要多少钱?成都网站建设公司哪一家好" style="border:1px solid #E0E0E0;" width="730" height="412" /> \r\n	</div>\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 1、企业做网站的目的。这一点很多企业都应该知道，企业做网站是为了更好的服务自己的精准客户，那么怎么为自己的客户服务，有没有考虑客户的习性，关注的问题，产生的疑问等等,而企业又是怎么对外宣传，展示企业的优势以及产品的核心卖点，如果自己不懂，那就多问，问建站公司是怎么做好一个网 站的，流程是怎样的。</span><br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	&nbsp; &nbsp; &nbsp;&nbsp;\r\n	<div>\r\n		&nbsp; &nbsp; 2、网站费用产生的来源。也就说要知道网站建设费用是怎么来的，一般分为网站基本费用、制作费用和维护费用，基础费用就是网站空间、域名，而制作费用包括网站策划、设计、制作、功能、建站公司实力等，制作费用占的比例比较大，成本投入越大，收费自然就会高，最后就是网站的维护费用，网站上线之后，交给企业自己去打理，做优化、做推广，如果在这过程中网站出现问题或者需求修改图片等，这些都是维护费里面，帮企业避免了很多麻烦。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、网站的制作方式。这个企业要清楚，不同价位的制作方式是不同的，不同的要求，网站制作方式也是不一样，如果没有什么要求，或者贪图便宜，一般都是模板网站，价格就1000-5000元左右，如果懂一点营销，但不想做那么贵的网站，一般就是普通展示型网站，要么就是直接复制别人的网站，这种网站价格5000-&nbsp;15000元左右，如果是做个性化定制，功能比较到复杂的，那网站制作费用15000以上，根据实际需求收费。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总之，企业不要动不动的就是问“做网站要多少钱?"，一定先要清楚自己企业的需求，选择专业的建站公司，不要只看广告，看网站建设价格，一定要看实力，看建站公司制作的案例，看建站公司办公环境，网站制作流程以及建站团队，这样才能选择靠谱并适合自己企业的建站公司，如果只重视网站建设价格，只关注网站建设价格，很容易被不专业的建站公司所忽悠，相信有很多企业吃过这样的亏，所以千万不要把价格放在第一位，更不要以价格高低来选择建站公司。以上就是深度网对“做网站要多少钱”的分享，仅供参考!\r\n	</div>\r\n</div>', '', NULL),
-	(112, 3, '<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">导读:” 做网站要多少钱?”，有关于网站价格问题，这是无法避免的，很多企业都会咨询这个问题，在这里我很想知道一个问题， 企业在咨询之前，有没有认真的考虑过企业做网站的目的，网站该设计成什么风格，具备哪些功能，是否具备营销力，是否容易优化推广,这些企业都没有考虑，在他们眼中，所有的网站类型，都是一样，没有区别，认为弄出各种叫法，这是建站公司的包装，真实情况真的是这样吗?</span><br />\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 关心</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">价格，这个可以理解，但是什么都没有聊，一上来就问“你们做网站要多少钱”,对于这种问题，如果是做模板网站的，那肯定是有固定价格，都有现成的网站，随便选择，如果是做个性化定制，那就需要做市场调研、营销策划、网站结构、网站设计、网站程序、内容编辑等，这些都是需要针对企业重新定制，这是得根据企业的要求，投入的成本，来收取费用的，如果什么都没有聊，就直接报价，那这是对企业的不负责任，如果能直接给你报价，要么就是做模板网站，要么就是制作中，会增加费用，在资讯</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">公司之前，还是建议企业先自己思考以下三点。</span><br />\r\n<br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;text-align:center;"=""> <img alt="成都做网站要多少钱?成都网站建设公司哪一家好" src="http://www.07fly.com/uploads/allimg/200227/1021201G4-0.jpg" title="成都做网站要多少钱?成都网站建设公司哪一家好" style="border:1px solid #E0E0E0;" width="730" height="412" /> \r\n	</div>\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 1、企业做网站的目的。这一点很多企业都应该知道，企业做网站是为了更好的服务自己的精准客户，那么怎么为自己的客户服务，有没有考虑客户的习性，关注的问题，产生的疑问等等,而企业又是怎么对外宣传，展示企业的优势以及产品的核心卖点，如果自己不懂，那就多问，问建站公司是怎么做好一个网 站的，流程是怎样的。</span><br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	&nbsp; &nbsp; &nbsp;&nbsp;\r\n	<div>\r\n		&nbsp; &nbsp; 2、网站费用产生的来源。也就说要知道网站建设费用是怎么来的，一般分为网站基本费用、制作费用和维护费用，基础费用就是网站空间、域名，而制作费用包括网站策划、设计、制作、功能、建站公司实力等，制作费用占的比例比较大，成本投入越大，收费自然就会高，最后就是网站的维护费用，网站上线之后，交给企业自己去打理，做优化、做推广，如果在这过程中网站出现问题或者需求修改图片等，这些都是维护费里面，帮企业避免了很多麻烦。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、网站的制作方式。这个企业要清楚，不同价位的制作方式是不同的，不同的要求，网站制作方式也是不一样，如果没有什么要求，或者贪图便宜，一般都是模板网站，价格就1000-5000元左右，如果懂一点营销，但不想做那么贵的网站，一般就是普通展示型网站，要么就是直接复制别人的网站，这种网站价格5000-&nbsp;15000元左右，如果是做个性化定制，功能比较到复杂的，那网站制作费用15000以上，根据实际需求收费。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总之，企业不要动不动的就是问“做网站要多少钱?"，一定先要清楚自己企业的需求，选择专业的建站公司，不要只看广告，看网站建设价格，一定要看实力，看建站公司制作的案例，看建站公司办公环境，网站制作流程以及建站团队，这样才能选择靠谱并适合自己企业的建站公司，如果只重视网站建设价格，只关注网站建设价格，很容易被不专业的建站公司所忽悠，相信有很多企业吃过这样的亏，所以千万不要把价格放在第一位，更不要以价格高低来选择建站公司。以上就是深度网对“做网站要多少钱”的分享，仅供参考!\r\n	</div>\r\n</div>', '', NULL),
-	(105, 3, '<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	对于这个问题，零起飞网络的很多客户都曾经问过，下面小编就具体谈一谈网站什么要续费，续费内容都包含什么，不续费会有什么后果。\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<img src="http://www.07fly.com/uploads/allimg/200107/1H51U423-0.jpg" style="border:0px;height:auto;" /> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<span style="font-weight:700;">网站为什么要续费？</span> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a>完成后，并不是放在网上以后什么都不用管了。\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	首先，为了使网站能够被访问，要保证域名可以正常使用，而域名是按年来交费的，所以域名是每年续费之一；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	其次，网站的程序、内容及图片是保存在服务器上的，而现在大部分网站都是租用的服务器，为了保证网站的正常运行，所以每年都需要交付网站服务器的租金；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	再次，在网站的日常运行中，往往会出现运行故障，内容修改，黑客攻击，忘记管理密码等等的问题，这就需要有专业人员进行维护，所以为保证网站的稳定，需要想支付技术支持的费用；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	另外，对于一些网站管理系统，是需要每年进行授权的，所以还需要支付每年网站系统的授权费；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	除了上诉的基本费用，如果你选择了<a href="http://www.07fly.com/a/tuoguan/" target="_blank"><u>网站托管</u></a>，网络推广，SEO等服务，你每年还需要再额外支付这些服务费用。\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<span style="font-weight:700;">续费内容都包含什么？</span> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	其实这个问题，在回答第一个问题时已经做了回答，这里再总结以下，续费内容包括：\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	基本费用：域名+服务器+技术支持+授权费\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	增值服务：网站托管，网络推广，SEO等服务（如果选择了这些服务需支付，否则不需要）\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<span style="font-weight:700;">不续费会有什么后果？</span> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	如果域名，服务器到期不续费，网站到期立刻无法访问；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	如果不支付技术支持费用，网站安全则得不到保障，出问题无人解决；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	如果不支付授权费用，网站将会被立即下线，无法正常访问，或可能被追究侵权责任；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	总之，做网站不是一次性投资，而是需要长期投资，为了保证网站稳定的运行，还是要注意按时续费。\r\n</p>', '', NULL);
+	(106, 40, '为什么这个没的内容的呢<br />', '', ''),
+	(107, 3, '<h1 class="title-article" style="font-size:28px;font-family:" color:#000000;font-style:normal;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	thinkphp5的vendor和extend的区别\r\n	</h1>\r\n<h1 class="title-article" style="font-size:28px;font-family:" color:#000000;font-style:normal;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	thinkphp5的vendor和extend的区别\r\n</h1>', '', ''),
+	(110, 38, '<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	1.&nbsp;了解当前和最新的设计发展的趋势\r\n	</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。\r\n</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-indent:0px;background-color:#ffffff;text-align:center;"=""> <img alt="网站设计" src="http://www.07fly.com/uploads/allimg/200227/105R12627-0.jpg" title="网站设计" style="border:1px solid #E0E0E0;" /> \r\n	</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	2.&nbsp;从成功的案例中获得灵感\r\n</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	每一个成功的案例都有其值得学习的地方，善于发现，善于学习，善于分析和思考，不但要从自己的成功的案例中获得灵感，还要了解竞争对手的成功案例。尤其是一些大型的成功的网站。\r\n	</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	3.&nbsp;为小型企业取得成功提供优势\r\n</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	小型企业的市场更加宽广，如果您能为小型的企业提供在繁忙的市场中取得成功所需的优势，那您就或得到更多的机会，争取更多的业务，久而久之，您的口碑在小型企业中广为流传，赢得客户的信任，让您在人群中脱颖而出。\r\n	</p>\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	本文零起飞网络为您整理编辑,版权归原作者所有，转载请注明原文来源出处。<br />\r\n本文章链接：<a href="http://www.07fly.com/News/trends/9747.html">http://www.07fly.com/News/trends/9747.html</a><br />\r\n07FLY专业做网站，网站建设，网站优化，主机托管，网站推广一条龙服务，让您省心到底\r\n		</div>', '', ''),
+	(109, 38, '没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。', '', ''),
+	(111, 38, '<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">导读:” 做网站要多少钱?”，有关于网站价格问题，这是无法避免的，很多企业都会咨询这个问题，在这里我很想知道一个问题， 企业在咨询之前，有没有认真的考虑过企业做网站的目的，网站该设计成什么风格，具备哪些功能，是否具备营销力，是否容易优化推广,这些企业都没有考虑，在他们眼中，所有的网站类型，都是一样，没有区别，认为弄出各种叫法，这是建站公司的包装，真实情况真的是这样吗?</span><br />\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 关心</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">价格，这个可以理解，但是什么都没有聊，一上来就问“你们做网站要多少钱”,对于这种问题，如果是做模板网站的，那肯定是有固定价格，都有现成的网站，随便选择，如果是做个性化定制，那就需要做市场调研、营销策划、网站结构、网站设计、网站程序、内容编辑等，这些都是需要针对企业重新定制，这是得根据企业的要求，投入的成本，来收取费用的，如果什么都没有聊，就直接报价，那这是对企业的不负责任，如果能直接给你报价，要么就是做模板网站，要么就是制作中，会增加费用，在资讯</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">公司之前，还是建议企业先自己思考以下三点。</span><br />\r\n<br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;text-align:center;"=""> <img alt="成都做网站要多少钱?成都网站建设公司哪一家好" src="http://www.07fly.com/uploads/allimg/200227/1021201G4-0.jpg" title="成都做网站要多少钱?成都网站建设公司哪一家好" style="border:1px solid #E0E0E0;" width="730" height="412" /> \r\n	</div>\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 1、企业做网站的目的。这一点很多企业都应该知道，企业做网站是为了更好的服务自己的精准客户，那么怎么为自己的客户服务，有没有考虑客户的习性，关注的问题，产生的疑问等等,而企业又是怎么对外宣传，展示企业的优势以及产品的核心卖点，如果自己不懂，那就多问，问建站公司是怎么做好一个网 站的，流程是怎样的。</span><br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	&nbsp; &nbsp; &nbsp;&nbsp;\r\n	<div>\r\n		&nbsp; &nbsp; 2、网站费用产生的来源。也就说要知道网站建设费用是怎么来的，一般分为网站基本费用、制作费用和维护费用，基础费用就是网站空间、域名，而制作费用包括网站策划、设计、制作、功能、建站公司实力等，制作费用占的比例比较大，成本投入越大，收费自然就会高，最后就是网站的维护费用，网站上线之后，交给企业自己去打理，做优化、做推广，如果在这过程中网站出现问题或者需求修改图片等，这些都是维护费里面，帮企业避免了很多麻烦。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、网站的制作方式。这个企业要清楚，不同价位的制作方式是不同的，不同的要求，网站制作方式也是不一样，如果没有什么要求，或者贪图便宜，一般都是模板网站，价格就1000-5000元左右，如果懂一点营销，但不想做那么贵的网站，一般就是普通展示型网站，要么就是直接复制别人的网站，这种网站价格5000-&nbsp;15000元左右，如果是做个性化定制，功能比较到复杂的，那网站制作费用15000以上，根据实际需求收费。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总之，企业不要动不动的就是问“做网站要多少钱?"，一定先要清楚自己企业的需求，选择专业的建站公司，不要只看广告，看网站建设价格，一定要看实力，看建站公司制作的案例，看建站公司办公环境，网站制作流程以及建站团队，这样才能选择靠谱并适合自己企业的建站公司，如果只重视网站建设价格，只关注网站建设价格，很容易被不专业的建站公司所忽悠，相信有很多企业吃过这样的亏，所以千万不要把价格放在第一位，更不要以价格高低来选择建站公司。以上就是深度网对“做网站要多少钱”的分享，仅供参考!\r\n	</div>\r\n</div>', '', ''),
+	(112, 3, '<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">导读:” 做网站要多少钱?”，有关于网站价格问题，这是无法避免的，很多企业都会咨询这个问题，在这里我很想知道一个问题， 企业在咨询之前，有没有认真的考虑过企业做网站的目的，网站该设计成什么风格，具备哪些功能，是否具备营销力，是否容易优化推广,这些企业都没有考虑，在他们眼中，所有的网站类型，都是一样，没有区别，认为弄出各种叫法，这是建站公司的包装，真实情况真的是这样吗?</span><br />\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 关心</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">价格，这个可以理解，但是什么都没有聊，一上来就问“你们做网站要多少钱”,对于这种问题，如果是做模板网站的，那肯定是有固定价格，都有现成的网站，随便选择，如果是做个性化定制，那就需要做市场调研、营销策划、网站结构、网站设计、网站程序、内容编辑等，这些都是需要针对企业重新定制，这是得根据企业的要求，投入的成本，来收取费用的，如果什么都没有聊，就直接报价，那这是对企业的不负责任，如果能直接给你报价，要么就是做模板网站，要么就是制作中，会增加费用，在资讯</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">公司之前，还是建议企业先自己思考以下三点。</span><br />\r\n<br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;text-align:center;"=""> <img alt="成都做网站要多少钱?成都网站建设公司哪一家好" src="http://www.07fly.com/uploads/allimg/200227/1021201G4-0.jpg" title="成都做网站要多少钱?成都网站建设公司哪一家好" style="border:1px solid #E0E0E0;" width="730" height="412" /> \r\n	</div>\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 1、企业做网站的目的。这一点很多企业都应该知道，企业做网站是为了更好的服务自己的精准客户，那么怎么为自己的客户服务，有没有考虑客户的习性，关注的问题，产生的疑问等等,而企业又是怎么对外宣传，展示企业的优势以及产品的核心卖点，如果自己不懂，那就多问，问建站公司是怎么做好一个网 站的，流程是怎样的。</span><br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	&nbsp; &nbsp; &nbsp;&nbsp;\r\n	<div>\r\n		&nbsp; &nbsp; 2、网站费用产生的来源。也就说要知道网站建设费用是怎么来的，一般分为网站基本费用、制作费用和维护费用，基础费用就是网站空间、域名，而制作费用包括网站策划、设计、制作、功能、建站公司实力等，制作费用占的比例比较大，成本投入越大，收费自然就会高，最后就是网站的维护费用，网站上线之后，交给企业自己去打理，做优化、做推广，如果在这过程中网站出现问题或者需求修改图片等，这些都是维护费里面，帮企业避免了很多麻烦。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、网站的制作方式。这个企业要清楚，不同价位的制作方式是不同的，不同的要求，网站制作方式也是不一样，如果没有什么要求，或者贪图便宜，一般都是模板网站，价格就1000-5000元左右，如果懂一点营销，但不想做那么贵的网站，一般就是普通展示型网站，要么就是直接复制别人的网站，这种网站价格5000-&nbsp;15000元左右，如果是做个性化定制，功能比较到复杂的，那网站制作费用15000以上，根据实际需求收费。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总之，企业不要动不动的就是问“做网站要多少钱?"，一定先要清楚自己企业的需求，选择专业的建站公司，不要只看广告，看网站建设价格，一定要看实力，看建站公司制作的案例，看建站公司办公环境，网站制作流程以及建站团队，这样才能选择靠谱并适合自己企业的建站公司，如果只重视网站建设价格，只关注网站建设价格，很容易被不专业的建站公司所忽悠，相信有很多企业吃过这样的亏，所以千万不要把价格放在第一位，更不要以价格高低来选择建站公司。以上就是深度网对“做网站要多少钱”的分享，仅供参考!\r\n	</div>\r\n</div>', '', ''),
+	(105, 40, '<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	对于这个问题，零起飞网络的很多客户都曾经问过，下面小编就具体谈一谈网站什么要续费，续费内容都包含什么，不续费会有什么后果。\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<img src="http://www.07fly.com/uploads/allimg/200107/1H51U423-0.jpg" style="border:0px;height:auto;" /> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<span style="font-weight:700;">网站为什么要续费？</span> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a>完成后，并不是放在网上以后什么都不用管了。\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	首先，为了使网站能够被访问，要保证域名可以正常使用，而域名是按年来交费的，所以域名是每年续费之一；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	其次，网站的程序、内容及图片是保存在服务器上的，而现在大部分网站都是租用的服务器，为了保证网站的正常运行，所以每年都需要交付网站服务器的租金；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	再次，在网站的日常运行中，往往会出现运行故障，内容修改，黑客攻击，忘记管理密码等等的问题，这就需要有专业人员进行维护，所以为保证网站的稳定，需要想支付技术支持的费用；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	另外，对于一些网站管理系统，是需要每年进行授权的，所以还需要支付每年网站系统的授权费；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	除了上诉的基本费用，如果你选择了<a href="http://www.07fly.com/a/tuoguan/" target="_blank"><u>网站托管</u></a>，网络推广，SEO等服务，你每年还需要再额外支付这些服务费用。\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<span style="font-weight:700;">续费内容都包含什么？</span> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	其实这个问题，在回答第一个问题时已经做了回答，这里再总结以下，续费内容包括：\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	基本费用：域名+服务器+技术支持+授权费\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	增值服务：网站托管，网络推广，SEO等服务（如果选择了这些服务需支付，否则不需要）\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<span style="font-weight:700;">不续费会有什么后果？</span> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	如果域名，服务器到期不续费，网站到期立刻无法访问；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	如果不支付技术支持费用，网站安全则得不到保障，出问题无人解决；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	如果不支付授权费用，网站将会被立即下线，无法正常访问，或可能被追究侵权责任；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	总之，做网站不是一次性投资，而是需要长期投资，为了保证网站稳定的运行，还是要注意按时续费。\r\n</p>', '', ''),
+	(113, 38, '<p style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;text-indent:0px;background-color:#FFFFFF;">\r\n	&nbsp;一个好的品牌设计关乎着这个品牌是否能受到大众的青睐，在市场上赢得一席位置，品牌设计已发展成一种由商品与消费者之间一种复杂的关系，那么如何进行品牌设计?品牌设计误区有哪些?下面小编为大家详细介绍。\r\n</p>\r\n<p style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-indent:0px;background-color:#FFFFFF;text-align:center;">\r\n	<img src="/public/upload/picture/20200421/1630030.jpg" alt="" style="border:0px;height:auto;" width="600" height="334" /> \r\n</p>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	<span style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;font-weight:normal;font-style:normal;color:#FF0000;">一、如何进行品牌设计?</span> \r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	1、树立现代品牌策略意识\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	(1)企业的领导一方面要树立现代品牌策略意识，重视品牌工作;另一方面，要对品牌策略有一个正确的认识，企业在激烈的市场竞争中靠什么来生存?靠的是自己的产品。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	(2)产品靠什么来进入市场?靠的就是品牌。只有品牌搞上去了，产品的销路才会好，企业才能站住脚，才会在消费者的心里留下良好的印象，最终树立起企业良好的品牌形象。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	2、准确的市场定位\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	(1)市场定位也称为产品定位或竞争性定位，是根据竞争者现有产品在细分市场上所处的地位和顾客对产品某些属性的重视程度，塑造出本企业产品与众不同的鲜明个性或形象并传递给目标顾客，使产品在市场上占有一定优势。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	(2)对中小企业而言，没有什么比建立品牌更重要的了。而要建立一个品牌，首要任务就是产品的定位，它是一个产品品牌能否长久生存和腾飞的基石。只有拥有了属于自己的品牌，企业在竞争中才不会落败。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	3、要大力宣传自己的品牌\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	创品牌要通过媒体大力宣传自己的产品，提高产品的知名度。我们的一些企业在资金紧张时，首先是削减广告费，企业因经营困难而不做广告，但不做广告反而会使经营更困难。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	4、要积极保护自己的品牌\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	要培育一只品牌不容易，要保护一只品牌也不容易。企业要积极打击侵权、假冒行为，这是培育品牌不可缺少的一项重要工作，也是维护企业良好品牌形象的重要工作。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	5、要更多取得产品“通行证”来强化品牌\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	产品质量是企业保持基业长青的致胜法宝，企业领导应真正重视各种国际通行的质量体系认证，此外还要注意ISO14000环保认证及各种专业性、地区性的产品认证。这是企业产品进入国际、国内市场的通行证，也是企业在激烈的市场竞争中制胜的有力武器。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	<span style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;font-weight:normal;font-style:normal;color:#FF0000;">二、品牌设计误区</span> \r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	1、营销成功的关键在于满足消费者需要，随着环境的不断变化，营销的本质发生了变化，它不是一场满足消费者需求的战争，而是一场企业之间争夺顾客有限心智的战争。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	2、更好的产品、更佳的团队、更大的投入，必将胜出，但是很多企业的投资项目都是“肉包子打狗，一去无回”。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	3、企业形象与品牌形象是促进销售的核心力量，但随着越来越多的品牌注重形象，消费者就更青睐接受简单而直接的诉求。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	4、品牌延伸可以利用现有的品牌资产在新领域获得竞争力，但忽略了消费者的认同感。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	5、做大规模才能增强企业竞争力，规模不等于竞争力，消费者心智中的强势地位及品牌才是真正的竞争力。没有心智资源的企业，规模再大也没有意义。\r\n</div>', '', ''),
+	(114, 31, '<h2 style="text-align:start;">\r\n	&nbsp;\r\n</h2>\r\n<h2 style="text-align:start;">\r\n	| 风小厨的DNA——风小厨是谁？\r\n</h2>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	我们跳出餐饮红海打开脑路试图找到属于风小厨的品牌路。品牌名称是第一联想。风——联想丰富，差异化所在，值得挖掘；小厨——明确的美食属性，兼具亲和力。什么是风呢？它存在于可感与无感之间，时而温柔、时而激烈；时而性感、时而调皮；时而暖心、时而高冷。\r\n</p>\r\n<p style="text-align:start;">\r\n	风的个性与风小厨有什么联系？中国线上零食市场65%为女性消费者，女性代理商占80%（第一财经商业数据中心（CBNData）《中国线上零食消费趋势报告》）针对女性审美/女性认同男性化的人格更具有优势，且在大众普遍接受中有造诣的厨师以男性为主。将风小厨人格化展开，如风般丝丝入心。\r\n</p>\r\n<p style="text-align:start;">\r\n	我们用偶像剧的手法去塑造一个风度翩翩的、风狂如痴的风趣有度的风小厨。基于品牌个性的品牌形象化。我们注入快时尚的Low poly视觉表现手法，设计出“风一样的美男子”形象。\r\n</p>\r\n<p style="text-align:start;">\r\n	<img src="/public/upload/picture/20200421/1720390.jpg" alt="" style="border:0px;height:auto;" width="1200" height="675" /> \r\n</p>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	<img src="/public/upload/picture/20200421/1720393.jpg" alt="" style="border:0px;height:auto;" width="1200" height="675" /> \r\n</p>\r\n<h2 style="text-align:start;">\r\n	&nbsp;\r\n</h2>\r\n<h2 style="text-align:start;">\r\n	|&nbsp;风小厨的故事——如何狂飚人生？\r\n</h2>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	我们开始思考，如何丰富风小厨的故事。从风开始回到历史中去，风姓是中国最古老姓，传说“伏羲”及其父“燧人氏”为风姓鼻祖。由此风姓被称“中华第一姓”。\r\n</p>\r\n<p style="text-align:start;">\r\n	——品牌烙印一：伏羲后人。\r\n</p>\r\n<p style="text-align:start;">\r\n	春秋战国时期，御厨风伯为秦国烹饪，辅佐建秦统一中国\r\n</p>\r\n<p style="text-align:start;">\r\n	——品牌烙印二：御厨 盐帮\r\n</p>\r\n<p style="text-align:start;">\r\n	自明清以来，万商云集，盐船漫合。京、鲁、豫、苏等各省名厨麇集沱江流域（内江、自贡、宜宾）形成川菜一派“盐帮菜”。\r\n</p>\r\n<p style="text-align:start;">\r\n	——品牌烙印三：变身 超能力\r\n</p>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	从历史结合现代的主旋律。传承与创新，开脑洞，结合时下流行元素——变身与超能力。\r\n</p>\r\n<p style="text-align:start;">\r\n	白昼——御厨天赋，风狂厨痴；\r\n</p>\r\n<p style="text-align:start;">\r\n	夜晚——风度翩翩，风趣公子。\r\n</p>', '', '');
 /*!40000 ALTER TABLE `archives_article` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.archives_case
+-- Dumping structure for table 20420_guanggao.archives_case
 CREATE TABLE IF NOT EXISTS `archives_case` (
   `id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `typeid` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -262,12 +251,12 @@ CREATE TABLE IF NOT EXISTS `archives_case` (
   KEY `typeid` (`typeid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='扩展表';
 
--- Dumping data for table 07fly_frame.archives_case: 0 rows
+-- Dumping data for table 20420_guanggao.archives_case: 0 rows
 DELETE FROM `archives_case`;
 /*!40000 ALTER TABLE `archives_case` DISABLE KEYS */;
 /*!40000 ALTER TABLE `archives_case` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.archives_online
+-- Dumping structure for table 20420_guanggao.archives_online
 CREATE TABLE IF NOT EXISTS `archives_online` (
   `id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `typeid` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -279,12 +268,12 @@ CREATE TABLE IF NOT EXISTS `archives_online` (
   KEY `typeid` (`typeid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='扩展表';
 
--- Dumping data for table 07fly_frame.archives_online: 0 rows
+-- Dumping data for table 20420_guanggao.archives_online: 0 rows
 DELETE FROM `archives_online`;
 /*!40000 ALTER TABLE `archives_online` DISABLE KEYS */;
 /*!40000 ALTER TABLE `archives_online` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.arctype
+-- Dumping structure for table 20420_guanggao.arctype
 CREATE TABLE IF NOT EXISTS `arctype` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '父级id',
@@ -323,104 +312,32 @@ CREATE TABLE IF NOT EXISTS `arctype` (
   PRIMARY KEY (`id`),
   KEY `reid` (`parent_id`,`isdefault`,`channel_id`,`ispart`,`corank`,`top_id`,`visible`),
   KEY `sortrank` (`sort`)
-) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='文章栏目表';
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='文章栏目表';
 
--- Dumping data for table 07fly_frame.arctype: 6 rows
+-- Dumping data for table 20420_guanggao.arctype: 17 rows
 DELETE FROM `arctype`;
 /*!40000 ALTER TABLE `arctype` DISABLE KEYS */;
 INSERT INTO `arctype` (`id`, `parent_id`, `top_id`, `sort`, `typename`, `typedir`, `litpic`, `isdefault`, `defaultname`, `issend`, `channel_id`, `maxpage`, `ispart`, `corank`, `temp_index`, `temp_list`, `temp_article`, `name_rule_article`, `name_rule_list`, `modname`, `description`, `keywords`, `seotitle`, `moresite`, `sitepath`, `siteurl`, `visible`, `cross`, `crossid`, `content`, `smalltypes`, `create_time`, `update_time`, `sys_user_id`) VALUES
-	(1, 0, 0, 0, '关于我们', '', 16, 0, '', 0, 1, -1, 1, 0, 'cms/index_article.htm', 'cms/list_article.htm', 'cms/article_article.htm', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, NULL, '', NULL, NULL, 1584449875, NULL),
-	(2, 0, 0, 50, '产品中心', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'index_article.htm', 'list_article.htm', 'article_article.htm', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, NULL, '', NULL, NULL, 1584449859, NULL),
-	(3, 0, 0, 50, '新闻中心', '/html/', 10, 0, 'index.html', 0, 1, -1, 0, 0, 'index_article.html', 'list_article.html', 'view_article.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, NULL, '', NULL, NULL, 1584452091, NULL),
-	(4, 2, 0, 100, '网络产品', '/htmll', 12, 0, 'index.html', 0, 1, -1, 1, 0, 'cms/index_article.htm', 'cms/list_article.html', 'view_article.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, NULL, '<p>\r\n	这是一个不错的公司的哟\r\n</p>\r\n<br />', NULL, NULL, 1584452914, NULL),
-	(5, 0, 0, 50, '联系我们', '/html/', 10, 0, 'index.html', 0, 1, -1, 1, 0, 'cms/index_article.htm', 'cms/list_article.htm', 'cms/article_article.htm', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, NULL, '联系我们联系我们联系我们<br />', NULL, 1581929689, 1584449843, NULL),
-	(31, 0, 0, 50, '成功案例', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'cms/index_article.htm', 'cms/list_article.htm', 'cms/article_article.htm', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, NULL, '', NULL, 1582948987, 1584449824, NULL);
+	(1, 0, 0, 1, '关于我们', '', 27, 0, '', 0, 1, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '<p style="text-align:justify;">\r\n	勿道致力于为所有谋求长远发展的各类企业提供品牌创建、品牌更新、品牌管理设计服务。以策略为导向，注重实效，结合对市场、企业、消费者、文化的深刻理解和对时尚潮流的准确把握，协助客户提升产品的销售力和形象力，打造“最具有赢响力”的品牌核心价值。以视觉为沟通语言，以设计为传达媒介，创造整合性、全面性、国际性的视觉传播系统，为客户提供完整而有效的品牌锐变方案。\r\n</p>\r\n<p style="text-align:justify;">\r\n	随着市场竞争程度的加剧，市场供需和大众审美都在被互联网思维重新定义，而瞳创团队始终筹谋思变，以引领前沿的年轻思维重新诠释品牌定位，为企业品牌发展注入新生血液，力求为客户提供适合的、全面的品牌发展策略。\r\n</p>\r\n<p style="text-align:justify;">\r\n	<br />\r\n</p>\r\n<p style="text-align:justify;">\r\n	我们不断融合创作激情与战略视野，迎接新的挑战，向巅峰迈进。当我们同客户站在一起时，我们表现出更多的理解和热情。我们深知，只有真正融入品牌的发展进程，关注企业面临的问题，才能争取到客户对设计价值的认可。内外兼顾，知人者智，让瞳创成为你的品牌智囊团，与你的品牌一起成长！\r\n</p>\r\n<p style="text-align:justify;">\r\n	<br />\r\n</p>\r\n我们的优势\r\n<p style="text-align:justify;">\r\n	—\r\n</p>\r\n<p style="text-align:justify;">\r\n	基于洞察之上的创想，我们始终专注于一件事：品牌形象策划与设计。 由资深创作人员亲自沟通，扁平化的组织架构，确保内外部沟通高效，精确的表现品牌诉求。对每一个案子都精益求精，拒绝大规模经营的流水线式低端作业。众多的成功案例和客户好评证明了勿道的专业。\r\n</p>', '', 0, 1587463768, 0),
+	(2, 0, 0, 3, '核心业务', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'service.html', 'service.html', 'service.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 0, 1587522546, 0),
+	(3, 0, 0, 4, '新闻中心', '/html/', 10, 0, 'index.html', 0, 1, -1, 0, 0, 'index_article.html', 'list_article.html', 'view_article.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '<p align="left">\r\n	在专业领域的探索与思考让我们深入了解设计的本质。\r\n</p>\r\n<p align="left">\r\n	我们为超过100 个企业提供了创新的品牌设计解决方案，帮助客户实现品牌革新，并向互联网发展。\r\n</p>', '', 0, 1587522548, 0),
+	(4, 2, 0, 100, '品牌咨询', '/htmll', 21, 0, 'index.html', 0, 1, -1, 1, 0, 'service.htm', 'service.html', 'service.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉', '', 'BRAND', 0, '', '', 1, 0, '', '<p>\r\n	透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉\r\n</p>\r\n<br />', '', 0, 1587434677, 0),
+	(5, 0, 0, 5, '企业文化', '/html/', 10, 0, 'index.html', 0, 1, -1, 1, 0, 'honor.html', 'honor.html', 'honor.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '联系我们联系我们联系我们<br />', '', 1581929689, 1587522550, 0),
+	(31, 1, 0, 3, '服务客户', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'list_case.html', 'list_case.html', 'view_case.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉， 让用户透过设计去体验您的品牌信息。', '', '', 0, '', '', 1, 0, '', '透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉，<br />\r\n让用户透过设计去体验您的品牌信息。', '', 1582948987, 1587522773, 0),
+	(32, 2, 0, 50, '公关传播', '/html/', 22, 0, 'index.html', 0, 1, -1, 1, 0, 'service.htm', 'service.htm', 'service.htm', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '公关传播业的方向应是文化 在华语圈内,用年度汉字来反映过去一年的焦点已经成为一种文化', '', 'SPREAD', 0, '', '', 1, 0, '', '公关传播业的方向应是文化 在华语圈内,用年度汉字来反映过去一年的焦点已经成为一种文化', '', 1587366405, 1587434665, 0),
+	(33, 2, 0, 50, '数字营销', '/html/', 23, 0, 'index.html', 0, 1, -1, 1, 0, 'service.htm', 'service.htm', 'service.htm', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '数字营销是使用数字传播渠道来推广产品和服务的实践活动，从而以一种及时、相关、定制化和节省成本的方式与消费者进行沟通', '', 'MARKET', 0, '', '', 1, 0, '', '数字营销是使用数字传播渠道来推广产品和服务的实践活动，从而以一种及时、相关、定制化和节省成本的方式与消费者进行沟通', '', 1587366446, 1587434685, 0),
+	(34, 2, 0, 50, '创意制作', '/html/', 24, 0, 'index.html', 0, 1, -1, 1, 0, 'service.htm', 'service.htm', 'service.htm', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '影视广告创意与制作两者是不可缺少的。一个好的影视广告制作要在好的创意基础上,一个好的创意也需要一个好的制作', '', 'IDEA', 0, '', '', 1, 0, '', '影视广告创意与制作两者是不可缺少的。一个好的影视广告制作要在好的创意基础上,一个好的创意也需要一个好的制作', '', 1587366470, 1587434691, 0),
+	(35, 5, 0, 50, '使命', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'honor.html', 'honor.html', 'honor.htm', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '企业确定的使命为企业确立了一个经营的基本指导思想、原则、方向、经营哲学等', '', '', 0, '', '', 1, 0, '', '企业使命是企业形象的一个颇为直接的描述。 企业生产经营的哲学定位，也就是经营观念。企业确定的使命为企业确立了一个经营的基本指导思想、原则、方向、经营哲学等，它不是企业具体的战略目标，或者是抽象地存在，不一定表述为文字，但影响经营者的决策和思维。<br />', '', 1587367032, 1587522267, 0),
+	(36, 5, 0, 50, '愿景', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'honor.html', 'honor.html', 'honor.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '企业愿景是组织在未来所能达到的一种状态的蓝图，阐述的是企业存在的最终目的。', '', '', 0, '', '', 1, 0, '', '<span>企业愿景是组织在未来所能达到的一种状态的蓝图，阐述的是企业存在的最终目的。回答的是“去哪里”的问题。愿景是关于理想的一幅独特的画面，它面向未来，可以为众人带来共同利益</span>', '', 1587367054, 1587522275, 0),
+	(37, 5, 0, 50, '价值观', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'honor.html', 'honor.html', 'honor.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '企业价值观是指企业及其员工的价值取向，是指企业在追求经营成功过程中所推崇的基本信念和奉行的目标', '', '', 0, '', '', 1, 0, '', '<em>企业价值观</em>是指<em>企业</em>及其员工的<em>价值</em>取向，是指<em>企业</em>在追求经营成功过程中所推崇的基本信念和奉行的目标。从哲学上说，<em>价值观</em>是关于对象对主体有用性的一种观念。而<em>企业价值观</em>是<em>企业</em>全体或多数员工一致赞同的关于<em>企业</em>意义的终极判断。', '', 1587367081, 1587522283, 0),
+	(38, 3, 0, 50, '2020', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'index_article.html', 'list_article.html', 'view_article.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1587370361, 1587452165, 0),
+	(39, 2, 0, 50, '活动策划', '/html/', 25, 0, 'index.html', 0, 1, -1, 1, 0, 'service.html', 'service.html', 'service.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '提高市场占有率的有效行为，一份可执行、可操作、创意突出的活动策划案，可有效提升企业的知名度及品牌美誉度', '', 'EVENT', 0, '', '', 1, 0, '', '提高市场占有率的有效行为，一份可执行、可操作、创意突出的活动策划案，可有效提升企业的知名度及品牌美誉度', '', 1587370818, 1587434701, 0),
+	(40, 3, 0, 50, '2019', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'list_article.html', 'list_article.html', 'view_article.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1587451565, 1587452176, 0),
+	(41, 1, 0, 2, '管理团队', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1587522683, 1587522772, 0),
+	(42, 1, 0, 1, '公司简介', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1587522764, 1587522769, 0);
 /*!40000 ALTER TABLE `arctype` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.book
-CREATE TABLE IF NOT EXISTS `book` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `typeid` int(16) NOT NULL COMMENT '书类别',
-  `name` varchar(256) NOT NULL COMMENT '名称',
-  `content` text NOT NULL COMMENT '介绍',
-  `pinyin` varchar(256) NOT NULL COMMENT '拼音',
-  `thumbnail` varchar(1024) NOT NULL COMMENT '缩略图',
-  `writer` varchar(256) NOT NULL COMMENT '作者',
-  `click_a` int(16) NOT NULL DEFAULT '0' COMMENT '点击总数',
-  `click_m` int(16) NOT NULL DEFAULT '0' COMMENT '点击月',
-  `click_w` int(16) NOT NULL DEFAULT '0' COMMENT '点击周',
-  `recom_a` int(16) NOT NULL DEFAULT '0' COMMENT '推荐总数',
-  `recom_m` int(16) NOT NULL DEFAULT '0' COMMENT '推荐月',
-  `recom_w` int(16) NOT NULL DEFAULT '0' COMMENT '推荐周',
-  `isaudit` tinyint(4) NOT NULL DEFAULT '0' COMMENT '审核',
-  `istop` tinyint(4) NOT NULL DEFAULT '0' COMMENT '固顶',
-  `ishot` tinyint(4) NOT NULL DEFAULT '0' COMMENT '热门',
-  `isrecom` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0=不推 1=推荐',
-  `overs` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0=为连载 1=完结',
-  `booksize` int(11) NOT NULL DEFAULT '0' COMMENT '大小',
-  `create_time` int(11) NOT NULL COMMENT '创建时间',
-  `update_time` int(11) NOT NULL COMMENT '更新时间',
-  `sys_user_id` int(11) DEFAULT '0' COMMENT '系统管理员id',
-  PRIMARY KEY (`id`),
-  KEY `typeid` (`typeid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='书本';
-
--- Dumping data for table 07fly_frame.book: 0 rows
-DELETE FROM `book`;
-/*!40000 ALTER TABLE `book` DISABLE KEYS */;
-/*!40000 ALTER TABLE `book` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.book_chap
-CREATE TABLE IF NOT EXISTS `book_chap` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `bookid` int(16) NOT NULL COMMENT '书编号',
-  `typeid` int(4) NOT NULL COMMENT '分类编号',
-  `name` varchar(256) NOT NULL DEFAULT '0',
-  `content` text NOT NULL COMMENT '内容',
-  `create_time` int(10) NOT NULL COMMENT '创建日期',
-  `update_time` int(10) NOT NULL COMMENT '更新日期',
-  `click` int(10) NOT NULL COMMENT '点击',
-  `sys_user_id` int(10) NOT NULL COMMENT '系统管理员人',
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`,`id`),
-  KEY `bookid` (`bookid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='书本章节';
-
--- Dumping data for table 07fly_frame.book_chap: 0 rows
-DELETE FROM `book_chap`;
-/*!40000 ALTER TABLE `book_chap` DISABLE KEYS */;
-/*!40000 ALTER TABLE `book_chap` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.book_type
-CREATE TABLE IF NOT EXISTS `book_type` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `typename` varchar(256) NOT NULL COMMENT '分类名称',
-  `typedir` varchar(256) NOT NULL COMMENT '目录',
-  `typetag` text NOT NULL COMMENT '分类标签',
-  `content` text NOT NULL COMMENT '内容页',
-  `sort` int(11) NOT NULL COMMENT '排序',
-  `visible` tinyint(2) NOT NULL DEFAULT '1' COMMENT '是否显示',
-  `seo_description` varchar(1024) DEFAULT NULL COMMENT 'seo描述',
-  `seo_title` varchar(256) NOT NULL COMMENT 'seo标题',
-  `seo_keywords` varchar(256) NOT NULL COMMENT 'seo关键字',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='书本分类';
-
--- Dumping data for table 07fly_frame.book_type: 8 rows
-DELETE FROM `book_type`;
-/*!40000 ALTER TABLE `book_type` DISABLE KEYS */;
-INSERT INTO `book_type` (`id`, `typename`, `typedir`, `typetag`, `content`, `sort`, `visible`, `seo_description`, `seo_title`, `seo_keywords`) VALUES
-	(1, '玄幻魔法', '/dushi', '', '', 1, 1, '提供最新玄幻魔法小说免费在线阅读，好看的玄幻魔法小说新书txt电子书免费下载，最新玄幻魔法小说排行榜', '', ''),
-	(2, '武侠修真', '/nvsheng', '武侠修真', '', 2, 1, '提供最新仙侠武侠小说免费在线阅读，好看的仙侠武侠小说新书txt电子书免费下载，最新仙侠武侠小说排行榜', '', ''),
-	(3, '都市言情', '/xhmf', '都市言情', '', 3, 1, '', '', ''),
-	(4, '历史军事', '/wuxia', '历史军事', '', 4, 1, '', '', ''),
-	(5, '网游竞技', '/lsjs', '网游竞技', '', 5, 1, '', '', ''),
-	(6, '科幻小说', '/kehuan', '科幻小说', '', 6, 1, '', '', ''),
-	(7, '恐怖灵异', '/kongbu', '恐怖灵异', '', 7, 1, '', '', ''),
-	(8, '女生小说', '/kongbu', '女生小说', '', 8, 1, '', '', '');
-/*!40000 ALTER TABLE `book_type` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.channel
+-- Dumping structure for table 20420_guanggao.channel
 CREATE TABLE IF NOT EXISTS `channel` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `nid` varchar(20) NOT NULL DEFAULT '' COMMENT '模型ID',
@@ -455,15 +372,15 @@ CREATE TABLE IF NOT EXISTS `channel` (
   KEY `nid` (`nid`,`isshow`,`arcsta`,`sendrank`)
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='频道栏目表';
 
--- Dumping data for table 07fly_frame.channel: 2 rows
+-- Dumping data for table 20420_guanggao.channel: 2 rows
 DELETE FROM `channel`;
 /*!40000 ALTER TABLE `channel` DISABLE KEYS */;
 INSERT INTO `channel` (`id`, `nid`, `name`, `maintable`, `addtable`, `addcon`, `mancon`, `editcon`, `useraddcon`, `usermancon`, `usereditcon`, `fieldset`, `listfields`, `allfields`, `issystem`, `isshow`, `issend`, `arcsta`, `usertype`, `sendrank`, `isdefault`, `needdes`, `needpic`, `titlename`, `onlyone`, `dfcid`, `create_time`, `update_time`, `sort`) VALUES
-	(1, 'article', '文章', 'archives', 'archives_article', '', '', '', '', '', '', NULL, NULL, NULL, 1, 1, 0, -1, '', 10, 0, 1, 1, '标题', 0, 0, 0, 1581774286, 0),
-	(24, 'case', '案例模块', 'archives', 'archives_case', '', '', '', '', '', '', NULL, NULL, NULL, 0, 1, 0, -1, '', 10, 0, 1, 1, '标题', 0, 0, 1581771591, 1581774343, 0);
+	(1, 'article', '文章', 'archives', 'archives_article', '', '', '', '', '', '', '', '', '', 1, 1, 0, -1, '', 10, 0, 1, 1, '标题', 0, 0, 0, 1581774286, 0),
+	(24, 'case', '案例模块', 'archives', 'archives_case', '', '', '', '', '', '', '', '', '', 0, 1, 0, -1, '', 10, 0, 1, 1, '标题', 0, 0, 1581771591, 1581774343, 0);
 /*!40000 ALTER TABLE `channel` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.channel_field
+-- Dumping structure for table 20420_guanggao.channel_field
 CREATE TABLE IF NOT EXISTS `channel_field` (
   `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
   `main_table` varchar(50) NOT NULL COMMENT '关联主表',
@@ -485,15 +402,15 @@ CREATE TABLE IF NOT EXISTS `channel_field` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='字段扩展表';
 
--- Dumping data for table 07fly_frame.channel_field: 2 rows
+-- Dumping data for table 20420_guanggao.channel_field: 2 rows
 DELETE FROM `channel_field`;
 /*!40000 ALTER TABLE `channel_field` DISABLE KEYS */;
 INSERT INTO `channel_field` (`id`, `main_table`, `ext_table`, `show_name`, `field_name`, `field_type`, `default_value`, `maxlength`, `desc`, `visible`, `is_system`, `is_must`, `sort`, `create_time`, `update_time`, `sys_user_id`, `channel_id`) VALUES
-	(17, 'archives', 'archives_article', '科室名称', 'ks_name', 'varchar', '', '250', '这是科室', 1, 0, 0, 100, 1581771540, 1584451981, 0, 1),
+	(17, 'archives', 'archives_article', '科室名称', 'ks_name', 'varchar', '', '250', '这是科室', 0, 0, 0, 100, 1581771540, 1587451836, 0, 1),
 	(18, 'archives', 'archives_case', '跳转网址', 'goto_url', 'varchar', 'http://www.baidu.com', '250', '0', 1, 0, 0, 100, 1581772028, 1581772050, 0, 24);
 /*!40000 ALTER TABLE `channel_field` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.config
+-- Dumping structure for table 20420_guanggao.config
 CREATE TABLE IF NOT EXISTS `config` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '配置ID',
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT '配置名称',
@@ -504,31 +421,31 @@ CREATE TABLE IF NOT EXISTS `config` (
   `describe` varchar(255) NOT NULL DEFAULT '' COMMENT '配置说明',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+  `visible` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否启用',
   `value` text NOT NULL COMMENT '配置值',
   `sort` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_name` (`name`),
   KEY `type` (`type`),
   KEY `group` (`group`)
-) ENGINE=MyISAM AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COMMENT='配置表';
+) ENGINE=MyISAM AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COMMENT='配置表';
 
--- Dumping data for table 07fly_frame.config: 26 rows
+-- Dumping data for table 20420_guanggao.config: 27 rows
 DELETE FROM `config`;
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
-INSERT INTO `config` (`id`, `name`, `type`, `title`, `group`, `extra`, `describe`, `create_time`, `update_time`, `status`, `value`, `sort`) VALUES
-	(1, 'seo_title', 1, '网站标题', 1, '', '网站标题前台显示标题，优先级低于SEO模块', 1378898976, 1582529043, 1, '零起飞网络', 3),
-	(2, 'seo_description', 2, '网站描述', 1, '', '网站搜索引擎描述，优先级低于SEO模块', 1378898976, 1578902705, 1, '07fly', 100),
-	(3, 'seo_keywords', 2, '网站关键字', 1, '', '网站搜索引擎关键字，优先级低于SEO模块', 1378898976, 1582529043, 1, '07fly', 99),
-	(9, 'config_type_list', 3, '配置类型列表', 3, '', '主要用于数据解析和页面表单的生成', 1378898976, 1581073821, 1, '0:数字\r\n1:字符\r\n2:文本\r\n3:数组\r\n4:枚举\r\n5:图片\r\n6:文件\r\n7:富文本\r\n8:单选\r\n9:多选\r\n10:日期\r\n11:时间\r\n12:颜色', 100),
-	(20, 'config_group_list', 3, '配置分组', 3, '', '配置分组', 1379228036, 1581073821, 1, '1:基础\r\n2:数据\r\n3:系统\r\n4:API', 100),
+INSERT INTO `config` (`id`, `name`, `type`, `title`, `group`, `extra`, `describe`, `create_time`, `update_time`, `visible`, `value`, `sort`) VALUES
+	(1, 'title', 1, '系统标题', 1, '', '网站标题前台显示标题，优先级低于SEO模块', 1378898976, 1587723785, 1, '零起飞网络', 3),
+	(2, 'description', 2, '系统描述', 1, '', '网站搜索引擎描述，优先级低于SEO模块', 1378898976, 1587723796, 1, '07fly', 100),
+	(3, 'keywords', 2, '系统关键字', 1, '', '网站搜索引擎关键字，优先级低于SEO模块', 1378898976, 1587723819, 1, '07fly', 99),
+	(9, 'config_type_list', 3, '配置类型列表', 3, '', '主要用于数据解析和页面表单的生成', 1378898976, 1587614212, 1, '0:数字\r\n1:字符\r\n2:文本\r\n3:数组\r\n4:枚举\r\n5:图片\r\n6:文件\r\n7:富文本\r\n8:单选\r\n9:多选\r\n10:日期\r\n11:时间\r\n12:颜色', 100),
+	(20, 'config_group_list', 3, '配置分组', 3, '', '配置分组', 1379228036, 1587614212, 1, '1:基础\r\n2:数据\r\n3:系统\r\n4:API', 100),
 	(25, 'list_rows', 0, '每页数据记录数', 2, '', '数据每页显示记录数', 1379503896, 1578896156, 1, '10', 10),
 	(29, 'data_backup_part_size', 0, '数据库备份卷大小', 2, '', '该值用于限制压缩后的分卷最大长度。单位：B', 1381482488, 1578895496, 1, '52428800', 7),
 	(30, 'data_backup_compress', 4, '数据库备份文件是否启用压缩', 2, '0:不压缩\r\n1:启用压缩', '压缩备份文件需要PHP环境支持gzopen,gzwrite函数', 1381713345, 1578895496, 1, '1', 9),
 	(31, 'data_backup_compress_level', 4, '数据库备份文件压缩级别', 2, '1:普通\r\n4:一般\r\n9:最高', '数据库备份文件的压缩级别，该配置在开启压缩时生效', 1381713408, 1578895496, 1, '9', 10),
-	(33, 'allow_url', 3, '不受权限验证的url', 3, '', '', 1386644047, 1581073821, 1, '0:file/pictureupload\r\n1:addon/execute\r\n2:admin/index/index\r\n3:admin/index/main', 100),
+	(33, 'allow_url', 3, '不受权限验证的url', 3, '', '', 1386644047, 1587614212, 1, '0:file/pictureupload\r\n1:addon/execute\r\n2:admin/index/index\r\n3:admin/index/main\r\n4:index/main', 100),
 	(43, 'empty_list_describe', 1, '数据列表为空时的描述信息', 2, '', '', 1492278127, 1578895496, 1, 'aOh! 暂时还没有数据~', 0),
-	(44, 'trash_config', 3, '回收站配置', 3, '', 'key为模型名称，值为显示列。', 1492312698, 1581073821, 1, 'Config:name\r\nAuthGroup:name\r\nMember:nickname\r\nMenu:name\r\nArticle:name\r\nArticleCategory:name\r\nAddon:name\r\nPicture:name\r\nFile:name\r\nActionLog:describe\r\nApi:name\r\nApiGroup:name\r\nBlogroll:name\r\nExeLog:exe_url\r\nSeo:name', 0),
+	(44, 'trash_config', 3, '回收站配置', 3, '', 'key为模型名称，值为显示列。', 1492312698, 1587614212, 1, 'Config:name\r\nAuthGroup:name\r\nMember:nickname\r\nMenu:name\r\nArticle:name\r\nArticleCategory:name\r\nAddon:name\r\nPicture:name\r\nFile:name\r\nActionLog:describe\r\nApi:name\r\nApiGroup:name\r\nBlogroll:name\r\nExeLog:exe_url\r\nSeo:name', 0),
 	(49, 'static_domain', 1, '静态资源域名', 1, '', '若静态资源为本地资源则此项为空，若为外部资源则为存放静态资源的域名', 1502430387, 1583981308, 1, '', 2),
 	(52, 'team_developer', 3, '研发团队人员', 4, '', '', 1504236453, 1582430537, 1, '0:零起飞\r\n1:开发人生', 0),
 	(53, 'api_status_option', 3, 'API接口状态', 4, '', '', 1504242433, 1582430537, 1, '0:待研发\r\n1:研发中\r\n2:测试中\r\n3:已完成', 0),
@@ -537,1459 +454,16 @@ INSERT INTO `config` (`id`, `name`, `type`, `title`, `group`, `extra`, `describe
 	(56, 'api_domain', 1, 'API部署域名', 4, '', '', 1504779094, 1582430537, 1, 'https://demo.07fly.org', 0),
 	(57, 'api_key', 0, 'API加密KEY', 4, '', '泄露后API将存在安全隐患', 1505302112, 1582430779, 1, 'l2V|gfZp{8`;jzR~6Y1_', 0),
 	(58, 'loading_icon', 4, '页面Loading图标设置', 1, '1:图标1\r\n2:图标2\r\n3:图标3\r\n4:图标4\r\n5:图标5\r\n6:图标6\r\n7:图标7', '页面Loading图标支持7种图标切换', 1505377202, 1582529044, 1, '7', 80),
-	(59, 'sys_file_field', 3, '文件字段配置', 3, '', 'key为模型名，值为文件列名。', 1505799386, 1581073821, 1, '0_article:file_id', 0),
-	(60, 'sys_picture_field', 0, '图片字段配置', 3, '', 'key为模型名，值为图片列名。', 1506315422, 1582430790, 1, '0_article:cover_id\r\n1_article:img_ids', 0),
-	(61, 'jwt_key', 0, 'JWT加密KEY', 3, '', '', 1506748805, 1582430802, 1, 'l2V|DSFXXXgfZp{8`;FjzR~6Y1_', 0),
-	(64, 'is_write_exe_log', 4, '是否写入执行记录', 3, '0:否\r\n1:是', '', 1510544340, 1581073821, 1, '1', 101),
-	(65, 'admin_allow_ip', 2, '超级管理员登录IP', 3, '', '后台超级管理员登录IP限制，其他角色不受限。', 1510995580, 1582430869, 1, '0:27.22.112.250', 0),
-	(66, 'pjax_mode', 8, 'PJAX模式', 3, '0:否\r\n1:是', '若为PJAX模式则浏览器不会刷新，若为常规模式则为AJAX+刷新', 1512370397, 1512982406, 1, '1', 120);
+	(59, 'sys_file_field', 3, '文件字段配置', 3, '', 'key为模型名，值为文件列名。', 1505799386, 1587614212, 1, '0_article:file_id', 0),
+	(60, 'sys_picture_field', 0, '图片字段配置', 3, '', 'key为模型名，值为图片列名。', 1506315422, 1587614212, 1, '0_article:cover_id1_article:img_ids', 0),
+	(61, 'jwt_key', 0, 'JWT加密KEY', 3, '', '', 1506748805, 1587614212, 1, 'l2V|DSFXXXgfZp{8`;FjzR~6Y1_', 0),
+	(64, 'is_write_exe_log', 4, '是否写入执行记录', 3, '0:否\r\n1:是', '', 1510544340, 1587614212, 1, '1', 101),
+	(65, 'admin_allow_ip', 2, '超级管理员登录IP', 3, '', '后台超级管理员登录IP限制，其他角色不受限。', 1510995580, 1587614212, 1, '0:27.22.112.250', 0),
+	(66, 'pjax_mode', 8, 'PJAX模式', 3, '0:否\r\n1:是', '若为PJAX模式则浏览器不会刷新，若为常规模式则为AJAX+刷新', 1512370397, 1512982406, 1, '1', 120),
+	(69, '121212', 3, '1212', 0, '', '', 1587720082, 0, 1, '', 0);
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.cst_chance
-CREATE TABLE IF NOT EXISTS `cst_chance` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL COMMENT '主题',
-  `customer_id` int(16) NOT NULL COMMENT '客户编号',
-  `linkman_id` varchar(256) NOT NULL COMMENT '联系人信息',
-  `find_date` date NOT NULL COMMENT '发现时间',
-  `bill_date` date NOT NULL COMMENT '预计签单时间',
-  `salestage` varchar(50) NOT NULL DEFAULT '' COMMENT '谈判状态',
-  `estimate_money` int(11) NOT NULL COMMENT '预计金额',
-  `success_rate` int(2) NOT NULL COMMENT '预计可能性成功率',
-  `link_time` datetime NOT NULL COMMENT '联系时间',
-  `next_time` datetime NOT NULL COMMENT '下次联系时间',
-  `needs` text NOT NULL COMMENT '需求',
-  `status` smallint(1) NOT NULL DEFAULT '1' COMMENT '机会状态1=初步洽谈 2=深入沟通 3=产品报价 4=成交商机 5=流失商机',
-  `owner_user_id` int(16) NOT NULL DEFAULT '0',
-  `create_user_id` int(16) NOT NULL DEFAULT '0',
-  `create_time` int(11) NOT NULL DEFAULT '0',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `org_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='销售机会';
-
--- Dumping data for table 07fly_frame.cst_chance: 21 rows
-DELETE FROM `cst_chance`;
-/*!40000 ALTER TABLE `cst_chance` DISABLE KEYS */;
-INSERT INTO `cst_chance` (`id`, `name`, `customer_id`, `linkman_id`, `find_date`, `bill_date`, `salestage`, `estimate_money`, `success_rate`, `link_time`, `next_time`, `needs`, `status`, `owner_user_id`, `create_user_id`, `create_time`, `update_time`, `org_id`) VALUES
-	(5, '第一次报价', 11, '61', '2017-01-17', '2017-01-12', '初期沟通', 57, 56, '2020-04-01 09:45:56', '2020-05-01 09:45:56', '网站需要改版', 1, 1, 4, 2017, 1586828802, 0),
-	(9, '初次沟通发了报价', 10, '60', '2017-04-01', '2017-04-01', '38', 20000, 30, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '初次沟通了意见，让发了一个报价单', 3, 1, 4, 2017, 0, 0),
-	(10, '见面沟通准备素材', 13, '68', '2017-05-15', '2017-05-22', '43', 5000, 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '见面沟通，提供了首页初稿，客户需要做准备相关素材，说是准备好之后联系', 1, 1, 4, 2017, 0, 0),
-	(11, '初次沟通需出初稿', 16, '64', '2017-05-15', '2017-05-31', '38', 6000, 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '初次见面沟通之后，提供相关素材，需要设计初稿', 3, 1, 4, 2017, 0, 0),
-	(12, '计费今天联系，跟客户面谈', 16, '64', '2017-06-16', '2017-06-21', '41', 5000, 60, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '要求太多，然后经手人不怎么联系', 3, 1, 4, 2017, 0, 0),
-	(13, '需要微信h5支付功能', 13150, '81', '2017-08-20', '2017-08-26', '38', 100, 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 2, 1, 4, 2017, 0, 0),
-	(14, '开发家政企业网站', 13151, '82', '2017-08-18', '2017-08-30', '43', 8000, 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '开发家政企业网站，需要微信支付功能，\r\n想做个网站把公司所有服务类别都放到网上，客户可以在网上预约购买下单。长期需要的可以充值会员，是值会员是充钱进去看到的是多少小时或好多次，会员客户再通过网络预约服务和支付服务的消费次数或时间。公司能够会访管理', 2, 1, 4, 2017, 0, 0),
-	(15, '机械租赁网站', 13153, '84', '2017-10-09', '2017-10-23', '38', 2000, 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '机械租赁网站，需要产品展示就可以了，', 4, 1, 4, 2017, 0, 0),
-	(16, '需要出一个方案', 13157, '88', '2018-03-01', '2018-03-31', '38', 500, 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 1, 4, 2018, 0, 0),
-	(17, '主题是什么', 13180, '111', '2018-03-29', '2018-03-31', '39', 500, 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 2, 1, 4, 2018, 0, 0),
-	(21, ' 健康咨询系统开发', 13156, '87', '2019-06-01', '2019-06-06', '42', 7000, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '主要是做一个问答系统，根据客户答案给出相应的结果分析', 1, 1, 1, 2019, 0, 0),
-	(20, '测试联系人', 1, '62', '2019-01-01', '2018-12-29', '39', 100, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '还不错哟', 1, 1, 4, 2018, 0, 0),
-	(22, '需要企业小程序', 13322, '142', '2019-06-04', '2019-06-30', '38', 2000, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '客户需要一个企业展示的小程序，客户家具行业', 1, 1, 1, 2019, 0, 0),
-	(23, '五金机械网站改版', 13324, '144', '2019-06-18', '2019-06-30', '38', 2800, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '主要是客户需要改片，不需要考虑他，按成本价格报价', 1, 1, 1, 2019, 0, 0),
-	(24, '好唱戏，输入销售机会标题', 13325, '145', '2020-03-29', '2020-04-03', '0', 1000, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '好唱戏，输入销售机会标题', 1, 1, 1, 1585450596, 0, 0),
-	(25, '好唱戏，输入销售机会标题', 13325, '145', '2020-03-29', '2020-04-03', '0', 1000, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '好唱戏，输入销售机会标题', 1, 1, 1, 1585450620, 0, 0),
-	(26, '好唱戏，输入销售机会标题', 13325, '145', '2020-03-29', '2020-04-03', '', 1000, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '好唱戏，输入销售机会标题', 1, 1, 0, 1585451165, 0, 0),
-	(27, '这是第二条信息了', 13325, '145', '2020-03-29', '2020-04-03', '初期沟通', 1000, 0, '2020-04-09 14:26:26', '0000-00-00 00:00:00', '好唱戏，输入销售机会标题', 1, 83, 1, 1585451245, 1586413939, 0),
-	(28, '测试一条信息', 13324, '144', '2020-03-29', '2020-04-03', '初期沟通', 1000, 0, '2020-03-29 12:56:57', '0000-00-00 00:00:00', '好唱戏，输入销售机会标题', 1, 83, 1, 1585451403, 1585457817, 0),
-	(29, '好唱戏，输入销售机会标题', 13325, '145', '2020-03-29', '2020-04-03', '初期沟通', 1000, 0, '2020-03-28 11:10:29', '0000-00-00 00:00:00', '好唱戏，输入销售机会标题', 1, 83, 1, 1585451429, 0, 0),
-	(30, '广告公司官网建设', 13333, '154', '2020-04-14', '2020-04-17', '商务谈判', 3000, 0, '2020-04-16 10:50:48', '2020-04-17 22:55:48', '制作一公司官网，广告公司行业的', 1, 1, 1, 1586829129, 1587110203, 0);
-/*!40000 ALTER TABLE `cst_chance` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_customer
-CREATE TABLE IF NOT EXISTS `cst_customer` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL COMMENT '客户名称',
-  `customer_no` varchar(64) NOT NULL COMMENT '客户编号',
-  `create_user_id` int(16) NOT NULL COMMENT '创建人员',
-  `owner_user_id` int(16) NOT NULL COMMENT '归属人员，0=为公海客户，-1=垃圾客户',
-  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `next_time` datetime NOT NULL COMMENT '下次沟通时间',
-  `link_time` datetime NOT NULL COMMENT '最近联系时间',
-  `link_body` varchar(1024) NOT NULL COMMENT '最近沟通内容',
-  `source` varchar(250) DEFAULT NULL COMMENT '客户来源',
-  `level` varchar(250) DEFAULT NULL COMMENT '客户等级',
-  `industry` varchar(250) DEFAULT NULL COMMENT '客户行业',
-  `customerstatus` varchar(50) DEFAULT NULL COMMENT '客户状态',
-  `linkman` varchar(250) DEFAULT NULL COMMENT '客户代表',
-  `mobile` varchar(250) DEFAULT NULL COMMENT '联系手机',
-  `tel` varchar(250) DEFAULT NULL COMMENT '联系电话',
-  `address` varchar(250) DEFAULT NULL COMMENT '联系地址',
-  `intro` varchar(250) DEFAULT NULL COMMENT '客户介绍',
-  `org_id` int(11) DEFAULT '0' COMMENT '组织id',
-  `openstatus` int(11) DEFAULT '0' COMMENT '公开，-1=垃圾客户，0=公海，1=私用',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13339 DEFAULT CHARSET=utf8 COMMENT='客户信息表';
-
--- Dumping data for table 07fly_frame.cst_customer: 47 rows
-DELETE FROM `cst_customer`;
-/*!40000 ALTER TABLE `cst_customer` DISABLE KEYS */;
-INSERT INTO `cst_customer` (`id`, `name`, `customer_no`, `create_user_id`, `owner_user_id`, `create_time`, `update_time`, `next_time`, `link_time`, `link_body`, `source`, `level`, `industry`, `customerstatus`, `linkman`, `mobile`, `tel`, `address`, `intro`, `org_id`, `openstatus`) VALUES
-	(1, '零起飞网络', '', 1, 0, 2013, 1585055549, '2019-06-27 00:00:00', '2019-06-18 00:00:00', '顶替阿斯蒂芬', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, -1),
-	(13174, '成都标筑广告有限公司', '', 1, 1, 2018, 1585054486, '0000-00-00 00:00:00', '2018-12-28 17:04:14', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(9, '成都元康餐饮有限公司', '', 1, 0, 2017, 1585055549, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, -1),
-	(10, '泰国香米电商网', '', 1, 0, 2017, 1585055549, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, -1),
-	(11, '富机电梯', '', 1, 1, 2017, 1586828802, '2020-05-01 09:45:56', '2020-04-01 09:45:56', '', 'source', 'VIP客户', '服务行业', '正式客户', '富机美女', '18030402705', NULL, NULL, '', NULL, 1),
-	(12, '金福机电维修中心', '', 1, 1, 2017, 1585053896, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13, '四川堰汇建筑劳务公司', '', 1, 1, 2017, 1585053896, '2019-06-25 09:40:59', '2019-06-18 09:45:23', '续费先垫着，下周回来处理联系的', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(16, '成都博美医疗用品有限公司', '', 1, 1, 2017, 1585053896, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(17, '东泰劳务公司', '', 1, 1, 2017, 1585053896, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(18, '成都康博特升降机有限公司', '', 1, 1, 2017, 1585053896, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13160, '马总', '', 1, 0, 2018, 1585385319, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-	(232, '尚美居装饰公司', '', 1, 1, 2017, 1585053896, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(254, '成都直线广告', '', 1, 1, 2017, 1585053896, '2019-06-17 15:20:03', '2019-06-10 08:20:03', '主要是把合作做了，等待申请款项', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13323, '张哥-客户软件定制', '', 1, 0, 2019, 1585385307, '2019-06-28 11:45:42', '2019-06-18 11:45:42', '在忙等待修改合同，说是忙过了后联系的', '网络', '普通客户', '互联网企业', NULL, '张哥', '13388163363', '13388163363', '天府二街天翔广场B座601 ', '需要做一个CRM系统，订做一款 报销 审批，然后客户管理的一套', NULL, 0),
-	(274, '铭丰资本', '', 1, 1, 2017, 1585053896, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(289, '成都瞳创广告', '', 1, 1, 2017, 1585053896, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(295, '正全农业', '', 1, 1, 2017, 1585053896, '2019-03-26 09:00:25', '0000-00-00 00:00:00', '考虑在天猫，淘宝，阿里，拼多多，自媒体，这几个平台上，前期做一块，看看效果，主要是考虑投入', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(967, '周记拔丝蛋糕', '', 1, 0, 2017, 1587110384, '2019-01-04 15:45:49', '2019-01-03 15:45:49', '沟通网站续费的事，晚上回复我的', 'source', '一般客户', '消费品企业', '流失客户', '1', '1', NULL, NULL, '已经不做了', NULL, 0),
-	(13150, 'BonYunStudio-006', '', 1, 1, 2017, 1585053889, '0000-00-00 00:00:00', '2019-05-15 19:58:54', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13151, '成都群泓信息技术有限公司', '', 1, 1, 2017, 1585053889, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13152, '四川高坝餐饮', '', 1, 1, 2017, 1585053889, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13153, '罗先生', '', 1, 0, 2017, 1585385360, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-	(13154, '成都市天天好广告有限公司 ', '', 1, 1, 2017, 1585053889, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13155, '成都市锦城老妈餐饮管理有限公司', '', 1, 1, 2017, 1585053889, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13156, '零起点形象设计', '', 1, 1, 2017, 1585053889, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13157, '恐龙产品行业', '', 1, 1, 2018, 1585053889, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13158, '中越之家手机站', '', 1, 0, 2018, 1585385339, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-	(13159, '股票网站', '', 1, 0, 2018, 1587110356, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, -1),
-	(13161, '四川足博仕鞋业有限公司', '', 1, 1, 2018, 1585053013, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13162, '古铁锋', '', 1, 1, 2018, 1585053013, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13163, '知行天下旅游', '', 1, 1, 2018, 1585053013, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13168, '成都零起飞科技00', '', 1, 1, 2018, 1585053013, '2019-05-31 00:00:00', '0000-00-00 00:00:00', 'p这是来测试大家的还是，今年的行情不是怎么好，程序应该怎么办呢', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13175, '车险-CRM定制', '', 1, 1, 2019, 1585053013, '0000-00-00 00:00:00', '2019-03-12 16:44:53', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13176, '仿制网站-王先生', '', 1, 1, 2019, 1585053013, '2019-07-01 11:45:45', '2019-06-23 11:45:45', '需要做一个关于推广页收付款，带后台，报价大概就600块钱', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(13320, '李健', '', 1, 1, 2019, 1585053013, '2019-07-06 00:00:00', '2019-06-19 00:00:00', '', '网络', '重点客户', '互联网企业', NULL, '李健', '13265551113', '13265551113', '沿海', '主要是做互联网的客户', NULL, 1),
-	(13321, '李昉鑫', '', 1, 1, 2019, 1585052996, '2019-06-05 00:00:00', '2019-05-29 00:00:00', '客户想找一个本地的开发，说后面有需求联系', '网络', '一般客户', '互联网企业', NULL, '李昉鑫', '17730941006', '', '湖南', '', NULL, 1),
-	(13322, '丹妹子', '', 1, 0, 2019, 1585385311, '0000-00-00 00:00:00', '2020-03-10 11:28:38', '客户有可能不做了，看了案例不理想估计是不想做了', '网络', '重点客户', '互联网企业', NULL, '丹妹子', '', '', '', '主要是之前网络业务员', NULL, 0),
-	(13324, '杨大国', '', 1, 1, 2019, 1586829309, '2019-06-25 10:05:14', '2019-06-18 10:08:23', '主要介绍了网站的给了成本价格为2500，客户咨询了推广，报了霸屏产品为9800元', '', 'VIP客户', '服务行业', '正式客户', '杨大国', '13908054700', '13908054700', '', '主要是作机械设备的，以前是做程序的', NULL, 1),
-	(13325, '熊猫兼兼', '', 1, 1, 2019, 1586829296, '0000-00-00 00:00:00', '2020-04-09 14:26:26', '', '', '一般客户', '互联网企业', '正式客户', '黄阳', '15828665472', '15828665472', '', '做兼职行业的', NULL, 1),
-	(13326, '巨能汽车销售', '', 1, 1, 2019, 1586829356, '0000-00-00 00:00:00', '2019-07-14 21:02:25', '', 'source', '一般客户', '互联网企业', '正式客户', '李静', '17323287203', '', '', 'QQ:359211294', NULL, 1),
-	(13327, '吉庆实业发展有限公司', '', 1, 1, 2019, 1585052671, '0000-00-00 00:00:00', '2019-08-16 10:54:18', '', '客户介绍', '普通客户', '原材料企业', NULL, '王吉兵', '13908091180', '', '', '护栏网行业网站改版升级', NULL, 1),
-	(13328, '四川旭兴建筑有限公司', '', 1, 1, 2019, 1585052671, '0000-00-00 00:00:00', '2019-09-07 11:52:15', '', '客户介绍', '一般客户', '服务行业', NULL, '徐铭', '18981717063', '', '', '周亮之前客户介绍过来 的', NULL, 1),
-	(13329, '谢文星', '', 1, 1, 2019, 1585052671, '2019-09-09 08:39:38', '2019-09-08 08:35:15', '已经提交测试版本的，等待测试结果', '网络', '普通客户', '互联网企业', NULL, '谢文星', '18910839620', '', '', '网络找来的', NULL, 1),
-	(13330, '唰呀支付', '', 1, 1, 2019, 1585052671, '0000-00-00 00:00:00', '2019-12-28 10:12:21', '', 'source', '一般客户', '互联网企业', '正式客户', '李冰', '18030402705', '', '', '', NULL, 1),
-	(13331, '多测测', '', 1, 1, 2020, 1585052671, '0000-00-00 00:00:00', '2020-01-15 15:30:27', '', '', '', '互联网企业', '正式客户', '陈先生-CRM授权客户', '180', '', '', '', NULL, 1),
-	(13332, '北京铁道部', '', 1, 1, 2020, 1585053821, '0000-00-00 00:00:00', '2020-01-15 15:37:56', '', '', '白银客户', '互联网企业', '正式客户', '彭回成', '13911239863', '', '', '', NULL, 1),
-	(13333, '张家奥', '', 1, 1, 1586828951, 1587110203, '2020-04-17 22:55:48', '2020-04-16 10:50:48', '', 'source', 'VIP客户', '互联网企业', '正式客户', '张家奥', '13438800605', NULL, NULL, '主要是做软件开发的', 0, 1),
-	(13334, '四川大光明城市照明工程有限公', '', 1, 1, 1587112564, 1587113957, '2020-04-27 12:55:39', '2020-04-17 16:58:43', '上六签定合同了', 'source', '一般客户', '科技行业', '正式客户', '雷琳莉', '1812195656', NULL, NULL, '', 0, 1);
-/*!40000 ALTER TABLE `cst_customer` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_dict
-CREATE TABLE IF NOT EXISTS `cst_dict` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL COMMENT '名字',
-  `typetag` varchar(256) NOT NULL COMMENT '分类标识',
-  `sort` smallint(8) NOT NULL,
-  `visible` smallint(2) NOT NULL,
-  `org_id` int(11) NOT NULL DEFAULT '0',
-  `create_time` int(11) NOT NULL DEFAULT '0',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=73 DEFAULT CHARSET=utf8 COMMENT='字典表';
-
--- Dumping data for table 07fly_frame.cst_dict: 50 rows
-DELETE FROM `cst_dict`;
-/*!40000 ALTER TABLE `cst_dict` DISABLE KEYS */;
-INSERT INTO `cst_dict` (`id`, `name`, `typetag`, `sort`, `visible`, `org_id`, `create_time`, `update_time`) VALUES
-	(1, 'VIP客户', 'level', 3, 1, 0, 0, 0),
-	(23, '一般客户', 'level', 4, 1, 0, 0, 0),
-	(24, '工业品企业', 'industry', 1, 1, 0, 0, 0),
-	(25, '国有经济', 'ecotype', 1, 1, 0, 0, 0),
-	(26, '集体经济', 'ecotype', 2, 1, 0, 0, 0),
-	(27, '私营经济', 'ecotype', 3, 1, 0, 0, 0),
-	(28, '个体经济', 'ecotype', 4, 1, 0, 0, 0),
-	(29, '联营经济', 'ecotype', 5, 1, 0, 0, 0),
-	(30, '股份制经济', 'ecotype', 6, 1, 0, 0, 0),
-	(31, '外商投资经济', 'ecotype', 7, 1, 0, 0, 0),
-	(32, '港澳台投资经济', 'ecotype', 8, 1, 0, 0, 0),
-	(33, '其它经济', 'ecotype', 9, 1, 0, 0, 0),
-	(34, '客户介绍', 'source', 1, 1, 0, 0, 0),
-	(35, '电话来访', 'source', 2, 1, 0, 0, 0),
-	(36, '独立开发', 'source', 3, 1, 0, 0, 0),
-	(37, '电话', 'salemode', 1, 1, 0, 0, 0),
-	(38, '初期沟通', 'salestage', 3, 0, 0, 0, 0),
-	(39, '立项评估', 'salestage', 2, 0, 0, 0, 0),
-	(40, '需求分析', 'salestage', 3, 0, 0, 0, 0),
-	(41, '方案制定', 'salestage', 4, 0, 0, 0, 0),
-	(42, '商务谈判', 'salestage', 5, 0, 0, 0, 0),
-	(43, '合同签订', 'salestage', 6, 0, 0, 0, 0),
-	(44, '失单', 'salestage', 7, 0, 0, 0, 0),
-	(45, '投诉', 'services', 1, 1, 0, 0, 0),
-	(46, '培训', 'services', 2, 1, 0, 0, 0),
-	(47, '升级', 'services', 3, 1, 0, 0, 0),
-	(48, '互联网企业', 'industry', 1, 1, 0, 0, 0),
-	(49, '电话 ', 'servicesmodel', 1, 1, 0, 0, 0),
-	(50, 'QQ', 'servicesmodel', 2, 1, 0, 0, 0),
-	(51, '服务行业', 'industry', 1, 1, 0, 0, 0),
-	(52, '网络资源', 'source', 4, 1, 0, 0, 0),
-	(53, '上门', 'salemode', 2, 1, 0, 0, 0),
-	(54, '维护', 'services', 4, 1, 0, 0, 0),
-	(55, '现场', 'servicesmodel', 3, 1, 0, 0, 0),
-	(56, '邮寄', 'salemode', 3, 1, 0, 0, 0),
-	(57, '网络', 'salemode', 4, 1, 0, 0, 0),
-	(58, '网络', 'servicesmodel', 4, 1, 0, 0, 0),
-	(59, '消费品企业', 'industry', 1, 1, 0, 0, 0),
-	(60, '原材料企业', 'industry', 1, 1, 0, 0, 0),
-	(61, '农业企业', 'industry', 1, 1, 0, 0, 0),
-	(63, '不需要', 'talk', 2, 1, 0, 0, 0),
-	(64, '挂了', 'talk', 3, 1, 0, 0, 0),
-	(65, '空号', 'talk', 4, 1, 0, 0, 0),
-	(66, '加微信号', 'talk', 5, 1, 0, 0, 0),
-	(67, '白银客户', 'level', 0, 1, 0, 0, 1584783815),
-	(68, '钻石客户', 'level', 0, 1, 0, 0, 1584784566),
-	(69, '科技行业', 'industry', 100, 1, 0, 1584784813, 1584784861),
-	(70, '正式客户', 'customerstatus', 100, 1, 0, 1584784813, 1584784861),
-	(71, '跟进客户', 'customerstatus', 100, 1, 0, 1586829262, 1586829277),
-	(72, '流失客户', 'customerstatus', 100, 1, 0, 1586829273, 1586829277);
-/*!40000 ALTER TABLE `cst_dict` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_dict_type
-CREATE TABLE IF NOT EXISTS `cst_dict_type` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL COMMENT '分类名称',
-  `typetag` text NOT NULL COMMENT '分类标识',
-  `sort` int(11) NOT NULL COMMENT '排序',
-  `visible` tinyint(2) NOT NULL DEFAULT '1' COMMENT '是否启用',
-  `desc` varchar(1024) DEFAULT NULL,
-  `org_id` int(11) DEFAULT '0',
-  `create_time` int(11) DEFAULT '0',
-  `update_time` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='字典分类';
-
--- Dumping data for table 07fly_frame.cst_dict_type: 9 rows
-DELETE FROM `cst_dict_type`;
-/*!40000 ALTER TABLE `cst_dict_type` DISABLE KEYS */;
-INSERT INTO `cst_dict_type` (`id`, `name`, `typetag`, `sort`, `visible`, `desc`, `org_id`, `create_time`, `update_time`) VALUES
-	(1, '客户等级', 'level', 2, 1, NULL, NULL, 0, 1584773395),
-	(2, '隶属行业', 'industry', 0, 1, '', NULL, 0, 1584773978),
-	(3, '经济类型', 'ecotype', 0, 1, NULL, NULL, 0, 0),
-	(4, '客户来源', 'source', 0, 1, NULL, NULL, 0, 0),
-	(5, '销售方式', 'salemode', 0, 1, NULL, NULL, 0, 0),
-	(6, '销售阶段', 'salestage', 0, 1, NULL, NULL, 0, 0),
-	(7, '服务类型', 'services', 0, 1, NULL, NULL, 0, 0),
-	(8, '客户服务方式', 'servicesmodel', 0, 1, '', NULL, 0, 1584774007),
-	(9, '客户状态', 'customerstatus', 0, 1, '', NULL, 0, 1584774007);
-/*!40000 ALTER TABLE `cst_dict_type` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_field_ext
-CREATE TABLE IF NOT EXISTS `cst_field_ext` (
-  `field_ext_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `main_table` varchar(50) NOT NULL COMMENT '关联主表',
-  `ext_table` varchar(50) NOT NULL COMMENT '扩展表名',
-  `show_name` varchar(256) NOT NULL COMMENT '字段表单名称',
-  `field_name` varchar(256) NOT NULL COMMENT '字段名称',
-  `field_type` varchar(50) NOT NULL COMMENT '单文本=varchar,文本=text,多行文本=textarea,整数=int,小数=float,图片=img,下拉=option,单选=radio,复选=checkbox',
-  `default` varchar(256) NOT NULL COMMENT '字段默认值',
-  `maxlength` varchar(256) NOT NULL COMMENT '最大值',
-  `desc` varchar(256) NOT NULL COMMENT '表单说明',
-  `visible` smallint(1) NOT NULL DEFAULT '1' COMMENT '是否使用',
-  `is_system` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否为系统字段，1=是（不能删除）0=否',
-  `is_must` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否改填',
-  `sort` int(16) NOT NULL DEFAULT '0' COMMENT '显示排序',
-  `create_time` datetime NOT NULL,
-  `create_user_id` int(16) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`field_ext_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='客户字段扩展表';
-
--- Dumping data for table 07fly_frame.cst_field_ext: 8 rows
-DELETE FROM `cst_field_ext`;
-/*!40000 ALTER TABLE `cst_field_ext` DISABLE KEYS */;
-INSERT INTO `cst_field_ext` (`field_ext_id`, `main_table`, `ext_table`, `show_name`, `field_name`, `field_type`, `default`, `maxlength`, `desc`, `visible`, `is_system`, `is_must`, `sort`, `create_time`, `create_user_id`) VALUES
-	(2, 'cst_customer', 'cst_customer', '客户代表', 'linkman', 'varchar', '', '250', '', 1, 1, 1, 0, '2019-05-28 12:15:19', 1),
-	(3, 'cst_customer', 'cst_customer', '客户来源', 'source', 'option', '网络,客户介绍,主动开发', '250', '', 1, 1, 1, 0, '2019-05-28 12:16:35', 1),
-	(4, 'cst_customer', 'cst_customer', '客户等级', 'grade', 'option', '普通客户,一般客户,重点客户', '250', '', 1, 1, 1, 0, '2019-05-28 12:17:40', 1),
-	(5, 'cst_customer', 'cst_customer', '客户行业', 'industry', 'option', '互联网企业,服务行业,原材料企业', '250', '', 1, 1, 1, 0, '2019-05-28 12:19:04', 1),
-	(6, 'cst_customer', 'cst_customer', '联系手机', 'mobile', 'varchar', '', '250', '', 1, 1, 1, 0, '2019-05-28 12:20:17', 1),
-	(7, 'cst_customer', 'cst_customer', '联系电话', 'tel', 'varchar', '', '250', '', 1, 1, 1, 0, '2019-05-28 12:20:25', 1),
-	(8, 'cst_customer', 'cst_customer', '联系地址', 'address', 'varchar', '', '250', '', 1, 1, 1, 0, '2019-05-28 12:20:33', 1),
-	(9, 'cst_customer', 'cst_customer', '客户介绍', 'intro', 'textarea', '', '250', '', 1, 1, 1, 0, '2019-05-28 12:20:54', 1);
-/*!40000 ALTER TABLE `cst_field_ext` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_field_tmp
-CREATE TABLE IF NOT EXISTS `cst_field_tmp` (
-  `field_ext_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `main_table` varchar(50) NOT NULL COMMENT '关联主表',
-  `ext_table` varchar(50) NOT NULL COMMENT '扩展表名',
-  `show_name` varchar(256) NOT NULL COMMENT '字段表单名称',
-  `field_name` varchar(256) NOT NULL COMMENT '字段名称',
-  `field_type` varchar(50) NOT NULL COMMENT '单文本=varchar,文本=text,多行文本=textarea,整数=int,小数=float,图片=img,下拉=option,单选=radio,复选=checkbox',
-  `default` varchar(256) NOT NULL COMMENT '字段默认值',
-  `maxlength` varchar(256) NOT NULL COMMENT '最大值',
-  `desc` varchar(256) NOT NULL COMMENT '表单说明',
-  `visible` smallint(1) NOT NULL DEFAULT '1' COMMENT '是否使用',
-  `is_system` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否为系统字段，1=是（不能删除）0=否',
-  `is_must` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否改填',
-  `sort` int(16) NOT NULL DEFAULT '0' COMMENT '显示排序',
-  `create_time` datetime NOT NULL,
-  `create_user_id` int(16) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`field_ext_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='客户字段模板表';
-
--- Dumping data for table 07fly_frame.cst_field_tmp: 0 rows
-DELETE FROM `cst_field_tmp`;
-/*!40000 ALTER TABLE `cst_field_tmp` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cst_field_tmp` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_filing
-CREATE TABLE IF NOT EXISTS `cst_filing` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(256) NOT NULL,
-  `customer_id` int(16) NOT NULL,
-  `linkman_id` int(16) NOT NULL,
-  `chance_id` int(16) NOT NULL,
-  `applicant_userID` int(16) NOT NULL,
-  `audit_userID` int(16) NOT NULL,
-  `audit_dt` datetime DEFAULT NULL,
-  `remark` text NOT NULL,
-  `support` text NOT NULL COMMENT '所需支持',
-  `status` smallint(1) NOT NULL DEFAULT '1' COMMENT '1=未审核2=同意3=否决',
-  `owner_user_id` int(16) NOT NULL,
-  `create_user_id` int(16) NOT NULL,
-  `adt` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='项目报备';
-
--- Dumping data for table 07fly_frame.cst_filing: 3 rows
-DELETE FROM `cst_filing`;
-/*!40000 ALTER TABLE `cst_filing` DISABLE KEYS */;
-INSERT INTO `cst_filing` (`id`, `title`, `customer_id`, `linkman_id`, `chance_id`, `applicant_userID`, `audit_userID`, `audit_dt`, `remark`, `support`, `status`, `owner_user_id`, `create_user_id`, `adt`) VALUES
-	(1, '项目报价', 1, 2, 1, 0, 4, '2017-10-31 14:31:38', '项目介绍', '', 1, 0, 0, '2013-09-09 21:34:14'),
-	(4, '这是一个不错的项目的呢', 1, 2, 2, 5, 4, '2016-06-12 15:02:30', '', '', 2, 0, 4, '2013-09-23 10:34:50'),
-	(5, '这是一个不错的项目的呢', 1, 2, 2, 5, 4, '2016-12-22 11:23:32', '', '需要技术部门和销售部门的支持和帮助的呢', 3, 0, 4, '2013-09-23 10:35:16');
-/*!40000 ALTER TABLE `cst_filing` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_linkman
-CREATE TABLE IF NOT EXISTS `cst_linkman` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `customer_id` int(16) NOT NULL,
-  `name` varchar(256) NOT NULL,
-  `gender` smallint(1) NOT NULL COMMENT '姓别1=男，0=女',
-  `postion` varchar(256) NOT NULL COMMENT '职位、',
-  `tel` varchar(256) NOT NULL,
-  `mobile` varchar(256) NOT NULL,
-  `qicq` varchar(256) NOT NULL,
-  `email` varchar(256) NOT NULL,
-  `zipcode` varchar(256) NOT NULL,
-  `address` varchar(1024) NOT NULL,
-  `remark` text NOT NULL COMMENT '备注',
-  `link_time` datetime NOT NULL COMMENT '最后跟进时间',
-  `create_time` int(11) NOT NULL DEFAULT '0',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `create_user_id` int(16) NOT NULL DEFAULT '0',
-  `org_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=160 DEFAULT CHARSET=utf8 COMMENT='客户联系人';
-
--- Dumping data for table 07fly_frame.cst_linkman: 88 rows
-DELETE FROM `cst_linkman`;
-/*!40000 ALTER TABLE `cst_linkman` DISABLE KEYS */;
-INSERT INTO `cst_linkman` (`id`, `customer_id`, `name`, `gender`, `postion`, `tel`, `mobile`, `qicq`, `email`, `zipcode`, `address`, `remark`, `link_time`, `create_time`, `update_time`, `create_user_id`, `org_id`) VALUES
-	(3, 2, '零起飞', 1, '经理', '', '18030402705', '', '', '', '', '', '0000-00-00 00:00:00', 2016, 0, 4, 0),
-	(5, 4, 'Mr Lee', 1, '经理', '18030402705', '18030402705', '', '', '', '', '', '0000-00-00 00:00:00', 2016, 0, 4, 0),
-	(6, 4, '222', 1, '22', '', '22222222', '', '', '', '', '', '0000-00-00 00:00:00', 2016, 0, 4, 0),
-	(7, 2, '网易163组', 1, '经理', '18030402705', '18030402705', '1871720801', 'goodmuzi@qq.com', '610000', '成都市天涯', '', '0000-00-00 00:00:00', 2016, 0, 4, 0),
-	(8, 7, '李大爷', 1, '经理', '', '13800000000', '', '', '', '', '基', '0000-00-00 00:00:00', 2016, 0, 4, 0),
-	(35, 4, 'niaomuniao', 1, '经理', '', '13800000000', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(36, 2, '添加', 1, '经理', '', '13800000000', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(37, 2, '添加', 1, '经理', '', '13800000000', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(38, 7, '修改', 1, '经理', '', '138000000000', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(56, 2, '赵老师', 1, '经理', '', '13800000000', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(58, 9, '陈先生', 1, '经理', '', '18030402705', '1871720801', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(59, 9, '朱玲', 1, '经理', '', '13889890808', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(60, 10, '陈先生', 1, '经理', '', '13980571681', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(61, 11, '叶总', 1, '经理', '', '13981704401', '', '', '', '', '', '2020-04-01 09:45:56', 2017, 1586828802, 4, 0),
-	(62, 1, '李枭', 1, '经理大哥', '02861833149', '18030402705', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(64, 16, '章长林', 1, '董事', '', '137090114455', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(66, 13, '张老师', 1, '经理', '', '18980911297', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(67, 16, '张哥', 1, '经理', '', '13889890808', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(68, 13, '张彪', 1, '经理', '', '18980940081', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(69, 1, '马红玉', 1, '经理', '', '18030402705', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(70, 1, '李大爷', 1, '经理', '', '138000000000', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(71, 12, '曾哥', 1, '经理', '18708172503', '18708172503', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(72, 17, '张彪', 1, '经理', '', '18980940081', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(73, 18, '徐先生', 0, '', '', '15198048364', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(74, 19, '李君', 0, '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 0, 0),
-	(75, 232, '杨聪', 0, '', '', '13980977165', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(76, 254, '吴润生', 0, '', '', '13060044977', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(77, 274, '许唯', 0, '', '', '13990143907', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(78, 289, '文磊', 0, '', '', '136 7800 1011', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(79, 295, '庞干', 0, '', '', '18382500111', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(80, 967, 'QQ联系', 0, '', '', '718054670', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(81, 13150, 'QQ1973990220', 0, '', '', '1973990220', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(82, 13151, '胡师傅', 1, '经理', '', '15680852851', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(83, 13152, '胡总', 0, '', '', '15184478485', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(84, 13153, '罗先生', 0, '', '', '15883317759', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(85, 13154, '侯先生', 0, '', '', '13340967746', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(86, 13155, '钟兵', 0, '', '', '15928725745', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(87, 13156, '胡大舟', 0, '', '', '13880974146', '', '', '', '', '', '0000-00-00 00:00:00', 2017, 0, 4, 0),
-	(88, 13157, '陈总', 0, '', '', '13088077660', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(89, 13158, '杨先生', 0, '', '', '18908196904', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(90, 13159, '', 0, '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(91, 13160, '', 0, '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(92, 13161, '', 0, '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(93, 13162, '', 0, '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(102, 13171, '', 0, '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(103, 13172, '', 0, '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(104, 13173, '', 0, '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(105, 13174, '刘先生', 0, '', '', '19078891234', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(106, 13175, 'af', 0, '', '', 'dfa', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(107, 13176, '1', 0, '', '', '323', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(108, 13177, '1', 0, '', '', '323', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(109, 13178, 'df', 0, '', '', 'adfadf', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(110, 13179, '好吧', 0, '', '', '我的', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(111, 13180, '好吧', 0, '', '', '我的', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(112, 13159, '股票网站', 0, '', '', '250502898', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(113, 13160, '马超', 0, '', '', '13910533024', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(114, 13161, '王宇', 0, '', '', '18200375741', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(115, 13162, '古铁锋', 0, '', '', '6662806', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(116, 13163, '贺阳春', 0, '', '', '15802888915', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(132, 13168, '马大姐', 1, '', '', '18030402705', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(134, 13174, '侯镇风', 0, '', '86883188', '15881010110', '', '', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(135, 967, '周记', 1, '', '', '18030753338', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(136, 13175, '郑先生', 0, '', '', '18928959279', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(137, 13176, '王先生', 0, '', '', '13880800245', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(138, 13176, '张先生', 1, '', '', '180003546788', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(123, 13165, '李枭', 0, '', '02812345678', '18030402705', '', 'goodmuzi@qq.com', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(124, 13166, '李枭', 0, '', '02812345678', '18030402705', '', 'goodmuzi@qq.com', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(125, 13167, '李枭', 0, '', '02812345678', '18030402705', '', 'goodmuzi@qq.com', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(128, 13170, '李枭', 0, '', '02812345678', '18030402705', '', 'goodmuzi@qq.com', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(129, 13171, '李枭', 0, '', '02812345678', '18030402705', '', 'goodmuzi@qq.com', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(130, 13172, '李枭', 0, '', '02812345678', '18030402705', '', 'goodmuzi@qq.com', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(131, 13173, '李枭', 0, '', '02812345678', '18030402705', '', 'goodmuzi@qq.com', '', '', '', '0000-00-00 00:00:00', 2018, 0, 4, 0),
-	(139, 13177, '100', 0, '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(140, 13320, '李健', 0, '', '13265551113', '13265551113', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(141, 13321, '李昉鑫', 0, '', '', '17730941006', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(142, 13322, '丹妹子', 0, '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(143, 13323, '张哥', 0, '', '13388163363', '13388163363', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(144, 13324, '杨大国', 0, '', '13908054700', '13908054700', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(145, 13325, '黄阳', 0, '', '15828665472', '15828665472', '', '', '', '', '', '2020-04-09 14:26:26', 2019, 1586413939, 1, 0),
-	(146, 13326, '李静', 0, '', '', '17323287203', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(147, 13327, '王吉兵', 0, '', '', '13908091180', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(148, 13328, '徐铭', 0, '', '', '18981717063', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(149, 13329, '谢文星', 0, '', '', '18910839620', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(150, 13330, '李冰', 0, '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', 2019, 0, 1, 0),
-	(151, 13331, '陈先生-CRM授权客户', 0, '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', 2020, 0, 1, 0),
-	(152, 13332, '彭回成', 0, '', '', '13911239863', '', '', '', '', '', '0000-00-00 00:00:00', 2020, 0, 1, 0),
-	(153, 13168, '李大哥', 0, '总经理', '028-61833149', '1803040258444', '1871720801', 'goodmuzi@qq.com', '', '成都市', '', '0000-00-00 00:00:00', 1585387681, 1585400686, 0, 0),
-	(154, 13333, '张家奥', 1, '', '', '13438803605', '', '', '', '', '', '2020-04-16 10:50:48', 1586829085, 1587110203, 0, 0),
-	(155, 13334, '雷琳莉', 0, '', '', '1812195656', '', '', '', '', '', '2020-04-17 16:58:43', 1587112564, 1587113957, 0, 0),
-	(156, 13335, '要', 0, '', '', '要', '', '', '', '', '', '0000-00-00 00:00:00', 1587113157, 0, 1, 0),
-	(157, 13336, '地', 0, '', '', '34', '', '', '', '', '', '0000-00-00 00:00:00', 1587113226, 0, 1, 0),
-	(158, 13337, '地', 0, '', '', '34', '', '', '', '', '', '0000-00-00 00:00:00', 1587113447, 0, 1, 0),
-	(159, 13338, '地', 0, '', '', '34', '', '', '', '', '', '0000-00-00 00:00:00', 1587113510, 0, 1, 0);
-/*!40000 ALTER TABLE `cst_linkman` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_quoted
-CREATE TABLE IF NOT EXISTS `cst_quoted` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `cusID` int(16) NOT NULL,
-  `linkmanID` int(16) NOT NULL,
-  `chanceID` int(16) NOT NULL,
-  `userID` int(16) NOT NULL,
-  `quoted_userID` int(16) NOT NULL,
-  `audit_userID` int(16) NOT NULL,
-  `title` varchar(256) NOT NULL,
-  `intro` text NOT NULL,
-  `delivery_intro` text NOT NULL,
-  `payment_intro` text NOT NULL,
-  `audit_dt` datetime DEFAULT NULL,
-  `transport_intro` text NOT NULL,
-  `status` smallint(1) NOT NULL DEFAULT '1' COMMENT '1=未审核2=同意3=否决',
-  `create_userID` int(16) NOT NULL,
-  `adt` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='报价表';
-
--- Dumping data for table 07fly_frame.cst_quoted: 5 rows
-DELETE FROM `cst_quoted`;
-/*!40000 ALTER TABLE `cst_quoted` DISABLE KEYS */;
-INSERT INTO `cst_quoted` (`id`, `cusID`, `linkmanID`, `chanceID`, `userID`, `quoted_userID`, `audit_userID`, `title`, `intro`, `delivery_intro`, `payment_intro`, `audit_dt`, `transport_intro`, `status`, `create_userID`, `adt`) VALUES
-	(5, 1, 2, 2, 0, 0, 0, '报价人111111111111', '', '', '', '0000-00-00 00:00:00', '', 3, 0, '2013-09-09 20:43:01'),
-	(6, 1, 2, 2, 0, 3, 4, '主要是NAs5000', '', '', '', '0000-00-00 00:00:00', '', 2, 4, '2013-09-23 10:59:50'),
-	(7, 4, 0, 0, 0, 0, 4, '主要针对设计网站', '', '苦', '苦', '2017-01-20 11:58:09', 'adf', 3, 4, '2016-06-12 15:01:53'),
-	(8, 2, 3, 5, 0, 0, 0, '表白江', '', '一个月之内交货', '首付300，\r\n一次付600', '0000-00-00 00:00:00', '', 1, 4, '2017-02-06 15:59:15'),
-	(9, 2, 3, 5, 0, 0, 0, '表白江', '', '一个月之内交货', '首付300，\r\n一次付600', '0000-00-00 00:00:00', '', 1, 4, '2017-02-06 15:59:30');
-/*!40000 ALTER TABLE `cst_quoted` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_quoted_detail
-CREATE TABLE IF NOT EXISTS `cst_quoted_detail` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `quotedID` int(16) NOT NULL,
-  `pro_number` varchar(64) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `model` varchar(64) NOT NULL,
-  `norm` varchar(64) NOT NULL,
-  `price` int(16) NOT NULL,
-  `rebate` int(16) NOT NULL,
-  `number` int(16) NOT NULL,
-  `money` int(16) NOT NULL,
-  `intro` text NOT NULL,
-  `userID` int(16) NOT NULL COMMENT '归属人员',
-  `adt` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='报价明细';
-
--- Dumping data for table 07fly_frame.cst_quoted_detail: 4 rows
-DELETE FROM `cst_quoted_detail`;
-/*!40000 ALTER TABLE `cst_quoted_detail` DISABLE KEYS */;
-INSERT INTO `cst_quoted_detail` (`id`, `quotedID`, `pro_number`, `name`, `model`, `norm`, `price`, `rebate`, `number`, `money`, `intro`, `userID`, `adt`) VALUES
-	(1, 1, '20880345', '神舟电脑', 'HP660 D6', 'D6', 10, 2, 10, 98, '', 0, '2013-09-22 09:55:32'),
-	(2, 1, '20880345', '神舟电脑', 'HP660 D6', 'D6', 10, 0, 5, 50, '', 0, '2013-09-22 09:55:32'),
-	(3, 1, 'X807651', 'AAA计费产品', 'N8000', '套', 9800, 0, 1, 9800, '', 0, '2013-09-22 09:55:32'),
-	(4, 6, '20880345', '神舟电脑', 'HP660 D6', 'D6', 10, 0, 2, 20, '', 0, '2013-09-23 11:01:43');
-/*!40000 ALTER TABLE `cst_quoted_detail` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_service
-CREATE TABLE IF NOT EXISTS `cst_service` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `customer_id` int(16) NOT NULL,
-  `linkman_id` int(16) NOT NULL,
-  `services` int(4) NOT NULL,
-  `servicesmodel` int(4) NOT NULL,
-  `money` int(11) NOT NULL DEFAULT '0',
-  `status` smallint(1) NOT NULL COMMENT '1=无需处理，2未处理，3=处理中，4处理完成',
-  `begin_time` datetime NOT NULL COMMENT '开始时间',
-  `duration` varchar(64) NOT NULL COMMENT '持续时间',
-  `content` text NOT NULL COMMENT '内容',
-  `intro` text NOT NULL,
-  `create_time` int(11) NOT NULL DEFAULT '0',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `create_user_id` int(16) NOT NULL DEFAULT '0',
-  `org_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='服务记录';
-
--- Dumping data for table 07fly_frame.cst_service: 1 rows
-DELETE FROM `cst_service`;
-/*!40000 ALTER TABLE `cst_service` DISABLE KEYS */;
-INSERT INTO `cst_service` (`id`, `customer_id`, `linkman_id`, `services`, `servicesmodel`, `money`, `status`, `begin_time`, `duration`, `content`, `intro`, `create_time`, `update_time`, `create_user_id`, `org_id`) VALUES
-	(28, 13163, 0, 47, 58, 0, 0, '2019-03-10 12:50:53', '1000', '主要是修改部分BUG，对界面调优化处理', '', 2019, 0, 1, 0);
-/*!40000 ALTER TABLE `cst_service` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_talk
-CREATE TABLE IF NOT EXISTS `cst_talk` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `cusID` int(16) NOT NULL,
-  `name` varchar(1024) NOT NULL,
-  `create_userID` int(16) NOT NULL DEFAULT '0',
-  `adt` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 COMMENT='打电话沟通记录';
-
--- Dumping data for table 07fly_frame.cst_talk: 71 rows
-DELETE FROM `cst_talk`;
-/*!40000 ALTER TABLE `cst_talk` DISABLE KEYS */;
-INSERT INTO `cst_talk` (`id`, `cusID`, `name`, `create_userID`, `adt`) VALUES
-	(1, 1, '暂时不需要', 4, '2017-07-17 17:59:57'),
-	(2, 1, '没接电话', 4, '2017-07-17 18:06:09'),
-	(3, 1, '暂时不需要', 4, '2017-07-17 18:07:53'),
-	(4, 1, '没接电话', 4, '2017-07-17 18:08:23'),
-	(5, 1, '没接电话', 4, '2017-07-17 18:09:15'),
-	(6, 1, '没接电话', 4, '2017-07-17 18:11:14'),
-	(7, 1, '暂时不需要', 4, '2017-07-17 18:11:19'),
-	(8, 1, '没接电话', 4, '2017-07-17 18:12:08'),
-	(9, 1, '暂时不需要', 4, '2017-07-17 18:12:44'),
-	(10, 1, '没接电话', 4, '2017-07-17 18:16:47'),
-	(11, 1, '暂时不需要', 4, '2017-07-17 18:18:53'),
-	(12, 1, '暂时不需要', 4, '2017-07-17 18:20:03'),
-	(13, 1, '没接电话', 4, '2017-07-17 18:20:14'),
-	(14, 5458, '不需要', 4, '2017-07-22 10:25:33'),
-	(15, 4890, '不需要', 4, '2017-07-22 10:42:30'),
-	(16, 4889, '空号', 4, '2017-07-22 10:44:12'),
-	(17, 4887, '空号', 4, '2017-07-22 10:51:58'),
-	(18, 4888, '不需要', 4, '2017-07-22 10:53:01'),
-	(19, 4886, '空号', 4, '2017-07-22 10:55:53'),
-	(20, 4885, '关机', 4, '2017-07-22 10:56:59'),
-	(21, 4884, '不需要', 4, '2017-07-22 11:06:02'),
-	(22, 4883, '暂时不需要', 4, '2017-07-22 11:07:13'),
-	(23, 4882, '不需要', 4, '2017-07-22 11:08:24'),
-	(24, 4881, '不需要', 4, '2017-07-22 11:09:34'),
-	(25, 4880, '空号', 4, '2017-07-22 11:10:11'),
-	(26, 4879, '不需要', 4, '2017-07-22 11:11:49'),
-	(27, 4878, '没接电话', 4, '2017-07-22 11:12:46'),
-	(28, 4877, '不需要', 4, '2017-07-22 11:13:50'),
-	(29, 4871, '不需要', 4, '2017-07-22 11:14:59'),
-	(30, 4870, '空号', 4, '2017-07-22 11:15:36'),
-	(31, 4869, '空号', 4, '2017-07-22 11:16:55'),
-	(32, 4868, '空号', 4, '2017-07-22 11:17:20'),
-	(33, 4867, '空号', 4, '2017-07-22 11:17:48'),
-	(34, 5847, '加微信', 4, '2017-07-22 11:20:24'),
-	(35, 5846, '没接电话', 4, '2017-07-22 15:55:53'),
-	(36, 5846, '没接电话', 4, '2017-07-22 15:56:01'),
-	(37, 5845, '不需要', 4, '2017-07-22 15:59:22'),
-	(38, 5844, '不需要', 4, '2017-07-22 16:02:04'),
-	(39, 5843, '没接电话', 4, '2017-07-22 16:02:54'),
-	(40, 5842, '没接电话', 4, '2017-07-22 16:03:37'),
-	(41, 5841, '不需要', 4, '2017-07-22 16:05:15'),
-	(42, 5840, '不需要', 4, '2017-07-22 16:07:07'),
-	(43, 5802, '没接电话', 4, '2017-07-22 16:09:09'),
-	(44, 13125, '不需要', 4, '2017-08-05 09:49:14'),
-	(45, 13125, '不需要', 4, '2017-08-05 09:49:14'),
-	(46, 13125, '不需要', 4, '2017-08-05 09:49:20'),
-	(47, 13123, '没接电话', 4, '2017-08-05 09:51:03'),
-	(48, 13123, '没接电话', 4, '2017-08-05 09:51:03'),
-	(49, 13149, '没接电话', 4, '2017-08-05 09:51:29'),
-	(50, 13149, '没接电话', 4, '2017-08-05 09:51:29'),
-	(51, 13149, '挂了', 4, '2017-08-05 09:51:52'),
-	(52, 13122, '不需要', 4, '2017-08-05 09:53:02'),
-	(53, 13118, '不需要', 4, '2017-08-05 10:27:13'),
-	(54, 13111, '不需要', 4, '2017-08-05 10:28:12'),
-	(55, 13109, '没接电话', 4, '2017-08-05 10:29:01'),
-	(56, 10893, '没接电话', 4, '2017-08-05 10:30:26'),
-	(57, 10890, '空号', 4, '2017-08-05 10:31:04'),
-	(58, 10889, '不需要', 4, '2017-08-05 10:32:04'),
-	(59, 10885, '不需要', 4, '2017-08-05 10:33:23'),
-	(60, 10883, '没接电话', 4, '2017-08-05 10:34:30'),
-	(61, 13147, '不需要', 4, '2017-08-05 10:36:35'),
-	(62, 13126, '不需要', 4, '2017-08-05 10:37:50'),
-	(63, 13082, '不需要', 4, '2017-08-05 10:39:06'),
-	(64, 13154, '没接电话', 4, '2017-10-31 14:20:35'),
-	(65, 13157, '加微信号', 4, '2018-04-24 15:57:45'),
-	(66, 13159, '加微信号', 4, '2018-04-26 09:54:47'),
-	(67, 13159, '没接电话', 4, '2018-07-11 19:01:51'),
-	(68, 13159, '没接电话', 4, '2018-07-25 21:31:02'),
-	(69, 13157, '不需要', 4, '2018-09-04 22:15:21'),
-	(70, 13159, '没接电话', 4, '2018-09-05 20:14:13'),
-	(71, 13159, '空号', 4, '2018-09-05 20:14:20');
-/*!40000 ALTER TABLE `cst_talk` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_trace
-CREATE TABLE IF NOT EXISTS `cst_trace` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `customer_id` int(16) NOT NULL COMMENT '客户编号',
-  `chance_id` int(11) NOT NULL COMMENT '销售机会',
-  `linkman_id` int(11) NOT NULL COMMENT '联系人',
-  `linkman_name` varchar(50) NOT NULL DEFAULT '' COMMENT '联系人名称',
-  `link_time` datetime NOT NULL COMMENT '联系时间',
-  `link_body` varchar(256) NOT NULL COMMENT '主题名称',
-  `salestage` varchar(50) NOT NULL DEFAULT '' COMMENT '沟通阶段',
-  `salemode` varchar(50) NOT NULL DEFAULT '' COMMENT '销售方式',
-  `next_time` datetime NOT NULL COMMENT '下次联系时间',
-  `next_body` varchar(256) NOT NULL COMMENT '下次沟通主题',
-  `create_time` int(11) NOT NULL DEFAULT '0',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `create_user_id` int(16) NOT NULL,
-  `org_id` int(11) NOT NULL DEFAULT '0',
-  `status` smallint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COMMENT='跟踪记录';
-
--- Dumping data for table 07fly_frame.cst_trace: 67 rows
-DELETE FROM `cst_trace`;
-/*!40000 ALTER TABLE `cst_trace` DISABLE KEYS */;
-INSERT INTO `cst_trace` (`id`, `customer_id`, `chance_id`, `linkman_id`, `linkman_name`, `link_time`, `link_body`, `salestage`, `salemode`, `next_time`, `next_body`, `create_time`, `update_time`, `create_user_id`, `org_id`, `status`) VALUES
-	(14, 10, 9, 60, '', '2017-04-24 00:00:00', '初次沟通', '38', '53', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(15, 10, 9, 60, '', '2017-05-17 15:31:34', '明确功能注册', '39', '37', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(16, 10, 9, 60, '', '2017-05-19 12:37:04', '确定了需求', '42', '53', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(17, 13, 10, 68, '', '2017-06-16 08:56:01', '看了合同，准备联系', '42', '37', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(18, 13, 10, 68, '', '2017-06-19 09:09:17', '主要确定合同', '42', '37', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(19, 16, 11, 67, '', '2017-06-16 10:04:51', '确定了需求', '41', '37', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(20, 16, 11, 67, '', '2017-06-19 14:07:43', '电话联系确定面谈时间', '41', '37', '0000-00-00 00:00:00', '', 0, 0, 4, 0, 2),
-	(23, 16, 11, 67, '', '2017-06-23 07:37:32', '把修改后的主题发给看', '41', '37', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(24, 13, 10, 68, '', '2017-06-22 15:38:32', '送合同去的', '42', '37', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(25, 13153, 15, 84, '', '2017-10-10 09:08:55', '联系发参照网站', '38', '57', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(26, 13153, 15, 84, '', '2017-10-16 09:09:26', '联系发参照网站', '38', '57', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(27, 13153, 15, 84, '', '2017-10-23 09:38:38', '联系发参照网站', '38', '57', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(29, 13154, 0, 85, '', '2017-10-16 17:07:52', '提供了需求报了价格', '38', '37', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(31, 13154, 0, 85, '', '2017-10-20 17:08:36', '咨询考虑的怎么样了', '38', '37', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 1),
-	(32, 13153, 15, 84, '', '2017-11-03 16:26:35', '暂时不需要，有需要在联系', '38', '57', '0000-00-00 00:00:00', '', 2017, 0, 4, 0, 2),
-	(33, 13157, 0, 88, '', '2018-03-01 11:55:25', '需要带方案沟通', '38', '37', '0000-00-00 00:00:00', '', 2018, 0, 4, 0, 1),
-	(34, 13158, 0, 89, '', '0000-00-00 00:00:00', '还在等客户接口', '38', '57', '2019-00-00 00:00:00', '', 2018, 0, 4, 0, 2),
-	(35, 13158, 0, 89, '', '2018-07-01 21:32:56', '朋友暂时不做了', '38', '57', '2018-07-31 21:33:04', '', 2018, 0, 4, 0, 0),
-	(37, 13158, 0, 89, '', '2018-07-01 21:32:56', '朋友暂时不做了', '38', '57', '2028-07-31 21:33:04', '', 2018, 0, 4, 0, 0),
-	(52, 1, 20, 62, '', '2018-12-28 11:30:20', '22222222222222', '0', '37', '2018-12-28 14:10:20', '', 2018, 0, 4, 0, 1),
-	(53, 967, 0, 80, '', '2019-01-03 15:45:49', '网站续费', '38', '37', '2019-01-04 15:45:49', '', 2019, 0, 1, 0, 1),
-	(41, 1, 20, 62, '', '2018-12-21 14:47:13', '测试合同', '38', '57', '1900-12-08 18:00:00', '', 2018, 0, 4, 0, 1),
-	(49, 1, 20, 62, '', '2018-12-27 17:55:13', '不错不错', '0', '37', '2018-11-28 02:10:13', '', 2018, 0, 4, 0, 1),
-	(50, 1, 20, 62, '', '2018-12-27 22:00:50', '哈哈', '0', '37', '2018-12-26 22:00:50', '', 2018, 0, 4, 0, 1),
-	(51, 0, 0, 0, '', '2018-12-05 14:30:36', '2222222222222222222', '0', '37', '2018-12-28 11:25:36', '', 2018, 0, 4, 0, 1),
-	(46, 1, 20, 62, '', '2018-12-26 17:40:06', '要做一个企业网站', '38', '37', '2019-01-05 13:40:06', '', 2018, 0, 4, 0, 1),
-	(47, 1, 20, 62, '', '2018-12-27 14:50:25', '测试来了哟', '38', '37', '2018-12-19 21:50:25', '', 2018, 0, 4, 0, 1),
-	(48, 1, 20, 62, '', '2018-11-28 10:50:26', '今天 还是跟踪了一一下吧，', '0', '37', '2018-12-27 21:50:26', '', 2018, 0, 4, 0, 1),
-	(54, 13168, 0, 132, '', '2019-02-16 22:05:12', '谈了下价格问题', '38', '37', '2019-02-28 10:05:12', '', 2019, 0, 1, 0, 1),
-	(55, 13168, 0, 132, '', '2019-03-11 15:57:17', '明天见面了', '38', '37', '2019-03-12 15:15:03', '', 2019, 0, 1, 0, 1),
-	(56, 13168, 0, 132, '', '2019-03-11 15:59:12', '明天上门详谈', '38', '37', '2019-03-12 15:55:46', '', 2019, 0, 1, 0, 1),
-	(57, 13168, 0, 132, '', '2019-03-11 16:01:44', '明天上门谈', '38', '37', '2019-03-12 16:00:30', '', 2019, 0, 1, 0, 1),
-	(58, 13168, 0, 132, '', '2019-03-11 16:02:40', '明天上门谈', '38', '37', '2019-03-12 16:00:31', '', 2019, 0, 1, 0, 1),
-	(59, 13176, 0, 137, '', '2019-03-12 20:40:52', '已付定金等待设计图', '43', '53', '2019-03-14 13:40:33', '', 2019, 0, 1, 0, 1),
-	(60, 13176, 0, 137, '', '2019-03-21 09:45:00', '预约联系上门调试网站', '43', '57', '2019-03-25 09:40:21', '', 2019, 0, 1, 0, 1),
-	(61, 254, 0, 76, '', '2019-03-21 21:12:16', '下周联系关于做推广', '38', '37', '2019-03-26 09:10:52', '', 2019, 0, 1, 0, 1),
-	(62, 295, 0, 79, '', '0000-00-00 00:00:00', '主要咨询电商方面开店问题', '38', '37', '2019-03-26 09:00:25', '', 2019, 0, 1, 0, 1),
-	(63, 13176, 0, 137, '', '2019-03-28 12:45:45', '4月1，2号回来，到时联系', '38', '57', '2019-04-02 13:45:53', '', 2019, 0, 1, 0, 1),
-	(64, 254, 0, 76, '', '2019-03-27 12:00:10', '当面沟通推广预计在8，9月开始做', '38', '53', '2019-09-02 12:45:10', '', 2019, 0, 1, 0, 1),
-	(67, 13321, 0, 141, '', '2019-05-28 15:07:05', '移动WEB和小程序接口咨询', '38', '57', '2019-06-08 15:05:32', '', 2019, 0, 1, 0, 1),
-	(66, 13320, 0, 140, '', '2019-05-27 00:00:00', '商标买卖网站', '38', '57', '2019-05-30 00:00:00', '', 2019, 0, 1, 0, 1),
-	(68, 13320, 0, 140, '', '2019-05-30 14:35:26', '咨询了进度', '38', '37', '2019-06-05 00:00:00', '', 2019, 0, 1, 0, 1),
-	(69, 13321, 0, 141, '', '2019-05-29 00:00:00', '咨询进度', '38', '37', '2019-06-05 00:00:00', '', 2019, 0, 1, 0, 1),
-	(70, 13320, 0, 140, '', '2019-06-05 13:40:14', '客户基本确定在确定需求', '38', '37', '2019-06-10 13:40:14', '', 2019, 0, 1, 0, 1),
-	(71, 13322, 22, 142, '', '2019-06-04 09:25:02', '家具企业类型小程序', '38', '57', '2019-06-10 00:00:00', '', 2019, 0, 1, 0, 1),
-	(72, 254, 0, 76, '', '2019-06-10 08:20:03', '民航续费跟踪', '43', '37', '2019-06-17 15:20:03', '', 2019, 0, 1, 0, 1),
-	(73, 13323, 0, 143, '', '2019-06-10 15:55:06', '提供报价需要当面详细谈', '38', '37', '2019-06-11 15:55:06', '', 2019, 0, 1, 0, 1),
-	(74, 13322, 22, 142, '', '2019-06-10 16:02:30', '客户还在考虑之中，需要进一步跟进', '38', '37', '2019-06-10 16:00:27', '', 2019, 0, 1, 0, 1),
-	(75, 13323, 0, 143, '', '2019-06-11 21:28:22', '当面沟通了需求让准备合同及方案', '42', '53', '2019-06-12 10:25:50', '', 2019, 0, 1, 0, 1),
-	(76, 13323, 0, 143, '', '2019-06-13 00:00:00', '修改合同中', '43', '57', '2019-06-17 11:40:18', '', 2019, 0, 1, 0, 1),
-	(77, 13, 10, 66, '', '2019-06-18 09:45:23', '续费先垫着，下周回来处理', '38', '37', '2019-06-25 09:40:59', '', 2019, 0, 1, 0, 1),
-	(78, 13324, 23, 144, '', '2019-06-18 10:08:23', '', '38', '37', '2019-06-25 10:05:14', '', 2019, 0, 1, 0, 1),
-	(79, 13323, 0, 143, '', '2019-06-18 16:36:01', '打电话说比较忙等忙过了后联系', '38', '37', '2019-06-25 16:35:44', '', 2019, 0, 1, 0, 1),
-	(80, 13322, 22, 142, '', '2019-06-24 11:44:17', '客户有可能不做了', '38', '37', '0000-00-00 00:00:00', '', 2019, 0, 1, 0, 1),
-	(81, 13176, 0, 107, '', '2019-06-23 11:45:45', '关于推广页收付款', '38', '37', '2019-07-01 11:45:45', '', 2019, 0, 1, 0, 1),
-	(82, 13320, 0, 140, '', '2019-06-20 11:45:42', '确定了需求等合同', '38', '37', '2019-06-28 11:45:42', '', 2019, 0, 1, 0, 1),
-	(83, 13323, 0, 143, '', '2019-06-18 11:45:42', '在忙等待修改合同', '38', '37', '2019-06-28 11:45:42', '', 2019, 0, 1, 0, 1),
-	(87, 13329, 0, 149, '', '2019-09-08 08:35:15', '主要是细节沟通', '38', '37', '2019-09-09 08:39:38', '', 2019, 1585228536, 1, 0, 1),
-	(88, 13156, 0, 87, '', '2020-03-26 17:43:46', '这是个测试的内容哟', '初期沟通', '网络', '0000-00-00 00:00:00', '', 0, 1585229640, 0, 0, 1),
-	(93, 13325, 27, 145, '', '2020-04-09 14:15:43', '要修改东西吧', '需求分析', '上门', '2020-04-09 14:18:43', '', 1586413128, 0, 0, 0, 1),
-	(91, 13156, 0, 87, '', '2020-03-26 17:43:46', '这是个测试的内容哟', '0', '0', '0000-00-00 00:00:00', '', 1585226869, 0, 0, 0, 1),
-	(92, 13156, 0, 87, '', '2020-03-26 21:12:47', '主要是关于客户谈的方式', '初期沟通', '上门', '2020-04-02 18:10:43', '', 1585226934, 1585229604, 0, 0, 1),
-	(94, 13325, 27, 145, '', '2020-04-09 14:25:31', '这是没测试数据吧', '初期沟通', '上门', '0000-00-00 00:00:00', '', 1586413541, 0, 0, 0, 1),
-	(95, 13325, 27, 145, '', '2020-04-09 14:26:26', '这是测试数据', '需求分析', '电话', '2020-04-09 14:35:55', '', 1586413623, 1586414159, 0, 0, 1),
-	(96, 13325, 27, 145, '', '2020-04-09 14:26:26', '这是测试数据', '需求分析', '电话', '0000-00-00 00:00:00', '', 1586413939, 1586414147, 0, 0, 1),
-	(97, 11, 5, 61, '', '2020-04-01 09:45:56', '暂时不做了，公司节约成本开支', '失单', '网络', '2020-05-01 09:45:56', '', 1586828802, 0, 0, 0, 1),
-	(98, 13333, 30, 154, '', '2020-04-13 09:50:47', '已经提供报价，等待客房确认', '商务谈判', '网络', '2020-04-15 09:50:47', '', 1586829202, 0, 0, 0, 1),
-	(99, 13333, 30, 154, '', '2020-04-16 10:50:48', '问确定没有，但是没有回话', '合同签订', '网络', '2020-04-17 22:55:48', '', 1587110203, 0, 0, 0, 1),
-	(100, 13334, 0, 155, '', '2020-04-17 16:58:43', '上六签定合同了', '合同签订', '上门', '2020-04-27 12:55:39', '', 1587113957, 0, 0, 0, 1);
-/*!40000 ALTER TABLE `cst_trace` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.cst_website
-CREATE TABLE IF NOT EXISTS `cst_website` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `customer_id` int(16) NOT NULL,
-  `name` varchar(256) NOT NULL,
-  `url` varchar(1024) NOT NULL COMMENT '网址',
-  `start_date` date NOT NULL COMMENT '开始日期',
-  `end_date` date NOT NULL COMMENT '结束日期',
-  `ftp` varchar(256) NOT NULL,
-  `ftp_ip` varchar(256) NOT NULL COMMENT 'FTP ip',
-  `ftp_account` varchar(256) NOT NULL COMMENT 'FTP 帐号',
-  `ftp_pwd` varchar(256) NOT NULL COMMENT 'FTP 密码',
-  `icp` varchar(256) NOT NULL,
-  `icp_account` varchar(256) NOT NULL,
-  `icp_pwd` varchar(256) NOT NULL,
-  `icp_num` varchar(256) NOT NULL,
-  `address` varchar(1024) NOT NULL,
-  `intro` text NOT NULL,
-  `create_user_id` int(16) NOT NULL DEFAULT '0',
-  `sort` int(16) NOT NULL DEFAULT '0',
-  `status` int(2) NOT NULL DEFAULT '1' COMMENT '网站状态1=新增，2=续费，-1=流失',
-  `create_time` int(11) NOT NULL DEFAULT '0',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `org_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='网站业务';
-
--- Dumping data for table 07fly_frame.cst_website: 39 rows
-DELETE FROM `cst_website`;
-/*!40000 ALTER TABLE `cst_website` DISABLE KEYS */;
-INSERT INTO `cst_website` (`id`, `customer_id`, `name`, `url`, `start_date`, `end_date`, `ftp`, `ftp_ip`, `ftp_account`, `ftp_pwd`, `icp`, `icp_account`, `icp_pwd`, `icp_num`, `address`, `intro`, `create_user_id`, `sort`, `status`, `create_time`, `update_time`, `org_id`) VALUES
-	(2, 254, '直线官网', 'www.cdzhixian.com', '2017-05-27', '2021-03-30', '211.149.238.19\ncdzhixian\nD4k4H8W5', '211.149.238.19', 'cdzhixian', 'D4k4H8W5', '蜀ICP备12018687号\n\n', '蜀ICP备12018687号', '', '', '', 'intro', 4, 0, 1, 2017, 0, 0),
-	(3, 254, '完美睡眠', 'wanmeisuimian.com', '2017-03-09', '2020-03-09', '211.149.238.19\n\n', '211.149.238.19', '', '', 'wurunsheng\nwurunsheng123456\n蜀ICP备17008077号', 'wurunsheng', 'wurunsheng123456', '蜀ICP备17008077号', '', '', 4, 0, -1, 2017, 1586834056, 0),
-	(4, 289, '瞳创广告官网', 'tocreate.cc', '2017-06-01', '2020-06-01', '211.149.238.19\n\n', '211.149.238.19', '', '', 'tocreategg\ntocreategg123456\n蜀ICP备16016565号', 'tocreategg', 'tocreategg123456', '蜀ICP备16016565号', '', '', 4, 0, 1, 2017, 0, 0),
-	(5, 295, '全正农业', 'sczqny.com', '2016-11-14', '2020-11-14', '211.149.238.19\n\n', '211.149.238.19', '', '', 'sczqny\nsczqny123456\n蜀ICP备16032455号', 'sczqny', 'sczqny123456', '蜀ICP备16032455号', '', '', 4, 0, 1, 2017, 0, 0),
-	(6, 274, '铭丰资本', 'http://www.zgmfpe.com', '2017-01-25', '2021-01-25', '211.149.238.19\r\nzgmfpe\r\n', '211.149.238.19', 'zgmfpe', '', 'kbtsjj\r\nkbtsjj123456\r\n', 'kbtsjj', 'kbtsjj123456', '', '', '', 4, 0, 1, 2017, 0, 0),
-	(7, 289, '万籁阁', 'http://www.wanlaige.com', '2017-02-06', '2020-02-06', '211.149.238.19\r\nwanlaige\r\n', '211.149.238.19', 'wanlaige', '', 'wanlaige\r\nwanlaige123456\r\n', 'wanlaige', 'wanlaige123456', '', '', '', 4, 0, -1, 2017, 1586834175, 0),
-	(8, 9, '元康餐饮', 'cdykcy.cn', '2017-03-31', '2019-03-30', '211.149.238.19\ncdykcy\n', '211.149.238.19', 'cdykcy', '', 'cdykcy\ncdykcy123456\n蜀ICP备17006007号', 'cdykcy', 'cdykcy123456', '蜀ICP备17006007号', '', '', 4, 0, -1, 2017, 0, 0),
-	(9, 254, '润德久玖', 'rundejiujiu.com', '2017-04-17', '2018-08-14', '211.149.238.19\n170417_rundejiujiu\n', '211.149.238.19', '170417_rundejiujiu', '', 'wu\n\n', 'wu', '', '', '', '', 4, 0, -1, 2017, 0, 0),
-	(10, 12, '金福机电', 'http://www.jfjdwxzx.com', '2017-05-10', '2020-05-01', '211.149.238.19\r\n170510_jfjd', '211.149.238.19', '170510_jfjd', '', 'jfjdwxzx\r\njfjdwxzx123456', 'jfjdwxzx', 'jfjdwxzx123456', '', '', '', 4, 0, 1, 2017, 1586931564, 0),
-	(11, 289, '万经堂', 'wangjintang.com', '2017-06-09', '2020-07-10', '211.149.238.19\n170609_wjt\n', '211.149.238.19', '170609_wjt', '', 'wu\n\n', 'wu', '', '', '', '', 4, 0, 1, 2017, 0, 0),
-	(12, 13, '堰汇劳务', 'yhconst.com', '2017-06-23', '2020-06-23', '211.149.238.19\n170623_yanhui\n', '211.149.238.19', '170623_yanhui', '', 'yhconst\nyhconst123456\n蜀ICP备17021895号', 'yhconst', 'yhconst123456', '蜀ICP备17021895号', '', '', 4, 0, 1, 2017, 0, 0),
-	(13, 17, '泰建筑劳', 'dtconst.com', '2017-06-23', '2020-06-23', '211.149.238.19\n170624_dongtai\n', '211.149.238.19', '170624_dongtai', '', 'dtconst\ndtconst123456\n', 'dtconst', 'dtconst123456', '', '', '', 4, 0, 1, 2017, 0, 0),
-	(14, 18, '康博特官网', 'kbtsjj.com', '2017-06-30', '2018-06-30', '211.149.238.19\n170630_kbtsjj\n', '211.149.238.19', '170630_kbtsjj', '', 'kbtsjj\nkbtsjj123456\n', 'kbtsjj', 'kbtsjj123456', '', '', '', 4, 0, -1, 2017, 0, 0),
-	(15, 967, '周记蛋糕', 'http://www.zhjblb.com ', '2017-01-04', '2019-01-04', '211.149.238.19\r\n\r\n', '211.149.238.19', '', '', 'lxhowlet\r\n\r\n蜀ICP备08008865号-18', 'lxhowlet', '', '蜀ICP备08008865号-18', '', '', 4, 0, -1, 2017, 0, 0),
-	(16, 11, '富机电梯', 'http://www.fu-ji.cn', '2017-04-21', '2021-04-21', '211.149.238.19\r\n170421_fuji\r\n', '211.149.238.19', '170421_fuji', '', '170421_fuji\r\n\r\n', '170421_fuji', '', '', '', '', 4, 0, 1, 2017, 0, 0),
-	(17, 13151, '群泓优家', 'http://www.qhfuwu.com', '2017-08-26', '2019-08-26', '211.149.238.19\r\n170826_qhfuwu\r\n', '211.149.238.19', '170826_qhfuwu', '', 'qhfuwu\r\n\r\n', 'qhfuwu', '', '', '', '', 4, 0, -1, 2017, 0, 0),
-	(18, 232, '尚美居', 'http://www.cdsmjzs.com', '2017-02-28', '2020-03-01', '211.149.238.19\r\n\r\n', '211.149.238.19', '', '', 'lxhowlet\r\n\r\n 蜀ICP备08008865号-8', 'lxhowlet', '', ' 蜀ICP备08008865号-8', '', '', 4, 0, -1, 2018, 0, 0),
-	(19, 13159, '益友股票社区', 'http://www.yiyouokok.com', '2018-04-12', '2020-04-12', '45.127.99.217\r\nyiyouokok\r\njnWNoyZcaqR9MRU', '45.127.99.217', 'yiyouokok', 'jnWNoyZcaqR9MRU', 'yiyouokok\r\n\r\n', 'yiyouokok', '', '', '', '', 4, 0, -1, 2018, 0, 0),
-	(20, 13155, '周渔郎鱼火锅', 'http://www.07fly.com', '2018-09-20', '2019-09-20', '211.149.238.19\n\n', '211.149.238.19', '', '', '180920_zyl\n\n', '180920_zyl', '', '', '', '', 4, 0, -1, 2018, 0, 0),
-	(21, 13161, '足博仕商城', 'http://www.zbszlnx.com', '2018-09-08', '2020-09-08', '211.149.238.19\n\n', '211.149.238.19', '', '', '170421_fuji\n\n', '170421_fuji', '', '', '', '', 4, 0, 1, 2018, 0, 0),
-	(22, 13163, '知行天下旅游网', 'http://www.zxtxly.com', '2018-07-20', '2020-07-20', '211.149.238.19\n\n', '211.149.238.19', '', '', '170421_fuji\n\n', '170421_fuji', '', '', '', '', 4, 0, 1, 2018, 0, 0),
-	(23, 289, '华西建筑设计院', 'http://hxjz.07fly.top', '2018-09-07', '2020-09-07', '211.149.238.19\r\n\r\n', '211.149.238.19', '', '', '180907_hxjz\r\n\r\n', '180907_hxjz', '', '', '', '', 4, 0, 1, 2018, 0, 0),
-	(24, 254, '民航电子', 'http://mhdz.07fly.top', '2018-04-01', '2020-04-01', '211.149.238.19\n\n', '211.149.238.19', '', '', '180228_mhdz\n\n', '180228_mhdz', '', '', '', '', 4, 0, 1, 2018, 0, 0),
-	(25, 289, '风小厨', 'http://www.fengxiaochu.com', '2017-12-21', '2018-12-21', '211.149.238.19\r\n\r\n', '211.149.238.19', '', '', '171221_haofeng\r\n\r\n', '171221_haofeng', '', '', '', '', 4, 0, -1, 2018, 0, 0),
-	(28, 295, '正源康柠檬网站', 'http://www.sczyknm.com', '2018-11-11', '2020-11-11', '211.149.238.19  181111_zyknm  r6m6p7d5', '', '', '', 'sczyknm \r\nzyk123abc', '', '', '', '', '', 4, 0, 1, 2018, 0, 0),
-	(29, 13174, '标筑广告', 'http://www.cdbzgg.com', '2018-12-01', '2020-12-02', '211.149.238.19 181113_bzgg  m2Q8F8V3', '', '', '', 'http://beian.west.cn/default.asp\r\ncdbzgg01 cdbgzgg123', '', '', '', '', '', 4, 0, 1, 2018, 0, 0),
-	(30, 13155, '锦城老妈官网', 'http://www.cdjclm.com', '2018-12-15', '2019-12-15', '211.149.238.19 181220_cdjclm  g6w2r5g6', '', '', '', '一个PC，一个手机', '', '', '', '', '得按两个站标准来续费', 4, 0, -1, 2018, 0, 0),
-	(31, 13155, '醉生肖', 'http://www.zuishengxiao.com', '2018-12-15', '2019-12-15', '211.149.238.19 181220_zsx  a2w6U6R7', '', '', '', '一个PC站，一个手机', '', '', '', '', '按两个站收取空间费用', 4, 0, -1, 2018, 0, 0),
-	(32, 13161, '足博仕招商网站', 'http://www.zuboshi.com.cn', '2018-10-15', '2019-10-15', '211.149.238.19  181017_zbszs e2M5w4S3', '', '', '', 'sczuboshi\r\nzuboshi123456', '', '', '', '', '', 4, 0, -1, 2018, 0, 0),
-	(33, 13175, 'CRM-汽车销售', 'http://www.07fly.com', '2019-02-20', '2020-02-20', '本地信息', '', '', '', '', '', '', '', '', '客户本地服务器', 1, 0, -1, 2019, 0, 0),
-	(34, 13325, '熊猫兼兼', 'http://www.cdxmjj.com', '2019-04-07', '2020-04-07', '', '', '', '', '', '', '', '', '', '', 1, 0, 1, 2019, 0, 0),
-	(35, 13326, '巨能特种车', 'http://www.junengauto.com', '2019-04-15', '2022-04-15', 'west.cn 云', '', '', '', '西数备案', '', '', '', '', '', 1, 0, 1, 2019, 0, 0),
-	(36, 13327, '吉庆实业', 'http://www.cdjiqing.com', '2019-07-20', '2022-07-20', '', '', '', '', '', '', '', '', '', '杨大国介绍', 1, 0, 1, 2019, 0, 0),
-	(37, 1, '体系认证网', 'http://www.ukas--china.com/', '2019-07-16', '2020-07-16', '云主机', '', '', '', '', '', '', '', '', '', 1, 0, 1, 2019, 0, 0),
-	(38, 13328, '旭兴建筑', 'http://www.scxx2015.com/', '2019-07-31', '2022-07-31', '211.149.238.19  190731_scxx b6h7W8P7', '', '', '', 'scxx2015\r\n07fly123', '', '', '', '', '江镇弓：18011440703     351500752@qq.com  \r\n\r\n联系电话 028-87768978\r\n\r\n联系人：徐铭  18981717063\r\n\r\n备安帐号：\r\nscxx2015\r\n07fly123\r\n\r\n网站管理后台：\r\nhttp://www.scxx2015.com/scxx2015_07fly/index.php#\r\nadmin\r\nscxx2015_07fly123456', 1, 0, 1, 2019, 0, 0),
-	(39, 13330, '唰呀支付', 'qudao.syapay.com', '2019-10-10', '2020-10-10', '', '', '', '', '', '', '', '', '', '唰呀支付下单系统', 1, 0, 1, 2019, 0, 0),
-	(40, 13331, '多测测', 'http://v866.07fly.top/', '2020-01-10', '2021-01-10', '', '', '', '', '', '', '', '', '', '只是CRM授权，作为演示地址使用', 1, 0, 1, 2020, 0, 0),
-	(41, 13332, '地接系统维护', 'http://crtsfz.07fly.top/', '2019-12-15', '2020-12-15', '', '', '', '', '', '', '', '', '', '主要为系统维护，有空间、程序、日常维护，之前费用大概一年4000元', 1, 0, 1, 2020, 0, 0),
-	(42, 13168, '零起飞官网', 'http://www.07fly.com', '2020-04-14', '2021-10-01', 'vb', '', '', '', 'v', '', '', '', '', 'b', 0, 0, 1, 1586870867, 1587114343, 0);
-/*!40000 ALTER TABLE `cst_website` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_bank_account
-CREATE TABLE IF NOT EXISTS `fin_bank_account` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL COMMENT '开户银行名称',
-  `card` varchar(256) NOT NULL COMMENT '帐号号',
-  `address` varchar(256) NOT NULL COMMENT '开户地址',
-  `holders` varchar(256) NOT NULL COMMENT '开户人',
-  `sort` smallint(2) NOT NULL,
-  `visible` smallint(2) NOT NULL,
-  `create_time` int(11) NOT NULL DEFAULT '0',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `org_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='银行帐户';
-
--- Dumping data for table 07fly_frame.fin_bank_account: 3 rows
-DELETE FROM `fin_bank_account`;
-/*!40000 ALTER TABLE `fin_bank_account` DISABLE KEYS */;
-INSERT INTO `fin_bank_account` (`id`, `name`, `card`, `address`, `holders`, `sort`, `visible`, `create_time`, `update_time`, `org_id`) VALUES
-	(1, '工商银行', '9855824408011', '成都大天路456号', '李先生', 1, 1, 0, 1586481153, 0),
-	(2, '农业银行', '624404040231212', '成都市犀浦', '李枭', 1, 1, 0, 1586479890, 0),
-	(9, '中国人民银行', '64564164321616161', '成都市犀浦上街22号', '李大大', 1, 1, 1586481245, 1586481249, 0);
-/*!40000 ALTER TABLE `fin_bank_account` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_capital_record
-CREATE TABLE IF NOT EXISTS `fin_capital_record` (
-  `record_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `type_id` int(16) NOT NULL DEFAULT '1' COMMENT '费用类别，1=注入，-1=抽取',
-  `create_user_id` int(16) NOT NULL,
-  `bank_id` int(16) NOT NULL,
-  `money` int(16) NOT NULL,
-  `intro` text NOT NULL,
-  `create_time` datetime NOT NULL,
-  `happen_date` date NOT NULL COMMENT '产生日期',
-  PRIMARY KEY (`record_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='资金注入抽取';
-
--- Dumping data for table 07fly_frame.fin_capital_record: 2 rows
-DELETE FROM `fin_capital_record`;
-/*!40000 ALTER TABLE `fin_capital_record` DISABLE KEYS */;
-INSERT INTO `fin_capital_record` (`record_id`, `type_id`, `create_user_id`, `bank_id`, `money`, `intro`, `create_time`, `happen_date`) VALUES
-	(13, 1, 4, 2, 10000, '有新的人员进来的啊', '2018-12-28 14:59:24', '2018-12-30'),
-	(11, 1, 4, 2, 1000, '加吧', '2018-12-26 14:49:29', '2018-12-24');
-/*!40000 ALTER TABLE `fin_capital_record` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_expenses_record
-CREATE TABLE IF NOT EXISTS `fin_expenses_record` (
-  `record_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `type_id` int(16) NOT NULL COMMENT '费用类别',
-  `create_user_id` int(16) NOT NULL,
-  `bank_id` int(16) NOT NULL,
-  `money` int(16) NOT NULL,
-  `intro` text NOT NULL,
-  `create_time` datetime NOT NULL,
-  `happen_date` date NOT NULL COMMENT '产生日期',
-  PRIMARY KEY (`record_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='其它支出记录';
-
--- Dumping data for table 07fly_frame.fin_expenses_record: 3 rows
-DELETE FROM `fin_expenses_record`;
-/*!40000 ALTER TABLE `fin_expenses_record` DISABLE KEYS */;
-INSERT INTO `fin_expenses_record` (`record_id`, `type_id`, `create_user_id`, `bank_id`, `money`, `intro`, `create_time`, `happen_date`) VALUES
-	(7, 18, 4, 1, 500, '办宽带', '2017-07-31 14:22:07', '2017-06-24'),
-	(8, 16, 4, 1, 500, '网站返点', '2017-12-07 16:44:11', '2017-11-26'),
-	(9, 18, 4, 2, 600, '购买办公用', '2018-12-26 11:46:13', '2018-12-25');
-/*!40000 ALTER TABLE `fin_expenses_record` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_expenses_type
-CREATE TABLE IF NOT EXISTS `fin_expenses_type` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) CHARACTER SET utf8 NOT NULL,
-  `pid` int(11) NOT NULL,
-  `sort` int(11) NOT NULL,
-  `create_time` int(11) NOT NULL,
-  `update_time` int(11) NOT NULL,
-  `org_id` int(11) NOT NULL DEFAULT '0',
-  `visible` tinyint(2) NOT NULL DEFAULT '1',
-  `intro` varchar(1024) CHARACTER SET utf8 DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=armscii8 COMMENT='其它支出类型';
-
--- Dumping data for table 07fly_frame.fin_expenses_type: 4 rows
-DELETE FROM `fin_expenses_type`;
-/*!40000 ALTER TABLE `fin_expenses_type` DISABLE KEYS */;
-INSERT INTO `fin_expenses_type` (`id`, `name`, `pid`, `sort`, `create_time`, `update_time`, `org_id`, `visible`, `intro`) VALUES
-	(16, '营业费用', 0, 4, 0, 0, 0, 1, ''),
-	(17, '管理费用支出', 0, 3, 0, 1586439347, 0, 1, ''),
-	(18, '办公司开支', 17, 1, 0, 0, 0, 1, ''),
-	(19, '日常开支', 17, 2, 0, 0, 0, 1, '2');
-/*!40000 ALTER TABLE `fin_expenses_type` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_flow_record
-CREATE TABLE IF NOT EXISTS `fin_flow_record` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `balance` float NOT NULL COMMENT '余额',
-  `pay_money` float NOT NULL COMMENT '支出',
-  `rece_money` float NOT NULL COMMENT '收入',
-  `bank_id` int(16) NOT NULL,
-  `bus_id` int(16) NOT NULL COMMENT '关联单号=业务单号',
-  `bus_type` varchar(128) NOT NULL COMMENT '单号类型=财务类型',
-  `intro` text NOT NULL,
-  `create_time` datetime NOT NULL,
-  `create_user_id` int(16) NOT NULL COMMENT '创建人',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=265 DEFAULT CHARSET=utf8 COMMENT='财务流水';
-
--- Dumping data for table 07fly_frame.fin_flow_record: 264 rows
-DELETE FROM `fin_flow_record`;
-/*!40000 ALTER TABLE `fin_flow_record` DISABLE KEYS */;
-INSERT INTO `fin_flow_record` (`id`, `balance`, `pay_money`, `rece_money`, `bank_id`, `bus_id`, `bus_type`, `intro`, `create_time`, `create_user_id`) VALUES
-	(1, 0, -100, 5, 1, 0, '0', '初始金额为0', '2016-04-05 11:32:00', 1),
-	(2, -100, 100, 0, 1, 0, '0', '', '2016-12-14 17:34:26', 4),
-	(3, -200, 100, 0, 1, 0, '0', '', '2016-12-14 17:34:27', 4),
-	(4, -300, 100, 0, 1, 0, '0', '', '2016-12-14 17:34:27', 4),
-	(5, -400, 100, 0, 1, 0, '0', '', '2016-12-14 17:34:27', 4),
-	(6, -500, 100, 0, 1, 0, '0', '', '2016-12-14 17:36:01', 4),
-	(7, -600, 100, 0, 1, 0, '0', '', '2016-12-14 17:36:12', 4),
-	(8, -700, 100, 0, 1, 0, '0', '', '2016-12-14 17:36:13', 4),
-	(9, -800, 100, 0, 1, 0, '0', '', '2016-12-14 17:36:13', 4),
-	(10, -700, 0, 100, 1, 0, '0', '', '2016-12-14 17:36:22', 4),
-	(11, -600, 0, 100, 1, 0, '0', '', '2016-12-14 17:36:22', 4),
-	(12, -500, 0, 100, 1, 0, '0', '', '2016-12-14 17:36:22', 4),
-	(13, -400, 0, 100, 1, 0, '0', '', '2016-12-14 17:36:23', 4),
-	(14, -300, 0, 100, 1, 0, '0', '', '2016-12-14 17:36:23', 4),
-	(15, -200, 0, 100, 1, 0, '0', '', '2016-12-14 17:40:05', 4),
-	(16, -1200, 1000, 0, 1, 0, '0', '', '2016-12-14 17:54:37', 4),
-	(17, -2200, 1000, 0, 1, 0, '0', '', '2016-12-14 17:55:48', 4),
-	(18, -3200, 1000, 0, 1, 0, '0', '', '2016-12-14 17:56:36', 4),
-	(19, -4200, 1000, 0, 1, 0, '0', '', '2016-12-14 17:56:55', 4),
-	(20, -3200, 0, 1000, 1, 0, '0', '', '2016-12-14 18:02:07', 4),
-	(21, -3100, 0, 100, 1, 0, '0', '', '2016-12-14 20:55:39', 4),
-	(22, -2111, 0, 989, 1, 0, '0', '', '2016-12-14 20:56:02', 4),
-	(23, -2879, 768, 0, 1, 0, '0', '', '2016-12-14 21:03:01', 4),
-	(24, -768, 768, 0, 2, 0, '0', '', '2016-12-14 21:03:14', 4),
-	(25, -2829, 0, 50, 1, 0, '0', '', '2016-12-14 22:05:48', 4),
-	(26, -468, 0, 300, 2, 0, '0', '', '2017-02-07 09:42:39', 4),
-	(27, 32, 0, 500, 2, 0, '0', '', '2017-02-07 09:50:56', 4),
-	(28, -2729, 0, 100, 1, 0, '0', '', '2017-02-07 10:21:48', 4),
-	(29, -2729, 0, 0, 1, 0, '0', '', '2017-02-07 10:52:20', 4),
-	(30, -2729, 0, 0, 1, 0, '0', '', '2017-02-07 10:52:38', 4),
-	(31, -2529, 0, 200, 1, 0, '0', '', '2017-02-07 10:54:12', 4),
-	(32, -2524, 0, 5, 1, 0, '0', '', '2017-02-07 12:04:07', 4),
-	(33, -2519, 0, 5, 1, 0, '0', '', '2017-02-07 12:06:12', 4),
-	(34, -2514, 0, 5, 1, 0, '0', '', '2017-02-07 12:09:56', 4),
-	(35, -2509, 0, 5, 1, 0, '0', '', '2017-02-07 12:10:18', 4),
-	(36, -2504, 0, 5, 1, 0, '0', '', '2017-02-07 12:19:23', 4),
-	(37, -2404, 0, 100, 1, 0, '0', '', '2017-02-07 15:05:25', 4),
-	(38, -2304, 0, 100, 1, 0, '0', '', '2017-02-07 15:06:46', 4),
-	(39, -2154, 0, 150, 1, 0, '0', '', '2017-02-07 15:11:18', 4),
-	(40, -1654, 0, 500, 1, 0, '0', '', '2017-02-07 15:16:04', 4),
-	(41, -1154, 0, 500, 1, 0, '0', '', '2017-02-07 20:38:25', 4),
-	(42, 146, 0, 1300, 1, 0, '0', '', '2017-04-11 14:43:59', 4),
-	(43, 1446, 0, 1300, 1, 0, '0', '', '2017-05-03 17:43:32', 4),
-	(44, 2346, 0, 900, 1, 0, '0', '', '2017-05-03 20:58:29', 4),
-	(45, 2446, 0, 100, 1, 0, '0', '', '2017-05-03 21:57:45', 4),
-	(46, 132, 0, 100, 2, 5, '0', '', '2017-05-22 14:58:21', 4),
-	(47, 3446, 0, 1000, 1, 6, 'fin_income_record', '', '2017-05-22 15:00:36', 4),
-	(48, -1368, 1500, 0, 2, 5, 'fin_expenses_record', '', '2017-05-22 15:25:47', 4),
-	(49, -368, 0, 1000, 2, 7, 'fin_income_record', '', '2017-05-22 15:31:10', 4),
-	(50, 400, 0, 768, 2, 8, 'fin_income_record', '', '2017-05-22 15:32:19', 4),
-	(51, 10399, 0, 9999, 2, 9, 'fin_income_record', '', '2017-05-22 15:36:44', 4),
-	(52, 400, 9999, 0, 2, 6, 'fin_expenses_record', '', '2017-05-22 15:38:29', 4),
-	(53, 3546, 0, 100, 1, 8, 'sal_contract', '', '2017-05-22 15:52:27', 4),
-	(54, 3646, 0, 100, 1, 0, '', '', '2017-05-22 16:08:05', 4),
-	(55, 2646, 1000, 0, 1, 8, 'fin_pay_record', '', '2017-05-22 16:14:31', 4),
-	(56, 500, 0, 100, 2, 17, 'sal_order', '', '2017-05-22 16:21:58', 4),
-	(57, -500, 1000, 0, 2, 5, 'pos_order', '', '2017-05-22 21:31:12', 4),
-	(58, -500, 0, 0, 2, 9, 'pos_order', '', '2017-05-23 17:13:45', 4),
-	(59, -500, 0, 0, 2, 9, 'pos_order', '', '2017-05-23 17:15:01', 4),
-	(60, 1846, 800, 0, 1, 9, 'pos_order', '', '2017-05-23 17:15:32', 4),
-	(61, 1656, 190, 0, 1, 9, 'pos_order', '', '2017-05-23 17:19:26', 4),
-	(62, 2456, 0, 800, 1, 9, 'sal_contract', '', '2017-06-19 09:36:32', 4),
-	(63, 4756, 0, 2300, 1, 10, 'sal_contract', '', '2017-06-26 21:18:26', 4),
-	(64, 7056, 0, 2300, 1, 11, 'sal_contract', '', '2017-06-26 21:18:48', 4),
-	(65, 8056, 0, 1000, 1, 12, 'sal_contract', '', '2017-06-30 12:29:28', 4),
-	(66, 7556, 500, 0, 1, 7, 'fin_expenses_record', '', '2017-07-31 14:22:07', 4),
-	(67, 8156, 0, 600, 1, 12, 'sal_contract', '', '2017-08-14 18:13:14', 4),
-	(68, 10556, 0, 2400, 1, 13, 'sal_contract', '', '2017-08-30 08:41:22', 4),
-	(69, 10656, 0, 100, 1, 0, '', '', '2017-08-30 08:42:19', 4),
-	(70, 11256, 0, 600, 1, 12, 'sal_contract', '', '2017-09-03 11:15:12', 4),
-	(71, 11856, 0, 600, 1, 12, 'sal_contract', '', '2017-10-16 09:40:55', 4),
-	(72, 15056, 0, 3200, 1, 13, 'sal_contract', '', '2017-10-16 09:41:53', 4),
-	(73, 16206, 0, 1150, 1, 8, 'sal_contract', '', '2017-10-16 09:46:13', 4),
-	(74, 17206, 0, 1000, 1, 15, 'sal_contract', '', '2017-10-31 12:00:46', 4),
-	(75, 19456, 0, 2250, 1, 8, 'sal_contract', '', '2017-11-02 15:59:38', 4),
-	(76, 20456, 0, 1000, 1, 16, 'sal_contract', '', '2017-11-14 17:18:31', 4),
-	(77, 21956, 0, 1500, 1, 16, 'sal_contract', '', '2017-12-07 16:43:21', 4),
-	(78, 21456, 500, 0, 1, 8, 'fin_expenses_record', '', '2017-12-07 16:44:11', 4),
-	(79, 22056, 0, 600, 1, 12, 'sal_contract', '', '2017-12-07 16:46:25', 4),
-	(80, 22956, 0, 900, 1, 19, 'sal_contract', '', '2017-12-21 11:53:16', 4),
-	(81, 24456, 0, 1500, 1, 29, 'sal_contract', '', '2018-01-10 13:09:26', 4),
-	(82, 26956, 0, 2500, 1, 21, 'sal_contract', '', '2018-01-10 13:09:57', 4),
-	(83, 27956, 0, 1000, 1, 18, 'sal_contract', '', '2018-01-16 17:39:03', 4),
-	(84, 28756, 0, 800, 1, 30, 'sal_contract', '', '2018-02-28 11:58:06', 4),
-	(85, 29756, 0, 1000, 1, 17, 'sal_contract', '', '2018-02-28 12:17:40', 4),
-	(86, 31756, 0, 2000, 1, 13, 'sal_contract', '', '2018-02-28 12:20:51', 4),
-	(87, 32756, 0, 1000, 1, 32, 'sal_contract', '', '2018-03-07 14:38:50', 4),
-	(88, 33556, 0, 800, 1, 31, 'sal_contract', '', '2018-03-07 14:39:32', 4),
-	(89, 34156, 0, 600, 1, 34, 'sal_contract', '', '2018-03-26 13:17:08', 4),
-	(90, 35156, 0, 1000, 1, 35, 'sal_contract', '', '2018-03-26 16:59:24', 4),
-	(91, 35756, 0, 600, 1, 37, 'sal_contract', '', '2018-04-26 09:46:12', 4),
-	(92, 39356, 0, 3600, 1, 36, 'sal_contract', '', '2018-04-26 09:46:57', 4),
-	(93, 40156, 0, 800, 1, 38, 'sal_contract', '', '2018-06-24 20:46:08', 4),
-	(94, 40956, 0, 800, 1, 41, 'sal_contract', '', '2018-07-18 14:28:11', 4),
-	(95, 42456, 0, 1500, 1, 39, 'sal_contract', '', '2018-07-18 14:28:54', 4),
-	(96, 43956, 0, 1500, 1, 40, 'sal_contract', '', '2018-07-18 14:29:29', 4),
-	(97, 45756, 0, 1800, 1, 42, 'sal_contract', '', '0000-00-00 00:00:00', 4),
-	(98, 50756, 0, 5000, 1, 44, 'sal_contract', '', '0000-00-00 00:00:00', 4),
-	(99, 55756, 0, 5000, 1, 46, 'sal_contract', '', '2018-10-09 15:41:58', 4),
-	(100, 65756, 0, 10000, 1, 49, 'sal_contract', '', '2018-10-09 15:42:51', 4),
-	(101, 68356, 0, 2600, 1, 48, 'sal_contract', '', '2018-10-09 15:43:17', 4),
-	(102, 70356, 0, 2000, 1, 47, 'sal_contract', '', '2018-10-09 15:44:10', 4),
-	(103, 71556, 0, 1200, 1, 51, 'sal_contract', '', '2018-10-19 17:48:18', 4),
-	(104, 74056, 0, 2500, 1, 43, 'sal_contract', '', '2018-10-19 17:49:53', 4),
-	(105, -100, 100, 0, 0, 58, 'pos_contract', '', '2018-12-25 11:55:31', 4),
-	(106, 73156, 900, 0, 1, 58, 'pos_contract', '', '2018-12-25 12:00:31', 4),
-	(107, -1500, 1000, 0, 2, 59, 'pos_contract', '', '2018-12-25 12:55:40', 4),
-	(108, -2500, 1000, 0, 2, 59, 'pos_contract', '', '2018-12-25 12:55:57', 4),
-	(109, -3500, 1000, 0, 2, 59, 'pos_contract', '', '2018-12-25 13:14:43', 4),
-	(110, -4500, 1000, 0, 2, 59, 'pos_contract', '', '2018-12-25 13:16:38', 4),
-	(111, -5500, 1000, 0, 2, 59, 'pos_contract', '', '2018-12-25 13:17:57', 4),
-	(112, -6500, 1000, 0, 2, 59, 'pos_contract', '', '2018-12-25 13:19:16', 4),
-	(113, -7500, 1000, 0, 2, 59, 'pos_contract', '', '2018-12-25 13:20:06', 4),
-	(114, 900, 0, 1000, 0, 59, 'pos_contract', '', '2018-12-25 14:25:37', 4),
-	(115, 1900, 0, 1000, 0, 59, 'pos_contract', '', '2018-12-25 14:26:58', 4),
-	(116, 1900, 0, 0, 0, 0, 'pos_contract', '', '2018-12-25 14:27:16', 4),
-	(117, 2900, 0, 1000, 0, 59, 'pos_contract', '', '2018-12-25 14:27:16', 4),
-	(118, 3900, 0, 1000, 0, 59, 'pos_contract', '', '2018-12-25 14:27:16', 4),
-	(119, 4900, 0, 1000, 0, 59, 'pos_contract', '', '2018-12-25 14:27:16', 4),
-	(120, 5900, 0, 1000, 0, 59, 'pos_contract', '', '2018-12-25 14:27:16', 4),
-	(121, 6900, 0, 1000, 0, 59, 'pos_contract', '', '2018-12-25 14:27:16', 4),
-	(122, 7800, 0, 900, 0, 58, 'pos_contract', '', '2018-12-25 14:27:16', 4),
-	(123, 7900, 0, 100, 0, 58, 'pos_contract', '', '2018-12-25 14:27:16', 4),
-	(124, 8000, 0, 100, 0, 58, 'pos_contract', '', '2018-12-25 14:27:16', 4),
-	(125, 8100, 0, 100, 0, 58, 'pos_contract', '', '2018-12-25 14:27:16', 4),
-	(126, -8500, 1000, 0, 2, 60, 'pos_contract', '', '2018-12-25 14:29:11', 4),
-	(127, -9500, 1000, 0, 2, 60, 'pos_contract', '', '2018-12-25 14:30:05', 4),
-	(128, -17400, 7900, 0, 2, 60, 'pos_contract', '', '2018-12-25 14:31:41', 4),
-	(129, 16000, 0, 7900, 0, 60, 'pos_contract', '', '2018-12-25 14:33:13', 4),
-	(130, 16000, 0, 0, 0, 0, 'pos_contract', '', '2018-12-25 14:33:20', 4),
-	(131, -25300, 7900, 0, 2, 60, 'pos_contract', '', '2018-12-25 14:34:09', 4),
-	(132, 23900, 0, 7900, 0, 60, 'pos_contract', '', '2018-12-25 14:35:37', 4),
-	(133, -33200, 7900, 0, 2, 60, 'pos_contract', '', '2018-12-25 14:36:15', 4),
-	(134, 31800, 0, 7900, 0, 60, 'pos_contract', '', '2018-12-25 14:36:56', 4),
-	(135, 32800, 0, 1000, 0, 60, 'pos_contract', '', '2018-12-25 14:37:08', 4),
-	(136, 33800, 0, 1000, 0, 60, 'pos_contract', '', '2018-12-25 14:37:18', 4),
-	(137, 34800, 0, 1000, 0, 57, 'pos_contract', '', '2018-12-25 14:38:22', 4),
-	(138, 35800, 0, 1000, 0, 57, 'pos_contract', '', '2018-12-25 14:38:22', 4),
-	(139, 36800, 0, 1000, 0, 57, 'pos_contract', '', '2018-12-25 14:38:22', 4),
-	(140, 37800, 0, 1000, 0, 57, 'pos_contract', '', '2018-12-25 14:38:22', 4),
-	(141, 38800, 0, 1000, 0, 57, 'pos_contract', '', '2018-12-25 14:38:22', 4),
-	(142, 39800, 0, 1000, 0, 57, 'pos_contract', '', '2018-12-25 14:38:22', 4),
-	(143, 40000, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:22', 4),
-	(144, 40200, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:22', 4),
-	(145, 40400, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:22', 4),
-	(146, 40600, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:22', 4),
-	(147, 40800, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:59', 4),
-	(148, 41000, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:59', 4),
-	(149, 41200, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:59', 4),
-	(150, 41400, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:59', 4),
-	(151, 41600, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:59', 4),
-	(152, 41800, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:59', 4),
-	(153, 42000, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:59', 4),
-	(154, 42200, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:59', 4),
-	(155, 42400, 0, 200, 0, 56, 'pos_contract', '', '2018-12-25 14:38:59', 4),
-	(156, -33700, 500, 0, 2, 56, 'pos_contract', '', '2018-12-25 14:42:30', 4),
-	(157, 42400, 0, 0, 0, 56, 'pos_contract', '', '2018-12-25 15:54:37', 4),
-	(158, -34400, 700, 0, 2, 56, 'pos_contract', '', '2018-12-25 17:00:28', 4),
-	(159, 43100, 0, 700, 0, 56, 'pos_contract', '', '2018-12-25 17:19:16', 4),
-	(160, 43600, 0, 500, 0, 56, 'pos_contract', '', '2018-12-25 17:19:16', 4),
-	(161, -35600, 1200, 0, 2, 56, 'pos_contract', '', '2018-12-25 17:19:40', 4),
-	(162, 44800, 0, 1200, 0, 56, 'pos_contract', '', '2018-12-25 17:19:57', 4),
-	(163, -36800, 1200, 0, 2, 56, 'pos_contract', '', '2018-12-25 17:20:14', 4),
-	(164, 46000, 0, 1200, 0, 56, 'pos_contract', '', '2018-12-25 17:23:02', 4),
-	(165, -38000, 1200, 0, 2, 56, 'pos_contract', '', '2018-12-25 17:24:13', 4),
-	(166, 47200, 0, 1200, 0, 56, 'pos_contract', '', '2018-12-25 17:26:03', 4),
-	(167, -39200, 1200, 0, 2, 56, 'pos_contract', '', '2018-12-25 17:30:19', 4),
-	(168, -39300, 100, 0, 2, 55, 'pos_contract', '', '2018-12-25 21:15:06', 4),
-	(169, -39200, 0, 100, 2, 55, 'sal_contract', '', '2018-12-25 21:17:33', 4),
-	(170, -39100, 0, 100, 2, 55, 'sal_contract', '', '2018-12-25 21:18:22', 4),
-	(171, -39000, 0, 100, 2, 55, 'sal_contract', '', '2018-12-25 21:20:29', 4),
-	(172, -38900, 0, 100, 2, 55, 'sal_contract', '', '2018-12-25 21:23:00', 4),
-	(173, 47100, 100, 0, 0, 55, 'sal_contract', '', '2018-12-25 21:24:25', 4),
-	(174, -38800, 0, 100, 2, 55, 'sal_contract', '', '2018-12-25 21:26:12', 4),
-	(175, -38700, 0, 100, 2, 55, 'sal_contract', '', '2018-12-25 21:27:26', 4),
-	(176, 47000, 100, 0, 0, 55, 'sal_contract', '', '2018-12-25 21:27:40', 4),
-	(177, -38600, 0, 100, 2, 55, 'sal_contract', '', '2018-12-25 21:29:12', 4),
-	(178, -38500, 0, 100, 2, 55, 'sal_contract', '', '2018-12-25 21:29:24', 4),
-	(179, -38400, 0, 100, 2, 55, 'sal_contract', '', '2018-12-25 21:30:25', 4),
-	(180, 46900, 100, 0, 0, 55, 'sal_contract', '', '2018-12-25 21:30:55', 4),
-	(181, 46800, 100, 0, 0, 55, 'sal_contract', '', '2018-12-25 21:30:55', 4),
-	(182, 46700, 100, 0, 0, 55, 'sal_contract', '', '2018-12-25 21:31:37', 4),
-	(183, 46600, 100, 0, 0, 55, 'sal_contract', '', '2018-12-25 21:31:37', 4),
-	(184, -37295, 0, 1105, 2, 55, 'sal_contract', '', '2018-12-26 09:29:51', 4),
-	(185, 45495, 1105, 0, 0, 55, 'sal_contract', '', '2018-12-26 09:34:00', 4),
-	(186, -36190, 0, 1105, 2, 55, 'sal_contract', '', '2018-12-26 09:34:32', 4),
-	(187, 44390, 1105, 0, 0, 55, 'sal_contract', '', '2018-12-26 09:35:56', 4),
-	(188, -35085, 0, 1105, 2, 55, 'sal_contract', '', '2018-12-26 09:36:16', 4),
-	(189, 43285, 1105, 0, 0, 55, 'sal_contract', '', '2018-12-26 09:37:02', 4),
-	(190, -33980, 0, 1105, 2, 55, 'sal_contract', '', '2018-12-26 09:37:30', 4),
-	(191, 42180, 1105, 0, 0, 55, 'sal_contract', '', '2018-12-26 09:39:30', 4),
-	(192, -32875, 0, 1105, 2, 55, 'sal_contract', '', '2018-12-26 09:39:49', 4),
-	(193, 41075, 1105, 0, 0, 55, 'sal_contract', '', '2018-12-26 09:41:58', 4),
-	(194, -31770, 0, 1105, 2, 55, 'sal_contract', '', '2018-12-26 09:42:18', 4),
-	(195, 39970, 1105, 0, 0, 55, 'sal_contract', '', '2018-12-26 09:42:56', 4),
-	(196, -30665, 0, 1105, 2, 55, 'sal_contract', '', '2018-12-26 09:43:52', 4),
-	(197, 39970, 0, 0, 0, 0, 'fin_income_record', '', '2018-12-26 10:50:02', 4),
-	(198, 39970, 0, 0, 0, 2, 'fin_income_record', '', '2018-12-26 10:52:34', 4),
-	(199, -30565, 0, 100, 2, 3, 'fin_income_record', '', '2018-12-26 10:53:20', 4),
-	(200, -30665, 100, 0, 2, 3, 'fin_income_record', '', '2018-12-26 11:20:17', 4),
-	(201, -20665, 0, 10000, 2, 4, 'fin_income_record', '', '2018-12-26 11:38:21', 4),
-	(202, -21265, 600, 0, 2, 9, 'fin_expenses_record', '', '2018-12-26 11:46:13', 4),
-	(203, 39970, 0, 0, 0, 10, 'fin_expenses_record', '', '2018-12-26 14:47:18', 4),
-	(204, -20265, 0, 1000, 2, 11, 'fin_capital_record', '', '2018-12-26 14:49:29', 4),
-	(205, -20365, 100, 0, 2, 12, 'fin_capital_record', '', '2018-12-26 14:52:20', 4),
-	(206, -20265, 0, 100, 2, 12, 'fin_capital_record', '', '2018-12-26 14:59:06', 4),
-	(207, -10265, 0, 10000, 2, 13, 'fin_capital_record', '', '2018-12-28 14:59:24', 4),
-	(208, -11265, 1000, 0, 2, 57, 'pos_contract', '', '2018-12-28 15:11:11', 4),
-	(209, -16265, 5000, 0, 2, 60, 'pos_contract', '', '2018-12-28 15:15:39', 4),
-	(210, 44970, 0, 5000, 0, 60, 'pos_contract', '', '2018-12-28 15:21:12', 4),
-	(211, 3735, 0, 20000, 2, 58, 'sal_contract', '', '2018-12-28 15:37:08', 4),
-	(212, 24970, 20000, 0, 0, 58, 'sal_contract', '', '2018-12-28 15:38:21', 4),
-	(213, 23865, 1105, 0, 0, 55, 'sal_contract', '', '2018-12-28 15:38:25', 4),
-	(214, 4840, 0, 1105, 2, 55, 'sal_contract', '', '2018-12-28 15:40:03', 4),
-	(215, 9840, 0, 5000, 2, 58, 'sal_contract', '', '2018-12-28 15:44:26', 4),
-	(216, 75240, 0, 65400, 2, 5, 'fin_income_record', '', '2018-12-28 15:52:45', 4),
-	(217, 23865, 0, 0, 0, 10, 'fin_expenses_record', '', '2018-12-28 15:55:36', 4),
-	(218, 8965, 14900, 0, 0, 58, 'sal_contract', '', '2018-12-28 17:33:16', 4),
-	(219, 90140, 0, 14900, 2, 58, 'sal_contract', '', '2018-12-28 17:33:32', 4),
-	(220, -5935, 14900, 0, 0, 58, 'sal_contract', '', '2018-12-28 17:48:25', 4),
-	(221, 105040, 0, 14900, 2, 58, 'sal_contract', '', '2018-12-28 17:48:52', 4),
-	(222, 95040, 10000, 0, 2, 60, 'pos_contract', '', '2018-12-28 18:06:23', 4),
-	(223, 4065, 0, 10000, 0, 60, 'pos_contract', '', '2018-12-28 18:09:23', 4),
-	(224, 5065, 0, 1000, 0, 57, 'pos_contract', '', '2019-01-08 16:05:22', 1),
-	(225, 6265, 0, 1200, 0, 56, 'pos_contract', '', '2019-01-08 16:05:22', 1),
-	(226, -8635, 14900, 0, 0, 58, 'sal_contract', '', '2019-01-08 16:06:17', 1),
-	(227, -13635, 5000, 0, 0, 58, 'sal_contract', '', '2019-01-08 16:06:17', 1),
-	(228, -14740, 1105, 0, 0, 55, 'sal_contract', '', '2019-01-08 16:06:17', 1),
-	(229, 74656, 0, 1500, 1, 61, 'sal_contract', '', '2019-01-10 14:42:54', 1),
-	(230, 75456, 0, 800, 1, 62, 'sal_contract', '', '2019-03-06 19:09:26', 1),
-	(231, 76456, 0, 1000, 1, 63, 'sal_contract', '', '2019-03-12 16:47:54', 1),
-	(232, 80456, 0, 4000, 1, 63, 'sal_contract', '', '2019-03-13 20:30:47', 1),
-	(233, 81136, 0, 680, 1, 67, 'sal_contract', '', '2019-05-01 13:30:52', 1),
-	(234, 81936, 0, 800, 1, 65, 'sal_contract', '', '2019-05-01 13:33:12', 1),
-	(235, 95840, 0, 800, 2, 68, 'sal_contract', '', '2019-05-28 13:45:12', 1),
-	(236, 85536, 0, 3600, 1, 76, 'sal_contract', '', '2019-07-30 10:50:02', 1),
-	(237, 87836, 0, 2300, 1, 73, 'sal_contract', '', '2019-07-30 10:51:29', 1),
-	(238, 90136, 0, 2300, 1, 73, 'sal_contract', '', '2019-07-30 10:52:16', 1),
-	(239, 92136, 0, 2000, 1, 72, 'sal_contract', '', '2019-07-30 10:52:52', 1),
-	(240, 93636, 0, 1500, 1, 72, 'sal_contract', '', '2019-07-30 10:53:22', 1),
-	(241, 96636, 0, 3000, 1, 74, 'sal_contract', '', '2019-07-30 10:54:09', 1),
-	(242, 97636, 0, 1000, 1, 45, 'sal_contract', '', '2019-09-08 18:05:55', 1),
-	(243, 105436, 0, 7800, 1, 77, 'sal_contract', '', '2019-09-08 18:06:26', 1),
-	(244, 106936, 0, 1500, 1, 78, 'sal_contract', '', '2019-09-08 18:09:55', 1),
-	(245, 108436, 0, 1500, 1, 79, 'sal_contract', '', '2019-09-08 18:10:12', 1),
-	(246, 109516, 0, 1080, 1, 64, 'sal_contract', '', '2019-09-08 18:10:45', 1),
-	(247, 111116, 0, 1600, 1, 70, 'sal_contract', '', '2019-09-08 18:11:33', 1),
-	(248, 111916, 0, 800, 1, 69, 'sal_contract', '', '2019-09-08 18:12:21', 1),
-	(249, 112516, 0, 600, 1, 75, 'sal_contract', '', '2019-09-08 21:16:55', 1),
-	(250, 113516, 0, 1000, 1, 66, 'sal_contract', '', '2019-09-08 21:32:24', 1),
-	(251, 117516, 0, 4000, 1, 82, 'sal_contract', '', '2019-09-09 08:38:11', 1),
-	(252, 121516, 0, 4000, 1, 83, 'sal_contract', '', '2019-09-09 08:41:54', 1),
-	(253, 129516, 0, 8000, 1, 83, 'sal_contract', '', '2019-09-29 18:07:33', 1),
-	(254, 131116, 0, 1600, 1, 84, 'sal_contract', '', '2019-09-29 18:08:30', 1),
-	(255, 134116, 0, 3000, 1, 74, 'sal_contract', '', '2019-09-29 18:09:25', 1),
-	(256, 134916, 0, 800, 1, 85, 'sal_contract', '', '2019-10-21 14:10:58', 1),
-	(257, 97040, 0, 1200, 2, 86, 'sal_contract', '', '2019-10-29 16:52:07', 1),
-	(258, 98240, 0, 1200, 2, 87, 'sal_contract', '', '2019-10-29 16:52:35', 1),
-	(259, 99040, 0, 800, 2, 88, 'sal_contract', '', '2019-12-28 10:15:24', 1),
-	(260, 99540, 0, 500, 2, 89, 'sal_contract', '', '2020-01-15 15:34:43', 1),
-	(261, 100940, 0, 1400, 2, 90, 'sal_contract', '', '2020-01-15 15:35:30', 1),
-	(262, 102440, 0, 1500, 2, 91, 'sal_contract', '', '2020-01-15 15:35:47', 1),
-	(263, 103440, 0, 1000, 2, 92, 'sal_contract', '', '2020-03-21 13:47:01', 1),
-	(264, 102440, 1000, 0, 2, 3, 'pos_contract', '', '2020-03-27 14:50:01', 1);
-/*!40000 ALTER TABLE `fin_flow_record` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_income_record
-CREATE TABLE IF NOT EXISTS `fin_income_record` (
-  `record_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `type_id` int(16) NOT NULL COMMENT '费用类别',
-  `bank_id` int(16) NOT NULL,
-  `money` decimal(10,2) NOT NULL,
-  `intro` text NOT NULL,
-  `happen_date` date NOT NULL COMMENT '产生日期',
-  `create_user_id` int(16) NOT NULL,
-  `create_time` datetime NOT NULL,
-  PRIMARY KEY (`record_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='其它收入记录';
-
--- Dumping data for table 07fly_frame.fin_income_record: 4 rows
-DELETE FROM `fin_income_record`;
-/*!40000 ALTER TABLE `fin_income_record` DISABLE KEYS */;
-INSERT INTO `fin_income_record` (`record_id`, `type_id`, `bank_id`, `money`, `intro`, `happen_date`, `create_user_id`, `create_time`) VALUES
-	(1, 19, 2, 100.00, '这个什么费用 呢', '2018-12-25', 4, '2018-12-26 10:50:02'),
-	(2, 19, 2, 100.00, '这个什么费用 呢', '2018-12-25', 4, '2018-12-26 10:52:34'),
-	(4, 21, 2, 10000.00, '这是投资人加放进来的', '2018-12-31', 4, '2018-12-26 11:38:21'),
-	(5, 19, 2, 65400.00, 'fsgsfgsfg', '2018-12-25', 4, '2018-12-28 15:52:45');
-/*!40000 ALTER TABLE `fin_income_record` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_income_type
-CREATE TABLE IF NOT EXISTS `fin_income_type` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) CHARACTER SET utf8 NOT NULL,
-  `pid` int(11) NOT NULL,
-  `sort` int(11) NOT NULL,
-  `create_time` int(11) NOT NULL,
-  `update_time` int(11) NOT NULL,
-  `org_id` int(11) NOT NULL,
-  `visible` tinyint(2) NOT NULL DEFAULT '1',
-  `intro` varchar(1024) CHARACTER SET utf8 DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=armscii8 COMMENT='其它收入类型';
-
--- Dumping data for table 07fly_frame.fin_income_type: 5 rows
-DELETE FROM `fin_income_type`;
-/*!40000 ALTER TABLE `fin_income_type` DISABLE KEYS */;
-INSERT INTO `fin_income_type` (`id`, `name`, `pid`, `sort`, `create_time`, `update_time`, `org_id`, `visible`, `intro`) VALUES
-	(16, '营业外收入5', 0, 3, 0, 0, 0, 1, '这是其它之外的收入'),
-	(18, '办公司开支', 0, 1, 0, 1586437802, 0, 1, ''),
-	(19, '销售收入', 18, 3, 0, 0, 0, 1, '还可以吧'),
-	(21, '其它分类收入', 0, 2, 0, 1586437805, 0, 1, '杂七杂入'),
-	(22, '房租支出', 18, 100, 1586438884, 1586438952, 0, 1, '444');
-/*!40000 ALTER TABLE `fin_income_type` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_invoice_pay
-CREATE TABLE IF NOT EXISTS `fin_invoice_pay` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `contract_id` int(16) NOT NULL COMMENT '合同订单号',
-  `contract_name` varchar(256) NOT NULL,
-  `customer_id` int(16) NOT NULL COMMENT '客户号',
-  `customer_name` varchar(256) NOT NULL,
-  `money` int(16) NOT NULL,
-  `pay_date` date NOT NULL COMMENT '开票时间',
-  `stages` int(11) NOT NULL COMMENT '批次',
-  `invoice_no` varchar(256) NOT NULL DEFAULT '0' COMMENT '发票编号',
-  `name` varchar(256) NOT NULL DEFAULT '0',
-  `bus_type` varchar(256) NOT NULL DEFAULT '0' COMMENT '关联类型',
-  `bus_id` varchar(256) NOT NULL DEFAULT '0' COMMENT '关联id',
-  `remark` text NOT NULL,
-  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `create_user_id` int(11) NOT NULL DEFAULT '0' COMMENT '创建人',
-  `handle_user_id` int(11) NOT NULL DEFAULT '0' COMMENT '经手人',
-  `org_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='开票记录、';
-
--- Dumping data for table 07fly_frame.fin_invoice_pay: 6 rows
-DELETE FROM `fin_invoice_pay`;
-/*!40000 ALTER TABLE `fin_invoice_pay` DISABLE KEYS */;
-INSERT INTO `fin_invoice_pay` (`id`, `contract_id`, `contract_name`, `customer_id`, `customer_name`, `money`, `pay_date`, `stages`, `invoice_no`, `name`, `bus_type`, `bus_id`, `remark`, `create_time`, `create_user_id`, `handle_user_id`, `org_id`) VALUES
-	(11, 16, '0', 1, '0', 100, '2017-05-22', 1, '212312313', '测试了吧-这是修改的内容', 'sal_order', '0', '', 2017, 4, 0, 0),
-	(12, 6, '0', 9, '0', 2600, '2017-05-22', 1, '', '100', 'sal_contract', '0', '', 2017, 4, 0, 0),
-	(13, 6, '0', 9, '0', 2600, '2017-05-22', 1, '', '100', 'sal_contract', '0', '', 2017, 4, 0, 0),
-	(14, 6, '0', 9, '0', 2600, '2017-05-22', 1, '', '100', 'sal_contract', '0', '', 2017, 4, 0, 0),
-	(22, 8, '0', 11, '0', 4770, '2017-11-01', 1, '', '合同', 'sal_contract', '0', '4500合同金额，补了270的发票', 2017, 4, 0, 0),
-	(30, 94, '0', 11, '0', 4770, '2017-11-01', 1, '323146413651', '合同', 'sal_contract', '0', '4500合同金额，补了270的发票', 2017, 4, 0, 0);
-/*!40000 ALTER TABLE `fin_invoice_pay` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_invoice_rece
-CREATE TABLE IF NOT EXISTS `fin_invoice_rece` (
-  `record_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `contract_id` int(16) NOT NULL COMMENT '关联采购号',
-  `supplier_id` int(16) NOT NULL COMMENT '供应商号',
-  `contract_name` varchar(256) NOT NULL,
-  `supplier_name` varchar(256) NOT NULL,
-  `money` int(16) NOT NULL,
-  `rece_date` date NOT NULL COMMENT '收票时间',
-  `stages` int(11) NOT NULL,
-  `name` varchar(256) NOT NULL COMMENT '发票内容',
-  `invoice_no` varchar(256) NOT NULL DEFAULT '0' COMMENT '发票编号',
-  `intro` text NOT NULL,
-  `create_time` datetime NOT NULL,
-  `create_user_id` int(11) NOT NULL,
-  PRIMARY KEY (`record_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='收票记录';
-
--- Dumping data for table 07fly_frame.fin_invoice_rece: 1 rows
-DELETE FROM `fin_invoice_rece`;
-/*!40000 ALTER TABLE `fin_invoice_rece` DISABLE KEYS */;
-INSERT INTO `fin_invoice_rece` (`record_id`, `contract_id`, `supplier_id`, `contract_name`, `supplier_name`, `money`, `rece_date`, `stages`, `name`, `invoice_no`, `intro`, `create_time`, `create_user_id`) VALUES
-	(21, 3, 1, '', '山西太原', 5000, '2020-03-27', 1, '货款', 'XWR', '', '2020-03-27 14:53:45', 1);
-/*!40000 ALTER TABLE `fin_invoice_rece` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_pay_plan
-CREATE TABLE IF NOT EXISTS `fin_pay_plan` (
-  `plan_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `contract_id` int(16) NOT NULL COMMENT '采购订单号',
-  `contract_name` int(16) NOT NULL COMMENT '采购合同名称',
-  `supplier_id` int(16) NOT NULL COMMENT '供应商号',
-  `supplier_name` varchar(256) NOT NULL COMMENT '供应商名称',
-  `bank_id` int(16) NOT NULL COMMENT '关联银行帐号',
-  `money` int(16) NOT NULL COMMENT '金额',
-  `plan_date` date NOT NULL COMMENT '计划付款时间',
-  `stages` int(11) NOT NULL COMMENT '其次',
-  `ifpay` varchar(50) NOT NULL DEFAULT '-1',
-  `intro` text NOT NULL,
-  `create_user_id` int(16) NOT NULL,
-  `create_time` datetime NOT NULL,
-  PRIMARY KEY (`plan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='付款计划表';
-
--- Dumping data for table 07fly_frame.fin_pay_plan: 0 rows
-DELETE FROM `fin_pay_plan`;
-/*!40000 ALTER TABLE `fin_pay_plan` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fin_pay_plan` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_pay_record
-CREATE TABLE IF NOT EXISTS `fin_pay_record` (
-  `record_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `plan_id` int(16) unsigned NOT NULL DEFAULT '0' COMMENT '关联付款记划',
-  `contract_id` int(16) NOT NULL COMMENT '采购订单号',
-  `contract_name` varchar(256) NOT NULL,
-  `supplier_id` int(16) NOT NULL COMMENT '供应商号',
-  `supplier_name` varchar(256) NOT NULL,
-  `bank_id` int(16) NOT NULL COMMENT '关联帐号',
-  `pay_date` date NOT NULL,
-  `money` decimal(10,2) NOT NULL,
-  `zero_money` decimal(10,2) NOT NULL,
-  `stages` int(11) NOT NULL,
-  `intro` text NOT NULL,
-  `create_time` datetime NOT NULL,
-  `create_user_id` int(11) NOT NULL,
-  PRIMARY KEY (`record_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COMMENT='付款记录';
-
--- Dumping data for table 07fly_frame.fin_pay_record: 1 rows
-DELETE FROM `fin_pay_record`;
-/*!40000 ALTER TABLE `fin_pay_record` DISABLE KEYS */;
-INSERT INTO `fin_pay_record` (`record_id`, `plan_id`, `contract_id`, `contract_name`, `supplier_id`, `supplier_name`, `bank_id`, `pay_date`, `money`, `zero_money`, `stages`, `intro`, `create_time`, `create_user_id`) VALUES
-	(45, 0, 3, '第三次采购', 1, '山西太原', 0, '2020-03-27', 1000.00, 0.00, 1, '', '2020-03-27 14:50:01', 1);
-/*!40000 ALTER TABLE `fin_pay_record` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_rece_plan
-CREATE TABLE IF NOT EXISTS `fin_rece_plan` (
-  `plan_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `contract_id` int(16) NOT NULL COMMENT '合同订单号',
-  `contract_name` varchar(256) NOT NULL COMMENT '合同名称',
-  `customer_id` int(16) NOT NULL COMMENT '客户号',
-  `customer_name` varchar(256) NOT NULL COMMENT '客户名称',
-  `bank_id` int(16) NOT NULL COMMENT '关联帐号',
-  `money` int(16) NOT NULL,
-  `plan_date` date NOT NULL COMMENT '计划回款时间',
-  `stages` int(11) NOT NULL,
-  `create_user_id` int(11) NOT NULL,
-  `ifpay` varchar(50) NOT NULL DEFAULT '-1' COMMENT 'NO=未付 YES=已经付',
-  `intro` text NOT NULL,
-  `create_time` datetime NOT NULL,
-  PRIMARY KEY (`plan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='计划回款表';
-
--- Dumping data for table 07fly_frame.fin_rece_plan: 0 rows
-DELETE FROM `fin_rece_plan`;
-/*!40000 ALTER TABLE `fin_rece_plan` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fin_rece_plan` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.fin_rece_record
-CREATE TABLE IF NOT EXISTS `fin_rece_record` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `contract_id` int(16) NOT NULL COMMENT '合同订单号',
-  `contract_name` varchar(256) NOT NULL COMMENT '合同名称',
-  `plan_id` int(16) NOT NULL DEFAULT '0' COMMENT '计划回款',
-  `customer_id` int(16) NOT NULL COMMENT '客户号',
-  `customer_name` varchar(256) NOT NULL COMMENT '客户名称',
-  `bank_id` int(16) NOT NULL COMMENT '关联帐号',
-  `payee_user_id` int(16) NOT NULL COMMENT '收款人',
-  `money` decimal(10,2) NOT NULL COMMENT '金额',
-  `zero_money` decimal(10,2) NOT NULL COMMENT '去零金额',
-  `back_date` date NOT NULL COMMENT '回款时间',
-  `stages` int(11) NOT NULL COMMENT '期次',
-  `bus_type` varchar(128) NOT NULL DEFAULT '0' COMMENT '关联业务类型',
-  `bus_id` varchar(128) NOT NULL DEFAULT '0' COMMENT '业务编号',
-  `remark` text NOT NULL COMMENT '备注',
-  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建日期',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `create_user_id` int(11) NOT NULL DEFAULT '0' COMMENT '创建人',
-  `org_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=134 DEFAULT CHARSET=utf8 COMMENT='回款记录';
-
--- Dumping data for table 07fly_frame.fin_rece_record: 81 rows
-DELETE FROM `fin_rece_record`;
-/*!40000 ALTER TABLE `fin_rece_record` DISABLE KEYS */;
-INSERT INTO `fin_rece_record` (`id`, `contract_id`, `contract_name`, `plan_id`, `customer_id`, `customer_name`, `bank_id`, `payee_user_id`, `money`, `zero_money`, `back_date`, `stages`, `bus_type`, `bus_id`, `remark`, `create_time`, `update_time`, `create_user_id`, `org_id`) VALUES
-	(28, 6, '', 0, 9, '', 1, 0, 1300.00, 0.00, '2017-03-31', 1, '0', '0', '收了50%预付款', 2017, 0, 4, 0),
-	(29, 6, '', 0, 9, '', 1, 0, 1300.00, 0.00, '2017-05-03', 2, '0', '0', '已经结清尾款', 2017, 0, 4, 0),
-	(30, 8, '', 0, 11, '', 1, 0, 900.00, 0.00, '2017-04-24', 1, '0', '0', '预付20%，首页确定后30%', 2017, 0, 4, 0),
-	(31, 8, '', 0, 11, '', 1, 0, 100.00, 0.00, '2017-05-03', 2, '0', '0', '', 2017, 0, 4, 0),
-	(32, 8, '', 0, 11, '', 1, 0, 100.00, 0.00, '2017-05-22', 3, 'sal_contract', '0', '', 2017, 0, 4, 0),
-	(34, 9, '', 0, 12, '', 1, 0, 800.00, 0.00, '2017-05-15', 1, 'sal_contract', '0', '', 2017, 0, 4, 0),
-	(35, 10, '', 0, 13, '', 1, 0, 2300.00, 0.00, '2017-06-26', 1, 'sal_contract', '0', '', 2017, 0, 4, 0),
-	(36, 11, '', 0, 17, '', 1, 0, 2300.00, 0.00, '2017-06-26', 1, 'sal_contract', '0', '', 2017, 0, 4, 0),
-	(37, 12, '', 0, 18, '', 1, 0, 1000.00, 0.00, '2017-06-30', 1, 'sal_contract', '0', '网站预付款', 2017, 0, 4, 0),
-	(38, 12, '', 0, 18, '', 1, 0, 600.00, 0.00, '2017-08-02', 2, 'sal_contract', '0', '推广按月支付8月费用', 2017, 0, 4, 0),
-	(39, 13, '', 0, 13151, '', 1, 0, 2400.00, 0.00, '2017-08-26', 1, 'sal_contract', '0', '预付30%', 2017, 0, 4, 0),
-	(40, 12, '', 0, 18, '', 1, 0, 600.00, 0.00, '2017-09-02', 3, 'sal_contract', '0', '', 2017, 0, 4, 0),
-	(41, 12, '', 0, 18, '', 1, 0, 600.00, 0.00, '2017-10-09', 4, 'sal_contract', '0', '推广费用10月，600元', 2017, 0, 4, 0),
-	(42, 13, '', 0, 13151, '', 1, 0, 3200.00, 0.00, '2017-09-29', 2, 'sal_contract', '0', '网站第二款40%费用3200', 2017, 0, 4, 0),
-	(43, 8, '', 0, 11, '', 1, 0, 1150.00, 0.00, '2017-05-17', 2, 'sal_contract', '0', '第2批款，1150', 2017, 0, 4, 0),
-	(44, 15, '', 0, 295, '', 1, 0, 1000.00, 0.00, '2017-10-26', 1, 'sal_contract', '0', '', 2017, 0, 4, 0),
-	(45, 8, '', 0, 11, '', 1, 0, 2250.00, 0.00, '2017-11-01', 3, 'sal_contract', '0', '尾款，补发票，270', 2017, 0, 4, 0),
-	(46, 16, '', 0, 13155, '', 1, 0, 1000.00, 0.00, '2017-11-06', 1, 'sal_contract', '0', '预付款', 2017, 0, 4, 0),
-	(47, 16, '', 0, 13155, '', 1, 0, 1500.00, 0.00, '2017-11-26', 2, 'sal_contract', '0', '尾款', 2017, 0, 4, 0),
-	(48, 12, '', 0, 18, '', 1, 0, 600.00, 0.00, '2017-11-04', 4, 'sal_contract', '0', 'SEO续费', 2017, 0, 4, 0),
-	(49, 19, '', 0, 967, '', 1, 0, 900.00, 0.00, '2017-12-21', 1, 'sal_contract', '0', '', 2017, 0, 4, 0),
-	(50, 29, '', 0, 274, '', 1, 0, 1500.00, 0.00, '2018-01-08', 1, 'sal_contract', '0', '转帐', 2018, 0, 4, 0),
-	(51, 21, '', 0, 289, '', 1, 0, 2500.00, 0.00, '2018-01-09', 1, 'sal_contract', '0', '支付宝收帐', 2018, 0, 4, 0),
-	(52, 18, '', 0, 13156, '', 1, 0, 1000.00, 0.00, '2018-01-12', 1, 'sal_contract', '0', '', 2018, 0, 4, 0),
-	(53, 30, '', 0, 289, '', 1, 0, 800.00, 0.00, '2018-02-25', 1, 'sal_contract', '0', '', 2018, 0, 4, 0),
-	(54, 17, '', 0, 13156, '', 1, 0, 1000.00, 0.00, '2018-01-19', 1, 'sal_contract', '0', '', 2018, 0, 4, 0),
-	(55, 13, '', 0, 13151, '', 1, 0, 2000.00, 0.00, '2018-02-07', 3, 'sal_contract', '0', '', 2018, 0, 4, 0),
-	(56, 32, '', 0, 13156, '', 1, 0, 1000.00, 0.00, '2018-03-05', 1000, 'sal_contract', '0', '', 2018, 0, 4, 0),
-	(57, 31, '', 0, 232, '', 1, 0, 800.00, 0.00, '2018-03-05', 1, 'sal_contract', '0', '', 2018, 0, 4, 0),
-	(58, 34, '', 0, 9, '', 1, 0, 600.00, 0.00, '2018-03-26', 1, 'sal_contract', '0', '', 2018, 0, 4, 0),
-	(59, 35, '', 0, 254, '', 1, 0, 1000.00, 0.00, '2018-03-26', 1, 'sal_contract', '0', '网站一年续费', 2018, 0, 4, 0),
-	(60, 37, '', 0, 12, '', 1, 0, 600.00, 0.00, '2018-04-24', 1, 'sal_contract', '0', '', 2018, 0, 4, 0),
-	(61, 36, '', 0, 11, '', 1, 0, 3600.00, 0.00, '2018-04-18', 1, 'sal_contract', '0', '三年续费', 2018, 0, 4, 0),
-	(62, 38, '', 0, 289, '', 1, 0, 800.00, 0.00, '2018-06-10', 1, 'sal_contract', '0', '', 2018, 0, 4, 0),
-	(63, 41, '', 0, 289, '', 1, 0, 800.00, 0.00, '2018-07-17', 1, 'sal_contract', '0', '18年续费', 2018, 0, 4, 0),
-	(64, 39, '', 0, 17, '', 1, 0, 1500.00, 0.00, '2018-06-25', 1, 'sal_contract', '0', '必是信任科技 ', 2018, 0, 4, 0),
-	(65, 40, '', 0, 13, '', 1, 0, 1500.00, 0.00, '2018-06-25', 1, 'sal_contract', '0', '', 2018, 0, 4, 0),
-	(66, 42, '', 0, 254, '', 1, 0, 1800.00, 0.00, '2018-08-01', 1, 'sal_contract', '0', '还有700空间费用 ', 0, 0, 4, 0),
-	(67, 44, '', 0, 13160, '', 1, 0, 5000.00, 0.00, '2018-05-15', 1, 'sal_contract', '0', '', 0, 0, 4, 0),
-	(68, 46, '', 0, 13161, '', 1, 0, 5000.00, 0.00, '2018-09-10', 1, 'sal_contract', '0', '预付款', 2018, 0, 4, 0),
-	(69, 49, '', 0, 13163, '', 1, 0, 10000.00, 0.00, '2018-09-25', 1, 'sal_contract', '0', '一期费用', 2018, 0, 4, 0),
-	(70, 48, '', 0, 13162, '', 1, 0, 2600.00, 0.00, '2018-09-02', 1, 'sal_contract', '0', '定制费用 ', 2018, 0, 4, 0),
-	(71, 47, '', 0, 13155, '', 1, 0, 2000.00, 0.00, '2018-09-20', 1, 'sal_contract', '0', '定金费用', 2018, 0, 4, 0),
-	(72, 51, '', 0, 295, '', 1, 0, 1200.00, 0.00, '2018-10-19', 1, 'sal_contract', '0', '', 2018, 0, 4, 0),
-	(73, 43, '', 0, 289, '', 1, 0, 2500.00, 0.00, '2018-10-18', 1, 'sal_contract', '0', '开了收据了的，下次有可能要发票', 2018, 0, 4, 0),
-	(102, 67, '金福机电续费', 0, 12, '金福机电维修中心', 0, 0, 680.00, 0.00, '2019-05-30', 1, '0', '0', '', 2019, 0, 1, 0),
-	(98, 61, '铭丰资本续费', 0, 274, '铭丰资本', 0, 0, 1500.00, 0.00, '2019-01-09', 1, '0', '0', '', 2019, 0, 1, 0),
-	(99, 62, '尚美居续费', 0, 232, '尚美居装饰公司', 0, 0, 800.00, 0.00, '2019-02-28', 1, '0', '0', '', 2019, 0, 1, 0),
-	(100, 63, 'CRM功能定制', 0, 13175, '车险-CRM定制', 0, 0, 1000.00, 0.00, '2019-03-01', 1, '0', '0', '', 2019, 0, 1, 0),
-	(101, 63, 'CRM功能定制', 0, 13175, '车险-CRM定制', 0, 0, 4000.00, 0.00, '2019-03-13', 2, '0', '0', '', 2019, 0, 1, 0),
-	(103, 65, '万籁阁续费', 0, 289, '成都瞳创广告', 0, 0, 800.00, 0.00, '2019-05-15', 1, '0', '0', '', 2019, 0, 1, 0),
-	(104, 68, '瞳创广告官网续费', 0, 289, '成都瞳创广告', 0, 0, 800.00, 0.00, '2019-05-27', 1, '0', '0', '', 2019, 0, 1, 0),
-	(105, 76, '吉庆实业网站制作', 0, 13327, '吉庆实业发展有限公司', 0, 0, 3600.00, 0.00, '2019-07-30', 1, '0', '0', '', 2019, 0, 1, 0),
-	(106, 73, '巨能特种车', 0, 13326, '巨能汽车销售', 0, 0, 2300.00, 0.00, '2019-04-15', 1, '0', '0', '', 2019, 0, 1, 0),
-	(107, 73, '巨能特种车', 0, 13326, '巨能汽车销售', 0, 0, 2300.00, 0.00, '2019-07-03', 2, '0', '0', '', 2019, 0, 1, 0),
-	(108, 72, '熊猫兼兼网站', 0, 13325, '熊猫兼兼', 0, 0, 2000.00, 0.00, '2019-04-07', 1, '0', '0', '', 2019, 0, 1, 0),
-	(109, 72, '熊猫兼兼网站', 0, 13325, '熊猫兼兼', 0, 0, 1500.00, 0.00, '2019-05-09', 2, '0', '0', '', 2019, 0, 1, 0),
-	(110, 74, '商标交易网站', 0, 13320, '李健', 0, 0, 3000.00, 0.00, '2019-06-25', 1, '0', '0', '', 2019, 0, 1, 0),
-	(111, 45, '图拉博网站', 0, 13156, '零起点形象设计', 0, 0, 1000.00, 0.00, '2018-12-20', 1, '0', '0', '', 2019, 0, 1, 0),
-	(112, 77, '善本堂健康调查系统', 0, 13156, '零起点形象设计', 0, 0, 7800.00, 0.00, '2019-08-30', 1, '0', '0', '', 2019, 0, 1, 0),
-	(113, 78, '泰建筑劳续费', 0, 17, '东泰劳务公司', 0, 0, 1500.00, 0.00, '2019-08-30', 1, '0', '0', '', 2019, 0, 1, 0),
-	(114, 79, '堰汇劳务续费', 0, 13, '四川堰汇建筑劳务公司', 0, 0, 1500.00, 0.00, '2019-08-30', 1, '0', '0', '', 2019, 0, 1, 0),
-	(115, 64, '企业网站仿制', 0, 13176, '仿制网站-王先生', 0, 0, 1080.00, 0.00, '2019-07-17', 1, '0', '0', '', 2019, 0, 1, 0),
-	(116, 70, '知行天下旅游网续费', 0, 13163, '知行天下旅游', 0, 0, 1600.00, 0.00, '2019-06-26', 1, '0', '0', '', 2019, 0, 1, 0),
-	(117, 69, '万经堂续费', 0, 289, '成都瞳创广告', 0, 0, 800.00, 0.00, '2019-06-26', 1, '0', '0', '', 2019, 0, 1, 0),
-	(118, 75, '二维码收款', 0, 13176, '', 0, 0, 600.00, 0.00, '2019-07-02', 1, '0', '0', '', 2019, 0, 1, 0),
-	(119, 66, '直线官网续费', 0, 254, '', 0, 0, 1000.00, 0.00, '2019-04-23', 1, '0', '0', '', 2019, 0, 1, 0),
-	(120, 82, '旭兴官网建设', 0, 13328, '', 0, 0, 4000.00, 1000.00, '2019-08-26', 1, '0', '0', '', 2019, 0, 1, 0),
-	(121, 83, '旅游门市管理系统', 0, 13329, '', 0, 0, 4000.00, 0.00, '2019-08-17', 1, '0', '0', '', 2019, 0, 1, 0),
-	(122, 83, '旅游门市管理系统', 0, 13329, '', 0, 0, 8000.00, 0.00, '2019-09-29', 3, '0', '0', '', 2019, 0, 1, 0),
-	(123, 84, '足博仕商城续费', 0, 13161, '', 0, 0, 1600.00, 0.00, '2019-09-10', 1, '0', '0', '', 2019, 0, 1, 0),
-	(124, 74, '商标交易网站', 0, 13320, '', 0, 0, 3000.00, 0.00, '2019-07-17', 2, '0', '0', '', 2019, 0, 1, 0),
-	(125, 85, '华西建筑设计院续费', 0, 289, '', 0, 0, 800.00, 0.00, '2019-10-12', 1, '0', '0', '', 2019, 0, 1, 0),
-	(126, 86, '正源康柠檬网站续费', 0, 295, '', 0, 0, 1200.00, 0.00, '2019-10-29', 1, '0', '0', '', 2019, 0, 1, 0),
-	(127, 87, '全正农业续费', 0, 295, '', 0, 0, 1200.00, 0.00, '2019-10-29', 1, '0', '0', '', 2019, 0, 1, 0),
-	(128, 88, '标筑广告续费', 0, 13174, '', 0, 0, 800.00, 0.00, '2019-12-27', 1, '0', '0', '', 2019, 0, 1, 0),
-	(129, 89, '多测测授权', 0, 13331, '', 0, 0, 500.00, 0.00, '2020-01-15', 1, '0', '0', '', 2020, 0, 1, 0),
-	(130, 90, '民航电子续费', 0, 254, '', 0, 0, 1400.00, 0.00, '2020-01-15', 1, '0', '0', '', 2020, 0, 1, 0),
-	(131, 91, '铭丰资本续费', 0, 274, '', 0, 0, 1500.00, 0.00, '2020-01-15', 1, '0', '0', '', 2020, 0, 1, 0),
-	(132, 92, '直线官网续费', 0, 254, '', 0, 0, 1000.00, 0.00, '2020-03-10', 1, '0', '0', '', 2020, 0, 1, 0),
-	(133, 94, '测试收费', 0, 254, '', 0, 0, 1000.00, 0.00, '2020-03-10', 1, '0', '0', '', 2020, 0, 1, 0);
-/*!40000 ALTER TABLE `fin_rece_record` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.friendlink
+-- Dumping structure for table 20420_guanggao.friendlink
 CREATE TABLE IF NOT EXISTS `friendlink` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` tinyint(1) DEFAULT '1' COMMENT '类型：1=文字链接，2=图片链接',
@@ -2007,497 +481,14 @@ CREATE TABLE IF NOT EXISTS `friendlink` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='友情链接表';
 
--- Dumping data for table 07fly_frame.friendlink: 7 rows
+-- Dumping data for table 20420_guanggao.friendlink: 1 rows
 DELETE FROM `friendlink`;
 /*!40000 ALTER TABLE `friendlink` DISABLE KEYS */;
 INSERT INTO `friendlink` (`id`, `type`, `title`, `url`, `logo`, `sort`, `target`, `email`, `intro`, `visible`, `lang`, `create_time`, `update_time`) VALUES
-	(1, 1, '百度', 'http://www.baidu.com', '10', 50, 1, '', '', 1, 'cn', 1524975826, 1582444521),
-	(2, 1, '腾讯', 'http://www.qq.com', '', 100, 1, '', '', 1, 'cn', 1524976095, 1583827762),
-	(3, 1, '新浪', 'http://www.sina.com.cn', '', 100, 1, '', '', 1, 'cn', 1532414285, 1537585047),
-	(4, 1, '淘宝', 'http://www.taobao.com', '', 100, 1, '', '', 1, 'cn', 1532414529, 1537585013),
-	(6, 1, 'baidu', 'http://www.baidu.com', '', 100, 1, '', '', 1, 'en', 1524975826, 1547473399),
-	(9, 1, 'taobao', 'http://www.taobao.com', '', 100, 1, '', '', 1, 'en', 1532414529, 1547473365),
-	(10, 1, 'weibo', 'http://www.weibo.com', '', 100, 1, '', '', 1, 'en', 1532414726, 1547473355);
+	(1, 1, '07FLY.com', 'http://www.07fly.com', '10', 50, 1, '', '', 1, 'cn', 1524975826, 1587869798);
 /*!40000 ALTER TABLE `friendlink` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.goods
-CREATE TABLE IF NOT EXISTS `goods` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '商品id(SKU)',
-  `name` varchar(100) NOT NULL DEFAULT '' COMMENT '商品名称',
-  `shop_id` int(10) unsigned NOT NULL DEFAULT '1' COMMENT '店铺id',
-  `category_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '商品分类id',
-  `category_id_1` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '一级分类id',
-  `category_id_2` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '二级分类id',
-  `category_id_3` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '三级分类id',
-  `brand_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '品牌id',
-  `group_id_array` varchar(255) NOT NULL DEFAULT '' COMMENT '店铺分类id 首尾用,隔开',
-  `promotion_type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '促销类型 0无促销，1团购，2限时折扣',
-  `goods_type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '实物或虚拟商品标志 1实物商品 0 虚拟商品 2 F码商品',
-  `market_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '市场价',
-  `sale_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '销售价格',
-  `cost_price` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '成本价',
-  `price` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '商品原价格',
-  `promotion_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品促销价格',
-  `give_point` int(11) NOT NULL DEFAULT '0' COMMENT '购买商品赠送积分',
-  `is_member_discount` int(1) NOT NULL DEFAULT '0' COMMENT '参与会员折扣',
-  `shipping_fee` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '运费 0为免运费',
-  `shipping_fee_id` int(11) NOT NULL DEFAULT '0' COMMENT '售卖区域id 物流模板id  ns_order_shipping_fee 表id',
-  `stock` int(10) NOT NULL DEFAULT '0' COMMENT '商品库存',
-  `max_buy` int(11) NOT NULL DEFAULT '0' COMMENT '限购 0 不限购',
-  `clicks` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '商品点击数量',
-  `min_stock_alarm` int(11) NOT NULL DEFAULT '0' COMMENT '库存预警值',
-  `sales` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '销售数量',
-  `collects` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '收藏数量',
-  `star` tinyint(3) unsigned NOT NULL DEFAULT '5' COMMENT '好评星级',
-  `evaluates` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '评价数',
-  `shares` int(11) NOT NULL DEFAULT '0' COMMENT '分享数',
-  `province_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '一级地区id',
-  `city_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '二级地区id',
-  `defaultpic` varchar(255) NOT NULL DEFAULT '0' COMMENT '商品主图',
-  `keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '商品关键词',
-  `introduction` varchar(255) NOT NULL DEFAULT '' COMMENT '商品简介，促销语',
-  `description` text NOT NULL COMMENT '商品详情',
-  `content` text NOT NULL COMMENT '商品详细内容',
-  `code` varchar(50) NOT NULL DEFAULT '' COMMENT '商家编号',
-  `is_hot` int(1) NOT NULL DEFAULT '0' COMMENT '是否热销商品',
-  `is_recommend` int(1) NOT NULL DEFAULT '0' COMMENT '是否推荐0=不推荐，1=推荐',
-  `is_new` int(1) NOT NULL DEFAULT '0' COMMENT '是否新品',
-  `is_bill` int(1) NOT NULL DEFAULT '0' COMMENT '是否开具增值税发票 1是，0否',
-  `state` tinyint(3) NOT NULL DEFAULT '1' COMMENT '商品状态 0下架，1正常，10违规（禁售）',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-  `litpic` varchar(1000) DEFAULT '0' COMMENT '商品缩略图',
-  `img_id_array` varchar(1000) DEFAULT NULL COMMENT '商品图片序列',
-  `sku_img_array` varchar(1000) DEFAULT NULL COMMENT '商品sku应用图片列表  属性,属性值，图片ID',
-  `match_point` float(10,2) DEFAULT NULL COMMENT '实物与描述相符（根据评价计算）',
-  `match_ratio` float(10,2) DEFAULT NULL COMMENT '实物与描述相符（根据评价计算）百分比',
-  `real_sales` int(10) NOT NULL DEFAULT '0' COMMENT '实际销量',
-  `goods_attribute_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品类型',
-  `goods_spec_format` text NOT NULL COMMENT '商品规格',
-  `goods_weight` decimal(8,2) NOT NULL DEFAULT '0.00' COMMENT '商品重量',
-  `goods_volume` decimal(8,2) NOT NULL DEFAULT '0.00' COMMENT '商品体积',
-  `shipping_fee_type` int(11) NOT NULL DEFAULT '1' COMMENT '计价方式1.重量2.体积3.计件',
-  `extend_category_id` varchar(255) DEFAULT NULL,
-  `extend_category_id_1` varchar(255) DEFAULT NULL,
-  `extend_category_id_2` varchar(255) DEFAULT NULL,
-  `extend_category_id_3` varchar(255) DEFAULT NULL,
-  `supplier_id` int(11) NOT NULL DEFAULT '0' COMMENT '供货商id',
-  `sale_date` datetime NOT NULL COMMENT '上下架时间',
-  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '商品添加时间',
-  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '商品编辑时间',
-  `min_buy` int(11) NOT NULL DEFAULT '0' COMMENT '最少买几件',
-  `virtual_goods_type_id` int(11) DEFAULT '0' COMMENT '虚拟商品类型id',
-  `production_date` int(11) NOT NULL DEFAULT '0' COMMENT '生产日期',
-  `shelf_life` varchar(50) NOT NULL DEFAULT '' COMMENT '保质期',
-  `goods_video_address` varchar(455) DEFAULT '' COMMENT '商品视频地址，不为空时前台显示视频',
-  `pc_custom_template` varchar(255) NOT NULL DEFAULT '' COMMENT 'pc端商品自定义模板',
-  `wap_custom_template` varchar(255) NOT NULL DEFAULT '' COMMENT 'wap端商品自定义模板',
-  `max_use_point` int(11) NOT NULL DEFAULT '0' COMMENT '积分抵现最大可用积分数 0为不可使用',
-  `is_open_presell` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否支持预售',
-  `presell_time` int(11) NOT NULL DEFAULT '0' COMMENT '预售发货时间',
-  `presell_day` int(11) NOT NULL DEFAULT '0' COMMENT '预售发货天数',
-  `presell_delivery_type` int(11) NOT NULL DEFAULT '1' COMMENT '预售发货方式1. 按照预售发货时间 2.按照预售发货天数',
-  `presell_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '预售金额',
-  `goods_unit` varchar(20) NOT NULL DEFAULT '' COMMENT '商品单位',
-  PRIMARY KEY (`id`),
-  KEY `UK_fly_goods_brand_id` (`brand_id`),
-  KEY `UK_fly_goods_category_id` (`category_id`),
-  KEY `UK_fly_goods_category_id_1` (`category_id_1`),
-  KEY `UK_fly_goods_category_id_2` (`category_id_2`),
-  KEY `UK_fly_goods_category_id_3` (`category_id_3`),
-  KEY `UK_fly_goods_extend_category_id` (`extend_category_id`),
-  KEY `UK_fly_goods_extend_category_id_1` (`extend_category_id_1`),
-  KEY `UK_fly_goods_extend_category_id_2` (`extend_category_id_2`),
-  KEY `UK_fly_goods_extend_category_id_3` (`extend_category_id_3`),
-  KEY `UK_fly_goods_goods_attribute_id` (`goods_attribute_id`),
-  KEY `UK_fly_goods_group_id_array` (`group_id_array`),
-  KEY `UK_fly_goods_promotion_price` (`promotion_price`)
-) ENGINE=MyISAM AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16554 COMMENT='商品表';
-
--- Dumping data for table 07fly_frame.goods: 16 rows
-DELETE FROM `goods`;
-/*!40000 ALTER TABLE `goods` DISABLE KEYS */;
-INSERT INTO `goods` (`id`, `name`, `shop_id`, `category_id`, `category_id_1`, `category_id_2`, `category_id_3`, `brand_id`, `group_id_array`, `promotion_type`, `goods_type`, `market_price`, `sale_price`, `cost_price`, `price`, `promotion_price`, `give_point`, `is_member_discount`, `shipping_fee`, `shipping_fee_id`, `stock`, `max_buy`, `clicks`, `min_stock_alarm`, `sales`, `collects`, `star`, `evaluates`, `shares`, `province_id`, `city_id`, `defaultpic`, `keywords`, `introduction`, `description`, `content`, `code`, `is_hot`, `is_recommend`, `is_new`, `is_bill`, `state`, `sort`, `litpic`, `img_id_array`, `sku_img_array`, `match_point`, `match_ratio`, `real_sales`, `goods_attribute_id`, `goods_spec_format`, `goods_weight`, `goods_volume`, `shipping_fee_type`, `extend_category_id`, `extend_category_id_1`, `extend_category_id_2`, `extend_category_id_3`, `supplier_id`, `sale_date`, `create_time`, `update_time`, `min_buy`, `virtual_goods_type_id`, `production_date`, `shelf_life`, `goods_video_address`, `pc_custom_template`, `wap_custom_template`, `max_use_point`, `is_open_presell`, `presell_time`, `presell_day`, `presell_delivery_type`, `presell_price`, `goods_unit`) VALUES
-	(76, '老人鞋子', 1, 4, 0, 0, 0, 0, '', 0, 1, 200.00, 160.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 80, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '/upload/images/190903/20190903095648913.jpg', '老人鞋子', '', '老人鞋子', '<p>老人鞋子老人鞋子老人鞋子</p>', '', 0, 0, 0, 0, 1, 3, NULL, NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 2019, 1586761014, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(77, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586767875, 0, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(78, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586768501, 0, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(79, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586768682, 0, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(80, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586768778, 0, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(81, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586768899, 0, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(82, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586768949, 0, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(83, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586769005, 0, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(84, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586769034, 0, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(85, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586769053, 0, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(86, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586769456, 0, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(87, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586769504, 0, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(88, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586769521, 0, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(89, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 100.00, 100.00, 850.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '0', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586769665, 1586771402, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(90, '测试商品', 1, 4, 0, 0, 0, 2, '', 0, 1, 50.00, 100.00, 100.00, 0.00, 0.00, 0, 0, 0.00, 0, 100, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '', '', '', '', '', 0, 0, 0, 0, 1, 2, '13', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586771261, 1586779145, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, ''),
-	(91, '测试商品9877666WQEQ佣人', 1, 4, 0, 0, 0, 2, '', 0, 1, 1.00, 100.00, 545.00, 0.00, 0.00, 0, 0, 0.00, 0, 1332, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, '0', '这是关键字', '', '这是描述', '有内容没的<br />', '', 0, 0, 0, 0, 1, 2, '10', NULL, NULL, NULL, NULL, 0, 0, '', 0.00, 0.00, 1, NULL, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 1586771289, 1586774763, 0, 0, 0, '', '', '', '', 0, 0, 0, 0, 1, 0.00, '');
-/*!40000 ALTER TABLE `goods` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.goods_attr
-CREATE TABLE IF NOT EXISTS `goods_attr` (
-  `attr_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '商品属性ID',
-  `attr_name` varchar(255) NOT NULL DEFAULT '' COMMENT '属性名称',
-  `visible` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否使用',
-  `spec_id_array` varchar(255) NOT NULL DEFAULT '' COMMENT '关联规格',
-  `sort` int(11) DEFAULT NULL,
-  `create_time` int(11) DEFAULT '0' COMMENT '创建时间',
-  `modify_time` int(11) DEFAULT '0' COMMENT '修改时间',
-  `brand_id_array` varchar(255) NOT NULL DEFAULT '' COMMENT '关联品牌',
-  PRIMARY KEY (`attr_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16384 COMMENT='商品相关属性';
-
--- Dumping data for table 07fly_frame.goods_attr: 4 rows
-DELETE FROM `goods_attr`;
-/*!40000 ALTER TABLE `goods_attr` DISABLE KEYS */;
-INSERT INTO `goods_attr` (`attr_id`, `attr_name`, `visible`, `spec_id_array`, `sort`, `create_time`, `modify_time`, `brand_id_array`) VALUES
-	(1, 'IDC租用', 1, '', 3, 1536331561, 1536333703, ''),
-	(28, '硬盘', 1, '', 1, 0, 0, ''),
-	(27, '原材料', 1, '', 0, 0, 0, ''),
-	(29, '硬盘', 1, '', 1, 0, 0, '');
-/*!40000 ALTER TABLE `goods_attr` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.goods_attr_relation
-CREATE TABLE IF NOT EXISTS `goods_attr_relation` (
-  `attr_relation_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `shop_id` int(11) NOT NULL DEFAULT '0' COMMENT '店铺ID',
-  `goods_id` int(11) NOT NULL COMMENT '商品ID',
-  `attr_id` int(10) unsigned NOT NULL COMMENT '属性编号',
-  `attr_name` varchar(255) NOT NULL DEFAULT '' COMMENT '属性名称',
-  `attr_value_id` int(11) NOT NULL COMMENT '属性值id',
-  `attr_value_name` varchar(255) NOT NULL DEFAULT '' COMMENT '属性值的名称',
-  `attr_value_data` varchar(255) NOT NULL DEFAULT '' COMMENT '属性值名称对应最终数据',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-  `create_time` int(11) DEFAULT '0' COMMENT '创建时间',
-  PRIMARY KEY (`attr_relation_id`),
-  KEY `UK_fly_goods_attribute_attr_value_id` (`attr_value_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=315 COMMENT='商品和属性关联表\r\n';
-
--- Dumping data for table 07fly_frame.goods_attr_relation: 4 rows
-DELETE FROM `goods_attr_relation`;
-/*!40000 ALTER TABLE `goods_attr_relation` DISABLE KEYS */;
-INSERT INTO `goods_attr_relation` (`attr_relation_id`, `shop_id`, `goods_id`, `attr_id`, `attr_name`, `attr_value_id`, `attr_value_name`, `attr_value_data`, `sort`, `create_time`) VALUES
-	(9, 0, 24, 5, '', 1, '100', '红色', 0, 1537101643),
-	(10, 0, 24, 6, '', 4, '101', '黑色', 0, 1537101643),
-	(11, 0, 24, 7, '', 2, '102', '白色', 1, 1537101643),
-	(12, 0, 24, 8, '', 3, '103', '大红色', 2, 1537101643);
-/*!40000 ALTER TABLE `goods_attr_relation` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.goods_attr_value
-CREATE TABLE IF NOT EXISTS `goods_attr_value` (
-  `attr_value_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '属性值ID',
-  `attr_id` int(11) NOT NULL COMMENT '属性ID',
-  `attr_value_name` varchar(50) NOT NULL DEFAULT '' COMMENT '属性值名称',
-  `attr_value_data` varchar(1000) NOT NULL DEFAULT '' COMMENT '属性对应相关数据',
-  `type` int(11) NOT NULL DEFAULT '1' COMMENT '属性对应输入类型1.直接2.单选3.多选',
-  `sort` int(11) NOT NULL DEFAULT '1999' COMMENT '排序号',
-  `is_search` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否使用',
-  PRIMARY KEY (`attr_value_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096 COMMENT='商品属性值';
-
--- Dumping data for table 07fly_frame.goods_attr_value: 11 rows
-DELETE FROM `goods_attr_value`;
-/*!40000 ALTER TABLE `goods_attr_value` DISABLE KEYS */;
-INSERT INTO `goods_attr_value` (`attr_value_id`, `attr_id`, `attr_value_name`, `attr_value_data`, `type`, `sort`, `is_search`) VALUES
-	(19, 1, '设备类型', '1U设备\r\n2U设备', 1, 0, 1),
-	(18, 27, '化纤', '国内\r\n国外\r\n华中', 1, 1, 1),
-	(17, 27, '绵薄', '新疆\r\n内地\r\n沿海', 1, 0, 1),
-	(12, 26, '时尚款', '', 1, 0, 1),
-	(13, 26, '经典款', '', 1, 1, 1),
-	(14, 26, '复古款', '', 1, 2, 1),
-	(20, 1, '带宽大小', '100M\r\n200M\r\n300M', 1, 2, 1),
-	(21, 28, '大小', '250G\r\n512G', 3, 0, 1),
-	(22, 28, '颜色', '黑色\r\n白色\r\n蓝色', 3, 1, 1),
-	(23, 29, '大小', '250G\r\n512G', 3, 0, 1),
-	(24, 29, '颜色', '黑色\r\n白色\r\n蓝色', 3, 1, 1);
-/*!40000 ALTER TABLE `goods_attr_value` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.goods_brand
-CREATE TABLE IF NOT EXISTS `goods_brand` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '索引ID',
-  `shop_id` int(11) NOT NULL DEFAULT '0' COMMENT '店铺ID',
-  `name` varchar(100) NOT NULL COMMENT '品牌名称',
-  `initial` varchar(1) NOT NULL COMMENT '品牌首字母',
-  `litpic` varchar(100) NOT NULL DEFAULT '' COMMENT '图片',
-  `recommend` tinyint(1) NOT NULL DEFAULT '0' COMMENT '推荐，0为否，1为是，默认为0',
-  `visible` tinyint(1) NOT NULL DEFAULT '0',
-  `sort` int(11) DEFAULT NULL,
-  `itsname` varchar(50) NOT NULL DEFAULT '' COMMENT '类别名称',
-  `category_id_array` varchar(1000) NOT NULL DEFAULT '' COMMENT '所属分类id组',
-  `brand_ads` varchar(255) NOT NULL DEFAULT '' COMMENT '品牌推荐广告',
-  `category_name` varchar(50) NOT NULL DEFAULT '' COMMENT '品牌所属分类名称',
-  `category_id_1` int(11) NOT NULL DEFAULT '0' COMMENT '一级分类ID',
-  `category_id_2` int(11) NOT NULL DEFAULT '0' COMMENT '二级分类ID',
-  `category_id_3` int(11) NOT NULL DEFAULT '0' COMMENT '三级分类ID',
-  `create_time` int(11) NOT NULL DEFAULT '0',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `org_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1024 COMMENT='品牌表';
-
--- Dumping data for table 07fly_frame.goods_brand: 2 rows
-DELETE FROM `goods_brand`;
-/*!40000 ALTER TABLE `goods_brand` DISABLE KEYS */;
-INSERT INTO `goods_brand` (`id`, `shop_id`, `name`, `initial`, `litpic`, `recommend`, `visible`, `sort`, `itsname`, `category_id_array`, `brand_ads`, `category_name`, `category_id_1`, `category_id_2`, `category_id_3`, `create_time`, `update_time`, `org_id`) VALUES
-	(1, 0, '足博仕', 'Z', '20', 1, 1, 0, '', '', '', '', 0, 0, 0, 0, 1586752282, 0),
-	(2, 0, '零起飞网络', 'L', '14,11,9', 1, 1, 1, '', '', '', '', 0, 0, 0, 0, 1586752112, 0);
-/*!40000 ALTER TABLE `goods_brand` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.goods_category
-CREATE TABLE IF NOT EXISTS `goods_category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '',
-  `itsname` varchar(50) NOT NULL DEFAULT '' COMMENT '商品分类简称 ',
-  `pid` int(11) NOT NULL DEFAULT '0',
-  `level` tinyint(4) NOT NULL DEFAULT '0',
-  `visible` int(11) NOT NULL DEFAULT '1' COMMENT '是否显示  1 显示 0 不显示',
-  `attr_id` int(11) NOT NULL DEFAULT '0' COMMENT '关联商品类型ID',
-  `attr_name` varchar(255) NOT NULL DEFAULT '' COMMENT '关联类型名称',
-  `keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '分类关键字用于seo',
-  `description` varchar(255) NOT NULL DEFAULT '' COMMENT '分类描述用于seo',
-  `intro` varchar(255) NOT NULL DEFAULT '' COMMENT '介绍',
-  `litpic` varchar(255) NOT NULL DEFAULT '' COMMENT '商品分类图片',
-  `sort` int(11) DEFAULT NULL COMMENT '排序',
-  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `org_id` int(11) NOT NULL DEFAULT '0' COMMENT '企业会员',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=244 COMMENT='商品分类表';
-
--- Dumping data for table 07fly_frame.goods_category: 9 rows
-DELETE FROM `goods_category`;
-/*!40000 ALTER TABLE `goods_category` DISABLE KEYS */;
-INSERT INTO `goods_category` (`id`, `name`, `itsname`, `pid`, `level`, `visible`, `attr_id`, `attr_name`, `keywords`, `description`, `intro`, `litpic`, `sort`, `create_time`, `update_time`, `org_id`) VALUES
-	(1, '49元促销区1', '49元促销区', 0, 1, 1, 0, '', '零起飞网站建设', '这是一个不错的栏目哟', 'vb r', '11', 2, 0, 1586749473, 0),
-	(2, '轻爽鞋专区', '轻爽鞋专区', 0, 1, 1, 0, '', '', '', '', 'upload/goods_category/1536765621.jpg', 5, 0, 1586759861, 0),
-	(3, '安全鞋系列', '安全鞋系列', 0, 1, 1, 0, '', '', '', '', 'upload/goods_category/1536765650.jpg', 4, 0, 0, 0),
-	(4, '舒爽鞋专区', '舒爽鞋专区', 0, 1, 0, 0, '', '', '', '介绍的东西吧', 'upload/goods_category/1536765712.jpg', 1, 0, 1586749186, 0),
-	(5, '男款专区', '男款专区', 1, 1, 1, 0, '', '网站建设,企业网站建设', '', '', '', 0, 0, 0, 0),
-	(6, '女款专区', '女款专区', 1, 1, 1, 0, '', '网站建设,企业网站建设', '', '', '', 1, 0, 0, 0),
-	(8, '女款专区', '女款专区', 5, 1, 1, 0, '', '网站建设,企业网站建设', '', '', '', 1, 0, 0, 0),
-	(9, '老年版', '1', 3, 0, 1, 0, '', '111', '11', '', '', 1, 0, 0, 0),
-	(10, '好的吧', '', 4, 0, 1, 0, '', '', '', '', '9', 100, 1586748669, 0, 0);
-/*!40000 ALTER TABLE `goods_category` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.goods_img
-CREATE TABLE IF NOT EXISTS `goods_img` (
-  `img_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `goods_id` int(11) NOT NULL COMMENT '商品ID',
-  `img_path` varchar(256) NOT NULL DEFAULT '' COMMENT '图片路径',
-  PRIMARY KEY (`img_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=112 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16384 COMMENT='商品图片';
-
--- Dumping data for table 07fly_frame.goods_img: 56 rows
-DELETE FROM `goods_img`;
-/*!40000 ALTER TABLE `goods_img` DISABLE KEYS */;
-INSERT INTO `goods_img` (`img_id`, `goods_id`, `img_path`) VALUES
-	(28, 31, '/upload/images/181111/20181111113539236.jpg'),
-	(29, 31, '/upload/images/181111/20181111113539869.jpg'),
-	(30, 31, '/upload/images/181111/20181111113539197.png'),
-	(31, 31, '/upload/images/181111/20181111113540228.jpg'),
-	(32, 31, '/upload/images/181111/20181111113540894.jpg'),
-	(33, 31, '/upload/images/181111/20181111113540845.jpg'),
-	(34, 31, '/upload/images/181111/20181111113540355.jpg'),
-	(35, 31, '/upload/images/181111/20181111113540144.jpg'),
-	(36, 34, '/upload/images/181111/20181111114053291.jpg'),
-	(37, 34, '/upload/images/181111/20181111114053243.jpg'),
-	(38, 34, '/upload/images/181111/20181111114054476.jpg'),
-	(39, 34, '/upload/images/181111/20181111114054536.png'),
-	(40, 35, '/upload/images/181111/20181111114053291.jpg'),
-	(41, 35, '/upload/images/181111/20181111114053243.jpg'),
-	(42, 35, '/upload/images/181111/20181111114054476.jpg'),
-	(43, 35, '/upload/images/181111/20181111114054536.png'),
-	(44, 36, '/upload/images/181115/20181115092621879.jpg'),
-	(45, 38, '/upload/images/181115/20181115170329429.jpg'),
-	(46, 38, '/upload/images/181115/20181115170329902.jpg'),
-	(47, 39, '/upload/images/181115/20181115200902424.jpg'),
-	(48, 39, '/upload/images/181115/20181115200903125.jpg'),
-	(49, 39, '/upload/images/181115/20181115200903715.jpg'),
-	(50, 52, '/upload/images/181117/20181117211132635.jpg'),
-	(51, 52, 'Array'),
-	(52, 52, ''),
-	(53, 52, 'Array'),
-	(54, 52, 'Array'),
-	(55, 52, 'Array'),
-	(56, 52, 'Array'),
-	(57, 53, '/upload/images/181117/20181117211132635.jpg'),
-	(58, 54, '/upload/images/181117/20181117211132635.jpg'),
-	(59, 55, '/upload/images/181117/20181117211132635.jpg'),
-	(60, 58, '/upload/images/181117/20181117211723880.jpg'),
-	(61, 59, '/upload/images/181117/20181117211723880.jpg'),
-	(62, 60, '/upload/images/181117/20181117211723880.jpg'),
-	(63, 61, '/upload/images/181117/20181117211723880.jpg'),
-	(64, 62, '/upload/images/181117/20181117211723880.jpg'),
-	(65, 63, '/upload/images/181117/20181117211723880.jpg'),
-	(66, 64, '/upload/images/181117/20181117211723880.jpg'),
-	(67, 65, '/upload/images/181117/20181117211723880.jpg'),
-	(68, 66, '/upload/images/181117/20181117211723880.jpg'),
-	(69, 67, '/upload/images/181117/20181117211723880.jpg'),
-	(70, 68, '/upload/images/181117/20181117211723880.jpg'),
-	(71, 69, '/upload/images/181117/20181117211723880.jpg'),
-	(85, 70, '/upload/images/181203/20181203103351697.jpg'),
-	(84, 70, '/upload/images/181203/20181203103351171.jpg'),
-	(83, 70, '/upload/images/181203/20181203103351715.jpg'),
-	(82, 70, '/upload/images/181203/20181203103350936.jpg'),
-	(81, 70, '/upload/images/181117/20181117211723880.jpg'),
-	(97, 71, '/upload/images/190326/20190326143838513.gif'),
-	(88, 72, '/upload/images/190326/20190326151309691.gif'),
-	(103, 73, '/upload/images/190326/20190326151309691.gif'),
-	(104, 74, '/upload/images/190902/20190902232154643.jpg'),
-	(105, 74, '/upload/images/190902/20190902232154290.jpg'),
-	(106, 74, '/upload/images/190902/20190902232154829.jpg'),
-	(111, 76, '/upload/images/190903/20190903095648913.jpg');
-/*!40000 ALTER TABLE `goods_img` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.goods_sku
-CREATE TABLE IF NOT EXISTS `goods_sku` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '表序号',
-  `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品编号',
-  `category_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品分类',
-  `brand_id` int(11) NOT NULL DEFAULT '0' COMMENT '品牌编号',
-  `goods_name` varchar(500) NOT NULL DEFAULT '' COMMENT '商品名称',
-  `sku_name` varchar(500) NOT NULL DEFAULT '' COMMENT 'SKU名称',
-  `sku_value_items` varchar(255) NOT NULL DEFAULT '' COMMENT '属性和属性值 id串 attribute + attribute value 表ID分号分隔',
-  `sku_value_items_format` varchar(500) NOT NULL DEFAULT '' COMMENT '属性和属性值id串组合json格式',
-  `sku_market_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '市场价',
-  `sku_sale_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '销售价格',
-  `sku_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '价格',
-  `sku_promote_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '促销价格',
-  `sku_cost_price` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '成本价',
-  `total_cost_money` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '成本总金额',
-  `total_sale_money` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '销售总金额',
-  `total_profit_money` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '利润总金额',
-  `sku_stock` int(11) NOT NULL DEFAULT '0' COMMENT '库存',
-  `sku_sales` int(11) NOT NULL DEFAULT '0' COMMENT '规格销量',
-  `litpic` int(11) NOT NULL DEFAULT '0' COMMENT '如果是第一个sku编码, 可以加图片',
-  `encode` varchar(255) NOT NULL DEFAULT '' COMMENT '商家编码',
-  `qrcode` varchar(255) NOT NULL DEFAULT '' COMMENT '商品二维码',
-  `sort` int(11) NOT NULL DEFAULT '0',
-  `visible` int(11) NOT NULL DEFAULT '1' COMMENT '是否显示',
-  `create_time` int(11) DEFAULT NULL COMMENT '创建时间',
-  `update_time` int(11) DEFAULT NULL COMMENT '修改时间',
-  `org_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=481 COMMENT='商品skui规格价格库存信息表';
-
--- Dumping data for table 07fly_frame.goods_sku: 25 rows
-DELETE FROM `goods_sku`;
-/*!40000 ALTER TABLE `goods_sku` DISABLE KEYS */;
-INSERT INTO `goods_sku` (`id`, `goods_id`, `category_id`, `brand_id`, `goods_name`, `sku_name`, `sku_value_items`, `sku_value_items_format`, `sku_market_price`, `sku_sale_price`, `sku_price`, `sku_promote_price`, `sku_cost_price`, `total_cost_money`, `total_sale_money`, `total_profit_money`, `sku_stock`, `sku_sales`, `litpic`, `encode`, `qrcode`, `sort`, `visible`, `create_time`, `update_time`, `org_id`) VALUES
-	(22, 76, 0, 0, '老人鞋子', '颜色:白色,尺寸:35码', '颜色:白色,尺寸:35码', '', 200.00, 300.00, 0.00, 0.00, 111.76, 1900.00, 5100.00, 3200.00, 20, 0, 0, '', '', 0, 1, 2020, 2020, NULL),
-	(25, 76, 0, 0, '老人鞋子', '颜色:黑色,尺寸:40码', '颜色:黑色,尺寸:40码', '', 200.00, 150.00, 0.00, 0.00, 111.76, 1900.00, 2850.00, 550.00, 20, 0, 0, '', '', 0, 1, 2020, 2020, NULL),
-	(24, 76, 0, 0, '老人鞋子', '颜色:黑色,尺寸:35码', '颜色:黑色,尺寸:35码', '', 200.00, 160.00, 0.00, 0.00, 111.76, 1900.00, 0.00, 0.00, 20, 0, 0, '', '', 0, 1, 2020, 2020, NULL),
-	(23, 76, 0, 0, '老人鞋子', '颜色:白色,尺寸:40码', '颜色:白色,尺寸:40码', '', 200.00, 160.00, 0.00, 0.00, 111.76, 1900.00, 0.00, 0.00, 20, 0, 0, '', '', 0, 1, 2020, 2020, NULL),
-	(26, 80, 0, 0, '测试商品', '测试商品', '0', '', 100.00, 100.00, 0.00, 0.00, 100.00, 0.00, 0.00, 0.00, 100, 0, 0, '', '', 0, 1, 1586768778, NULL, NULL),
-	(27, 81, 0, 0, '测试商品', '测试商品', '0', '', 100.00, 100.00, 0.00, 0.00, 100.00, 0.00, 0.00, 0.00, 100, 0, 0, '', '', 0, 1, 1586768899, NULL, NULL),
-	(28, 84, 0, 0, '测试商品', '', '', '', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586769034, NULL, NULL),
-	(29, 87, 0, 0, '测试商品', '尺码:35', '2:12', '', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586769504, NULL, NULL),
-	(30, 87, 0, 0, '测试商品', '尺码:36', '2:13', '', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586769504, NULL, NULL),
-	(31, 87, 0, 0, '测试商品', '尺码:37', '2:14', '', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586769504, NULL, NULL),
-	(32, 87, 0, 0, '测试商品', '尺码:42', '2:15', '', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586769504, NULL, NULL),
-	(33, 88, 0, 0, '测试商品', '尺码:35', '2:12', '', 0.00, 100.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586769521, NULL, NULL),
-	(34, 88, 0, 0, '测试商品', '尺码:36', '2:13', '', 0.00, 100.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586769521, NULL, NULL),
-	(35, 88, 0, 0, '测试商品', '尺码:37', '2:14', '', 0.00, 100.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586769521, NULL, NULL),
-	(36, 88, 0, 0, '测试商品', '尺码:42', '2:15', '', 0.00, 100.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586769521, NULL, NULL),
-	(37, 89, 4, 0, '测试商品', '尺码:35', '2:12', '', 0.00, 100.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586769665, 1586771402, NULL),
-	(41, 90, 4, 0, '测试商品', '尺码:36', '2:13', '', 50.00, 100.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586771261, 1586779146, NULL),
-	(42, 90, 4, 0, '测试商品', '尺码:35', '2:12', '', 50.00, 100.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586771261, 1586779145, NULL),
-	(43, 90, 4, 0, '测试商品', '尺码:42', '2:15', '', 50.00, 100.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586771261, 1586779146, NULL),
-	(44, 90, 4, 0, '测试商品', '尺码:37', '2:14', '', 50.00, 100.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, '', '', 0, 1, 1586771261, 1586779145, NULL),
-	(53, 91, 2, 1, '测试商品9877666WQEQ佣人', '尺码:37', '2:14', '', 1.00, 100.00, 0.00, 0.00, 545.00, 0.00, 0.00, 0.00, 333, 0, 20, '', '', 0, 1, 1586772263, 1586780891, NULL),
-	(54, 91, 4, 0, '测试商品008', '尺码:35', '2:12', '', 888.00, 100.00, 0.00, 0.00, 545.00, 0.00, 0.00, 0.00, 333, 0, 0, '', '', 0, 1, 1586772263, 1586779760, NULL),
-	(55, 91, 4, 0, '测试商品9877666WQEQ佣人', '尺码:42', '2:15', '', 888.00, 100.00, 0.00, 0.00, 545.00, 0.00, 0.00, 0.00, 333, 0, 0, '', '', 0, 1, 1586772263, 1586774763, NULL),
-	(56, 91, 4, 0, '测试商品008', '尺码:36', '2:13', '', 888.00, 100.00, 0.00, 0.00, 545.00, 0.00, 0.00, 0.00, 333, 0, 0, '', '', 0, 1, 1586772263, 1586774764, NULL),
-	(57, 91, 2, 1, '服务器品牌', 'XES', '', '', 100.00, 100.00, 0.00, 0.00, 100.00, 0.00, 0.00, 0.00, 100, 0, 12, 'XDAD', '', 0, 1, 1586781118, 1586781391, NULL);
-/*!40000 ALTER TABLE `goods_sku` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.goods_spec
-CREATE TABLE IF NOT EXISTS `goods_spec` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '属性ID',
-  `shop_id` int(11) NOT NULL DEFAULT '0' COMMENT '店铺ID',
-  `spec_name` varchar(255) NOT NULL DEFAULT '' COMMENT '属性名称',
-  `visible` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否可视',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-  `show_type` int(11) NOT NULL DEFAULT '1' COMMENT '展示方式 1 文字 2 颜色 3 图片',
-  `is_screen` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否参与筛选 0 不参与 1 参与',
-  `intro` varchar(255) NOT NULL DEFAULT '' COMMENT '属性说明',
-  `create_time` int(11) DEFAULT NULL COMMENT '创建日期',
-  `update_time` int(11) DEFAULT NULL,
-  `org_id` int(11) DEFAULT NULL COMMENT '会员id',
-  PRIMARY KEY (`id`),
-  KEY `IDX_category_props_categoryId` (`shop_id`),
-  KEY `IDX_category_props_orders` (`sort`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=3276 COMMENT='商品属性（规格）表';
-
--- Dumping data for table 07fly_frame.goods_spec: 3 rows
-DELETE FROM `goods_spec`;
-/*!40000 ALTER TABLE `goods_spec` DISABLE KEYS */;
-INSERT INTO `goods_spec` (`id`, `shop_id`, `spec_name`, `visible`, `sort`, `show_type`, `is_screen`, `intro`, `create_time`, `update_time`, `org_id`) VALUES
-	(2, 0, '尺码', 1, 3, 1, 1, '', 0, NULL, NULL),
-	(3, 0, '颜色', 1, 1, 1, 1, '', NULL, NULL, NULL),
-	(5, 0, '尺寸', 1, 2, 1, 1, '', NULL, 1586781824, NULL);
-/*!40000 ALTER TABLE `goods_spec` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.goods_spec_value
-CREATE TABLE IF NOT EXISTS `goods_spec_value` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品属性值ID',
-  `spec_id` int(11) NOT NULL COMMENT '商品属性ID',
-  `spec_value_name` varchar(255) NOT NULL DEFAULT '' COMMENT '商品属性值名称',
-  `spec_value_data` varchar(255) NOT NULL DEFAULT '' COMMENT '商品属性值数据',
-  `intro` varchar(255) NOT NULL DEFAULT '',
-  `visible` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否可视',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-  `create_time` int(11) DEFAULT NULL,
-  `update_time` int(11) DEFAULT NULL,
-  `org_id` int(11) NOT NULL DEFAULT '0' COMMENT '会员id',
-  PRIMARY KEY (`id`),
-  KEY `IDX_category_propvalues_c_pId` (`spec_id`),
-  KEY `IDX_category_propvalues_orders` (`sort`),
-  KEY `IDX_category_propvalues_value` (`spec_value_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1092 COMMENT='商品规格值模版表';
-
--- Dumping data for table 07fly_frame.goods_spec_value: 12 rows
-DELETE FROM `goods_spec_value`;
-/*!40000 ALTER TABLE `goods_spec_value` DISABLE KEYS */;
-INSERT INTO `goods_spec_value` (`id`, `spec_id`, `spec_value_name`, `spec_value_data`, `intro`, `visible`, `sort`, `create_time`, `update_time`, `org_id`) VALUES
-	(12, 2, '35', '', '', 1, 255, 0, NULL, 0),
-	(13, 2, '36', '', '', 1, 255, 0, NULL, 0),
-	(14, 2, '37', '', '', 1, 255, 0, NULL, 0),
-	(15, 2, '42', '', '', 1, 255, 0, NULL, 0),
-	(22, 3, '天空色', '', '', 1, 3, NULL, 1586781816, 0),
-	(21, 3, '黑色', '', '', 1, 2, NULL, 1586781815, 0),
-	(20, 3, '白色', '', '', 1, 1, NULL, 1586781814, 0),
-	(30, 5, '35码', '', '', 0, 0, NULL, NULL, 0),
-	(31, 5, '40码', '', '', 0, 1, NULL, NULL, 0),
-	(32, 5, '41码', '', '', 0, 5, 1586759302, NULL, 0),
-	(33, 5, '41码', '', '', 0, 5, 1586759324, NULL, 0),
-	(34, 3, '大红色', '', '', 1, 25, 1586759350, 1586781817, 0);
-/*!40000 ALTER TABLE `goods_spec_value` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.guestbook
-CREATE TABLE IF NOT EXISTS `guestbook` (
-  `id` smallint(6) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '表单名称',
-  `nid` varchar(64) NOT NULL DEFAULT '' COMMENT '表单标识',
-  `maintable` varchar(64) NOT NULL DEFAULT '',
-  `addtable` varchar(64) NOT NULL DEFAULT '',
-  `tablename` varchar(30) NOT NULL DEFAULT '' COMMENT '数据表',
-  `create_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `update_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `opentype` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '公开程度',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='留言表主表';
-
--- Dumping data for table 07fly_frame.guestbook: 1 rows
-DELETE FROM `guestbook`;
-/*!40000 ALTER TABLE `guestbook` DISABLE KEYS */;
-INSERT INTO `guestbook` (`id`, `name`, `nid`, `maintable`, `addtable`, `tablename`, `create_time`, `update_time`, `sort`, `opentype`) VALUES
-	(25, '在线留言', 'online', 'guestbook', 'guestbook_online', '', 1583056280, 1583056338, 0, 0);
-/*!40000 ALTER TABLE `guestbook` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.guestbook_field
+-- Dumping structure for table 20420_guanggao.guestbook_field
 CREATE TABLE IF NOT EXISTS `guestbook_field` (
   `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
   `main_table` varchar(50) NOT NULL COMMENT '关联主表',
@@ -2519,7 +510,7 @@ CREATE TABLE IF NOT EXISTS `guestbook_field` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='字段扩展表';
 
--- Dumping data for table 07fly_frame.guestbook_field: 2 rows
+-- Dumping data for table 20420_guanggao.guestbook_field: 2 rows
 DELETE FROM `guestbook_field`;
 /*!40000 ALTER TABLE `guestbook_field` DISABLE KEYS */;
 INSERT INTO `guestbook_field` (`id`, `main_table`, `ext_table`, `show_name`, `field_name`, `field_type`, `default_value`, `maxlength`, `desc`, `visible`, `is_system`, `is_must`, `sort`, `create_time`, `update_time`, `sys_user_id`, `channel_id`) VALUES
@@ -2527,7 +518,7 @@ INSERT INTO `guestbook_field` (`id`, `main_table`, `ext_table`, `show_name`, `fi
 	(20, 'guestbook', 'guestbook_online', '箱内地址', 'email', 'varchar', '', '250', '', 1, 0, 0, 50, 1583115091, 1583115113, 0, 25);
 /*!40000 ALTER TABLE `guestbook_field` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.guestbook_online
+-- Dumping structure for table 20420_guanggao.guestbook_online
 CREATE TABLE IF NOT EXISTS `guestbook_online` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `gid` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -2542,17 +533,17 @@ CREATE TABLE IF NOT EXISTS `guestbook_online` (
   KEY `typeid` (`gid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='扩展表';
 
--- Dumping data for table 07fly_frame.guestbook_online: 4 rows
+-- Dumping data for table 20420_guanggao.guestbook_online: 4 rows
 DELETE FROM `guestbook_online`;
 /*!40000 ALTER TABLE `guestbook_online` DISABLE KEYS */;
 INSERT INTO `guestbook_online` (`id`, `gid`, `content`, `reply`, `mobile`, `realname`, `create_time`, `update_time`, `email`) VALUES
-	(2, 25, NULL, NULL, '18030402587', '开发人生', 1583056280, 1583056280, NULL),
-	(3, 0, NULL, NULL, '', '11', NULL, NULL, ''),
-	(4, 0, NULL, NULL, '', '11', NULL, NULL, ''),
-	(5, 25, NULL, '这不是一个好的现象哟', '', '我的名字', 1583805658, 1583805658, 'goodmuzi@qq.com');
+	(2, 25, '', '', '18030402587', '开发人生', 1583056280, 1583056280, ''),
+	(3, 0, '', '', '', '11', 0, 0, ''),
+	(4, 0, '', '', '', '11', 0, 0, ''),
+	(5, 25, '', '这不是一个好的现象哟', '', '我的名字', 1583805658, 1583805658, 'goodmuzi@qq.com');
 /*!40000 ALTER TABLE `guestbook_online` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.guestbook_type
+-- Dumping structure for table 20420_guanggao.guestbook_type
 CREATE TABLE IF NOT EXISTS `guestbook_type` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT '栏目名称',
@@ -2564,12 +555,12 @@ CREATE TABLE IF NOT EXISTS `guestbook_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='留言表';
 
--- Dumping data for table 07fly_frame.guestbook_type: 0 rows
+-- Dumping data for table 20420_guanggao.guestbook_type: 0 rows
 DELETE FROM `guestbook_type`;
 /*!40000 ALTER TABLE `guestbook_type` DISABLE KEYS */;
 /*!40000 ALTER TABLE `guestbook_type` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.hook
+-- Dumping structure for table 20420_guanggao.hook
 CREATE TABLE IF NOT EXISTS `hook` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(40) NOT NULL DEFAULT '' COMMENT '钩子名称',
@@ -2582,7 +573,7 @@ CREATE TABLE IF NOT EXISTS `hook` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='钩子表';
 
--- Dumping data for table 07fly_frame.hook: 4 rows
+-- Dumping data for table 20420_guanggao.hook: 4 rows
 DELETE FROM `hook`;
 /*!40000 ALTER TABLE `hook` DISABLE KEYS */;
 INSERT INTO `hook` (`id`, `name`, `describe`, `addon_list`, `status`, `update_time`, `create_time`, `org_id`) VALUES
@@ -2592,7 +583,7 @@ INSERT INTO `hook` (`id`, `name`, `describe`, `addon_list`, `status`, `update_ti
 	(39, 'RegionSelect', '区域选择', 'Region', 1, 0, 0, 1);
 /*!40000 ALTER TABLE `hook` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.picture
+-- Dumping structure for table 20420_guanggao.picture
 CREATE TABLE IF NOT EXISTS `picture` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id自增',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '图片名称',
@@ -2603,9 +594,9 @@ CREATE TABLE IF NOT EXISTS `picture` (
   `update_time` int(11) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='图片表';
+) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='图片表';
 
--- Dumping data for table 07fly_frame.picture: 20 rows
+-- Dumping data for table 20420_guanggao.picture: 36 rows
 DELETE FROM `picture`;
 /*!40000 ALTER TABLE `picture` DISABLE KEYS */;
 INSERT INTO `picture` (`id`, `name`, `path`, `url`, `sha1`, `create_time`, `update_time`, `status`) VALUES
@@ -2628,95 +619,26 @@ INSERT INTO `picture` (`id`, `name`, `path`, `url`, `sha1`, `create_time`, `upda
 	(17, 'a6c84594150be1e880802b1122ec5e48.jpg', '20200222/a6c84594150be1e880802b1122ec5e48.jpg', '', '16fa21cdd736e4b3c235cdcecc98e296b6253d9c', 1582364109, 0, 1),
 	(18, '5f71d6e687e709749719bbed1ae9d8c0.jpg', '20200222/5f71d6e687e709749719bbed1ae9d8c0.jpg', '', 'bb27c74e3a0cf8369e2dff7c979dc41cb87398f6', 1582374788, 0, 1),
 	(19, 'c2e196c32eaab1e97e4553f1239f3e5d.jpg', '20200228/c2e196c32eaab1e97e4553f1239f3e5d.jpg', '', 'ab462306dfcc59877ccfe4a16cc8a7b228441431', 1582859007, 0, 1),
-	(20, 'c8359331d3d217509315a964e2fa4337.jpg', '20200413/c8359331d3d217509315a964e2fa4337.jpg', '', '9b890e74a8686f125dac7985051bb63b1ae34241', 1586751940, 0, 1);
+	(20, 'c8359331d3d217509315a964e2fa4337.jpg', '20200413/c8359331d3d217509315a964e2fa4337.jpg', '', '9b890e74a8686f125dac7985051bb63b1ae34241', 1586751940, 0, 1),
+	(21, '3da7e7488af51eb5423f9504c443d912.png', '20200420/3da7e7488af51eb5423f9504c443d912.png', '', 'cf7b284efe8244d412b8421fcf86887560bd9c51', 1587371179, 0, 1),
+	(22, '63004fee52a44147af7d8a3204246a45.png', '20200420/63004fee52a44147af7d8a3204246a45.png', '', 'd7e91b5933dbc5fddd8ba2f173baee2af69f7cbc', 1587371192, 0, 1),
+	(23, '307dca0bf9f3330abccb5df57fe15390.png', '20200420/307dca0bf9f3330abccb5df57fe15390.png', '', '831d2dadd2dee2e43a446630d9c546a5b5ded6d8', 1587371206, 0, 1),
+	(24, 'fbac7e75d49152cbea8915a02cce1a2e.png', '20200420/fbac7e75d49152cbea8915a02cce1a2e.png', '', '4d0b0f46301ea36190d9d5c6f45dc7c07873c5ae', 1587371222, 0, 1),
+	(25, '13a7ec1adba6fa0e3c3219778c30e103.png', '20200420/13a7ec1adba6fa0e3c3219778c30e103.png', '', 'ab12d6b6ae3c48e83cc34b4b74bfe88440df79e4', 1587371266, 0, 1),
+	(26, 'a89bd9612f4b5652c7789d0ec29db50c.jpg', '20200421/a89bd9612f4b5652c7789d0ec29db50c.jpg', '', 'de98f0fb34babc614813521ff4eac0ed80ce0a8c', 1587430698, 0, 1),
+	(27, '172b857d95a3f04dcc604e7e02bb14a4.png', '20200421/172b857d95a3f04dcc604e7e02bb14a4.png', '', '52b5ba57eb10df3454c9d5b024341f7e2e57c3ae', 1587430878, 0, 1),
+	(28, '1ddd3d13f69fcef79c439d0aa79d502f.jpg', '20200421/1ddd3d13f69fcef79c439d0aa79d502f.jpg', '', '2cbb97f2878b2fa0965681943ec75c764f00dcf1', 1587441980, 0, 1),
+	(29, '0ce6e1b5afeb61bd446b054592fcf3e5.jpg', '20200421/0ce6e1b5afeb61bd446b054592fcf3e5.jpg', '', '81c1da3bc8e1f044ce8ee3137d0c958ec44c01db', 1587452745, 0, 1),
+	(30, 'f239c9ddb9f8a4b6dc993e0c6960b73f.jpg', '20200421/f239c9ddb9f8a4b6dc993e0c6960b73f.jpg', '', 'e794d26867bece75a843e1b4c409d6bb18ae3919', 1587452764, 0, 1),
+	(31, '53565d3fa1a34967bfea3c52e1961a1b.png', '20200421/53565d3fa1a34967bfea3c52e1961a1b.png', '', '6bac20a689021c7fc95187ae4dd4bc181f1be3d9', 1587460668, 0, 1),
+	(32, '7096cfc2289a1a50e2b9aa461ba4c1f5.jpg', '20200421/7096cfc2289a1a50e2b9aa461ba4c1f5.jpg', '', '0f4e18766e5211998a6710a62fccb96d319379e0', 1587460837, 0, 1),
+	(33, '2abcdfd0394904a319ce38ab5214ef77.jpg', '20200422/2abcdfd0394904a319ce38ab5214ef77.jpg', '', '580fb3467d714cda876586ea9cb4f8f5242d4278', 1587521403, 0, 1),
+	(34, 'a2ed686328472201ad1dd58df11d4975.jpg', '20200422/a2ed686328472201ad1dd58df11d4975.jpg', '', 'b3dfe9023b5eb1e3fe9b53168f92011a77b0d627', 1587521422, 0, 1),
+	(35, 'c97cc9c897d388cef910d6ef80f43fca.jpg', '20200422/c97cc9c897d388cef910d6ef80f43fca.jpg', '', '6237a47b4e8d708be2784b8651082f072a552971', 1587521461, 0, 1),
+	(36, '8906f2a16c7fb86917b3deb343833d7a.jpg', '20200422/8906f2a16c7fb86917b3deb343833d7a.jpg', '', 'c8e87330a150264f904f52aaa8e38717cacac0d6', 1587521634, 0, 1);
 /*!40000 ALTER TABLE `picture` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.pos_contract
-CREATE TABLE IF NOT EXISTS `pos_contract` (
-  `contract_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `contract_no` varchar(50) NOT NULL COMMENT '合同编号',
-  `supplier_id` int(16) NOT NULL,
-  `linkman_id` int(16) NOT NULL,
-  `chance_id` int(16) NOT NULL,
-  `website_id` int(16) NOT NULL COMMENT '关联网站',
-  `start_date` date NOT NULL COMMENT '采购时间',
-  `end_date` date NOT NULL COMMENT '预订到货时间',
-  `our_user_id` int(16) NOT NULL COMMENT '我方联系人',
-  `money` decimal(10,2) NOT NULL COMMENT '合同金额',
-  `goods_money` decimal(10,2) NOT NULL COMMENT '商品金额',
-  `zero_money` decimal(10,2) NOT NULL COMMENT '去零金额',
-  `back_money` decimal(10,2) NOT NULL COMMENT '回款金额',
-  `owe_money` decimal(10,2) NOT NULL COMMENT '欠款金额',
-  `pay_money` decimal(10,2) NOT NULL COMMENT '支付金额',
-  `unpaid_money` decimal(10,2) NOT NULL COMMENT '未支付金额',
-  `invoice_money` decimal(10,2) NOT NULL COMMENT '开票金额',
-  `title` varchar(256) NOT NULL COMMENT '订单主题',
-  `intro` text NOT NULL COMMENT '订单介绍',
-  `status` smallint(1) NOT NULL DEFAULT '1' COMMENT '1=临时单，2=执行，3=完成，4=撤消',
-  `back_status` smallint(1) NOT NULL DEFAULT '1' COMMENT '回款状态，1=未付，2=部分，3=全部',
-  `pay_status` smallint(1) NOT NULL DEFAULT '1' COMMENT '支付状态，1=未付，2=部分，3=全部',
-  `deliver_status` smallint(1) NOT NULL DEFAULT '1' COMMENT '交付状态，-1=不需要，1=需要，2=录入明细，3=待入库，4=部分，5=全部',
-  `invoice_status` smallint(1) NOT NULL DEFAULT '1' COMMENT '开票状态 0=不需要，1=需要，2=部分，3=全部',
-  `rece_status` smallint(1) NOT NULL DEFAULT '1' COMMENT '收货状态，1=需要，2=录入明细，3=待入库，4=部分，5=全部',
-  `create_user_id` int(16) NOT NULL,
-  `create_time` datetime NOT NULL,
-  PRIMARY KEY (`contract_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='采购合同';
-
--- Dumping data for table 07fly_frame.pos_contract: 3 rows
-DELETE FROM `pos_contract`;
-/*!40000 ALTER TABLE `pos_contract` DISABLE KEYS */;
-INSERT INTO `pos_contract` (`contract_id`, `contract_no`, `supplier_id`, `linkman_id`, `chance_id`, `website_id`, `start_date`, `end_date`, `our_user_id`, `money`, `goods_money`, `zero_money`, `back_money`, `owe_money`, `pay_money`, `unpaid_money`, `invoice_money`, `title`, `intro`, `status`, `back_status`, `pay_status`, `deliver_status`, `invoice_status`, `rece_status`, `create_user_id`, `create_time`) VALUES
-	(1, '1909031312', 12, 2, 0, 0, '2019-11-07', '2019-12-27', 1, 10000.00, 0.00, 0.00, 0.00, 10000.00, 0.00, 0.00, 0.00, '测试采购', '', 2, 1, 1, 1, 1, 5, 1, '2019-09-03 13:35:03'),
-	(2, '1909031482', 12, 1, 0, 0, '2019-07-25', '2019-12-04', 1, 10000.00, 0.00, 0.00, 0.00, 10000.00, 0.00, 0.00, 0.00, '第二次采购', '', 2, 1, 1, 1, 1, 4, 1, '2019-09-03 14:16:20'),
-	(3, '1909031467', 1, 0, 0, 0, '2019-09-03', '2019-09-03', 1, 10000.00, 0.00, 0.00, 0.00, 9000.00, 1000.00, 0.00, 5000.00, '第三次采购', '', 2, 1, 2, 1, 2, 4, 1, '2019-09-03 14:28:04');
-/*!40000 ALTER TABLE `pos_contract` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.pos_contract_list
-CREATE TABLE IF NOT EXISTS `pos_contract_list` (
-  `list_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '订单项ID',
-  `contract_id` int(11) NOT NULL COMMENT '合同ID',
-  `goods_id` int(11) NOT NULL COMMENT '商品ID',
-  `goods_name` varchar(100) NOT NULL COMMENT '商品名称',
-  `sku_id` int(11) NOT NULL COMMENT 'skuID',
-  `sku_name` varchar(50) NOT NULL COMMENT 'sku名称',
-  `sale_price` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '商品价格',
-  `cost_price` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '商品成本价',
-  `num` varchar(255) NOT NULL DEFAULT '0' COMMENT '购买数量',
-  `into_num` varchar(255) NOT NULL DEFAULT '0' COMMENT '入库数据',
-  `owe_num` varchar(255) NOT NULL DEFAULT '0' COMMENT '未入库数量',
-  `owe_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '未入库金额',
-  `adjust_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '调整金额',
-  `goods_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品总价',
-  `goods_picture` int(11) NOT NULL DEFAULT '0' COMMENT '商品图片',
-  `remarks` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
-  `create_user_id` int(11) DEFAULT '0',
-  `create_time` datetime NOT NULL,
-  PRIMARY KEY (`list_id`),
-  KEY `UK_ns_order_goods_goods_id` (`goods_id`),
-  KEY `UK_ns_order_goods_order_id` (`contract_id`),
-  KEY `UK_ns_order_goods_sku_id` (`sku_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=289 COMMENT='采购订单商品表';
-
--- Dumping data for table 07fly_frame.pos_contract_list: 12 rows
-DELETE FROM `pos_contract_list`;
-/*!40000 ALTER TABLE `pos_contract_list` DISABLE KEYS */;
-INSERT INTO `pos_contract_list` (`list_id`, `contract_id`, `goods_id`, `goods_name`, `sku_id`, `sku_name`, `sale_price`, `cost_price`, `num`, `into_num`, `owe_num`, `owe_money`, `adjust_money`, `goods_money`, `goods_picture`, `remarks`, `create_user_id`, `create_time`) VALUES
-	(8, 1, 76, '老人鞋子', 22, '颜色:白色,尺寸:35码', 0.00, 100.00, '10', '10', '0', 0.00, 0.00, 1000.00, 0, '', 1, '2019-09-03 13:55:44'),
-	(7, 1, 76, '老人鞋子', 23, '颜色:白色,尺寸:40码', 0.00, 100.00, '10', '10', '0', 0.00, 0.00, 1000.00, 0, '', 1, '2019-09-03 13:55:44'),
-	(6, 1, 76, '老人鞋子', 24, '颜色:黑色,尺寸:35码', 0.00, 100.00, '10', '10', '0', 0.00, 0.00, 1000.00, 0, '', 1, '2019-09-03 13:55:44'),
-	(5, 1, 76, '老人鞋子', 25, '颜色:黑色,尺寸:40码', 0.00, 100.00, '10', '10', '0', 0.00, 0.00, 1000.00, 0, '', 1, '2019-09-03 13:55:44'),
-	(9, 2, 76, '老人鞋子', 25, '颜色:黑色,尺寸:40码', 0.00, 100.00, '10', '5', '5', 500.00, 0.00, 1000.00, 0, '', 1, '2019-09-03 14:16:42'),
-	(10, 2, 76, '老人鞋子', 24, '颜色:黑色,尺寸:35码', 0.00, 100.00, '10', '5', '5', 500.00, 0.00, 1000.00, 0, '', 1, '2019-09-03 14:16:42'),
-	(11, 2, 76, '老人鞋子', 23, '颜色:白色,尺寸:40码', 0.00, 100.00, '10', '5', '5', 500.00, 0.00, 1000.00, 0, '', 1, '2019-09-03 14:16:42'),
-	(12, 2, 76, '老人鞋子', 22, '颜色:白色,尺寸:35码', 0.00, 100.00, '10', '5', '5', 500.00, 0.00, 1000.00, 0, '', 1, '2019-09-03 14:16:42'),
-	(13, 3, 76, '老人鞋子', 25, '颜色:黑色,尺寸:40码', 0.00, 200.00, '10', '2', '8', 1600.00, 0.00, 2000.00, 0, '', 1, '2019-09-03 14:28:39'),
-	(14, 3, 76, '老人鞋子', 24, '颜色:黑色,尺寸:35码', 0.00, 200.00, '10', '2', '8', 1600.00, 0.00, 2000.00, 0, '', 1, '2019-09-03 14:28:39'),
-	(15, 3, 76, '老人鞋子', 23, '颜色:白色,尺寸:40码', 0.00, 200.00, '10', '2', '8', 1600.00, 0.00, 2000.00, 0, '', 1, '2019-09-03 14:28:39'),
-	(16, 3, 76, '老人鞋子', 22, '颜色:白色,尺寸:35码', 0.00, 200.00, '10', '2', '8', 1600.00, 0.00, 2000.00, 0, '', 1, '2019-09-03 14:28:39');
-/*!40000 ALTER TABLE `pos_contract_list` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.region
+-- Dumping structure for table 20420_guanggao.region
 CREATE TABLE IF NOT EXISTS `region` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '' COMMENT '地区名称',
@@ -2725,7 +647,7 @@ CREATE TABLE IF NOT EXISTS `region` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=910007 DEFAULT CHARSET=utf8 COMMENT='省市县数据表';
 
--- Dumping data for table 07fly_frame.region: 3,548 rows
+-- Dumping data for table 20420_guanggao.region: 3,548 rows
 DELETE FROM `region`;
 /*!40000 ALTER TABLE `region` DISABLE KEYS */;
 INSERT INTO `region` (`id`, `name`, `level`, `pid`) VALUES
@@ -6279,149 +4201,7 @@ INSERT INTO `region` (`id`, `name`, `level`, `pid`) VALUES
 	(910006, '东莞市', 3, 441900);
 /*!40000 ALTER TABLE `region` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.sal_contract
-CREATE TABLE IF NOT EXISTS `sal_contract` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL COMMENT '合同名称',
-  `contract_no` varchar(50) NOT NULL COMMENT '合同编号',
-  `customer_id` int(16) NOT NULL COMMENT '客户ID',
-  `linkman_id` int(16) NOT NULL COMMENT '联系人ID',
-  `chance_id` int(16) NOT NULL COMMENT '销售机会',
-  `website_id` int(16) NOT NULL COMMENT '关联网站',
-  `start_date` date NOT NULL COMMENT '开始时间',
-  `end_date` date NOT NULL COMMENT '结束时间',
-  `owner_user_id` int(16) NOT NULL COMMENT '我方联系人',
-  `money` decimal(10,2) NOT NULL COMMENT '合同金额',
-  `goods_money` decimal(10,2) NOT NULL COMMENT '商品金额',
-  `zero_money` decimal(10,2) NOT NULL COMMENT '去零金额',
-  `back_money` decimal(10,2) NOT NULL COMMENT '回款金额',
-  `owe_money` decimal(10,2) NOT NULL COMMENT '欠款金额',
-  `deliver_money` decimal(10,2) NOT NULL COMMENT '交付金额',
-  `invoice_money` decimal(10,2) NOT NULL COMMENT '开票金额',
-  `remark` text NOT NULL COMMENT '合同备注',
-  `status` smallint(1) NOT NULL DEFAULT '1' COMMENT '1=临时单，2=执行，3=完成，4=撤消',
-  `back_status` smallint(1) NOT NULL DEFAULT '1' COMMENT '回款状态，1=未付，2=部分，3=全部',
-  `deliver_status` smallint(1) NOT NULL DEFAULT '1' COMMENT '交付状态，-1=不需要，1=需要，2=录入明细，3=待出库，4=部分，5=全部',
-  `invoice_status` smallint(1) NOT NULL DEFAULT '1' COMMENT '开票状态， 0=不需要，1=需要，2=部分，3=全部',
-  `renew` smallint(1) NOT NULL DEFAULT '0' COMMENT '合同类型，0=新增，1=续费',
-  `create_user_id` int(16) NOT NULL COMMENT '创建者',
-  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `org_id` int(11) NOT NULL DEFAULT '0' COMMENT '企业id',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=95 DEFAULT CHARSET=utf8 COMMENT='销售合同';
-
--- Dumping data for table 07fly_frame.sal_contract: 66 rows
-DELETE FROM `sal_contract`;
-/*!40000 ALTER TABLE `sal_contract` DISABLE KEYS */;
-INSERT INTO `sal_contract` (`id`, `name`, `contract_no`, `customer_id`, `linkman_id`, `chance_id`, `website_id`, `start_date`, `end_date`, `owner_user_id`, `money`, `goods_money`, `zero_money`, `back_money`, `owe_money`, `deliver_money`, `invoice_money`, `remark`, `status`, `back_status`, `deliver_status`, `invoice_status`, `renew`, `create_user_id`, `create_time`, `update_time`, `org_id`) VALUES
-	(6, '元康餐饮', '1704111272', 9, 59, 0, 0, '2017-03-31', '2018-03-31', 5, 2600.00, 0.00, 0.00, 2600.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 1, 4, 2017, 0, 0),
-	(8, '正式合同', '1705030885', 11, 61, 0, 0, '2017-04-24', '2018-04-24', 4, 4500.00, 0.00, 0.00, 4500.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 1, 4, 2017, 0, 0),
-	(9, '新合同', '1706190988', 12, 71, 0, 0, '2017-05-10', '2018-05-10', 4, 800.00, 0.00, 0.00, 800.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 1, 4, 2017, 0, 0),
-	(10, '新合同', '1706260814', 13, 68, 10, 0, '2017-06-22', '2018-06-22', 4, 4600.00, 0.00, 0.00, 2300.00, 0.00, 0.00, 0.00, '送发票需要开收据过去', 2, 2, 1, 1, 1, 4, 2017, 0, 0),
-	(11, '新合同', '1706260858', 17, 72, 0, 0, '2017-06-22', '2018-06-22', 4, 4600.00, 0.00, 0.00, 2300.00, 0.00, 0.00, 0.00, '', 2, 2, 1, 1, 1, 4, 2017, 0, 0),
-	(12, '博美特', '1706301289', 18, 73, 0, 0, '2017-06-30', '2018-06-30', 4, 7200.00, 0.00, 0.00, 3400.00, 0.00, 0.00, 0.00, '网站制作，推广，58发布信息', 2, 2, 1, 1, 1, 4, 2017, 0, 0),
-	(13, '会员定制', '1708300851', 13151, 82, 14, 0, '2017-08-26', '2019-08-26', 4, 8000.00, 0.00, 0.00, 7600.00, 0.00, 0.00, -1200.00, '主要是网站+会员系统管理', 2, 2, 1, 1, 1, 4, 2017, 0, 0),
-	(15, '全正农业续费', '1710311189', 295, 79, 0, 5, '2017-11-14', '2018-11-14', 4, 1000.00, 0.00, 0.00, 1000.00, 0.00, 0.00, 0.00, '续费一年', 2, 3, 1, 1, 2, 4, 2017, 0, 0),
-	(16, '醉生肖PC网站', '1711140517', 13155, 86, 0, 0, '2017-11-06', '2018-11-06', 4, 2500.00, 0.00, 0.00, 2500.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 1, 4, 2017, 0, 0),
-	(17, '诺森网站', '1712070353', 13156, 87, 0, 0, '2017-12-07', '2018-12-01', 4, 1000.00, 0.00, 0.00, 1000.00, 0.00, 0.00, 0.00, '只做程序，', 2, 3, 1, 1, 1, 4, 2017, 0, 0),
-	(18, '六扇门网站', '1712070397', 13156, 87, 0, 0, '2017-12-01', '2018-12-01', 4, 1000.00, 0.00, 0.00, 1000.00, 0.00, 0.00, 0.00, '做程序PC+手机站', 2, 3, 1, 1, 1, 4, 2017, 0, 0),
-	(19, '周记蛋糕续费', '1712211179', 967, 80, 0, 15, '2018-01-04', '2018-12-31', 4, 900.00, 0.00, 0.00, 900.00, 0.00, 0.00, 0.00, '网站续费', 2, 3, 1, 1, 2, 4, 2017, 0, 0),
-	(20, '醉生肖WAP网站', '1711211183', 13155, 86, 0, 0, '2017-12-01', '2018-12-01', 4, 1500.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '代码开发，扣出了提成', 1, 1, 1, 1, 1, 4, 2017, 0, 0),
-	(21, '凤小厨网站', '1801101249', 289, 78, 0, 0, '2017-12-21', '2018-12-21', 4, 2500.00, 0.00, 0.00, 2500.00, 0.00, 0.00, 0.00, '增加程序+空间维护', 2, 3, 1, 1, 1, 4, 2018, 0, 0),
-	(29, '铭丰资本续费', '1801100188', 274, 77, 0, 6, '2018-01-25', '2019-01-25', 4, 1500.00, 0.00, 0.00, 1500.00, 0.00, 0.00, 0.00, '续费一年维护+空间+域名', 2, 3, 1, 1, 2, 4, 2018, 0, 0),
-	(30, '万籁阁续费', '1802281131', 289, 78, 0, 7, '2018-02-06', '2019-02-06', 4, 800.00, 0.00, 0.00, 800.00, 0.00, 0.00, 0.00, '网站续费', 2, 3, 1, 1, 2, 4, 2018, 0, 0),
-	(31, '尚美居续费', '1803070264', 232, 75, 0, 18, '2018-02-28', '2019-03-01', 4, 800.00, 0.00, 0.00, 800.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 2, 4, 2018, 0, 0),
-	(32, '调查网2', '1802071452', 13156, 87, 0, 0, '2018-03-07', '2018-03-31', 4, 1000.00, 0.00, 0.00, 1000.00, 0.00, 0.00, 0.00, '手机，PC界面制作', 2, 3, 1, 1, 1, 4, 2018, 0, 0),
-	(34, '元康餐饮续费', '1803260145', 9, 58, 0, 8, '2018-03-31', '2019-03-30', 4, 600.00, 0.00, 0.00, 600.00, 0.00, 0.00, 0.00, '续费600一年空间费用', 2, 3, 1, 1, 2, 4, 2018, 0, 0),
-	(35, '直线官网续费', '1803260496', 254, 76, 0, 2, '2018-05-27', '2019-03-30', 4, 1000.00, 0.00, 0.00, 1000.00, 0.00, 0.00, 0.00, '网站续费', 2, 3, 1, 1, 2, 4, 2018, 0, 0),
-	(36, '富机电梯续费', '1804200360', 11, 61, 0, 16, '2018-04-21', '2021-04-21', 4, 3600.00, 0.00, 0.00, 3600.00, 0.00, 0.00, 0.00, '三年费用，1500/每年，3年0.8折', 2, 3, 1, 1, 2, 4, 2018, 0, 0),
-	(37, '金福机电续费', '1804260995', 12, 71, 0, 10, '2018-05-10', '2019-05-01', 4, 600.00, 0.00, 0.00, 600.00, 0.00, 0.00, 0.00, '续费一年', 2, 3, 1, 1, 2, 4, 2018, 0, 0),
-	(38, '瞳创广告官网续费', '1806240896', 289, 78, 0, 4, '2018-06-01', '2019-06-01', 4, 800.00, 0.00, 0.00, 800.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 2, 4, 2018, 0, 0),
-	(39, '泰建筑劳续费', '1807031064', 17, 72, 0, 13, '2018-06-23', '2019-06-23', 4, 1500.00, 0.00, 0.00, 1500.00, 0.00, 0.00, 0.00, '续费一年', 2, 3, 1, 1, 2, 4, 2018, 0, 0),
-	(40, '堰汇劳务续费', '1807031098', 13, 66, 0, 12, '2018-06-23', '2019-06-23', 4, 1500.00, 0.00, 0.00, 1500.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 2, 4, 2018, 0, 0),
-	(41, '万经堂续费', '1807180233', 289, 78, 0, 11, '2018-06-09', '2019-07-10', 4, 800.00, 0.00, 0.00, 800.00, 0.00, 0.00, 0.00, '续费800', 2, 3, 1, 1, 2, 4, 2018, 0, 0),
-	(42, '民航电子', '1810091419', 254, 76, 0, 0, '2018-04-01', '2019-04-01', 4, 2500.00, 0.00, 0.00, 1800.00, 0.00, 0.00, 0.00, '微官网网站1800制作费用，700空间费用', 2, 2, 1, 1, 1, 4, 2018, 0, 0),
-	(43, '华西建筑设计院', '1810091433', 289, 78, 0, 0, '2018-09-07', '2010-09-07', 4, 2500.00, 0.00, 0.00, 2500.00, 0.00, 0.00, 0.00, '自适应网站制作', 2, 3, 1, 1, 1, 4, 2018, 0, 0),
-	(44, '创青赛报名系统', '1810091428', 13160, 113, 0, 0, '2018-05-15', '2018-10-01', 4, 5000.00, 0.00, 0.00, 5000.00, 0.00, 0.00, 0.00, '程序开发，中途停产了，只收了5000', 2, 3, 1, 1, 1, 4, 2018, 0, 0),
-	(45, '图拉博网站', '1810091464', 13156, 87, 0, 0, '2018-09-20', '2018-11-01', 4, 1000.00, 0.00, 0.00, 1000.00, 0.00, 0.00, 0.00, '代码开发', 2, 3, 1, 1, 1, 4, 2018, 0, 0),
-	(46, '足博仕商城', '1810091494', 13161, 114, 0, 0, '2018-09-06', '2019-09-06', 4, 10000.00, 0.00, 0.00, 5000.00, 0.00, 0.00, 0.00, '', 2, 2, 1, 1, 1, 4, 2018, 0, 0),
-	(47, '周渔郎鱼火锅', '1810091413', 13155, 86, 0, 0, '2018-09-20', '2018-09-20', 4, 3500.00, 0.00, 0.00, 2000.00, 0.00, 0.00, 0.00, '网站制作+空间+维护', 2, 2, 1, 1, 1, 4, 2018, 0, 0),
-	(48, '古铁锋-CRM定制', '1810091450', 13162, 115, 0, 0, '2018-09-01', '2019-09-01', 4, 2600.00, 0.00, 0.00, 2600.00, 0.00, 0.00, 0.00, '功能定制', 2, 3, 1, 1, 1, 4, 2018, 0, 0),
-	(49, '知行天下旅游网', '1810091426', 13163, 116, 0, 0, '2018-07-15', '2019-07-15', 4, 17000.00, 0.00, 0.00, 10000.00, 0.00, 0.00, 0.00, '酒店预订系统平台+有手机网站', 2, 2, 1, 1, 1, 4, 2018, 0, 0),
-	(51, '全正农业续费', '1810190564', 295, 79, 0, 5, '2018-11-14', '2019-11-14', 4, 1200.00, 0.00, 0.00, 1200.00, 0.00, 0.00, 0.00, '2019年续费', 2, 3, 1, 1, 2, 4, 2018, 0, 0),
-	(65, '万籁阁续费', '20190326-65', 289, 78, 0, 0, '2019-03-26', '2020-03-26', 1, 800.00, 0.00, 0.00, 800.00, 0.00, 0.00, 0.00, '之前没有上架，现在需要重新使用', 2, 3, -1, 1, 1, 1, 2019, 1586961242, 0),
-	(63, 'CRM功能定制', '1903121641', 13175, 136, 0, 0, '2019-03-01', '2020-03-01', 1, 5000.00, 0.00, 0.00, 5000.00, 0.00, 0.00, 0.00, '1 用户\r\na 分级权限，最少三级，管理员，主管，员工；管理员权限最大，可以看到所有成员所有资料所有报表；主管只能看到自己团队的资料及报表；员工只能看到自己的资料及报表；\r\nb 增减用户名，分团队，分权限增减；相关员工资料不会因为删除账号而删除资料\r\n\r\n2 数据\r\na 按附件自定义栏位显示客户数据，所有栏位都可以自己修改\r\nb 可以批量导入导出数据\r\nc 可以按员工名手动或自动分配数据，也可以批量回收数据；按状态或新保费去筛选\r\nd 员工自己可以按状态或新保费或等级去排序\r\n\r\n3 报表\r\na 按员工保存的状态去做报表分析\r\nb 分团队查看报表\r\n\r\n4 通知\r\na 状态栏显示通知，管理员或主管可自定义通知，管理员通知所有员工都可以看到；主管通知就相关团队员工可以看到\r\nb 实时显示总业绩排名，业绩以员工录入的新保费为准，新保费附件栏位有\r\n\r\n5 反馈\r\na 设置反馈页面，所有员工可以递交反馈资料\r\nb 首页留一个链接，链接到知识库\r\nc 知识库整理个递交模板，可以自行上传知识到库', 2, 3, -1, 1, 1, 1, 2019, 1586961243, 0),
-	(61, '铭丰资本续费', '20190110-61', 274, 0, 0, 0, '2019-01-10', '2020-01-10', 1, 1500.00, 0.00, 0.00, 1500.00, 0.00, 0.00, 0.00, '只开了收据，已经寄出', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(62, '尚美居续费', '20190306-62', 232, 0, 0, 0, '2019-03-06', '2020-03-06', 1, 800.00, 0.00, 0.00, 800.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(64, '企业网站仿制', '1903132074', 13176, 137, 0, 0, '2019-03-12', '2020-03-12', 1, 1080.00, 0.00, 0.00, 1080.00, 0.00, 0.00, 0.00, '600元制作费，400元空间，80元域名', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(66, '直线官网续费', '20190328-66', 254, 0, 0, 0, '2019-03-28', '2020-03-28', 1, 1000.00, 0.00, 0.00, 1000.00, 0.00, 0.00, 0.00, '已经续费1年费用', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(67, '金福机电续费', '20190501-67', 12, 0, 0, 0, '2019-05-01', '2020-05-01', 1, 680.00, 0.00, 0.00, 680.00, 0.00, 0.00, 0.00, '续费一年', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(68, '瞳创广告官网续费', '20190528-68', 289, 0, 0, 0, '2019-05-28', '2020-05-28', 1, 800.00, 0.00, 0.00, 800.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(69, '万经堂续费', '20190626-69', 289, 78, 0, 0, '2019-06-26', '2020-06-26', 1, 800.00, 0.00, 0.00, 800.00, 0.00, 0.00, 0.00, '一年费用', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(70, '知行天下旅游网续费', '20190626-70', 13163, 116, 0, 0, '2019-06-26', '2020-06-26', 1, 1600.00, 0.00, 0.00, 1600.00, 0.00, 0.00, 0.00, '一年维护维护费用', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(72, '熊猫兼兼网站', '1904071021', 13325, 145, 0, 0, '2019-04-07', '2020-04-07', 1, 3500.00, 0.00, 0.00, 3500.00, 0.00, 0.00, 0.00, '兼职网站开发', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(73, '巨能特种车', '1904151060', 13326, 146, 0, 0, '2019-04-15', '2020-04-15', 1, 4600.00, 0.00, 0.00, 4600.00, 0.00, 0.00, 0.00, '企业网站开发', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(74, '商标交易网站', '1906251024', 13320, 140, 0, 0, '2019-06-25', '2020-06-25', 1, 10000.00, 0.00, 0.00, 6000.00, 4000.00, 0.00, 0.00, '', 2, 2, -1, 1, 1, 1, 2019, 0, 0),
-	(75, '二维码收款', '1906301026', 13176, 137, 0, 0, '2019-06-30', '2020-06-30', 1, 600.00, 0.00, 0.00, 600.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(76, '吉庆实业网站制作', '1907041053', 13327, 147, 0, 0, '2019-07-04', '2022-07-04', 1, 3600.00, 0.00, 0.00, 3600.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(77, '善本堂健康调查系统', '1906061060', 13156, 87, 21, 0, '2019-06-06', '2020-06-06', 1, 7800.00, 0.00, 0.00, 7800.00, 0.00, 0.00, 0.00, '健康调查系统', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(78, '泰建筑劳续费', '20190808-78', 17, 0, 0, 0, '2019-08-08', '2020-08-08', 1, 1500.00, 0.00, 0.00, 1500.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(79, '堰汇劳务续费', '20190808-79', 13, 0, 0, 0, '2019-08-08', '2020-08-08', 1, 1500.00, 0.00, 0.00, 1500.00, 0.00, 0.00, 0.00, '尚好科技签订合同', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(84, '足博仕商城续费', '20190923-84', 13161, 0, 0, 0, '2019-09-23', '2020-09-23', 1, 1600.00, 0.00, 0.00, 1600.00, 0.00, 0.00, 0.00, '只是网站维护', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(82, '旭兴官网建设', '1909090813', 13328, 148, 0, 0, '2019-07-31', '2022-07-31', 1, 5000.00, 0.00, 1000.00, 4000.00, 0.00, 0.00, 0.00, '周亮介绍需返点20%', 2, 3, -1, 1, 1, 1, 2019, 0, 0),
-	(83, '旅游门市管理系统', '1909090851', 13329, 149, 0, 0, '2019-08-17', '2020-08-17', 1, 12000.00, 0.00, 0.00, 12000.00, 0.00, 0.00, 0.00, '开发费用', 2, 3, -1, 1, 1, 1, 2019, 0, 0),
-	(85, '华西建筑设计院续费', '20191021-85', 289, 0, 0, 0, '2019-10-21', '2020-10-21', 1, 800.00, 0.00, 0.00, 800.00, 0.00, 0.00, 0.00, '', 2, 3, -1, 1, 1, 1, 2019, 0, 0),
-	(86, '正源康柠檬网站续费', '20191028-86', 295, 0, 0, 0, '2019-10-28', '2020-10-28', 1, 1200.00, 0.00, 0.00, 1200.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(87, '全正农业续费', '20191028-87', 295, 0, 0, 0, '2019-10-28', '2020-10-28', 1, 1200.00, 0.00, 0.00, 1200.00, 0.00, 0.00, 0.00, '', 2, 3, 1, 1, 1, 1, 2019, 0, 0),
-	(88, '标筑广告续费', '20191228-88', 13174, 0, 0, 0, '2019-12-28', '2020-12-28', 1, 800.00, 0.00, 0.00, 800.00, 0.00, 0.00, 0.00, '', 2, 3, -1, 1, 1, 1, 2019, 0, 0),
-	(89, '多测测授权', '2001151558', 13331, 151, 0, 0, '2020-01-15', '2021-01-15', 1, 500.00, 0.00, 0.00, 500.00, 0.00, 0.00, 0.00, '授权', 2, 3, -1, 1, 1, 1, 2020, 1587114268, 0),
-	(90, '民航电子续费', '20200115-90', 254, 0, 0, 0, '2020-01-15', '2021-01-15', 1, 1400.00, 0.00, 0.00, 1400.00, 0.00, 0.00, 0.00, '才收到钱的', 2, 3, -1, 1, 1, 1, 2020, 1586957053, 0),
-	(91, '铭丰资本续费', '20200115-91', 274, 0, 0, 0, '2020-01-15', '2021-01-15', 1, 1500.00, 0.00, 0.00, 1500.00, 0.00, 0.00, 0.00, '只开收据和合同', 2, 3, -1, 1, 1, 1, 2020, 1586961235, 0),
-	(92, '直线官网续费', '20200313-92', 254, 0, 0, 0, '2020-03-13', '2021-03-13', 1, 1000.00, 0.00, 0.00, 1000.00, 0.00, 0.00, 0.00, '2020续费', 2, 3, -1, 1, 1, 1, 2020, 1586961237, 0),
-	(93, '测试合同', '2003271438', 1, 62, 20, 0, '2020-03-27', '2022-06-01', 1, 1000.00, 0.00, 0.00, 0.00, 1000.00, 0.00, 0.00, '', 1, 1, -1, 1, 1, 1, 2020, 1586961240, 0),
-	(94, '这是做测试的一个合同哟', 'C20200415-0012', 13168, 153, 0, 0, '2020-04-15', '2020-04-15', 1, 1000.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '好的', 2, 1, 3, 1, 0, 1, 1586960503, 1587047240, 0);
-/*!40000 ALTER TABLE `sal_contract` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.sal_contract_list
-CREATE TABLE IF NOT EXISTS `sal_contract_list` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `contract_id` int(11) NOT NULL COMMENT '合同ID',
-  `goods_id` int(11) NOT NULL COMMENT '商品ID',
-  `goods_name` varchar(100) NOT NULL COMMENT '商品名称',
-  `sku_id` int(11) NOT NULL COMMENT 'skuID',
-  `sku_name` varchar(50) NOT NULL COMMENT 'sku名称',
-  `sale_price` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '商品价格',
-  `cost_price` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '商品成本价',
-  `num` int(11) NOT NULL DEFAULT '0' COMMENT '购买数量',
-  `out_num` int(11) NOT NULL DEFAULT '0' COMMENT '出库数量',
-  `owe_num` int(11) NOT NULL DEFAULT '0' COMMENT '未出库数量',
-  `owe_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '未出库金额',
-  `adjust_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '调整金额',
-  `goods_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品总价',
-  `goods_picture` int(11) NOT NULL DEFAULT '0' COMMENT '商品图片',
-  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
-  `create_user_id` int(11) DEFAULT '0',
-  `create_time` int(11) NOT NULL DEFAULT '0',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `org_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `UK_ns_order_goods_goods_id` (`goods_id`),
-  KEY `UK_ns_order_goods_order_id` (`contract_id`),
-  KEY `UK_ns_order_goods_sku_id` (`sku_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=112 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=289 COMMENT='销售合同明细表';
-
--- Dumping data for table 07fly_frame.sal_contract_list: 4 rows
-DELETE FROM `sal_contract_list`;
-/*!40000 ALTER TABLE `sal_contract_list` DISABLE KEYS */;
-INSERT INTO `sal_contract_list` (`id`, `contract_id`, `goods_id`, `goods_name`, `sku_id`, `sku_name`, `sale_price`, `cost_price`, `num`, `out_num`, `owe_num`, `owe_money`, `adjust_money`, `goods_money`, `goods_picture`, `remark`, `create_user_id`, `create_time`, `update_time`, `org_id`) VALUES
-	(56, 0, 91, '测试商品9877666WQEQ佣人', 53, '尺码:37', 100.00, 0.00, 2, 0, 2, 200.00, 0.00, 200.00, 0, '', 1, 1586953747, 0, 0),
-	(55, 0, 0, '服务器品牌', 57, 'XES', 100.00, 0.00, 1, 0, 1, 100.00, 0.00, 100.00, 0, '', 1, 1586953747, 0, 0),
-	(111, 94, 91, '测试商品9877666WQEQ佣人', 53, '尺码:37', 100.00, 0.00, 10, 0, 10, 200.00, 0.00, 200.00, 0, '', 1, 1587041255, 0, 0),
-	(110, 94, 91, '服务器品牌', 57, 'XES', 100.00, 0.00, 10, 0, 10, 100.00, 0.00, 100.00, 0, '', 1, 1587041255, 0, 0);
-/*!40000 ALTER TABLE `sal_contract_list` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.sequence
+-- Dumping structure for table 20420_guanggao.sequence
 CREATE TABLE IF NOT EXISTS `sequence` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '前缀',
@@ -6434,7 +4214,7 @@ CREATE TABLE IF NOT EXISTS `sequence` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='唯一序号生成表';
 
--- Dumping data for table 07fly_frame.sequence: 31 rows
+-- Dumping data for table 20420_guanggao.sequence: 32 rows
 DELETE FROM `sequence`;
 /*!40000 ALTER TABLE `sequence` DISABLE KEYS */;
 INSERT INTO `sequence` (`id`, `name`, `current_date`, `current_value`, `increment`, `create_time`, `update_time`, `org_id`) VALUES
@@ -6462,288 +4242,17 @@ INSERT INTO `sequence` (`id`, `name`, `current_date`, `current_value`, `incremen
 	(21, 'SK', '20191227', 3, 0, 1577412954, 1577431768, 101),
 	(22, 'TD', '20191227', 2, 0, 1577426301, 1577426303, 101),
 	(23, 'SD', '20191227', 2, 0, 1577433016, 1577433038, 101),
-	(25, 'TD', '2019-12-31', 1, NULL, 1577500698, 1577500698, 101),
-	(26, 'TD', '20191231', 2, NULL, 1577500988, 1577501023, 101),
-	(27, 'TD', '20200130', 1, NULL, 1577501167, 1577501167, 101),
-	(28, 'SK', '20191228', 2, NULL, 1577503747, 1577506094, 101),
-	(29, 'SD', '20191228', 1, NULL, 1577504136, 1577504136, 101),
-	(30, 'C', '20200415', 29, NULL, 1586959845, 1586961246, 1),
+	(25, 'TD', '2019-12-31', 1, 0, 1577500698, 1577500698, 101),
+	(26, 'TD', '20191231', 2, 0, 1577500988, 1577501023, 101),
+	(27, 'TD', '20200130', 1, 0, 1577501167, 1577501167, 101),
+	(28, 'SK', '20191228', 2, 0, 1577503747, 1577506094, 101),
+	(29, 'SD', '20191228', 1, 0, 1577504136, 1577504136, 101),
+	(30, 'C', '20200415', 29, 0, 1586959845, 1586961246, 1),
 	(31, 'C', '20200416', 139, 1, 1587015720, 1587047684, 1),
 	(32, 'C', '20200417', 14, 1, 1587109916, 1587114360, 1);
 /*!40000 ALTER TABLE `sequence` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.stock_goods_sku
-CREATE TABLE IF NOT EXISTS `stock_goods_sku` (
-  `stock_goods_sku_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '表序号',
-  `sku_id` int(11) NOT NULL DEFAULT '0' COMMENT 'skuID',
-  `store_id` int(11) NOT NULL DEFAULT '0' COMMENT '仓库编号',
-  `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品编号',
-  `goods_name` varchar(500) NOT NULL DEFAULT '' COMMENT '商品名称',
-  `sku_name` varchar(500) NOT NULL DEFAULT '' COMMENT 'SKU名称',
-  `sale_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '销售价格',
-  `cost_price` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '成本价',
-  `total_cost_money` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '成本总金额',
-  `total_sale_money` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '销售总金额',
-  `total_profit_money` decimal(19,2) NOT NULL DEFAULT '0.00' COMMENT '利润总金额',
-  `stock` int(11) NOT NULL DEFAULT '0' COMMENT '库存',
-  `code` varchar(255) NOT NULL DEFAULT '' COMMENT '商家编码',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`stock_goods_sku_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=481 COMMENT='库存清单';
-
--- Dumping data for table 07fly_frame.stock_goods_sku: 4 rows
-DELETE FROM `stock_goods_sku`;
-/*!40000 ALTER TABLE `stock_goods_sku` DISABLE KEYS */;
-INSERT INTO `stock_goods_sku` (`stock_goods_sku_id`, `sku_id`, `store_id`, `goods_id`, `goods_name`, `sku_name`, `sale_price`, `cost_price`, `total_cost_money`, `total_sale_money`, `total_profit_money`, `stock`, `code`, `create_time`, `update_time`) VALUES
-	(1, 25, 8, 76, '老人鞋子', '颜色:黑色,尺寸:40码', 150.00, 111.76, 1900.00, 2550.00, 650.00, 17, '', '2019-09-03 13:57:40', '2019-09-03 16:39:49'),
-	(2, 24, 8, 76, '老人鞋子', '颜色:黑色,尺寸:35码', 160.00, 111.76, 1900.00, 2720.00, 820.00, 17, '', '2019-09-03 13:57:40', '2019-09-03 16:39:49'),
-	(3, 23, 8, 76, '老人鞋子', '颜色:白色,尺寸:40码', 160.00, 111.76, 1900.00, 2720.00, 820.00, 17, '', '2019-09-03 13:57:40', '2019-09-03 16:39:49'),
-	(4, 22, 8, 76, '老人鞋子', '颜色:白色,尺寸:35码', 300.00, 111.76, 1900.00, 5100.00, 3200.00, 17, '', '2019-09-03 13:57:40', '2019-09-03 16:39:49');
-/*!40000 ALTER TABLE `stock_goods_sku` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.stock_into
-CREATE TABLE IF NOT EXISTS `stock_into` (
-  `into_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `store_id` int(16) unsigned NOT NULL DEFAULT '0' COMMENT '仓库编号',
-  `contract_id` int(16) unsigned NOT NULL DEFAULT '0' COMMENT '采购合同编号',
-  `title` varchar(256) NOT NULL COMMENT '订单主题',
-  `money` decimal(10,2) NOT NULL COMMENT '金额',
-  `number` int(16) NOT NULL COMMENT '数量',
-  `intro` text NOT NULL COMMENT '订单介绍',
-  `status` smallint(1) NOT NULL DEFAULT '-1' COMMENT '1=已经入库，-1=未入库',
-  `into_user_id` int(16) NOT NULL COMMENT '入库管理员',
-  `into_time` datetime NOT NULL COMMENT '入库时间',
-  `into_type` varchar(50) NOT NULL COMMENT '入库类型',
-  `create_user_id` int(16) NOT NULL COMMENT '创建人',
-  `create_time` datetime NOT NULL COMMENT '创建时间',
-  PRIMARY KEY (`into_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='入库单';
-
--- Dumping data for table 07fly_frame.stock_into: 4 rows
-DELETE FROM `stock_into`;
-/*!40000 ALTER TABLE `stock_into` DISABLE KEYS */;
-INSERT INTO `stock_into` (`into_id`, `store_id`, `contract_id`, `title`, `money`, `number`, `intro`, `status`, `into_user_id`, `into_time`, `into_type`, `create_user_id`, `create_time`) VALUES
-	(13, 8, 1, '测试采购', 800.00, 8, '', 1, 1, '2019-09-03 13:57:40', '采购入库', 1, '2019-09-03 13:56:54'),
-	(14, 8, 1, '测试采购', 3200.00, 32, '', 1, 1, '2019-09-03 14:01:06', '采购入库', 1, '2019-09-03 14:00:51'),
-	(15, 8, 2, '第二次采购', 2000.00, 20, '', 1, 1, '2019-09-03 14:18:47', '采购入库', 1, '2019-09-03 14:17:12'),
-	(18, 8, 3, '第三次采购', 1600.00, 8, '', 1, 1, '2019-09-03 16:39:49', '采购入库', 1, '2019-09-03 16:39:39');
-/*!40000 ALTER TABLE `stock_into` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.stock_into_list
-CREATE TABLE IF NOT EXISTS `stock_into_list` (
-  `list_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '订单项ID',
-  `into_id` int(11) NOT NULL COMMENT '入库单编号 ',
-  `contract_id` int(11) NOT NULL COMMENT '合同ID',
-  `contract_list_id` int(11) NOT NULL COMMENT '合同明细ID',
-  `store_id` int(11) NOT NULL COMMENT '库存编号',
-  `goods_id` int(11) NOT NULL COMMENT '商品ID',
-  `goods_name` varchar(100) NOT NULL COMMENT '商品名称',
-  `sku_id` int(11) NOT NULL COMMENT 'skuID',
-  `sku_name` varchar(50) NOT NULL COMMENT 'sku名称',
-  `number` varchar(255) NOT NULL DEFAULT '0' COMMENT '购买数量',
-  `price` decimal(10,2) NOT NULL COMMENT '采购价格',
-  `money` decimal(10,2) NOT NULL COMMENT '总金额',
-  `remarks` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
-  `create_user_id` int(11) DEFAULT '0',
-  `create_time` datetime NOT NULL,
-  `into_user_id` int(11) DEFAULT '0' COMMENT '入库人员',
-  `into_time` datetime NOT NULL COMMENT '入库时间',
-  PRIMARY KEY (`list_id`),
-  KEY `UK_ns_order_goods_goods_id` (`goods_id`),
-  KEY `UK_ns_order_goods_order_id` (`contract_id`),
-  KEY `UK_ns_order_goods_sku_id` (`sku_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=289 COMMENT='入库单明细表';
-
--- Dumping data for table 07fly_frame.stock_into_list: 16 rows
-DELETE FROM `stock_into_list`;
-/*!40000 ALTER TABLE `stock_into_list` DISABLE KEYS */;
-INSERT INTO `stock_into_list` (`list_id`, `into_id`, `contract_id`, `contract_list_id`, `store_id`, `goods_id`, `goods_name`, `sku_id`, `sku_name`, `number`, `price`, `money`, `remarks`, `create_user_id`, `create_time`, `into_user_id`, `into_time`) VALUES
-	(8, 13, 1, 5, 8, 76, '老人鞋子', 25, '颜色:黑色,尺寸:40码', '2', 100.00, 200.00, '', 1, '2019-09-03 13:56:54', 1, '2019-09-03 13:57:40'),
-	(7, 13, 1, 6, 8, 76, '老人鞋子', 24, '颜色:黑色,尺寸:35码', '2', 100.00, 200.00, '', 1, '2019-09-03 13:56:54', 1, '2019-09-03 13:57:40'),
-	(6, 13, 1, 7, 8, 76, '老人鞋子', 23, '颜色:白色,尺寸:40码', '2', 100.00, 200.00, '', 1, '2019-09-03 13:56:54', 1, '2019-09-03 13:57:40'),
-	(5, 13, 1, 8, 8, 76, '老人鞋子', 22, '颜色:白色,尺寸:35码', '2', 100.00, 200.00, '', 1, '2019-09-03 13:56:54', 1, '2019-09-03 13:57:40'),
-	(9, 14, 1, 8, 8, 76, '老人鞋子', 22, '颜色:白色,尺寸:35码', '8', 100.00, 800.00, '', 1, '2019-09-03 14:00:51', 1, '2019-09-03 14:01:06'),
-	(10, 14, 1, 7, 8, 76, '老人鞋子', 23, '颜色:白色,尺寸:40码', '8', 100.00, 800.00, '', 1, '2019-09-03 14:00:51', 1, '2019-09-03 14:01:06'),
-	(11, 14, 1, 6, 8, 76, '老人鞋子', 24, '颜色:黑色,尺寸:35码', '8', 100.00, 800.00, '', 1, '2019-09-03 14:00:51', 1, '2019-09-03 14:01:06'),
-	(12, 14, 1, 5, 8, 76, '老人鞋子', 25, '颜色:黑色,尺寸:40码', '8', 100.00, 800.00, '', 1, '2019-09-03 14:00:51', 1, '2019-09-03 14:01:06'),
-	(13, 15, 2, 9, 8, 76, '老人鞋子', 25, '颜色:黑色,尺寸:40码', '5', 100.00, 500.00, '', 1, '2019-09-03 14:17:12', 1, '2019-09-03 14:18:47'),
-	(14, 15, 2, 10, 8, 76, '老人鞋子', 24, '颜色:黑色,尺寸:35码', '5', 100.00, 500.00, '', 1, '2019-09-03 14:17:12', 1, '2019-09-03 14:18:47'),
-	(15, 15, 2, 11, 8, 76, '老人鞋子', 23, '颜色:白色,尺寸:40码', '5', 100.00, 500.00, '', 1, '2019-09-03 14:17:12', 1, '2019-09-03 14:18:47'),
-	(16, 15, 2, 12, 8, 76, '老人鞋子', 22, '颜色:白色,尺寸:35码', '5', 100.00, 500.00, '', 1, '2019-09-03 14:17:12', 1, '2019-09-03 14:18:47'),
-	(26, 18, 3, 14, 8, 76, '老人鞋子', 24, '颜色:黑色,尺寸:35码', '2', 200.00, 400.00, '', 1, '2019-09-03 16:39:39', 1, '2019-09-03 16:39:49'),
-	(28, 18, 3, 16, 8, 76, '老人鞋子', 22, '颜色:白色,尺寸:35码', '2', 200.00, 400.00, '', 1, '2019-09-03 16:39:39', 1, '2019-09-03 16:39:49'),
-	(27, 18, 3, 15, 8, 76, '老人鞋子', 23, '颜色:白色,尺寸:40码', '2', 200.00, 400.00, '', 1, '2019-09-03 16:39:39', 1, '2019-09-03 16:39:49'),
-	(25, 18, 3, 13, 8, 76, '老人鞋子', 25, '颜色:黑色,尺寸:40码', '2', 200.00, 400.00, '', 1, '2019-09-03 16:39:39', 1, '2019-09-03 16:39:49');
-/*!40000 ALTER TABLE `stock_into_list` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.stock_out
-CREATE TABLE IF NOT EXISTS `stock_out` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `store_id` int(16) unsigned NOT NULL DEFAULT '0' COMMENT '仓库编号',
-  `contract_id` int(16) unsigned NOT NULL DEFAULT '0' COMMENT '销售合同编号',
-  `name` varchar(256) NOT NULL COMMENT '出库单名称',
-  `money` decimal(10,2) NOT NULL COMMENT '金额',
-  `number` int(16) NOT NULL COMMENT '数量',
-  `remark` text NOT NULL COMMENT '备注',
-  `status` smallint(1) NOT NULL DEFAULT '-1' COMMENT '1=已经出库，-1=未出库',
-  `out_user_id` int(16) NOT NULL COMMENT '出库管理员',
-  `out_time` datetime NOT NULL COMMENT '出库时间',
-  `out_type` varchar(50) NOT NULL COMMENT '出库类型',
-  `create_user_id` int(16) NOT NULL COMMENT '创建人',
-  `handle_user_id` int(16) NOT NULL COMMENT '经手人',
-  `create_time` int(16) NOT NULL,
-  `update_time` int(16) NOT NULL,
-  `org_id` int(16) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='出库单';
-
--- Dumping data for table 07fly_frame.stock_out: 2 rows
-DELETE FROM `stock_out`;
-/*!40000 ALTER TABLE `stock_out` DISABLE KEYS */;
-INSERT INTO `stock_out` (`id`, `store_id`, `contract_id`, `name`, `money`, `number`, `remark`, `status`, `out_user_id`, `out_time`, `out_type`, `create_user_id`, `handle_user_id`, `create_time`, `update_time`, `org_id`) VALUES
-	(13, 8, 58, '发光字', 4000.00, 40, '', 1, 1, '2019-01-09 09:54:31', '销售出库', 1, 0, 0, 0, 0),
-	(15, 13, 94, '这是做测试的一个合同哟', 400.00, 4, '', -1, 0, '0000-00-00 00:00:00', '销售合同出库', 1, 0, 1587046262, 0, 0),
-	(16, 13, 94, '这是做测试的一个合同哟', 400.00, 4, '', -1, 0, '0000-00-00 00:00:00', '销售合同出库', 1, 0, 1587046868, 0, 0),
-	(17, 13, 94, '这是做测试的一个合同哟', 400.00, 4, '', -1, 0, '0000-00-00 00:00:00', '销售合同出库', 1, 0, 1587047069, 0, 0),
-	(18, 13, 94, '这是做测试的一个合同哟', 400.00, 4, '', -1, 0, '0000-00-00 00:00:00', '销售合同出库', 1, 0, 1587047097, 0, 0),
-	(19, 13, 94, '这是做测试的一个合同哟', 400.00, 4, '', -1, 0, '0000-00-00 00:00:00', '销售合同出库', 1, 0, 1587047191, 0, 0),
-	(20, 13, 94, '这是做测试的一个合同哟', 400.00, 4, '', -1, 0, '0000-00-00 00:00:00', '销售合同出库', 1, 0, 1587047240, 0, 0);
-/*!40000 ALTER TABLE `stock_out` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.stock_out_list
-CREATE TABLE IF NOT EXISTS `stock_out_list` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '订单项ID',
-  `out_id` int(11) NOT NULL COMMENT '出库单编号 ',
-  `contract_id` int(11) NOT NULL COMMENT '合同ID',
-  `contract_list_id` int(11) NOT NULL COMMENT '合同明细ID',
-  `store_id` int(11) NOT NULL COMMENT '库存编号',
-  `goods_id` int(11) NOT NULL COMMENT '商品ID',
-  `goods_name` varchar(100) NOT NULL COMMENT '商品名称',
-  `sku_id` int(11) NOT NULL COMMENT 'skuID',
-  `sku_name` varchar(50) NOT NULL COMMENT 'sku名称',
-  `num` varchar(255) NOT NULL DEFAULT '0' COMMENT '出库数量',
-  `price` decimal(10,2) NOT NULL COMMENT '出库价格',
-  `money` decimal(10,2) NOT NULL COMMENT '总金额',
-  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
-  `out_user_id` int(11) DEFAULT '0' COMMENT '出库人员',
-  `out_time` datetime NOT NULL COMMENT '出库时间',
-  `create_user_id` int(11) DEFAULT '0',
-  `create_time` int(11) DEFAULT '0',
-  `update_time` int(11) DEFAULT '0',
-  `org_id` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `UK_ns_order_goods_goods_id` (`goods_id`),
-  KEY `UK_ns_order_goods_order_id` (`contract_id`),
-  KEY `UK_ns_order_goods_sku_id` (`sku_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=289 COMMENT='出库单明细表';
-
--- Dumping data for table 07fly_frame.stock_out_list: 2 rows
-DELETE FROM `stock_out_list`;
-/*!40000 ALTER TABLE `stock_out_list` DISABLE KEYS */;
-INSERT INTO `stock_out_list` (`id`, `out_id`, `contract_id`, `contract_list_id`, `store_id`, `goods_id`, `goods_name`, `sku_id`, `sku_name`, `num`, `price`, `money`, `remark`, `out_user_id`, `out_time`, `create_user_id`, `create_time`, `update_time`, `org_id`) VALUES
-	(32, 13, 58, 23, 8, 68, '阿斯蒂芬', 57, '尺码:36,颜色:白色', '20', 0.00, 2000.00, '', 1, '2019-01-09 09:54:31', 1, 0, 0, 0),
-	(31, 13, 58, 22, 8, 68, '阿斯蒂芬', 58, '尺码:36,颜色:黑色', '20', 0.00, 2000.00, '', 1, '2019-01-09 09:54:31', 1, 0, 0, 0),
-	(33, 18, 94, 110, 13, 110, '110', 110, '110', '2', 110.00, 200.00, '', 0, '0000-00-00 00:00:00', 1, 1587047097, 0, 0),
-	(34, 18, 94, 111, 13, 111, '111', 111, '111', '2', 111.00, 200.00, '', 0, '0000-00-00 00:00:00', 1, 1587047097, 0, 0),
-	(35, 19, 94, 110, 13, 91, '服务器品牌', 57, 'XES', '2', 100.00, 200.00, '', 0, '0000-00-00 00:00:00', 1, 1587047191, 0, 0),
-	(36, 19, 94, 111, 13, 91, '测试商品9877666WQEQ佣人', 53, '尺码:37', '2', 100.00, 200.00, '', 0, '0000-00-00 00:00:00', 1, 1587047191, 0, 0),
-	(37, 20, 94, 110, 13, 91, '服务器品牌', 57, 'XES', '2', 100.00, 200.00, '', 0, '0000-00-00 00:00:00', 1, 1587047240, 0, 0),
-	(38, 20, 94, 111, 13, 91, '测试商品9877666WQEQ佣人', 53, '尺码:37', '2', 100.00, 200.00, '', 0, '0000-00-00 00:00:00', 1, 1587047240, 0, 0);
-/*!40000 ALTER TABLE `stock_out_list` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.stock_store
-CREATE TABLE IF NOT EXISTS `stock_store` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL COMMENT '名称',
-  `create_user_id` int(11) NOT NULL COMMENT '创建人员',
-  `manage_user_id` varchar(256) NOT NULL COMMENT '管理人员',
-  `sort` smallint(2) NOT NULL COMMENT '排序',
-  `visible` smallint(2) NOT NULL DEFAULT '1' COMMENT '是否显示',
-  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `org_id` int(11) NOT NULL DEFAULT '0' COMMENT '企业id',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='仓库管理';
-
--- Dumping data for table 07fly_frame.stock_store: 2 rows
-DELETE FROM `stock_store`;
-/*!40000 ALTER TABLE `stock_store` DISABLE KEYS */;
-INSERT INTO `stock_store` (`id`, `name`, `create_user_id`, `manage_user_id`, `sort`, `visible`, `create_time`, `update_time`, `org_id`) VALUES
-	(12, '平阳仓库', 4, '4', 0, 1, 0, 0, 0),
-	(13, '犀浦仓库', 4, '4', 0, 1, 0, 0, 0);
-/*!40000 ALTER TABLE `stock_store` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.sup_linkman
-CREATE TABLE IF NOT EXISTS `sup_linkman` (
-  `linkman_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `supplier_id` int(16) NOT NULL,
-  `name` varchar(256) NOT NULL,
-  `gender` smallint(1) NOT NULL,
-  `postion` varchar(256) NOT NULL,
-  `tel` varchar(256) NOT NULL,
-  `mobile` varchar(256) NOT NULL,
-  `qicq` varchar(256) NOT NULL,
-  `email` varchar(256) NOT NULL,
-  `zipcode` varchar(256) NOT NULL,
-  `address` varchar(1024) NOT NULL,
-  `intro` text NOT NULL,
-  `create_time` datetime NOT NULL,
-  `create_user_id` int(16) NOT NULL,
-  PRIMARY KEY (`linkman_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='供应商联系人';
-
--- Dumping data for table 07fly_frame.sup_linkman: 11 rows
-DELETE FROM `sup_linkman`;
-/*!40000 ALTER TABLE `sup_linkman` DISABLE KEYS */;
-INSERT INTO `sup_linkman` (`linkman_id`, `supplier_id`, `name`, `gender`, `postion`, `tel`, `mobile`, `qicq`, `email`, `zipcode`, `address`, `intro`, `create_time`, `create_user_id`) VALUES
-	(1, 12, '枭哥', 1, '技术部', '02888641234', '13688868655', '1585925559', 'web@07fly.com', '610000', '成都市新路', '这个小伙子不错,一个很好的人的呀', '2013-09-06 10:26:59', 0),
-	(2, 12, '二娃', 1, '1', '12345678', '12345678', '', '1@1.com', '', '', '', '2013-09-23 14:16:55', 0),
-	(3, 12, '三娃', 1, '1', '12345678', '12345678', '', '1@1.com', '', '', '', '2013-09-23 14:17:00', 0),
-	(4, 13, '李大爷', 1, '经理', '12', '18030402705', '123', 'muziii@163.com', '', '成都校园路100号', '', '2016-04-24 22:07:37', 0),
-	(5, 0, '李大哥', 0, '', '02832145678', '', '', '', '', '', '', '2018-12-21 17:43:35', 4),
-	(6, 17, '李大哥', 0, '', '02832145678', '', '', '', '', '', '', '2018-12-21 17:44:47', 4),
-	(7, 13, '李大二', 1, '村长', '12', '18030402705', '', '', '', '', '', '2018-12-21 22:17:14', 4),
-	(8, 13, '李大二', 1, '村长', '12', '18030402705', '', '', '', '', '', '2018-12-21 22:17:48', 4),
-	(9, 0, '李大二', 1, '村长', '12', '18030402705', '', '', '', '', '', '2018-12-21 22:17:58', 4),
-	(10, 20, '11', 0, '', '1', '', '', '', '', '', '', '2019-05-04 17:26:59', 1),
-	(11, 13, 'dadfadf', 1, '123', '123', 'a1123', '123', '123', '', '123', '', '2019-05-04 18:08:18', 1);
-/*!40000 ALTER TABLE `sup_linkman` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.sup_supplier
-CREATE TABLE IF NOT EXISTS `sup_supplier` (
-  `supplier_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL,
-  `area_id` int(16) NOT NULL COMMENT '所在地区',
-  `create_user_id` int(16) NOT NULL,
-  `level` int(16) NOT NULL COMMENT '客户等级',
-  `ecotype` int(16) NOT NULL COMMENT '经济类型',
-  `trade` int(16) NOT NULL COMMENT '行业',
-  `satisfy` smallint(6) NOT NULL DEFAULT '3' COMMENT '满意度（1-5），默认为3',
-  `credit` smallint(2) NOT NULL DEFAULT '3' COMMENT '信用度（1-5），默认为3',
-  `address` varchar(256) NOT NULL,
-  `linkman` varchar(256) NOT NULL,
-  `website` varchar(256) NOT NULL,
-  `zipcode` varchar(64) NOT NULL,
-  `tel` varchar(256) NOT NULL,
-  `fax` varchar(256) NOT NULL,
-  `email` varchar(256) NOT NULL,
-  `intro` text NOT NULL,
-  `create_time` datetime NOT NULL,
-  PRIMARY KEY (`supplier_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='供应商';
-
--- Dumping data for table 07fly_frame.sup_supplier: 4 rows
-DELETE FROM `sup_supplier`;
-/*!40000 ALTER TABLE `sup_supplier` DISABLE KEYS */;
-INSERT INTO `sup_supplier` (`supplier_id`, `name`, `area_id`, `create_user_id`, `level`, `ecotype`, `trade`, `satisfy`, `credit`, `address`, `linkman`, `website`, `zipcode`, `tel`, `fax`, `email`, `intro`, `create_time`) VALUES
-	(1, '山西太原', 0, 0, 0, 27, 24, 3, 3, '', '', 'http://www.07fly.com', '', '02987651123', '', '', '', '0000-00-00 00:00:00'),
-	(12, '上海八达', 0, 0, 0, 30, 48, 3, 3, ' 上海市', '李小姐', 'http://www.00808.com', '', '61833149', '', '', '这还是一家不错的公司的哟', '2013-09-05 15:29:12'),
-	(13, '成都零起飞网络', 0, 0, 0, 28, 24, 3, 3, '', '李先生', 'http://www.07fly.com', '', '18030402705', '', '', '这个公司还是不错哟', '2016-04-24 22:06:47'),
-	(16, '成都百度科技', 0, 4, 0, 25, 24, 3, 3, '成都市大天路', '李大哥', '', '', '02832145678', '024854', 'goodmuzi@qq.com', '', '2018-12-21 17:44:12');
-/*!40000 ALTER TABLE `sup_supplier` ENABLE KEYS */;
-
--- Dumping structure for table 07fly_frame.sys_auth
+-- Dumping structure for table 20420_guanggao.sys_auth
 CREATE TABLE IF NOT EXISTS `sys_auth` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '用户组id,自增主键',
   `module` varchar(20) NOT NULL DEFAULT '' COMMENT '用户组所属模块',
@@ -6759,17 +4268,14 @@ CREATE TABLE IF NOT EXISTS `sys_auth` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='权限组表';
 
--- Dumping data for table 07fly_frame.sys_auth: 4 rows
+-- Dumping data for table 20420_guanggao.sys_auth: 1 rows
 DELETE FROM `sys_auth`;
 /*!40000 ALTER TABLE `sys_auth` DISABLE KEYS */;
 INSERT INTO `sys_auth` (`id`, `module`, `name`, `intro`, `status`, `rules`, `sys_user_id`, `sort`, `update_time`, `create_time`, `org_id`) VALUES
-	(1, '', '企业超级管理', '本权限为企业帐号注册初次的权限列表', 1, '1,333,334,324,385,298,480,481,466,522,478,463,472,473,464,479,417,418,462,470,471,475,488,487,494,489,490,521,493,492,491,474,496,497,498,495,499,504,503,500,501,502,414,520,508,507,506,505,416,511,510,509,512,516,515,514,513,517,519,518', 1, 0, 1584451071, 1569638911, 1),
-	(2, '', '基本信息配置管理员', '管理基本信息配置', 1, '1,324,20,27,47,48,49,50,28,39,40,41,42,29,43,44,45,46,30,51,52,53,54,31,55,56,57,58,32,59,60,61,62,33,63,64,65,66,67,80,81,82,83,68,84,85,86,87,69,88,89,90,91,70,92,93,94,95,71,96,97,98,99,72,100,101,102,103,73,104,105,106,107,74,108,109,110,111,75,112,113,114,115,76,116,117,118,119,77,120,121,122,123,78,124,125,126,127,79,128,129,130,131', 1, 1, 1576464669, 1570796576, 101),
-	(22, '', '高级管理员', '这个角色可以管理系统所有栏目及功能按钮', 1, '1,324,2,25,34,35,36,37,38,26,302,305,425,17,18,19,333,334,20,27,47,48,49,50,28,39,40,41,42,29,43,44,45,46,30,430,51,52,53,54,31,55,56,57,58,32,59,60,61,62,33,63,64,65,66,67,80,81,82,83,68,84,85,86,87,69,88,89,90,91,70,92,93,94,95,71,96,97,98,99,72,100,101,102,103,73,104,105,106,107,74,108,109,110,111,75,112,113,114,115,76,116,117,118,119,77,120,121,122,123,78,124,125,126,127,79,128,129,130,131,21,132,154,155,156,157,310,311,312,315,316,317,313,318,319,320,314,321,322,323,426,134,158,159,427,133,160,161,162,163,165,166,164,261,330,327,328,329,403,399,400,135,167,168,262,169,170,171,263,172,173,174,136,175,264,137,176,265,331,332,401,341,343,344,141,142,177,178,179,180,181,428,461,266,182,183,184,267,185,186,187,268,188,189,190,143,293,301,429,145,191,269,195,196,197,198,270,192,193,194,144,199,325,271,200,201,202,272,203,204,205,146,206,273,147,207,274,335,347,402,342,345,346,138,140,284,300,434,406,364,365,366,367,368,369,370,371,372,373,431,432,433,139,275,411,435,436,437,438,439,440,441,442,443,444,445,446,447,448,407,459,299,455,456,208,209,276,210,211,212,277,213,214,215,278,216,217,218,279,219,220,221,280,222,223,224,281,225,226,227,282,228,229,230,283,231,232,233,408,457,458,460,234,419,235,285,236,237,238,286,239,240,241,287,242,243,245,288,246,247,248,289,249,250,251,290,252,253,254,291,255,256,257,292,258,259,260,326,409,410,423,424,306,307,348,349,350,412,405,351,352,353,354,355,356,357,358,359,360,449,450,451,452,453,454,308,309,404,361,362,363,148,149,294,377,336,337,378,150,295,379,338,374,380,151,296,381,339,375,382,152,297,383,340,376,384,413,415,416,414,417,418,462,470,471,463,472,473,464,474,475,465,476,477,466,478,479,467,480,481,468,482,483,469,484,485,153,298,385', 35, 1, 1577354254, 1575169788, 101),
-	(27, '', '管理员组', '', 1, '1,333,334,324,2,25,34,35,36,37,38,26,302,305,425,17,18,19', 69, 0, 1581135400, 1581135380, 110);
+	(1, '', '企业超级管理', '本权限为企业帐号注册初次的权限列表', 1, '1,333,334,466,522,478,463,472,473,464,479,417,418,462,470,471,475,488,487,494,489,490,521,493,492,491,474,496,497,498,495,499,504,503,500,501,502,414,520,508,507,506,505,416,511,510,509,512,516,515,514,513,517,519,518', 1, 0, 1587610703, 1569638911, 1);
 /*!40000 ALTER TABLE `sys_auth` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.sys_auth_access
+-- Dumping structure for table 20420_guanggao.sys_auth_access
 CREATE TABLE IF NOT EXISTS `sys_auth_access` (
   `sys_user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `sys_auth_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户组id',
@@ -6778,7 +4284,7 @@ CREATE TABLE IF NOT EXISTS `sys_auth_access` (
   `org_id` int(10) unsigned NOT NULL DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户组授权表';
 
--- Dumping data for table 07fly_frame.sys_auth_access: 17 rows
+-- Dumping data for table 20420_guanggao.sys_auth_access: 18 rows
 DELETE FROM `sys_auth_access`;
 /*!40000 ALTER TABLE `sys_auth_access` DISABLE KEYS */;
 INSERT INTO `sys_auth_access` (`sys_user_id`, `sys_auth_id`, `update_time`, `create_time`, `org_id`) VALUES
@@ -6798,10 +4304,11 @@ INSERT INTO `sys_auth_access` (`sys_user_id`, `sys_auth_id`, `update_time`, `cre
 	(80, 27, 1581135438, 1581135438, 1),
 	(81, 1, 0, 1583806365, 121),
 	(82, 1, 0, 1583806401, 122),
-	(83, 1, 0, 1584695987, 122);
+	(83, 1, 0, 1584695987, 122),
+	(84, 1, 1587610611, 1587610611, 1);
 /*!40000 ALTER TABLE `sys_auth_access` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.sys_dept
+-- Dumping structure for table 20420_guanggao.sys_dept
 CREATE TABLE IF NOT EXISTS `sys_dept` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT NULL COMMENT '部门名称',
@@ -6814,18 +4321,18 @@ CREATE TABLE IF NOT EXISTS `sys_dept` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='部门表';
 
--- Dumping data for table 07fly_frame.sys_dept: 5 rows
+-- Dumping data for table 20420_guanggao.sys_dept: 5 rows
 DELETE FROM `sys_dept`;
 /*!40000 ALTER TABLE `sys_dept` DISABLE KEYS */;
 INSERT INTO `sys_dept` (`id`, `name`, `pid`, `sort`, `visible`, `create_time`, `update_time`, `org_id`) VALUES
-	(1, '商务部', 0, 6, 1, NULL, 1584764548, 1),
-	(2, '技术部', 0, 5, 1, NULL, 1584695438, 1),
-	(3, '人事事', 0, 3, 1, NULL, 1586417709, 1),
+	(1, '商务部', 0, 6, 1, 0, 1584764548, 1),
+	(2, '技术部', 0, 5, 1, 0, 1584695438, 1),
+	(3, '人事事', 0, 3, 1, 0, 1586417709, 1),
 	(4, '财务部', 0, 4, 1, 0, 1586417712, 1),
 	(5, '销售部01', 1, 2, 1, 0, 1584771236, 1);
 /*!40000 ALTER TABLE `sys_dept` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.sys_menu
+-- Dumping structure for table 20420_guanggao.sys_menu
 CREATE TABLE IF NOT EXISTS `sys_menu` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT '菜单名称',
@@ -6844,7 +4351,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=547 DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
--- Dumping data for table 07fly_frame.sys_menu: 117 rows
+-- Dumping data for table 20420_guanggao.sys_menu: 113 rows
 DELETE FROM `sys_menu`;
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
 INSERT INTO `sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visible`, `is_shortcut`, `is_menu`, `icon`, `status`, `update_time`, `create_time`, `org_id`) VALUES
@@ -6854,7 +4361,7 @@ INSERT INTO `sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visible`,
 	(17, '用户添加', 26, 10, 'admin', 'SysUser/add', 1, 0, 0, 'fa-circle-o', 1, 1581133424, 1570758733, 1),
 	(18, '用户删除', 26, 10, 'admin', 'SysUser/del', 1, 0, 0, 'fa-circle-o', 1, 1581133427, 1570758899, 1),
 	(19, '用户修改', 26, 10, 'admin', 'SysUser/edit', 1, 0, 0, 'fa-circle-o', 1, 1581133431, 1570758908, 1),
-	(20, '系统扩展', 0, 101, 'admin', '#', 1, 0, 1, 'fa-cubes', 1, 1586425514, 1570759051, 1),
+	(20, '系统扩展', 0, 101, 'admin', '#', 1, 0, 1, 'fa-fire', 1, 1587691366, 1570759051, 1),
 	(21, '散客管理', 20, 20, 'admin', '#', 0, 0, 1, 'fa-user-secret', 1, 1578969149, 1570759147, 1),
 	(23, '数据库管理', 420, 10, 'admin', 'Database/show', 1, 0, 1, 'fa-database', 1, 1581134863, 1570775822, 1),
 	(25, '权限列表', 2, 3, 'admin', 'SysAuth/show', 1, 0, 1, 'fa-circle-o', 1, 1581133532, 1570776665, 1),
@@ -6874,11 +4381,9 @@ INSERT INTO `sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visible`,
 	(303, '数据备份', 23, 1, 'admin', 'Database/databackup', 1, 0, 1, '', 1, 1581134868, 1573995669, 1),
 	(304, '数据恢复', 23, 2, 'admin', 'Database/dataRestore', 1, 0, 1, '', 1, 1581134872, 1573995695, 1),
 	(305, '用户浏览', 26, 2, 'admin', 'SysUser/show_json', 1, 0, 0, '', 1, 1581133417, 1574148728, 1),
-	(324, '基础数据', 0, 20, 'admin', '#', 1, 0, 1, 'fa-home', 1, 1586425525, 0, 1),
-	(333, '资料修改', 1, 12, 'admin', 'admin/SysUser/editInfo', 1, 0, 0, '', 1, 1578454426, 1574651722, 1),
-	(334, '密码修改', 1, 13, 'admin', 'admin/SysUser/editPwd', 1, 0, 0, '', 1, 1578454437, 1574651738, 1),
+	(333, '资料修改', 1, 12, 'admin', 'SysUser/editInfo', 1, 0, 0, '', 1, 1587614396, 1574651722, 1),
+	(334, '密码修改', 1, 13, 'admin', 'SysUser/editPwd', 1, 0, 0, '', 1, 1587614403, 1574651738, 1),
 	(546, '网站管理', 544, 2, 'crm', 'CstWebsite/show', 1, 0, 1, '', 1, 0, 1586435348, 1),
-	(544, '销售管理', 0, 40, 'crm', 'sell-manage', 1, 0, 1, 'fa-shopping-cart', 1, 1586428075, 1586428044, 1),
 	(545, '销售合同', 544, 1, 'crm', 'SalContract/show', 1, 0, 1, '', 1, 0, 1586428151, 1),
 	(543, '仓库管理', 324, 6, 'crm', 'StockStore/show', 1, 0, 1, '', 1, 1586506313, 1586427428, 1),
 	(542, '商品规格', 537, 5, 'crm', 'GoodsSpec/show', 1, 0, 1, '', 1, 1586427161, 1586427159, 1),
@@ -6905,7 +4410,6 @@ INSERT INTO `sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visible`,
 	(416, '留言表单', 466, 50, 'cms', 'guestbook/show', 1, 0, 1, '', 1, 1583115853, 1575615870, 1),
 	(417, '封面编辑', 479, 1, 'cms', 'Arctype/edit_content', 1, 0, 0, '', 1, 1582096410, 1575615930, 1),
 	(418, '内容删除', 479, 2, 'cms', 'Archives/del', 1, 0, 0, '', 1, 1582096359, 1575615951, 1),
-	(523, '客户管理', 0, 30, 'crm', 'CstCustomer', 1, 0, 1, 'fa-user', 1, 1586425520, 1584771433, 1),
 	(420, '系统管理', 0, 100, 'admin', 'admin/system/show', 1, 0, 1, 'fa-wrench', 1, 1586425512, 1575805253, 1),
 	(421, '行为日志', 420, 4, 'admin', 'Log/show', 1, 0, 1, 'fa-street-view', 1, 1581134860, 1575805707, 1),
 	(422, '企业会员', 2, 1, 'admin', 'SysOrg/show', 1, 0, 1, '', 1, 1581133400, 1575809624, 1),
@@ -6948,7 +4452,6 @@ INSERT INTO `sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visible`,
 	(462, '内容编辑', 479, 60, 'cms', 'Archives/edit', 1, 0, 0, '', 1, 1582096336, 1577352700, 1),
 	(463, '栏目删除', 478, 61, 'cms', 'Arctype/del', 1, 0, 0, '', 1, 1582082279, 1577352700, 1),
 	(464, '栏目添加', 478, 70, 'cms', 'Arctype/add', 1, 0, 0, '', 1, 1582082209, 1577352700, 1),
-	(465, '文档系统', 0, 71, 'doc', 'book/show', 1, 0, 1, '', 1, 1586740887, 1577352700, 1),
 	(466, '内容系统', 0, 80, 'cms', 'Statistics/sk_food', 1, 0, 1, '', 1, 1586425198, 1577352700, 1),
 	(488, '修改', 475, 3, 'cms', 'Ads/edit', 1, 0, 0, '', 1, 0, 1583807457, 1),
 	(470, '数据浏览', 479, 60, 'cms', 'Archives/show_json', 1, 0, 0, '', 1, 1582096279, 1577352700, 1),
@@ -6967,7 +4470,7 @@ INSERT INTO `sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visible`,
 	(484, '插件列表', 20, 91, 'admin', 'addon/addon_list', 1, 0, 1, '', 1, 1582082099, 1577352700, 1);
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.sys_org
+-- Dumping structure for table 20420_guanggao.sys_org
 CREATE TABLE IF NOT EXISTS `sys_org` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) DEFAULT NULL COMMENT '用户名',
@@ -6986,15 +4489,14 @@ CREATE TABLE IF NOT EXISTS `sys_org` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=123 DEFAULT CHARSET=utf8 COMMENT='系统组织表';
 
--- Dumping data for table 07fly_frame.sys_org: 2 rows
+-- Dumping data for table 20420_guanggao.sys_org: 1 rows
 DELETE FROM `sys_org`;
 /*!40000 ALTER TABLE `sys_org` DISABLE KEYS */;
 INSERT INTO `sys_org` (`id`, `username`, `password`, `company`, `start_date`, `stop_date`, `sort`, `visible`, `linkman`, `mobile`, `remark`, `create_time`, `update_time`, `org_id`) VALUES
-	(1, 'admin', 'c929dd40244b90f89ea78348bfdfcfb9', '成都零起飞网络', '2020-03-10', '2020-04-10', 0, 1, '李大哥', 'admin', '', 1583806365, 1586098758, 1),
-	(122, '07fly', '4e6ee1b742f998507391910a6ae3f3b0', '成都零起飞网络', '2020-03-10', '2020-04-10', 0, 1, '李大大', '07fly', '', 1583806401, 1586098750, 1);
+	(1, 'admin', 'c929dd40244b90f89ea78348bfdfcfb9', '勿道管理中心', '2020-03-10', '2020-04-10', 0, 1, '李大哥', 'admin', '', 1583806365, 1587621503, 1);
 /*!40000 ALTER TABLE `sys_org` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.sys_postion
+-- Dumping structure for table 20420_guanggao.sys_postion
 CREATE TABLE IF NOT EXISTS `sys_postion` (
   `id` int(11) DEFAULT NULL,
   `name` varchar(64) DEFAULT NULL COMMENT '职位名称',
@@ -7006,12 +4508,12 @@ CREATE TABLE IF NOT EXISTS `sys_postion` (
   `org_id` int(11) DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='系统职位表';
 
--- Dumping data for table 07fly_frame.sys_postion: 0 rows
+-- Dumping data for table 20420_guanggao.sys_postion: 0 rows
 DELETE FROM `sys_postion`;
 /*!40000 ALTER TABLE `sys_postion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_postion` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.sys_user
+-- Dumping structure for table 20420_guanggao.sys_user
 CREATE TABLE IF NOT EXISTS `sys_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL COMMENT '用户名',
@@ -7030,17 +4532,17 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   `visible` int(11) NOT NULL DEFAULT '1' COMMENT '1=显示、0=隐藏',
   `org_id` int(11) NOT NULL DEFAULT '1' COMMENT '组织结构',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=84 DEFAULT CHARSET=utf8 COMMENT='系统用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=85 DEFAULT CHARSET=utf8 COMMENT='系统用户表';
 
--- Dumping data for table 07fly_frame.sys_user: 2 rows
+-- Dumping data for table 20420_guanggao.sys_user: 2 rows
 DELETE FROM `sys_user`;
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
 INSERT INTO `sys_user` (`id`, `username`, `password`, `realname`, `gender`, `dept_id`, `email`, `qicq`, `mobile`, `intro`, `rules`, `create_time`, `update_time`, `sort`, `visible`, `org_id`) VALUES
-	(1, 'admin', 'c929dd40244b90f89ea78348bfdfcfb9', '零起飞', 1, 1, 'test@test.com', '', '', '', '1,333,334,324,2,25,34,35,36,37,38,26,302,305,425,17,18,19,20,27,47,48,49,50,28,39,40,41,42,29,43,44,45,46,30,430,51,52,53,54,31,55,56,57,58,32,59,60,61,62,33,63,64,65,66,67,80,81,82,83,68,84,85,86,87,69,88,89,90,91,70,92,93,94,95,71,96,97,98,99,72,100,101,102,103,73,104,105,106,107,74,108,109,110,111,75,112,113,114,115,76,116,117,118,119,77,120,121,122,123,78,124,125,126,127,79,128,129,130,131,21,132,154,155,156,157,310,311,312,315,316,317,313,318,319,320,314,321,322,323,426,134,158,159,427,133,160,161,162,163,165,166,164,261,330,327,328,329,403,399,400,135,167,168,262,169,170,171,263,172,173,174,136,175,264,137,176,265,331,332,401,341,343,344,141,142,177,178,179,180,181,428,461,266,182,183,184,267,185,186,187,268,188,189,190,143,293,301,429,145,191,269,195,196,197,198,270,192,193,194,144,199,325,271,200,201,202,272,203,204,205,146,206,273,147,207,274,335,347,402,342,345,346,138,140,284,300,434,406,364,365,366,367,368,369,370,371,372,373,431,432,433,139,275,411,435,436,437,438,439,440,441,442,443,444,445,446,447,448,407,459,299,455,456,208,209,276,210,211,212,277,213,214,215,278,216,217,218,279,219,220,221,280,222,223,224,281,225,226,227,282,228,229,230,283,231,232,233,408,457,458,460,234,419,235,285,236,237,238,286,239,240,241,287,242,243,245,288,246,247,248,289,249,250,251,290,252,253,254,291,255,256,257,292,258,259,260,326,409,410,423,424,306,307,348,349,350,412,405,351,352,353,354,355,356,357,358,359,360,449,450,451,452,453,454,308,309,404,361,362,363,148,149,294,377,336,337,378,150,295,379,338,374,380,151,296,381,339,375,382,152,297,383,340,376,384,413,415,416,414,417,418,462,470,471,463,472,473,464,474,475,465,476,477,466,478,479,467,480,481,468,482,483,469,484,153,298,385', 0, 1587345674, 0, 1, 1),
-	(83, '07fly', '4e6ee1b742f998507391910a6ae3f3b0', '零小二', 0, 5, '', '', '07fly', '', '', 1584695987, 0, 0, 1, 122);
+	(1, 'admin', 'c929dd40244b90f89ea78348bfdfcfb9', '开发人生', 0, 1, 'admin@admin', '1871720801', '18030402705', '', '', 1587348600, 1587881832, 1, 1, 1),
+	(84, 'manage', 'd4762d05bc7d5d3b1a43d8e67774f4dc', '匆道', 1, 0, '', '', '', '', '', 1587610606, 1587621461, 0, 1, 1);
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.taglist
+-- Dumping structure for table 20420_guanggao.taglist
 CREATE TABLE IF NOT EXISTS `taglist` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'tagid',
@@ -7055,7 +4557,7 @@ CREATE TABLE IF NOT EXISTS `taglist` (
   KEY `aid` (`aid`,`typeid`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章标签表';
 
--- Dumping data for table 07fly_frame.taglist: 20 rows
+-- Dumping data for table 20420_guanggao.taglist: 20 rows
 DELETE FROM `taglist`;
 /*!40000 ALTER TABLE `taglist` DISABLE KEYS */;
 INSERT INTO `taglist` (`id`, `tid`, `aid`, `typeid`, `tag`, `arcrank`, `lang`, `add_time`, `update_time`) VALUES
@@ -7081,7 +4583,7 @@ INSERT INTO `taglist` (`id`, `tid`, `aid`, `typeid`, `tag`, `arcrank`, `lang`, `
 	(1, 49, 42, 64, '网络优化', 0, 'cn', 1565234124, 0);
 /*!40000 ALTER TABLE `taglist` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.tags
+-- Dumping structure for table 20420_guanggao.tags
 CREATE TABLE IF NOT EXISTS `tags` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'tagid',
   `tag` varchar(50) NOT NULL DEFAULT '' COMMENT 'tag内容',
@@ -7101,7 +4603,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
   KEY `tag` (`tag`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COMMENT='标签索引表';
 
--- Dumping data for table 07fly_frame.tags: 27 rows
+-- Dumping data for table 20420_guanggao.tags: 27 rows
 DELETE FROM `tags`;
 /*!40000 ALTER TABLE `tags` DISABLE KEYS */;
 INSERT INTO `tags` (`id`, `tag`, `typeid`, `count`, `total`, `weekcc`, `monthcc`, `weekup`, `monthup`, `lang`, `create_time`, `update_time`) VALUES
@@ -7134,7 +4636,7 @@ INSERT INTO `tags` (`id`, `tag`, `typeid`, `count`, `total`, `weekcc`, `monthcc`
 	(50, '推广服务', 64, 0, 0, 0, 0, 0, 0, 'cn', 1565161106, 0);
 /*!40000 ALTER TABLE `tags` ENABLE KEYS */;
 
--- Dumping structure for table 07fly_frame.website
+-- Dumping structure for table 20420_guanggao.website
 CREATE TABLE IF NOT EXISTS `website` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '配置ID',
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT '配置名称',
@@ -7146,25 +4648,27 @@ CREATE TABLE IF NOT EXISTS `website` (
   `describe` varchar(255) NOT NULL DEFAULT '' COMMENT '配置说明',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+  `visible` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
   `sort` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_name` (`name`),
   KEY `type` (`type`),
   KEY `group` (`group`)
-) ENGINE=MyISAM AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 COMMENT='网站配置表';
+) ENGINE=MyISAM AUTO_INCREMENT=76 DEFAULT CHARSET=utf8 COMMENT='网站配置表';
 
--- Dumping data for table 07fly_frame.website: 7 rows
+-- Dumping data for table 20420_guanggao.website: 9 rows
 DELETE FROM `website`;
 /*!40000 ALTER TABLE `website` DISABLE KEYS */;
-INSERT INTO `website` (`id`, `name`, `type`, `title`, `value`, `group`, `extra`, `describe`, `create_time`, `update_time`, `status`, `sort`) VALUES
-	(67, 'web_name', 'varchar', '网站名称', '零起飞', '1', '', '这是输入是网站的描述', 0, 1584348221, 1, 0),
-	(68, 'web_title', 'varchar', '网站标题', '成都零起飞网站', '1', '', '这是输入是网站的描述', 0, 1584348221, 1, 0),
-	(69, 'web_keywords', 'varchar', '网站关键字', '网站建设', '1', '', '这是输入是网站的描述', 0, 1584348221, 1, 0),
-	(70, 'web_content', 'textarea', '网站描述', '建站素材专注建站资源站点，提供免费网页素材,网页素材图片,网站源码,企业网站源码,模板插件,js特效大全,建站教程,站长工具和常用软件下载,是领先的站长资源网站,分享企业建站需的资源,做您的好帮手,让您的建站从此轻松简单。', '1', '', '这是输入是网站的描述', 0, 1584348221, 1, 0),
-	(71, 'web_copyright', 'textarea', '网站版权', '建站素材专注建站资源站点，提供免费网页素材,网页素材图片,网站源码,企业网站源码,模板插件,js特效大全,建站教程,站长工具和常用软件下载,是领先的站长资源网站,分享企业建站需的资源,做您的好帮手,让您的建站从此轻松简单。', '1', '', '这是输入是网站的描述', 0, 1583906596, 1, 0),
-	(1, 'web_visible', 'bool', '网站状态', '1', '1', '', '', 0, 1584348221, 1, 0),
-	(73, 'web_beian', 'varchar', '网站备案号', '蜀08008865号', '1', '', '', 0, 1584348221, 1, 0);
+INSERT INTO `website` (`id`, `name`, `type`, `title`, `value`, `group`, `extra`, `describe`, `create_time`, `update_time`, `visible`, `sort`) VALUES
+	(67, 'web_name', 'varchar', '网站名称', '勿道官网', '1', '', '这是输入是网站的描述', 0, 1587724083, 1, 0),
+	(68, 'web_title', 'varchar', '网站标题', '勿道官网', '1', '', '这是输入是网站的描述', 0, 1587698500, 1, 0),
+	(69, 'web_keywords', 'varchar', '网站关键字', '广告设计', '1', '', '这是输入是网站的描述', 0, 1587724083, 1, 0),
+	(70, 'web_content', 'textarea', '网站描述', '勿道官网', '0', '', '网站的描述信息', 0, 1587701182, 1, 0),
+	(71, 'web_copyright', 'textarea', '网站版权', '2020 勿道版权所有', '1', '', '这是输入是网站的描述', 0, 1587724083, 1, 0),
+	(1, 'web_visible', 'bool', '网站状态', '1', '1', '', '', 0, 1587724083, 1, 0),
+	(73, 'web_icp', 'varchar', '网站备案号', '蜀08008865号', '1', '', '', 0, 1587724083, 1, 0),
+	(74, 'web_theme', 'varchar', '网站主题', 'wudao', '1', '', '', 0, 1587724083, 1, 0),
+	(75, 'web_address', 'varchar', '联系地址', '成都市校园路', '1', '', '', 1587699544, 1587724083, 1, 0);
 /*!40000 ALTER TABLE `website` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
