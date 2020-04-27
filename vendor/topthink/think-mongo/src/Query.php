@@ -907,7 +907,7 @@ class Query
                 // 字符串查询
                 $where[] = ['exp', $field];
             } else {
-                $where = '';
+                $where = [];
             }
         } elseif (is_array($op)) {
             $where[$field] = $param;

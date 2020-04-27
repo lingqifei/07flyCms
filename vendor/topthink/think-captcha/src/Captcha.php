@@ -181,7 +181,6 @@ class Captcha
 
 
         $ttfPath = __DIR__ . '/../assets/' . ($this->useZh ? 'zhttfs' : 'ttfs') . '/';
-
         // 绘验证码
         $code   = []; // 验证码
         $codeNX = 0; // 验证码第N个字符的左边距
