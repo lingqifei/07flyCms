@@ -50,9 +50,9 @@ class IndexBase extends ControllerBase
         define('THEME_PATH', PATH_PUBLIC.$web_theme );
 
         $root_url = get_file_root_path();
-        //$this->assign('template_dir', STATIC_DOMAIN . SYS_DS_PROS . 'public/theme/' . $web_theme.'/');
         $this->assign('root_url', $root_url);
         $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/');
+        $this->assign('template_name', $web_theme);
     }
 
     /**
@@ -60,15 +60,23 @@ class IndexBase extends ControllerBase
      */
     final protected function fetch($template = '', $vars = [], $replace = [], $config = [])
     {
-        $template=THEME_NAME.DS.$template;
+
+        if(is_mobile()){
+            $template=THEME_NAME.DS.'wap'.DS.$template;
+        }else{
+            $template=THEME_NAME.DS.$template;
+        }
+
         $tpfilepath=PATH_PUBLIC.'theme'.DS.$template;
         if (!file_exists($tpfilepath)) {
             echo "$tpfilepath 模板文件不存在~~";
             exit;
         }
 
+        //去掉模板的后缀，适应Tp5的模板
         $template=str_replace('.html' , '', strtolower($template));
         $template=str_replace('.htm' , '', strtolower($template));
+
         return parent::fetch($template, $vars, $replace, $config);
     }
 

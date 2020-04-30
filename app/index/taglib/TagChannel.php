@@ -92,7 +92,7 @@ class TagChannel extends Base
         switch ($type) {
             case 'son': // 下级栏目
                 $typeid  = !empty($typeid) ? $typeid : $this->tid;
-                $result = $this->getSon($typeid, false);
+                $result = $this->getSon($typeid, true);
                 break;
             case 'self': // 同级栏目
                 $typeid  = !empty($typeid) ? $typeid : $this->tid;
