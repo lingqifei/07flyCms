@@ -37,7 +37,7 @@ class TagList extends Base
         if ($aid > 0) {
             //引用文档逻辑
             $this->logicArchives = new \app\index\logic\Archives();
-            $this->tid = $this->logicArchives->getArchivesFieldValue(['id' => $aid], 'typeid');
+            $this->tid = $this->logicArchives->getArchivesFieldValue(['id' => $aid], 'type_id');
         }
         /*--end*/
 
@@ -91,11 +91,20 @@ class TagList extends Base
             }
 
             // 过滤typeid中含有空值的栏目ID
+            $logicArctype = new \app\index\logic\Arctype();
             $typeidArr_tmp = explode(',', $param['typeid']);
-            $typeidArr_tmp = array_unique($typeidArr_tmp);
+            $typeidArr_tmp = array_unique($typeidArr_tmp);//过滤重复的
+            $typeidArr_son = [];
             foreach ($typeidArr_tmp as $k => $v) {
-                if (empty($v)) unset($typeidArr_tmp[$k]);
+                if (empty($v)) {
+                    unset($typeidArr_tmp[$k]);
+                }else{
+                    $typeid_son=$logicArctype->getArctypeAllSon($v);
+                    $typeidArr_son=array_merge($typeidArr_son,$typeid_son);
+                }
             }
+            $typeidArr_tmp = array_merge($typeidArr_tmp,$typeidArr_son);
+
             $param['typeid'] = implode(',', $typeidArr_tmp);
             // end
         }
@@ -118,10 +127,9 @@ class TagList extends Base
         $logicArchives = new \app\index\logic\Archives();
         $orderby = $logicArchives->getOrderBy($orderby, $orderway);
         $result = $logicArchives->getArchivesPageList($where, true, $orderby, $pagesize);
-
         $list = $result->ToArray();
+
         //获取文档栏目信息
-        $logicArctype = new \app\index\logic\Arctype();
         foreach ($list['data'] as &$row) {
             $typeinfo = $logicArctype->getArctypeInfo(['id' => $row['type_id']]);
             if ($typeinfo) {
