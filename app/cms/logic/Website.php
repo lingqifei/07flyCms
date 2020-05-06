@@ -41,26 +41,16 @@ class Website extends CmsBase
     public function setting($data = [])
     {
 
-//        $validate_result = $this->validateWebsite->scene('setting')->check($data);
-//
-//        if (!$validate_result) {
-//
-//            return [RESULT_ERROR, $this->validateWebsite->getError()];
-//        }
-
         foreach ($data as $key=>$value){
-
             $val=[
                 'value'=>$value
             ];
             $map['name']=['=',$key];
-            $result = $this->modelWebsite->setInfo($val,$map);
+            $result = $this->modelWebsite->setFieldValue($map,'value',$value);
         }
         $url = url('show');
-
         $result && action_log('编辑', '编辑网站配置');
-
-        return $result ? [RESULT_SUCCESS, '编辑成功', $url] : [RESULT_ERROR, $this->modelWebsite->getError()];
+        return  [RESULT_SUCCESS, '编辑成功', $url];
     }
 
 
