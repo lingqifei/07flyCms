@@ -39,7 +39,7 @@ class TagPosition extends Base
         /*应用于文档列表*/
         $aid = input('param.aid/d', 0);
         if ($aid > 0) {
-            $this->tid = $this->logicArchives->getArchivesFieldValue(['id'=>$aid],'typeid');
+            $this->tid = $this->logicArchives->getFieldValue(['id'=>$aid],'type_id');
         }
         /*--end*/
 
@@ -56,7 +56,7 @@ class TagPosition extends Base
      * @return string
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getPosition($typeid = '', $symbol = '', $style = 'crumb')
+    public function getPosition($typeid = '', $symbol = '>', $style = 'crumb')
     {
         $typeid = !empty($typeid) ? $typeid : $this->tid;
 
@@ -65,18 +65,18 @@ class TagPosition extends Base
         $basic_indexname = !empty($indexname) ? $indexname: '首页';
 
         $symbol = !empty($symbol) ? $symbol : config('web_symbol');
+        $symbol = !empty($symbol) ? $symbol : '>';
 
         /*首页链接*/
         $home_url = url('index/index');
         /*--end*/
-
-        // $symbol = htmlspecialchars_decode($symbol);
+        $symbol = htmlspecialchars_decode($symbol);
         $str = "<a href='{$home_url}' class='{$style}'>{$basic_indexname}</a>";
 
+        //解析当前栏目分类
         $logicArctype = new \app\index\logic\Arctype();
         $pids = $logicArctype->getArctypeAllPid($typeid);
         $result=$logicArctype->getArctypeList(['id'=>['in',$pids]]);
-
         $i = 1;
         foreach ($result['data'] as $key => $val) {
             if ($i < count($result)) {
@@ -86,6 +86,9 @@ class TagPosition extends Base
             }
             ++$i;
         }
+        $typeinfo=$logicArctype->getArctypeInfo(['id'=>$typeid]);
+        $str .= " {$symbol} <a href='{$typeinfo['typeurl']}'>{$typeinfo['typename']}</a>";
+        //关联当前分类--end
 
         return $str;
     }

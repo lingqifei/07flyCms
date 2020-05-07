@@ -59,7 +59,7 @@ class Archives extends IndexBase
     }
 
 
-    /**文章列表查询
+    /**文章列表查询=》相关文章
      * @param array $where
      * @param bool $field
      * @param string $order
@@ -171,14 +171,16 @@ class Archives extends IndexBase
     }
 
 
-    /**获取文章详细
+    /**获取文章=字段信息
      * @param array $data
      * @return mixed|string
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getArchivesFieldValue($where = [], $field = true)
+    public function getFieldValue($where = [], $field = true)
     {
         $info=$this->modelArchives->getValue($where, $field);
+
+        return  $info;
 
     }
 

@@ -39,12 +39,14 @@ class Website extends CmsBase
     {
 
         IS_POST && $this->jump($this->logicWebsite->setting($this->param));
+
         if (!empty($this->param['groupid'])) {
             $this->assign('groupid',$this->param['groupid']);
         }else{
             $this->assign('groupid',1);
         }
         $html=$this->logicWebsite->getWebsiteInfoHtml($this->param);
+
         $this->assign('html', $html);
 
         $this->comm_data();

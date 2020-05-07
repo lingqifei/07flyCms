@@ -36,7 +36,7 @@ class TagSearchurl extends Base
      */
     public function getSearchurl()
     {
-        $url = url("index/Search/lists");
+        $url = url("index/Search/index");
         return $url;
     }
 }
