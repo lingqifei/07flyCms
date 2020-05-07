@@ -94,15 +94,16 @@ class TagList extends Base
             $logicArctype = new \app\index\logic\Arctype();
             $typeidArr_tmp = explode(',', $param['typeid']);
             $typeidArr_tmp = array_unique($typeidArr_tmp);//过滤重复的
-            $typeidArr_son = [];
+            $typeidArr_son = [];//得到子级栏目
             foreach ($typeidArr_tmp as $k => $v) {
                 if (empty($v)) {
                     unset($typeidArr_tmp[$k]);
                 }else{
                     $typeid_son=$logicArctype->getArctypeAllSon($v);
-                    $typeidArr_son=array_merge($typeidArr_son,$typeid_son);
+                    $typeid_son && $typeidArr_son=array_merge($typeidArr_son,$typeid_son);
                 }
             }
+
             $typeidArr_tmp = array_merge($typeidArr_tmp,$typeidArr_son);
 
             $param['typeid'] = implode(',', $typeidArr_tmp);
@@ -123,11 +124,40 @@ class TagList extends Base
             $where['a.flag'] = ['exp', Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
         }
 
+        $param = input('param.');
+
+        //搜索查询
+        if (strtolower(request()->controller()) == 'search') {
+            $keywords = input('param.keywords/s', '');
+            $typeid = input('param.typeid/s', '');
+            $where['a.title'] = ['like', "%{$keywords}%"];
+            if($typeid){
+                $where['a.type_id'] = ['in', $typeid];
+            }
+        }
+
+        //标签查询
+        if (strtolower(request()->controller()) == 'tags') {
+            $tag = input('param.tag/s', '');
+            $tagid = input('param.tagid/d', 0);
+            if (!empty($tag)) {
+                $tagidArr = M('tagindex')->where(array('tag'=>array('LIKE', "%{$tag}%")))->column('id', 'id');
+                $aidArr = M('taglist')->field('aid')->where(array('tid'=>array('in', $tagidArr)))->column('aid', 'aid');
+                $condition['aid'] = array('in', $aidArr);
+            } elseif ($tagid > 0) {
+                $aidArr = M('taglist')->field('aid')->where(array('tid'=>array('eq', $tagid)))->column('aid', 'aid');
+                $condition['aid'] = array('in', $aidArr);
+            }
+        }
+
+
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
         $orderby = $logicArchives->getOrderBy($orderby, $orderway);
         $result = $logicArchives->getArchivesPageList($where, true, $orderby, $pagesize);
         $list = $result->ToArray();
+
+        $logicArctype = new \app\index\logic\Arctype();
 
         //获取文档栏目信息
         foreach ($list['data'] as &$row) {

@@ -36,7 +36,7 @@ class TagSearchform extends Base
      */
     public function getSearchform($typeid = '', $channelid = '', $notypeid = '', $flag = '', $noflag = '')
     {
-        $searchurl = url('index/Search/lists');
+        $searchurl = url('index/Search/index');
 
         $hidden = '';
 
