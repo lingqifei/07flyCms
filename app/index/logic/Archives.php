@@ -206,15 +206,18 @@ class Archives extends IndexBase
             case 'now':
             case 'new': // 兼容织梦的写法
             case 'pubdate': // 兼容织梦的写法
+                $orderby = "a.pubdate {$orderWay}";
+                break;
             case 'create_time':
                 $orderby = "a.create_time {$orderWay}";
                 break;
-
+            case 'update_time':
+                $orderby = "a.update_time {$orderWay}";
+                break;
             case 'sortrank': // 兼容织梦的写法
             case 'sort':
                 $orderby = "a.sort {$orderWay}";
                 break;
-
             case 'rand':
                 if (true === $isrand) {
                     $orderby = "rand()";

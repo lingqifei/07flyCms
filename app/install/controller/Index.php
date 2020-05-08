@@ -41,7 +41,7 @@ class Index extends Controller
     public function checkInstall()
     {
         
-        //file_exists(APP_PATH . 'database.php') && $this->error('系统已经成功安装，请勿重复安装!');
+        file_exists(APP_PATH . 'database.php') && $this->error('系统已经成功安装，请勿重复安装!');
     }
     
     /**

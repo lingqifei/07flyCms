@@ -97,9 +97,19 @@ class TagArclist extends Base
             // 过滤typeid中含有空值的栏目ID
             $typeidArr_tmp = explode(',', $param['typeid']);
             $typeidArr_tmp = array_unique($typeidArr_tmp);
-            foreach($typeidArr_tmp as $k => $v){
-                if (empty($v)) unset($typeidArr_tmp[$k]);
+            $typeidArr_son = [];//得到子级栏目
+            $logicArctype = new \app\index\logic\Arctype();
+            foreach ($typeidArr_tmp as $k => $v) {
+                if (empty($v)) {
+                    unset($typeidArr_tmp[$k]);
+                }else{
+                    $typeid_son=$logicArctype->getArctypeAllSon($v);
+                    $typeid_son && $typeidArr_son=array_merge($typeidArr_son,$typeid_son);
+                }
             }
+
+            $typeidArr_tmp = array_merge($typeidArr_tmp,$typeidArr_son);
+
             $param['typeid'] = implode(',', $typeidArr_tmp);
             // end
         }

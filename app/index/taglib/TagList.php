@@ -123,8 +123,7 @@ class TagList extends Base
             $reg_txt = str_replace(",", "|", $param['flag']);
             $where['a.flag'] = ['exp', Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
         }
-
-        $param = input('param.');
+       // $param = input('param.');
 
         //搜索查询
         if (strtolower(request()->controller()) == 'search') {
@@ -149,6 +148,7 @@ class TagList extends Base
                 $condition['aid'] = array('in', $aidArr);
             }
         }
+
 
 
         /*获取文档列表*/
