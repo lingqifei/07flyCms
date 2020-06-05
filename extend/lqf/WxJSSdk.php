@@ -66,6 +66,9 @@ class WxJSSdk
         // $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$this->appId&corpsecret=$this->appSecret";
         $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
         $res = json_decode($this->httpGet($url));
+//
+//        print_r($res);exit;
+
         $access_token = $res->access_token;
         return $access_token;
     }
