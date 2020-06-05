@@ -135,7 +135,7 @@ class SysUser extends AdminBase
         IS_POST && $this->jump($this->logicSysUser->addToAuth($this->param));
 
         // 所有的权限组
-        $auth_list = $this->logicSysAuth->getAuthList($where = '', $field = true, $order = 'sort asc', $paginate = false);
+        $auth_list = $this->logicSysAuth->getAuthList($where = [], $field = true, $order = 'sort asc', $paginate = false);
 
         // 会员当前权限组
         $sys_user_auth_list = $this->logicSysAuthAccess->getUserAuthInfo($this->param['id']);

@@ -1,5 +1,5 @@
 {include file="layout/head"}
-<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+<body class="fixed-sidebar  gray-bg" style="overflow:hidden">
 <div id="wrapper">
     <!--左侧导航开始-->
     <nav class="navbar-default navbar-static-side" role="navigation">
@@ -9,8 +9,11 @@
                 <li class="nav-header">
                     <div class="dropdown profile-element">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs" style="font-size:18px;">
-                                <strong class="font-bold">{$page_org.company}</strong> </span> </span>
+                            <span class="clear">
+                                <span class="block m-t-xs" style="font-size:18px;">
+                                <strong class="font-bold">{$page_org.company}</strong>
+                                </span>
+                            </span>
                         </a>
                     </div>
                     <div class="logo-element">{$page_org.company} </div>
@@ -26,11 +29,13 @@
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-white " href="#"><i class="fa fa-bars"></i> </a>
+                    <a class="navbar-minimalize minimalize-styl-2" href="#" title="展示收起侧栏"><i class="fa fa-outdent"></i> </a>
                 </div>
+<!--                <div class="navbar-module">-->
+<!--                    <a href="#">系统设置</a>-->
+<!--                    <a href="#">CRM</a>-->
+<!--                </div>-->
                 <ul class="nav navbar-top-links navbar-right">
-
-                    <li><a href="{:url('index/index/index')}" target="_blank">网站首页</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#"> <i class="fa fa-chevron-down">{$sys_user_info['realname']}</i>  </a>
                         <ul class="dropdown-menu dropdown-alerts">
@@ -60,4 +65,10 @@
     </div>
     <!--右侧部分结束-->
 </div>
+<script>
+    $(".navbar-module a").click(function(){
+        $(this).addClass("on");
+        $(this).siblings().removeClass('on');
+    });
+</script>
 {include file="layout/bottom"}

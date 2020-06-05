@@ -41,7 +41,7 @@ class IOUtil
     {
         $path = "../data/";
         !is_dir($path) && mkdir($path, 0755, true);
-        $filename=$path.$filename;
+        $filename = $path . $filename;
 
         $handle = fopen($filename, "r");
         $content = fread($handle, filesize($filename));
