@@ -176,12 +176,10 @@ class Archives extends IndexBase
      * @return mixed|string
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getFieldValue($where = [], $field = true)
+    public function getArchivesFieldValue($where = [], $field = true)
     {
         $info=$this->modelArchives->getValue($where, $field);
-
         return  $info;
-
     }
 
 

@@ -155,6 +155,8 @@ class TagChannel extends Base
         }
 
         $result= list2tree($result,$typeid,0,'id','parent_id','typename');//把所以树形展示
+
+
         /*--end*/
         /*没有子栏目时，获取同级栏目*/
         if (empty($result) && $self == true) {
