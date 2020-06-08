@@ -1,2 +1,9 @@
 .idea
 /web.config
+/build.php
+/.travis.yml
+/CHANGELOG.md
+/composer.json
+/composer.lock
+/LICENSE
+/think
