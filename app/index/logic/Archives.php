@@ -12,7 +12,9 @@
  */
 
 namespace app\index\logic;
+
 use \think\Db;
+
 /**
  * 频道栏目管理=》逻辑层
  */
@@ -31,13 +33,13 @@ class Archives extends IndexBase
     {
         $this->modelArchives->alias('a');
 
-        $list= $this->modelArchives->getList($where, $field, $order, $paginate)->toArray();
+        $list = $this->modelArchives->getList($where, $field, $order, $paginate)->toArray();
 
-        $paginate===false && $list['data']=$list;
+        $paginate === false && $list['data'] = $list;
 
-        foreach ($list['data'] as &$row){
-            $row['litpic'] =get_picture_url($row['litpic']);
-            $row['arcurl']=$this->getArchivesUrl($row);
+        foreach ($list['data'] as &$row) {
+            $row['litpic'] = get_picture_url($row['litpic']);
+            $row['arcurl'] = $this->getArchivesUrl($row);
         }
         return $list;
     }
@@ -54,12 +56,12 @@ class Archives extends IndexBase
     public function getArchivesPageList($where = [], $field = true, $order = '', $paginate = 15)
     {
         $this->modelArchives->alias('a');
-        $list= $this->modelArchives->getList($where, $field, $order, $paginate);
+        $list = $this->modelArchives->getList($where, $field, $order, $paginate);
         return $list;
     }
 
 
-    /**文章列表查询=》相关文章
+    /**文章列表查询
      * @param array $where
      * @param bool $field
      * @param string $order
@@ -67,23 +69,22 @@ class Archives extends IndexBase
      * @return array
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getArchiveslikeList($where = [], $field = true, $order = '', $paginate = false,$limit='')
+    public function getArchiveslikeList($where = [], $field = true, $order = '', $paginate = false, $limit = '')
     {
         $this->modelArchives->alias('a');
 
-        if($limit) $this->modelArchives->limit=$limit;
+        if ($limit) $this->modelArchives->limit = $limit;
 
-        $list= $this->modelArchives->getList($where, $field, $order, false)->toArray();
+        $list = $this->modelArchives->getList($where, $field, $order, false)->toArray();
 
-        $paginate===false && $list['data']=$list;
+        $paginate === false && $list['data'] = $list;
 
-        foreach ($list['data'] as &$row){
-            $row['litpic'] =get_picture_url($row['litpic']);
-            $row['arcurl']=$this->getArchivesUrl($row);
+        foreach ($list['data'] as &$row) {
+            $row['litpic'] = get_picture_url($row['litpic']);
+            $row['arcurl'] = $this->getArchivesUrl($row);
         }
         return $list;
     }
-
 
 
     /**转换一条文章的实际地址
@@ -91,12 +92,12 @@ class Archives extends IndexBase
      * @return mixed|string
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getArchivesUrl($data=[])
+    public function getArchivesUrl($data = [])
     {
         if ($data['is_jump'] == 1 && $data['jump_url']) {
-            $arcurl=$data['jump_url'];
+            $arcurl = $data['jump_url'];
         } else {
-            $arcurl = url('index/view/index', array('aid'=>$data['id']));
+            $arcurl = url('index/view/index', array('aid' => $data['id']));
         }
         return $arcurl;
     }
@@ -109,16 +110,16 @@ class Archives extends IndexBase
      */
     public function getArchivesInfo($where = [], $field = true)
     {
-        $info=$this->modelArchives->getInfo($where, $field);
-        if($info){
-            is_object($info)&& $info=$info->ToArray();
-            $info['arcurl']=$this->getArchivesUrl($info);//加载链接地址
-            $addtable=$this->modelChannel->getValue(['id'=>$info['channel_id']],'addtable');
-            $ext_info=Db::table($addtable)->where('id',$info['id'])->find();
-            if($ext_info){
-                return array_merge($info,$ext_info);
-            }else{
-                Db::table($addtable)->insert(['id'=>$info['id']]);
+        $info = $this->modelArchives->getInfo($where, $field);
+        if ($info) {
+            is_object($info) && $info = $info->ToArray();
+            $info['arcurl'] = $this->getArchivesUrl($info);//加载链接地址
+            $addtable = $this->modelChannel->getValue(['id' => $info['channel_id']], 'addtable');
+            $ext_info = Db::table($addtable)->where('id', $info['id'])->find();
+            if ($ext_info) {
+                return array_merge($info, $ext_info);
+            } else {
+                Db::table($addtable)->insert(['id' => $info['id']]);
                 return $info;
             }
         }
@@ -130,18 +131,18 @@ class Archives extends IndexBase
      * @return mixed|string
      * Author: lingqifei created by at 2020/3/18 0018
      */
-    public function getArchivesNext($aid,$channelid,$typeid)
+    public function getArchivesNext($aid, $channelid, $typeid)
     {
-        $map['id']=['gt',$aid];
-        $map['channel_id']=['=',$channelid];
-        $map['type_id']=['=',$typeid];
-        $this->modelArchives->limit=1;
-        $list= $this->modelArchives->getList($map, '', 'id asc', false)->toArray();
+        $map['id'] = ['gt', $aid];
+        $map['channel_id'] = ['=', $channelid];
+        $map['type_id'] = ['=', $typeid];
+        $this->modelArchives->limit = 1;
+        $list = $this->modelArchives->getList($map, '', 'id asc', false)->toArray();
 
-        if($list){
-            $id=$list[0]['id'];
-            return $this->getArchivesInfo(['id'=>$id]);
-        }else{
+        if ($list) {
+            $id = $list[0]['id'];
+            return $this->getArchivesInfo(['id' => $id]);
+        } else {
             return '';
         }
 
@@ -152,36 +153,35 @@ class Archives extends IndexBase
      * @return mixed|string
      * Author: lingqifei created by at 2020/3/18 0018
      */
-    public function getArchivesPre($aid,$channelid,$typeid)
+    public function getArchivesPre($aid, $channelid, $typeid)
     {
 
-        $map['id']=['lt',$aid];
-        $map['channel_id']=['=',$channelid];
-        $map['type_id']=['=',$typeid];
-        $this->modelArchives->limit=1;
-        $list= $this->modelArchives->getList($map, '', 'id desc', false)->toArray();
+        $map['id'] = ['lt', $aid];
+        $map['channel_id'] = ['=', $channelid];
+        $map['type_id'] = ['=', $typeid];
+        $this->modelArchives->limit = 1;
+        $list = $this->modelArchives->getList($map, '', 'id desc', false)->toArray();
 
-        if($list){
-            $id=$list[0]['id'];
-            return $this->getArchivesInfo(['id'=>$id]);
-        }else{
+        if ($list) {
+            $id = $list[0]['id'];
+            return $this->getArchivesInfo(['id' => $id]);
+        } else {
             return '';
         }
 
     }
 
 
-    /**获取文章=字段信息
+    /**获取文章详细
      * @param array $data
      * @return mixed|string
      * Author: lingqifei created by at 2020/2/27 0027
      */
     public function getArchivesFieldValue($where = [], $field = true)
     {
-        $info=$this->modelArchives->getValue($where, $field);
-        return  $info;
-    }
+        $info = $this->modelArchives->getValue($where, $field);
 
+    }
 
 
     /**排序条件组合
@@ -191,7 +191,8 @@ class Archives extends IndexBase
      * @return string
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getOrderBy($orderby, $orderWay, $isrand=false){
+    public function getOrderBy($orderby, $orderWay, $isrand = false)
+    {
         switch ($orderby) {
             case 'hot':
             case 'click':
@@ -204,18 +205,15 @@ class Archives extends IndexBase
             case 'now':
             case 'new': // 兼容织梦的写法
             case 'pubdate': // 兼容织梦的写法
-                $orderby = "a.pubdate {$orderWay}";
-                break;
             case 'create_time':
                 $orderby = "a.create_time {$orderWay}";
                 break;
-            case 'update_time':
-                $orderby = "a.update_time {$orderWay}";
-                break;
+
             case 'sortrank': // 兼容织梦的写法
             case 'sort':
                 $orderby = "a.sort {$orderWay}";
                 break;
+
             case 'rand':
                 if (true === $isrand) {
                     $orderby = "rand()";
@@ -226,7 +224,7 @@ class Archives extends IndexBase
 
             default:
             {
-                $orderby = "a.create_time  desc";
+                $orderby = "a.pubdate  desc";
                 break;
             }
         }
