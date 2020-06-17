@@ -50,6 +50,10 @@ class View extends IndexBase{
                 'type' => $type,
                 'field' => $archives,
             );
+
+            //更新点击
+            $this->logicArchives->setArchivesClick(['id'=>$this->aid]);
+
         }
 
         /*模板文件*/

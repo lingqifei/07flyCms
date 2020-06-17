@@ -180,7 +180,22 @@ class Archives extends IndexBase
     public function getArchivesFieldValue($where = [], $field = true)
     {
         $info = $this->modelArchives->getValue($where, $field);
+        return $info;
+    }
 
+
+    /**设置文章点击
+     * @param array $data
+     * @return mixed|string
+     * Author: lingqifei created by at 2020/2/27 0027
+     */
+    public function setArchivesClick($where = [], $field = true)
+    {
+        $click = $this->modelArchives->getValue($where, 'click');
+        if($click){
+            $click=(int)$click+1;
+            $this->modelArchives->setFieldValue($where, 'click',$click);
+        }
     }
 
 

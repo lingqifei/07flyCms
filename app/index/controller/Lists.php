@@ -56,4 +56,5 @@ class Lists extends IndexBase{
         $this->assign('fly', $this->typeinfo);
         return $this->fetch($viewfile);
     }
+
 }
