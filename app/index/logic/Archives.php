@@ -56,7 +56,10 @@ class Archives extends IndexBase
     public function getArchivesPageList($where = [], $field = true, $order = '', $paginate = 15)
     {
         $this->modelArchives->alias('a');
-        $list = $this->modelArchives->getList($where, $field, $order, $paginate);
+        $list = $this->modelArchives->getList($where, $field, $order, $paginate)->toArray();
+        foreach ($list['data'] as &$row){
+            $row=$this->getArchivesInfo(["id"=>$row['id']], $field = true);
+        }
         return $list;
     }
 
@@ -115,7 +118,7 @@ class Archives extends IndexBase
             is_object($info) && $info = $info->ToArray();
             $info['arcurl'] = $this->getArchivesUrl($info);//加载链接地址
             $addtable = $this->modelChannel->getValue(['id' => $info['channel_id']], 'addtable');
-            $ext_info = Db::table($addtable)->where('id', $info['id'])->find();
+            $ext_info = Db::table(SYS_DB_PREFIX.$addtable)->where('id', $info['id'])->find();
             if ($ext_info) {
                 return array_merge($info, $ext_info);
             } else {

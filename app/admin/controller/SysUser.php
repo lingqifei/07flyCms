@@ -36,7 +36,12 @@ class SysUser extends AdminBase
         if (!empty($this->param['keywords'])) {
             $where['username|mobile|realname'] = ['like', '%' . $this->param['keywords'] . '%'];
         }
-        $list = $this->logicSysUser->getUserList($where)->toArray();
+        if (!empty($this->param['pid'])) {
+            $ids=$this->logicSysDept->getDeptAllSon($this->param['pid']);
+            $ids[]=$this->param['pid'];
+            $where['dept_id'] = ['in', $ids];
+        }
+        $list = $this->logicSysUser->getSysUserList($where)->toArray();
         foreach ($list['data'] as &$row) {
             $row['sys_auth_name'] = arr2str(array_column($this->logicSysAuthAccess->getUserAuthListName($row['id']), 'name'), ',');
         }
@@ -49,7 +54,9 @@ class SysUser extends AdminBase
      */
     public function add()
     {
-        IS_POST && $this->jump($this->logicSysUser->userAdd($this->param));
+        IS_POST && $this->jump($this->logicSysUser->sysUserAdd($this->param));
+
+        $this->common_data();
 
         return $this->fetch('add');
     }
@@ -60,14 +67,13 @@ class SysUser extends AdminBase
     public function edit()
     {
 
-        IS_POST && $this->jump($this->logicSysUser->userEdit($this->param));
+        IS_POST && $this->jump($this->logicSysUser->sysUserEdit($this->param));
 
-        $info = $this->logicSysUser->getUserInfo(['id' => $this->param['id']]);
+        $info = $this->logicSysUser->getSysUserInfo(['id' => $this->param['id']]);
 
         $this->assign('info', $info);
 
-        //获取菜单Select结构数据
-        //$this->getUserSelectData("pid",$info['pid']);
+        $this->common_data();
 
         return $this->fetch('edit');
     }
@@ -78,9 +84,9 @@ class SysUser extends AdminBase
     public function editInfo()
     {
 
-        IS_POST && $this->jump($this->logicSysUser->userEdit($this->param));
+        IS_POST && $this->jump($this->logicSysUser->sysUserEdit($this->param));
 
-        $info = $this->logicSysUser->getUserInfo(['id' => $this->param['id']]);
+        $info = $this->logicSysUser->getSysUserInfo(['id' => $this->param['id']]);
 
         $this->assign('info', $info);
 
@@ -95,7 +101,7 @@ class SysUser extends AdminBase
 
         IS_POST && $this->jump($this->logicSysUser->editPassword($this->param));
 
-        $info = $this->logicSysUser->getUserInfo(['id' => $this->param['id']]);
+        $info = $this->logicSysUser->getSysUserInfo(['id' => $this->param['id']]);
 
         $this->assign('info', $info);
 
@@ -110,7 +116,7 @@ class SysUser extends AdminBase
 
         IS_POST && $this->jump($this->logicSysUser->ResetPassword($this->param));
 
-        $info = $this->logicSysUser->getUserInfo(['id' => $this->param['id']]);
+        $info = $this->logicSysUser->getSysUserInfo(['id' => $this->param['id']]);
 
         $this->assign('info', $info);
 
@@ -123,7 +129,7 @@ class SysUser extends AdminBase
     public function del()
     {
         $where = empty($this->param['id']) ? ['id' => 0] : ['id' => $this->param['id']];
-        $this->jump($this->logicSysUser->userDel($where, $this->param));
+        $this->jump($this->logicSysUser->sysUserDel($where, $this->param));
     }
 
     /**
@@ -174,6 +180,16 @@ class SysUser extends AdminBase
 
         return $this->fetch('user_rules');
 
+    }
+
+    /**
+     * 公共数据
+     * Author: lingqifei created by at 2020/6/16 0016
+     */
+    public function  common_data(){
+        //获取菜单Select结构数据
+        $dept_select=$this->logicSysDept->getSysDeptTreeSelect();
+        $this->assign('dept_select', $dept_select);
     }
 
 }

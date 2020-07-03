@@ -240,11 +240,12 @@ class SysModule extends AdminBase
 
         $this->initModuleDir();
         $info=$this->modelSysModule->getInfo(['id'=>$data['id']], true);
-
         //备份模块
-        $this->sysModulePack($info['name']);
+        $res=$this->sysModulePack($info['name']);
 
-        $this->sysModuleDown($info['name']);
+        //$this->sysModuleDown($info['name']);
+
+        return [RESULT_SUCCESS , '备份成功文件为：'.$res[1]];
 
     }
 
@@ -288,8 +289,6 @@ class SysModule extends AdminBase
             return [RESULT_ERROR, '打包模块失败'];
             exit;
         }
-
-
         return $result ? [RESULT_SUCCESS , $pack_zip]  : [RESULT_ERROR, $this->modelSysModule->getError()];
     }
 

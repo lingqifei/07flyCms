@@ -66,7 +66,6 @@ class SysDept extends AdminBase
 
         //获取菜单Select结构数据
         $dept_select=$this->logicSysDept->getSysDeptTreeSelect();
-
         $this->assign('dept_select', $dept_select);
 
         if (!empty($this->param['id'])) {

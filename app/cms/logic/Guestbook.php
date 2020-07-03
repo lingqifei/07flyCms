@@ -58,7 +58,7 @@ class Guestbook extends CmsBase
         $data['addtable']='guestbook_'.$data['nid'];//扩展表
 
         //添加创建表
-        $rtn=$this->tablefield->add_table($data['addtable'],$this->getAddTableSql($data['addtable']));
+        $rtn=$this->tablefield->add_table(SYS_DB_PREFIX.$data['addtable'],$this->getAddTableSql(SYS_DB_PREFIX.$data['addtable']));
         if($rtn[0]==RESULT_ERROR)  return $rtn;
         
         $result = $this->modelGuestbook->setInfo($data);
@@ -99,7 +99,7 @@ class Guestbook extends CmsBase
         $list=$this->getGuestbookList($where);
 
         foreach ($list['data'] as $row){
-            $this->tablefield->drop_table($row['addtable']);
+            $this->tablefield->drop_table(SYS_DB_PREFIX.$row['addtable']);
         }
 
         $result = $this->modelGuestbook->deleteInfo($where,true);
@@ -155,7 +155,6 @@ class Guestbook extends CmsBase
      */
     public function getAddTableSql($table)
     {
-        $table=SYS_DB_PREFIX.$table;
         $sql="
 CREATE TABLE `$table` (
 	`id` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
@@ -187,7 +186,7 @@ ENGINE=MyISAM;"	;
 
         //扩展数据处理
         $where['gid']=['=',$data['gid']];
-        $list=Db::table($table['addtable'])
+        $list=Db::table(SYS_DB_PREFIX.$table['addtable'])
             ->where($where)
             ->order('create_time desc')
             ->paginate(DB_LIST_ROWS)
@@ -215,7 +214,7 @@ ENGINE=MyISAM;"	;
 
         $where['gid']=['=',$data['gid']];
         $where['id']=['=',$data['id']];
-        $result=Db::table($table['addtable'])->where($where)->update($data);
+        $result=Db::table(SYS_DB_PREFIX.$table['addtable'])->where($where)->update($data);
 
         $url = url('ext_list');
         $result && action_log('留言回复', '留言回复：' . $data['reply']);
@@ -233,7 +232,7 @@ ENGINE=MyISAM;"	;
 
         $where['gid']=['=',$data['gid']];
         $where['id']=['=',$data['id']];
-        $result=Db::table($table['addtable'])->where($where)->delete();
+        $result=Db::table(SYS_DB_PREFIX.$table['addtable'])->where($where)->delete();
 
         $result && action_log('删除', '删除 留言表单，where：' . http_build_query($data));
         return $result ? [RESULT_SUCCESS, ' 删除成功'] : [RESULT_ERROR, $this->modelGuestbook->getError()];
@@ -252,7 +251,7 @@ ENGINE=MyISAM;"	;
 
         $where['gid']=['=',$data['gid']];
         $where['id']=['=',$data['id']];
-        $info=Db::table($table['addtable'])
+        $info=Db::table(SYS_DB_PREFIX.$table['addtable'])
             ->where($where)
             ->find();
         return $info;

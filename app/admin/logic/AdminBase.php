@@ -36,11 +36,13 @@ class AdminBase extends LogicBase
         if (IS_ROOT) {
             return $pass_data;
         }
+        //echo $url;
+        //print_r($allow_url_list);
         //放行配置允许通过的地址
         if (!empty($allow_url_list)) {
             foreach ($allow_url_list as $v) {
                 if(!empty($v)){
-                    if (strpos($url, strtolower($v)) !== false) {
+                    if (strpos(strtolower($v), strtolower($url)) !== false) {
                         return $pass_data;
                     }
                 }

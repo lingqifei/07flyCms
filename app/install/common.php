@@ -181,8 +181,8 @@ function register_administrator($db_object, $prefix, $admin, $auth)
 {
 
     //执行删除
-    $sql="DELETE FROM  `[PREFIX]sys_user`   WHERE  id='1'";
-    $sql = str_replace(array('[PREFIX]'),array($prefix),$sql);
+    $sql = "DELETE FROM  `[PREFIX]sys_user`   WHERE  id='1'";
+    $sql = str_replace(array('[PREFIX]'), array($prefix), $sql);
     $db_object->execute($sql);
 
     $sql = "INSERT INTO `[PREFIX]sys_user` (`id`, `username`, `password`, `realname`,  `dept_id`, `email`, `qicq`, `mobile`,  `create_time`, `update_time`, `sort`, `visible`, `org_id`) 
@@ -190,7 +190,7 @@ function register_administrator($db_object, $prefix, $admin, $auth)
     $password = data_md5_key($admin['password'], $auth);
     $time = time();
     $sql = str_replace(
-        array('[PREFIX]', '[USERNAME]', '[PASSWORD]',  '[EMAIL]', '[UPDATETIME]', '[CREATETIME]'),
+        array('[PREFIX]', '[USERNAME]', '[PASSWORD]', '[EMAIL]', '[UPDATETIME]', '[CREATETIME]'),
         array($prefix, $admin['username'], $password, $admin['email'], $time, $time),
         $sql);
 

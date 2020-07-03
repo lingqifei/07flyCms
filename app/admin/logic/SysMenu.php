@@ -87,7 +87,7 @@ class SysMenu extends AdminBase
         /*2019-12-11 新增加加用户单独权限设置
         *合并用户单独添加的权限列表
         */
-        $userinfo = $this->logicSysUser->getUserInfo(['id' => $id], 'rules');
+        $userinfo = $this->logicSysUser->getSysUserInfo(['id' => $id], 'rules');
         $user_rules_array = str2arr(trim($userinfo['rules']));
 
         $rules_array = array_merge($rules_array, $user_rules_array);

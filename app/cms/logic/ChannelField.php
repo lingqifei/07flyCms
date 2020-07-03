@@ -84,7 +84,7 @@ class ChannelField extends CmsBase
         }
 
         //为表添加字段
-        $rtn=$this->tablefield->add_field($data['ext_table'],$data['field_name'],$data['field_type'],$data['maxlength'],$data['default_value'], $data['desc']);
+        $rtn=$this->tablefield->add_field(SYS_DB_PREFIX.$data['ext_table'],$data['field_name'],$data['field_type'],$data['maxlength'],$data['default_value'], $data['desc']);
         if($rtn[0]==RESULT_ERROR)  return $rtn;
 
         $result = $this->modelChannelField->setInfo($data);
@@ -107,7 +107,7 @@ class ChannelField extends CmsBase
         }
 
         //为表添加字段
-        $rtn=$this->tablefield->modify_field($data['ext_table'],$data['field_name'],$data['field_type'],$data['maxlength'],$data['default_value'], $data['desc']);
+        $rtn=$this->tablefield->modify_field(SYS_DB_PREFIX.$data['ext_table'],$data['field_name'],$data['field_type'],$data['maxlength'],$data['default_value'], $data['desc']);
         if($rtn[0]==RESULT_ERROR)  return $rtn;
 
         $url = url('show');
@@ -127,7 +127,7 @@ class ChannelField extends CmsBase
         $list=$this->getChannelFieldList($where);
 
         foreach ($list['data'] as $row){
-            $this->tablefield->del_field($row['ext_table'],$row['field_name']);
+            $this->tablefield->del_field(SYS_DB_PREFIX.$row['ext_table'],$row['field_name']);
         }
 
         $result = $this->modelChannelField->deleteInfo($where,true);
@@ -266,6 +266,17 @@ class ChannelField extends CmsBase
 									  </div>
 									</div>
 								</div>';
+                    break;
+                case "img":
+                    $htmltxt .= '
+                                        <div class="form-group text-left">
+                                            <label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+                                            <div class="col-sm-10">';
+                    $htmltxt .='
+                                        {assign name="'.$row[ "field_name" ].'" value="'.$field_value.'" /}
+                    {:hook(\'File\', [\'name\' => \''.$row[ "field_name" ].'\', \'value\' => $'.$row[ "field_name" ].', \'type\' => \'img\'])}
+                    ';
+                    $htmltxt .= '</div></div>';
                     break;
                 default:
                     $htmltxt .= '';

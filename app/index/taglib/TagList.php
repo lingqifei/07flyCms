@@ -155,7 +155,7 @@ class TagList extends Base
         $logicArchives = new \app\index\logic\Archives();
         $orderby = $logicArchives->getOrderBy($orderby, $orderway);
         $result = $logicArchives->getArchivesPageList($where, true, $orderby, $pagesize);
-        $list = $result->ToArray();
+        $list = is_object($result)?$result->ToArray():$result;
 
         $logicArctype = new \app\index\logic\Arctype();
 
