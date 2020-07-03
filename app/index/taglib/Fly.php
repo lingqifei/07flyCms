@@ -28,6 +28,10 @@ class Fly extends TagLib
         'arcclick'   => ['attr' => 'aid,value,type', 'close' => 0],
         'type' => ['attr' => 'typeid,empty,id,addfields,joinaid'],
 
+        //文章扩展表
+        'arcextlist' => ['attr' => 'channelid,eid,aid,row,offset,titlelen,limit,orderby,orderway,infolen,empty,mod,name,id,key,addfields,tagid,pagesize,thumb,joinaid'],
+
+
         // 相关文档
         'likearticle'    => ['attr' => 'channelid,limit,row,titlelen,infolen,typeid,empty,mod,name,id,key,thumb'],
         'prenext'    => ['attr' => 'get,titlelen,id,empty'],
@@ -361,6 +365,111 @@ class Fly extends TagLib
         $parseStr .= '$aid = $' . $id . '["id"];';
         $parseStr .= '$' . $id . '["title"] = text_msubstr($' . $id . '["title"], 0, ' . $titlelen . ', false);';
         $parseStr .= '$' . $id . '["description"] = text_msubstr($' . $id . '["description"], 0, ' . $infolen . ', true);';
+
+        $parseStr .= '$' . $key . '= intval($key) + 1;?>';
+        $parseStr .= '<?php $mod = ($' . $key . ' % ' . $mod . ' ); ?>';
+        $parseStr .= $content;
+        $parseStr .= '<?php ++$e; ?>';
+        $parseStr .= '<?php $aid = 0; ?>';
+        $parseStr .= '<?php endforeach; endif; else: echo htmlspecialchars_decode("' . $empty . '");endif; ?>';
+        $parseStr .= '<?php $' . $id . ' = []; ?>'; // 清除变量值，只限于在标签内部使用
+
+        if (!empty($parseStr)) {
+            return $parseStr;
+        }
+        return;
+    }
+
+    /**
+     * arcextlist标签解析 获取指定文档扩展列表（兼容tp的volist标签语法）
+     * 格式：
+     * {fly:arclist channelid='1' typeid='1' row='10' offset='0' titlelen='30' orderby ='aid desc'  infolen='160' empty='' id='field' mod='' name=''}
+     *  {$field.title}
+     *  {$field.typeid}
+     * {/fly:arclist}
+     * @access public
+     * @param array $tag 标签属性
+     * @param string $content 标签内容
+     * @return string|void
+     */
+    public function tagArcextlist($tag, $content)
+    {
+        $eid = !empty($tag['eid']) ? $tag['eid'] : '';
+        $eid = $this->varOrvalue($eid);
+
+        $aid = !empty($tag['aid']) ? $tag['aid'] : '';
+        $aid = $this->varOrvalue($aid);
+
+        $name = !empty($tag['name']) ? $tag['name'] : '';
+        $id = isset($tag['id']) ? $tag['id'] : 'field';
+        $key = !empty($tag['key']) ? $tag['key'] : 'i';
+        $empty = isset($tag['empty']) ? $tag['empty'] : '';
+        $empty = htmlspecialchars($empty);
+        $mod = !empty($tag['mod']) && is_numeric($tag['mod']) ? $tag['mod'] : '2';
+        $orderby = isset($tag['orderby']) ? $tag['orderby'] : '';
+        if (isset($tag['orderWay'])) {
+            $orderway = $tag['orderWay'];
+        } else {
+            $orderway = isset($tag['orderway']) ? $tag['orderway'] : 'desc';
+        }
+        $pagesize = !empty($tag['pagesize']) && is_numeric($tag['pagesize']) ? intval($tag['pagesize']) : 0;
+        $thumb = !empty($tag['thumb']) ? $tag['thumb'] : 'on';
+        $titlelen = !empty($tag['titlelen']) && is_numeric($tag['titlelen']) ? intval($tag['titlelen']) : 100;
+        $infolen = !empty($tag['infolen']) && is_numeric($tag['infolen']) ? intval($tag['infolen']) : 160;
+        $offset = !empty($tag['offset']) && is_numeric($tag['offset']) ? intval($tag['offset']) : 0;
+        $row = !empty($tag['row']) && is_numeric($tag['row']) ? intval($tag['row']) : 10;
+        if (!empty($tag['limit'])) {
+            $limitArr = explode(',', $tag['limit']);
+            $offset = !empty($limitArr[0]) ? intval($limitArr[0]) : 0;
+            $row = !empty($limitArr[1]) ? intval($limitArr[1]) : 0;
+        }
+
+        $parseStr = '<?php ';
+        // 声明变量
+        $parseStr .= ' if(isset($ui_row) && !empty($ui_row)) : $row = $ui_row; else: $row = ' . $row . '; endif;';
+
+        if ($name) { // 从模板中传入数据集
+            $symbol = substr($name, 0, 1);
+            if (':' == $symbol) {
+                $name = $this->autoBuildVar($name);
+                $parseStr .= '$_result=' . $name . ';';
+                $name = '$_result';
+            } else {
+                $name = $this->autoBuildVar($name);
+            }
+
+            $parseStr .= 'if(is_array(' . $name . ') || ' . $name . ' instanceof \think\Collection || ' . $name . ' instanceof \think\Paginator): $' . $key . ' = 0; $e = 1;';
+            // 设置了输出数组长度
+            if (0 != $offset || 'null' != $row) {
+                $parseStr .= '$__LIST__ = is_array(' . $name . ') ? array_slice(' . $name . ',' . $offset . ',' . $row . ', true) : ' . $name . '->slice(' . $offset . ',' . $row . ', true); ';
+            } else {
+                $parseStr .= ' $__LIST__ = ' . $name . ';';
+            }
+
+        } else { // 查询数据库获取的数据集
+            $parseStr .= ' $param = array(';
+            $parseStr .= '      "aid"=> $aid,';
+            $parseStr .= '      "eid"=> ' . $eid . ',';
+            $parseStr .= ' );';
+            $parseStr .= ' $tag = ' . var_export($tag, true) . ';';
+            $parseStr .= ' $tagArcextlist = new \app\index\taglib\TagArcextlist;';
+            $parseStr .= ' $_result = $tagArcextlist->getArcextlist($param, $row, "' . $orderby . '", "' . $orderway . '","' . $pagesize . '","' . $thumb . '");';
+
+            $parseStr .= 'if(is_array($_result["list"]) || $_result["list"] instanceof \think\Collection || $_result["list"] instanceof \think\Paginator): $' . $key . ' = 0; $e = 1;';
+            // 设置了输出数组长度
+            if (0 != $offset || 'null' != $row) {
+                $parseStr .= ' $__LIST__ = is_array($_result["list"]) ? array_slice($_result["list"],' . $offset . ', $row, true) : $_result["list"]->slice(' . $offset . ', $row, true); ';
+            } else {
+                $parseStr .= ' $__LIST__ = $_result["list"];';
+            }
+            $parseStr .= ' $__TAG__ = $_result["tag"];';
+        }
+        $parseStr .= 'if( count($__LIST__)==0 ) : echo htmlspecialchars_decode("' . $empty . '");';
+        $parseStr .= 'else: ';
+        $parseStr .= 'foreach($__LIST__ as $key=>$' . $id . '): ';
+        $parseStr .= '$aid = $' . $id . '["id"];';
+        $parseStr .= '$' . $id . '["title"] = text_msubstr($' . $id . '["title"], 0, ' . $titlelen . ', false);';
+        $parseStr .= '$' . $id . '["content"] = text_msubstr($' . $id . '["content"], 0, ' . $infolen . ', true);';
 
         $parseStr .= '$' . $key . '= intval($key) + 1;?>';
         $parseStr .= '<?php $mod = ($' . $key . ' % ' . $mod . ' ); ?>';

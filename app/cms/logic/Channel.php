@@ -46,9 +46,7 @@ class Channel extends CmsBase
     {
         
         $validate_result = $this->validateChannel->scene('add')->check($data);
-        
         if (!$validate_result) {
-            
             return [RESULT_ERROR, $this->validateChannel->getError()];
         }
 
@@ -57,7 +55,7 @@ class Channel extends CmsBase
         $data['addtable']='archives_'.$data['nid'];//扩展表
 
         //添加创建表
-        $rtn=$this->tablefield->add_table($data['addtable'],$this->getAddTableSql($data['addtable']));
+        $rtn=$this->tablefield->add_table(SYS_DB_PREFIX.$data['addtable'],$this->getAddTableSql($data['addtable']));
         if($rtn[0]==RESULT_ERROR)  return $rtn;
         
         $result = $this->modelChannel->setInfo($data);
@@ -98,7 +96,7 @@ class Channel extends CmsBase
         $list=$this->getChannelList($where);
 
         foreach ($list['data'] as $row){
-            $this->tablefield->drop_table($row['addtable']);
+            $this->tablefield->drop_table(SYS_DB_PREFIX.$row['addtable']);
         }
 
         $where['issystem']=['<>','1'];//排除系统模块

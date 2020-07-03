@@ -53,6 +53,19 @@
                 <span class="help-block m-b-none"></span> </div>
         </div>
         <div class="form-group">
+            <label class="col-sm-2 control-label">所在部门</label>
+            <div class="col-sm-8">
+                <select name="dept_id" class="form-control chosen-select">
+                    <option value="0">所在部门</option>
+                    {volist name='dept_select' id='vo'}
+                    <option value="{$vo.id}">{$vo.treename}</option>
+                    {/volist}
+                </select>
+                <span class="help-block m-b-none"></span>
+
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-sm-offset-2 col-sm-8">
                 {include file="layout/save_btn"}
             </div>

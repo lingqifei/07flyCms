@@ -76,7 +76,7 @@ class AdminBase extends ControllerBase
         //把授权菜单列表
         session('auth_menu_list',  $this->authMenuList);
         session('auth_menu_url_list',  $this->authMenuUrlList);
-        session('sys_user_info',   $user = $this->logicSysUser->getUserInfo(['id' => SYS_USER_ID]));
+        session('sys_user_info',   $user = $this->logicSysUser->getSysUserInfo(['id' => SYS_USER_ID]));
 
         // 检查菜单权限
         list($jump_type, $message) = $this->logicAdminBase->authCheck(URL, $this->authMenuUrlList);

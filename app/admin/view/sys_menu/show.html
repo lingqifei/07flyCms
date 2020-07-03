@@ -1,72 +1,59 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-        <div class="col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5><i class="fa fa-home"></i> 菜单管理</h5>
+        <div class="col-md-3">
+            <div class="ibox">
+                <div class="ibox-title"><h5>分类目录</h5>
+                    <div class="ibox-tools"><a class="refresh-tree">刷新</a></div>
                 </div>
-                <div class="ibox-content">
-
+                <div class="ibox-content right_centent" style="">
+                    <div id="left-tree" data-url="{:url('SysMenu/get_list_tree')}"> </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">{$page_title}列表</div>
+                <div class="ibox-content table-responsive">
                     <div class="row">
-                        <div class="col-md-3">
-                            <div class="panel panel-default ">
-                                <div class="panel-heading">
-                                    <div class="row">
-                                        <div class="col-sm-6">菜单管理</div>
-                                        <div class="col-sm-6 text-right"><a class="refresh-tree">刷新</a></div>
-                                    </div>
-                                </div>
-                                <div class="panel-body right_centent" style="">
-                                    <div id="left-tree" data-url="{:url('SysMenu/get_list_tree')}"> </div>
-                                </div>
+                        <form id="pagerForm" method="post" class="form-inline searchForm">
+                            <input type="hidden" name="pid" value="">
+                            <div class="col-sm-3 m-b-xs">
+                                <a class="btn btn-default refresh-tree"> <i class="fa fa-refresh"> </i>刷新</a>
+                                <lqf_link> <a class="btn btn-info ajax-open add-btn" data-url="{:url('SysMenu/add')}" data-title="用户"><i class="fa fa-plus"></i>添加</a> </lqf_link>
                             </div>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="ibox float-e-margins">
-                                <div class="ibox-content table-responsive">
-                                    <div class="row">
-                                        <form id="pagerForm" method="post" class="form-inline searchForm">
-                                            <input type="hidden" name="pid" value="">
-                                            <div class="col-sm-3 m-b-xs">
-                                                <a class="btn btn-default refresh-tree"> <i class="fa fa-refresh"> </i>刷新</a>
-                                                <lqf_link> <a class="btn btn-info ajax-open add-btn" data-url="{:url('SysMenu/add')}" data-title="用户"><i class="fa fa-plus"></i>添加</a> </lqf_link>
-                                            </div>
-                                            <div class="col-sm-9 m-b-xs text-right">
-                                                <div class="input-group">
-                                                    <input type="text" name="keywords" placeholder="输入主题关键字搜索" class="form-control">
-                                                </div>
-                                                <div class="input-group">
+                            <div class="col-sm-9 m-b-xs text-right">
+                                <div class="input-group">
+                                    <input type="text" name="keywords" placeholder="输入主题关键字搜索" class="form-control">
+                                </div>
+                                <div class="input-group">
                                                     <span class="input-group-btn">
                                                     <button type="button" class="btn btn-primary ajaxSearchForm"><i class="fa fa-search"></i> 搜索</button>
                                                     </span>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <table class="table table-hover sorttable ajax-list-table" data-url="{:url('SysMenu/show_json')}">
-                                        <thead>
-                                        <tr>
-                                            <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
-                                            <th width="100">菜单名称</th>
-                                            <th width="100">菜单地址</th>
-                                            <th width="80">所属模块</th>
-                                            <th width="60">排序</th>
-                                            <th width="60">启用</th>
-                                            <th width="80">操作</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                        <tfoot class="ibox-content">
-                                        <tr>
-                                            <td colspan="11" align="center"></td>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
+                    <table class="table table-hover sorttable ajax-list-table" data-url="{:url('SysMenu/show_json')}">
+                        <thead>
+                        <tr>
+                            <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+                            <th width="22">编号</th>
+                            <th width="100">菜单名称</th>
+                            <th width="100">菜单地址</th>
+                            <th width="80">所属模块</th>
+                            <th width="60">排序</th>
+                            <th width="60">启用</th>
+                            <th width="80">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot class="ibox-content">
+                        <tr>
+                            <td colspan="11" align="center"></td>
+                        </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
@@ -83,6 +70,7 @@
     %>
     <tr>
         <td><input name="user_id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
+        <td><%=data[i]['id']%></td>
         <td><%=data[i]['name']%></td>
         <td><%=data[i]['url']%></td>
         <td><%=data[i]['module']%></td>

@@ -28,7 +28,7 @@ class SysUser extends AdminBase
     /**
      * 获取列表
      */
-    public function getUserList($where = [], $field = true, $order = 'id desc', $paginate = DB_LIST_ROWS)
+    public function getSysUserList($where = [], $field = true, $order = 'id desc', $paginate = DB_LIST_ROWS)
     {
         return $this->modelSysUser->getList($where, $field, $order, $paginate);
     }
@@ -36,7 +36,7 @@ class SysUser extends AdminBase
     /**
      * 获取单个信息
      */
-    public function getUserInfo($where = [], $field = true)
+    public function getSysUserInfo($where = [], $field = true)
     {
         return $this->modelSysUser->getInfo($where, $field);
     }
@@ -44,7 +44,7 @@ class SysUser extends AdminBase
     /**
      * 添加
      */
-    public function userAdd($data = [])
+    public function sysUserAdd($data = [])
     {
 
         $validate_result = $this->validateSysUser->scene('add')->check($data);
@@ -67,7 +67,7 @@ class SysUser extends AdminBase
     /**
      * 编辑
      */
-    public function userEdit($data = [])
+    public function sysUserEdit($data = [])
     {
 
         $validate_result = $this->validateSysUser->scene('edit')->check($data);
@@ -88,7 +88,7 @@ class SysUser extends AdminBase
     /**
      * 删除
      */
-    public function userDel($where = [],$data=[])
+    public function sysUserDel($where = [],$data=[])
     {
 
         if (SYS_ADMINISTRATOR_ID == $data['id']) {
@@ -181,7 +181,7 @@ class SysUser extends AdminBase
             return [RESULT_ERROR, $this->validateSysUser->getError()];
         }
 
-        $user = $this->getUserInfo(['id' => $data['id']]);
+        $user = $this->getSysUserInfo(['id' => $data['id']]);
 
         if (data_md5_key($data['old_password']) != $user['password']) {
             return [RESULT_ERROR, '旧密码输入不正确'];
@@ -210,7 +210,7 @@ class SysUser extends AdminBase
 
             return [RESULT_ERROR, $this->validateSysUser->getError()];
         }
-        $user = $this->getUserInfo(['id' => $data['id']]);
+        $user = $this->getSysUserInfo(['id' => $data['id']]);
 
         $data['password']  = data_md5_key($data['password']);
 

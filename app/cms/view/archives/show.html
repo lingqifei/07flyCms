@@ -1,12 +1,16 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-sm-2">
-            <div class="ibox float-e-margins">
-                <div id="ArctypeListTreeview" class="test"></div>
+            <div class="ibox">
+                <div class="ibox-title">栏目分类</div>
+                <div class="ibox-content">
+                    <div id="left-tree" data-url="{:url('Archives/show',array('typelist'=>'all'))}"></div>
+                </div>
             </div>
         </div>
         <div class="col-sm-10">
-            <div class="ibox float-e-margins">
+            <div class="ibox">
+                <div class="ibox-title">文章列表</div>
                 <div class="ibox-content table-responsive">
                     <div class="row">
                         <form id="pagerForm" method="post" class="form-inline searchForm">
@@ -75,12 +79,13 @@
         <td><%=data[i]['typename']%></td>
         <td><%=data[i]['click']%></td>
         <td><%=data[i]['writer']%></td>
-        <td><%=data[i]['update_time']%></td>
+        <td><%=data[i]['pubdate']%></td>
         <td><input type="text" class="w50 ajax-sort" data-url="{:url('Archives/set_sort')}" data-ids="{'id':'<%=data[i]['id']%>'}" value="<%=data[i]['sort']%>"></td>
         <td>
             <p>
                 <lqf_link><a class="ajax-open" data-url="{:url('Archives/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改">修改</a></lqf_link>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('Archives/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
+                <lqf_link><a class="ajax-open" data-url="{:url('Arcext/show_item')}" data-ids="{'archives_id':'<%=data[i]['id']%>','channel_id':'<%=data[i]['channel_id']%>'}">扩展</a></lqf_link>
             </p>
         </td>
     </tr>
@@ -96,17 +101,22 @@
     });
 
     function ajax_type_list() {
-        var getArcypeUrl = "{:url('Archives/show',array('typelist'=>'all'))}";
+       // var getArcypeUrl = "{:url('Archives/show',array('typelist'=>'all'))}";
+        var target = $('#left-tree').attr('data-url');
         //左边栏目加载
         $.ajax({
             type: "POST",
-            url: getArcypeUrl,
+            url: target,
             data: '',
             dataType: "json",
             success: function (jsondata) {
-                $('#ArctypeListTreeview').treeview({
+                $('#left-tree').treeview({
                     data: jsondata,
                     levels: 2,
+                    showTags: false,//显示右边tags
+                    showCheckbox: false,//是否显示多选
+                    multiSelect: false,
+                    showBorder: false,
                     onNodeSelected: function (event, node) {
                         type_id = node.tags;
                         $("#type_id").val(type_id);

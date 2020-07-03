@@ -22,32 +22,8 @@ use think\Db;
 class TableField extends LogicBase
 {
 
-    //检查表字段是否存在
-    // return true/false
-    public function check_field( $table, $colField){
-        $fields = $this->get_field( $table );
-        if (in_array( $colField, $fields ) ) {
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    /**
-     * @param $table
-     * @return array
-     * @throws \think\db\exception\BindParamException
-     * @throws \think\exception\PDOException
-     */
-    final protected function get_field($table ) {
-
-        return Db::name($table)->getTableFields();
-
-    }
-
     //增加字段
     public function add_field($table,$fied,$type,$maxlength,$default=NULL,$desc=NULL){
-        $table=SYS_DB_PREFIX.$table;
         $field_exits=$this->check_field( $table, $fied);
         if(!$field_exits){
             if($type=='varchar'){
@@ -78,9 +54,7 @@ class TableField extends LogicBase
 
     //修改字段
     public function modify_field($table,$fied,$type,$maxlength,$default=NULL,$desc=NULL){
-        $table=SYS_DB_PREFIX.$table;
         $field_exits=$this->check_field( $table, $fied);
-
         if($field_exits){
             if($type=='varchar'){
                 $sql="ALTER TABLE `$table` MODIFY `$fied` varchar($maxlength) COMMENT '$desc'";
@@ -130,7 +104,6 @@ class TableField extends LogicBase
         $result = $this->check_table($table);
         $field_exits=$this->check_field( $table, $fied);
         if ($result && $field_exits ) {
-            $table = SYS_DB_PREFIX . $table;
             $sql = "ALTER TABLE `$table` DROP `$fied`";
             $result = Db::execute($sql);
             return $result ? [RESULT_SUCCESS, '添加成功'] : [RESULT_ERROR, '添加失败'];
@@ -150,11 +123,7 @@ class TableField extends LogicBase
     }
 
     public function drop_table($table){
-
         $result=$this->check_table($table);
-
-        $table=SYS_DB_PREFIX.$table;
-
         if($result){
             $sql="drop table `$table`;"	;
             $result = Db::execute($sql);
@@ -163,9 +132,30 @@ class TableField extends LogicBase
     }
 
     public function  check_table($table){
-        $table=SYS_DB_PREFIX.$table;
         return Db::query('SHOW TABLES LIKE '."'".$table."'");
 
     }
+
+    //检查表字段是否存在
+    // return true/false
+    public function check_field( $table, $colField){
+        $fields = $this->get_field( $table );
+        if (in_array( $colField, $fields ) ) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * @param $table
+     * @return array
+     * @throws \think\db\exception\BindParamException
+     * @throws \think\exception\PDOException
+     */
+    final protected function get_field($table ) {
+        return Db::table($table)->getTableFields();
+    }
+
 
 }

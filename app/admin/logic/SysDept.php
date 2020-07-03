@@ -150,4 +150,43 @@ class SysDept extends AdminBase
         return $result ? [RESULT_SUCCESS, '部门删除成功'] : [RESULT_ERROR, $this->modelSysDept->getError()];
     }
 
+    /**获得所有指定id所有父级
+     * @param int $deptid
+     * @param array $data
+     * @return array
+     */
+    public function getDeptAllPid($deptid=0, $data=[])
+    {
+        $where['id']=['=',$deptid];
+        $info = $this->modelSysDept->getInfo($where,true);
+        if(!empty($info) && $info['pid']){
+            $data[]=$info['pid'];
+            return $this->getDeptAllPid($info['pid'],$data);
+        }
+        return $data;
+    }
+
+    /**获得所有指定id所有子级
+     * @param int $deptid
+     * @param array $data
+     * @return array
+     */
+    public function getDeptAllSon($deptid=0, $data=[])
+    {
+        $where['pid']=['=',$deptid];
+        $sons = $this->modelSysDept->getList($where,true,'sort asc',false);
+        if (count($sons) > 0) {
+            foreach ($sons as $v) {
+                $data[] = $v['id'];
+                $data = $this->getDeptAllSon($v['id'], $data); //注意写$data 返回给上级
+            }
+        }
+        if (count($data) > 0) {
+            return $data;
+        } else {
+            return false;
+        }
+        return $data;
+    }
+
 }

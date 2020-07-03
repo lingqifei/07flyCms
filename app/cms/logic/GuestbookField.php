@@ -72,7 +72,7 @@ class GuestbookField extends CmsBase
         }
 
         //为表添加字段
-        $rtn=$this->tablefield->add_field($data['ext_table'],$data['field_name'],$data['field_type'],$data['maxlength'],$data['default_value'], $data['desc']);
+        $rtn=$this->tablefield->add_field(SYS_DB_PREFIX.$data['ext_table'],$data['field_name'],$data['field_type'],$data['maxlength'],$data['default_value'], $data['desc']);
         if($rtn[0]==RESULT_ERROR)  return $rtn;
 
         $result = $this->modelGuestbookField->setInfo($data);
@@ -95,7 +95,7 @@ class GuestbookField extends CmsBase
         }
 
         //为表添加字段
-        $rtn=$this->tablefield->modify_field($data['ext_table'],$data['field_name'],$data['field_type'],$data['maxlength'],$data['default_value'], $data['desc']);
+        $rtn=$this->tablefield->modify_field(SYS_DB_PREFIX.$data['ext_table'],$data['field_name'],$data['field_type'],$data['maxlength'],$data['default_value'], $data['desc']);
         if($rtn[0]==RESULT_ERROR)  return $rtn;
 
         $url = url('show');
@@ -115,7 +115,7 @@ class GuestbookField extends CmsBase
         $list=$this->getGuestbookFieldList($where);
 
         foreach ($list['data'] as $row){
-            $this->tablefield->del_field($row['ext_table'],$row['field_name']);
+            $this->tablefield->del_field(SYS_DB_PREFIX.$row['ext_table'],$row['field_name']);
         }
 
         $result = $this->modelGuestbookField->deleteInfo($where,true);

@@ -111,7 +111,7 @@ class Archives extends CmsBase
                 $ext_data=array_merge($ext_data,array("$field"=>$data[$field]));
             }
         }
-        $result=Db::name($arctype['addtable'])->insert($ext_data);
+        $result=Db::table(SYS_DB_PREFIX.$arctype['addtable'])->insert($ext_data);
 
         $url = url('show');
         $result && action_log('新增', '新增文档，name：' . $data['title']);
@@ -164,7 +164,7 @@ class Archives extends CmsBase
         $this->modelArchives->setInfo($main_data);
 
 
-        //2、添加附加表
+        //2、更新附表数据
         $ext_field=$this->logicChannelField->getExtTableFieldList($arctype['maintable'],$arctype['addtable']);
         $ext_data=array(
             "id"=>$data['id'],
@@ -177,7 +177,7 @@ class Archives extends CmsBase
                 $ext_data=array_merge($ext_data,array("$field"=>$data[$field]));
             }
         }
-        Db::name($arctype['addtable'])->update($ext_data);
+        Db::table(SYS_DB_PREFIX.$arctype['addtable'])->update($ext_data);
 
         $url = url('show');
         action_log('编辑', '编辑文档，name：' . $data['title']);
@@ -207,7 +207,7 @@ class Archives extends CmsBase
         $arclist=$this->modelArchives->getList($where,true,true,false);
         foreach ($arclist as $row){
             $arctype=$this->logicArctype->getArctypeInfoDetail($row['type_id']);
-            Db::table($arctype['addtable'])->delete($row['id'],true);
+            Db::table(SYS_DB_PREFIX.$arctype['addtable'])->delete($row['id'],true);
             $result = $this->modelArchives->deleteInfo($where,true);
         }
         $result && action_log('删除', '删除文档，where：' . http_build_query($where));
@@ -222,11 +222,11 @@ class Archives extends CmsBase
         $info=$this->modelArchives->getInfo($where, $field)->toArray();
         if($info){
             $arctype=$this->logicArctype->getArctypeInfoDetail($info['type_id']);
-            $ext_info=Db::table($arctype['addtable'])->where('id',$info['id'])->find();
+            $ext_info=Db::table(SYS_DB_PREFIX.$arctype['addtable'])->where('id',$info['id'])->find();
             if($ext_info){
                 return array_merge($info,$ext_info);
             }else{
-                Db::table($arctype['addtable'])->insert(['id'=>$info['id']]);
+                Db::table(SYS_DB_PREFIX.$arctype['addtable'])->insert(['id'=>$info['id']]);
                 return $info;
             }
         }

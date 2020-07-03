@@ -102,7 +102,7 @@ class SysOrg extends AdminBase
         $where=[];
         !empty($data['username'])?$where['username']=['=',$data['username']]:'';
         !empty($data['id'])?$where['org_id']=['=',$data['id']]:'';
-        $userinfo=$this->logicSysUser->getUserInfo($where);
+        $userinfo=$this->logicSysUser->getSysUserInfo($where);
         if($userinfo){
             return  [RESULT_ERROR, '当前企业的管理员帐号已存在'] ;
         }else{

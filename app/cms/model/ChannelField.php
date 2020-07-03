@@ -28,6 +28,8 @@ class ChannelField extends CmsBase
             "datetime" => array( 'name' => '时间类型', 'type' => 'datetime' ),
             "date" => array( 'name' => '日期类型', 'type' => 'date' ),
             "imgurl" => array( 'name' => '图片(仅网址))', 'type' => 'varchar' ),
+            "img" => array( 'name' => '单图片', 'type' => 'varchar' ),
+            "imgs" => array( 'name' => '多个图片', 'type' => 'varchar' ),
             "option" => array( 'name' => '使用option下拉框', 'type' => 'varchar' ),
             "radio" => array( 'name' => '使用radio选项卡', 'type' => 'varchar' ),
             "checkbox" => array( 'name' => 'Checkbox多选框', 'type' => 'varchar' ),
