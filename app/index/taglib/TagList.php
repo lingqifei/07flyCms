@@ -161,6 +161,7 @@ class TagList extends Base
 
         //获取文档栏目信息
         foreach ($list['data'] as &$row) {
+            $row=$logicArchives->getArchivesInfo(["id"=>$row['id']], $field = true);
             $typeinfo = $logicArctype->getArctypeInfo(['id' => $row['type_id']]);
             if ($typeinfo) {
                 $row['typename'] = $typeinfo['typename'];

@@ -23,7 +23,6 @@ use think\Request;
 class TagArcextlist extends Base
 {
     public $tid = '';
-    public $currentstyle = '';
 
     //初始化
     protected function _initialize()
@@ -76,6 +75,8 @@ class TagArcextlist extends Base
         }
         if(!empty($param['aid'])){
             $where['aid']=['=',$param['aid']];
+        }else{
+            $where['aid']=['=',0];
         }
         $logicArchives = new \app\index\logic\Arcext();
 
@@ -85,6 +86,7 @@ class TagArcextlist extends Base
         //获取文档栏目信息
         $logicArctype = new \app\index\logic\Arctype();
         foreach ($result['data'] as &$row){
+            $row['litpic_array']=explode(',',$row['litpic']);
 //            $typeinfo=$logicArctype->getArctypeInfo(['id'=>$row['type_id']]);
 //            if($typeinfo){
 //                $row['typename']=$typeinfo['typename'];

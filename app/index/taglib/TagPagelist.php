@@ -44,7 +44,6 @@ class TagPagelist extends Base
         }
         $listitem = !empty($listitem) ? $listitem : 'info,index,end,pre,next,pageno';
         $listsize = !empty($listsize) ? $listsize : '3';
-
         $value = $pages->render($listitem, $listsize);
         return $value;
     }

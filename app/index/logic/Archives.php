@@ -56,10 +56,7 @@ class Archives extends IndexBase
     public function getArchivesPageList($where = [], $field = true, $order = '', $paginate = 15)
     {
         $this->modelArchives->alias('a');
-        $list = $this->modelArchives->getList($where, $field, $order, $paginate)->toArray();
-        foreach ($list['data'] as &$row){
-            $row=$this->getArchivesInfo(["id"=>$row['id']], $field = true);
-        }
+        $list = $this->modelArchives->getList($where, $field, $order, $paginate);
         return $list;
     }
 
@@ -122,7 +119,7 @@ class Archives extends IndexBase
             if ($ext_info) {
                 return array_merge($info, $ext_info);
             } else {
-                Db::table($addtable)->insert(['id' => $info['id']]);
+                Db::table(SYS_DB_PREFIX.$addtable)->insert(['id' => $info['id']]);
                 return $info;
             }
         }
@@ -183,7 +180,7 @@ class Archives extends IndexBase
     public function getArchivesFieldValue($where = [], $field = true)
     {
         $info = $this->modelArchives->getValue($where, $field);
-
+        return $info;
     }
 
 

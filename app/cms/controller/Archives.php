@@ -30,10 +30,16 @@ class Archives extends CmsBase
     public function show()
     {
         //请求页左边栏目数据
-        if (!empty($this->param['typelist'])) {
-            $where=[];
-            $listtree=$this->logicArctype->getArctypeListTree($where);
-            return $listtree;
+        if (!empty($this->param['data_type'])) {
+            if($this->param['data_type']=='get_arctype_tree'){
+                $where=[];
+                $listtree=$this->logicArctype->getArctypeListTree($where);
+                return $listtree;
+            }else if($this->param['data_type']=='get_arctype_info'){
+                $info = $this->logicArctype->getArctypeInfo(['id' => $this->param['id']]);
+                return $info;
+            }
+
         }
         return $this->fetch('show');
     }

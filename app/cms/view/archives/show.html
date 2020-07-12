@@ -4,7 +4,7 @@
             <div class="ibox">
                 <div class="ibox-title">栏目分类</div>
                 <div class="ibox-content">
-                    <div id="left-tree" data-url="{:url('Archives/show',array('typelist'=>'all'))}"></div>
+                    <div id="left-tree" data-url="{:url('Archives/show',array('data_type'=>'get_arctype_tree'))}"></div>
                 </div>
             </div>
         </div>
@@ -132,7 +132,7 @@
 
     //操作当前内容
     function singpage(type_id) {
-        var getArcypeOneUrl = "{:url('Arctype/info')}";
+        var getArcypeOneUrl = "{:url('Archives/show',array('data_type'=>'get_arctype_info'))}";
         $.ajax({
             type: "POST",
             url: getArcypeOneUrl,

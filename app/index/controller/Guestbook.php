@@ -27,4 +27,13 @@ class Guestbook extends IndexBase{
             $this->jump($this->logicGuestbook->guestbookAdd($this->param));
         }
     }
+
+    /**
+     * 短信发磅测试
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/7/12 0012
+     */
+    public function  send_sms(){
+        $this->jump($this->logicGuestbook->send_sms($this->param));
+    }
+
 }

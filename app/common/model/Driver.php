@@ -10,27 +10,13 @@
  * Author: kfrs <goodkfrs@QQ.com> 574249366
  * Date: 2019-10-3
  */
-namespace addon\editor\controller;
 
-use app\common\controller\AddonBase;
-use addon\editor\logic\Upload as LogicUpload;
+namespace app\common\model;
 
 /**
- * 编辑器插件上传控制器
+ * 驱动模型
  */
-class Upload extends AddonBase
+class Driver extends ModelBase
 {
-
-    /**
-     * 图片上传
-     */
-    public function pictureUpload()
-    {
-        
-        $UploadLogic = new LogicUpload();
-        
-        $result = $UploadLogic->pictureUpload();
-        
-        return throw_response_exception($result);
-    }
+    
 }

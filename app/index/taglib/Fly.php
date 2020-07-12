@@ -119,6 +119,7 @@ class Fly extends TagLib
         $parseStr .= ' if(empty($typeid) && isset($channelartlist["id"]) && !empty($channelartlist["id"])) : $typeid = intval($channelartlist["id"]); endif; ';
         /*--end*/
         $parseStr .= ' if(isset($ui_row) && !empty($ui_row)) : $row = $ui_row; else: $row = ' . $row . '; endif;';
+        
         if ($name) { // 从模板中传入数据集
             $symbol = substr($name, 0, 1);
             if (':' == $symbol) {
@@ -423,7 +424,6 @@ class Fly extends TagLib
             $offset = !empty($limitArr[0]) ? intval($limitArr[0]) : 0;
             $row = !empty($limitArr[1]) ? intval($limitArr[1]) : 0;
         }
-
         $parseStr = '<?php ';
         // 声明变量
         $parseStr .= ' if(isset($ui_row) && !empty($ui_row)) : $row = $ui_row; else: $row = ' . $row . '; endif;';
@@ -437,7 +437,6 @@ class Fly extends TagLib
             } else {
                 $name = $this->autoBuildVar($name);
             }
-
             $parseStr .= 'if(is_array(' . $name . ') || ' . $name . ' instanceof \think\Collection || ' . $name . ' instanceof \think\Paginator): $' . $key . ' = 0; $e = 1;';
             // 设置了输出数组长度
             if (0 != $offset || 'null' != $row) {
@@ -448,7 +447,7 @@ class Fly extends TagLib
 
         } else { // 查询数据库获取的数据集
             $parseStr .= ' $param = array(';
-            $parseStr .= '      "aid"=> $aid,';
+            $parseStr .= '      "aid"=> '.$aid.',';
             $parseStr .= '      "eid"=> ' . $eid . ',';
             $parseStr .= ' );';
             $parseStr .= ' $tag = ' . var_export($tag, true) . ';';

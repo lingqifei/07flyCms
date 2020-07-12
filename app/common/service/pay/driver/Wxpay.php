@@ -38,7 +38,7 @@ class Wxpay extends Pay implements Driver
     public function driverInfo()
     {
         
-        return ['driver_name' => '微信支付驱动', 'driver_class' => 'Wxpay', 'driver_describe' => '微信支付', 'author' => 'Bigotry', 'version' => '1.0'];
+        return ['driver_name' => '微信支付驱动', 'driver_class' => 'Wxpay', 'driver_describe' => '微信支付', 'author' => 'lingqifei', 'version' => '1.0'];
     }
     
     /**

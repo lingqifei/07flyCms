@@ -55,7 +55,7 @@ class Arctype extends CmsBase
     }
 
     /**
-     * 列表
+     * 详细
      */
     public function info()
     {

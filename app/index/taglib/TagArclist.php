@@ -140,6 +140,7 @@ class TagArclist extends Base
             if($typeinfo){
                 $row['typename']=$typeinfo['typename'];
                 $row['typeurl']=$typeinfo['typeurl'];
+                $row['typepic']=$typeinfo['litpic'];
             }
         }
 

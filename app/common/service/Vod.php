@@ -25,6 +25,6 @@ class Vod extends ServiceBase implements BaseInterface
     public function serviceInfo()
     {
         
-        return ['service_name' => '视频点播服务', 'service_class' => 'Vod', 'service_describe' => '系统视频点播服务，用于整合多个视频点播服务平台', 'author' => 'Bigotry', 'version' => '1.0'];
+        return ['service_name' => '视频点播服务', 'service_class' => 'Vod', 'service_describe' => '系统视频点播服务，用于整合多个视频点播服务平台', 'author' => 'lingqifei', 'version' => '1.0'];
     }
 }

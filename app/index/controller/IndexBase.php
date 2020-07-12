@@ -52,7 +52,12 @@ class IndexBase extends ControllerBase
         $root_url = get_file_root_path();
         //$this->assign('template_dir', STATIC_DOMAIN . SYS_DS_PROS . 'public/theme/' . $web_theme.'/');
         $this->assign('root_url', $root_url);
-        $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/');
+        if(is_mobile()){
+            $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/wap/');
+        }else{
+            $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/');
+        }
+
     }
 
     /**
@@ -60,7 +65,15 @@ class IndexBase extends ControllerBase
      */
     final protected function fetch($template = '', $vars = [], $replace = [], $config = [])
     {
-        $template=THEME_NAME.DS.$template;
+
+        if(is_mobile()){
+            $template=THEME_NAME.DS.'wap'.DS.$template;
+        }else{
+            $template=THEME_NAME.DS.$template;
+        }
+
+
+        //$template=THEME_NAME.DS.$template;
         $tpfilepath=PATH_PUBLIC.'theme'.DS.$template;
         if (!file_exists($tpfilepath)) {
             echo "$tpfilepath 模板文件不存在~~";

@@ -1,3 +1,3 @@
-DELETE FROM ob_hook WHERE `name` = 'ArticleEditor';
+DELETE FROM hook WHERE `name` = 'ArticleEditor';
 
-DELETE FROM ob_addon WHERE `name` = 'Editor';
+DELETE FROM addon WHERE `name` = 'Editor';

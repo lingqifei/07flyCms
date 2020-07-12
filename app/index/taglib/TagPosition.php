@@ -39,7 +39,7 @@ class TagPosition extends Base
         /*应用于文档列表*/
         $aid = input('param.aid/d', 0);
         if ($aid > 0) {
-            $this->tid = $this->logicArchives->getFieldValue(['id'=>$aid],'type_id');
+            $this->tid = $this->logicArchives->getArchivesFieldValue(['id'=>$aid],'type_id');
         }
         /*--end*/
 
@@ -86,6 +86,7 @@ class TagPosition extends Base
             }
             ++$i;
         }
+
         $typeinfo=$logicArctype->getArctypeInfo(['id'=>$typeid]);
         $str .= " {$symbol} <a href='{$typeinfo['typeurl']}'>{$typeinfo['typename']}</a>";
         //关联当前分类--end

@@ -25,7 +25,7 @@ class Sms extends ServiceBase implements BaseInterface
     public function serviceInfo()
     {
         
-        return ['service_name' => '短信服务', 'service_class' => 'Sms', 'service_describe' => '系统短信服务，用于整合多个短信平台', 'author' => 'Bigotry', 'version' => '1.0'];
+        return ['service_name' => '短信服务', 'service_class' => 'Sms', 'service_describe' => '系统短信服务，用于整合多个短信平台', 'author' => 'lingqifei', 'version' => '1.0'];
     }
     
 }
