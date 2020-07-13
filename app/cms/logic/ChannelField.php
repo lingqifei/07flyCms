@@ -23,19 +23,21 @@ class ChannelField extends CmsBase
     /**
      * 析构函数
      */
-    function  __construct() {
+    function __construct()
+    {
         $this->tablefield = new TableField();
     }
+
     /**
      * 模型字段处列表
      */
     public function getChannelFieldList($where = [], $field = true, $order = '', $paginate = DB_LIST_ROWS)
     {
 
-        $list=$this->modelChannelField->getList($where, $field, $order, $paginate)->toArray();
-        if($paginate===false) $list['data']=$list;
-        foreach ($list['data'] as &$row){
-            $row['field_type_text']=$this->modelChannelField->field_type_text($row['field_type']);
+        $list = $this->modelChannelField->getList($where, $field, $order, $paginate)->toArray();
+        if ($paginate === false) $list['data'] = $list;
+        foreach ($list['data'] as &$row) {
+            $row['field_type_text'] = $this->modelChannelField->field_type_text($row['field_type']);
         }
         return $list;
     }
@@ -43,11 +45,11 @@ class ChannelField extends CmsBase
     /**
      * 模型字段处列表
      */
-    public function getExtTableFieldList($main_table=null,$ext_table=null)
+    public function getExtTableFieldList($main_table = null, $ext_table = null)
     {
-        if($main_table && $ext_table){
-            $where['main_table']=['=',$main_table];
-            $where['ext_table']=['=',$ext_table];
+        if ($main_table && $ext_table) {
+            $where['main_table'] = ['=', $main_table];
+            $where['ext_table'] = ['=', $ext_table];
             return $this->modelChannelField->getList($where, "", '', false)->toArray();
         }
     }
@@ -58,7 +60,7 @@ class ChannelField extends CmsBase
     public function getChannelTypeList()
     {
 
-       return  $this->modelChannelField->field_type_text();
+        return $this->modelChannelField->field_type_text();
     }
 
     /**
@@ -84,15 +86,16 @@ class ChannelField extends CmsBase
         }
 
         //为表添加字段
-        $rtn=$this->tablefield->add_field(SYS_DB_PREFIX.$data['ext_table'],$data['field_name'],$data['field_type'],$data['maxlength'],$data['default_value'], $data['desc']);
-        if($rtn[0]==RESULT_ERROR)  return $rtn;
+        $rtn = $this->tablefield->add_field(SYS_DB_PREFIX . $data['ext_table'], $data['field_name'], $data['field_type'], $data['maxlength'], $data['default_value'], $data['desc']);
+        if ($rtn[0] == RESULT_ERROR) return $rtn;
 
         $result = $this->modelChannelField->setInfo($data);
         $url = url('show');
-        $result && action_log('新增', '新增模块字段，table：' . $data['ext_table'].',field:'. $data['field_name']);
+        $result && action_log('新增', '新增模块字段，table：' . $data['ext_table'] . ',field:' . $data['field_name']);
 
         return $result ? [RESULT_SUCCESS, '添加成功', $url] : [RESULT_ERROR, $this->modelChannelField->getError()];
     }
+
     /**
      * 模型编辑
      */
@@ -107,30 +110,31 @@ class ChannelField extends CmsBase
         }
 
         //为表添加字段
-        $rtn=$this->tablefield->modify_field(SYS_DB_PREFIX.$data['ext_table'],$data['field_name'],$data['field_type'],$data['maxlength'],$data['default_value'], $data['desc']);
-        if($rtn[0]==RESULT_ERROR)  return $rtn;
+        $rtn = $this->tablefield->modify_field(SYS_DB_PREFIX . $data['ext_table'], $data['field_name'], $data['field_type'], $data['maxlength'], $data['default_value'], $data['desc']);
+        if ($rtn[0] == RESULT_ERROR) return $rtn;
 
         $url = url('show');
 
         $result = $this->modelChannelField->setInfo($data);
 
-        $result && action_log('编辑', '编辑模型字段，name：' .$data['ext_table'].',field:'. $data['field_name']);
+        $result && action_log('编辑', '编辑模型字段，name：' . $data['ext_table'] . ',field:' . $data['field_name']);
 
         return $result ? [RESULT_SUCCESS, '编辑模型字段', $url] : [RESULT_ERROR, $this->modelChannelField->getError()];
     }
+
     /**
      * 字段删除
      */
     public function channelFieldDel($where = [])
     {
 
-        $list=$this->getChannelFieldList($where);
+        $list = $this->getChannelFieldList($where);
 
-        foreach ($list['data'] as $row){
-            $this->tablefield->del_field(SYS_DB_PREFIX.$row['ext_table'],$row['field_name']);
+        foreach ($list['data'] as $row) {
+            $this->tablefield->del_field(SYS_DB_PREFIX . $row['ext_table'], $row['field_name']);
         }
 
-        $result = $this->modelChannelField->deleteInfo($where,true);
+        $result = $this->modelChannelField->deleteInfo($where, true);
 
         $result && action_log('删除', '模型字段，where：' . http_build_query($where));
 
@@ -142,77 +146,78 @@ class ChannelField extends CmsBase
     //pararm $ext_table 		[description] 扩展表名
     //pararm field_val_arr 		[description] 需要展示的字段html
     //return html string
-    public function channelExtFieldHtml( $ext_table, $field_val_arr = [] ) {
-        $where['visible']=['=','1'];
-        $where['ext_table']=['=',$ext_table];
+    public function channelExtFieldHtml($ext_table, $field_val_arr = [])
+    {
+        $where['visible'] = ['=', '1'];
+        $where['ext_table'] = ['=', $ext_table];
         $list = $this->modelChannelField->getList($where, "", 'sort asc', false)->toArray();
         $htmltxt = "";
-        foreach ( $list as $key => $row ) {
+        foreach ($list as $key => $row) {
             //是否存在字段值
-            $field_value = array_key_exists( $row[ "field_name" ], $field_val_arr ) ? $field_val_arr[ $row[ "field_name" ] ] : "";
-            switch ( $row[ 'field_type' ] ) {
+            $field_value = array_key_exists($row["field_name"], $field_val_arr) ? $field_val_arr[$row["field_name"]] : "";
+            switch ($row['field_type']) {
                 case "varchar":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-										<input name="' . $row[ "field_name" ] . '" class="form-control" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row[ 'desc' ] . '</span> 
+										<input name="' . $row["field_name"] . '" class="form-control" type="text" value="' . $field_value . '"/>
+										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
 									</div>
 								</div>';
                     break;
                 case "textarea":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-										<textarea name="' . $row[ "field_name" ] . '" class="form-control" >' . $field_value . '</textarea>
-										<span class="help-block m-b-none">' . $row[ 'desc' ] . '</span> 
+										<textarea name="' . $row["field_name"] . '" class="form-control" >' . $field_value . '</textarea>
+										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
 									</div>
 								</div>';
                     break;
                 case "int":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-										<input name="' . $row[ "field_name" ] . '" class="form-control" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row[ 'desc' ] . '</span> 
+										<input name="' . $row["field_name"] . '" class="form-control" type="text" value="' . $field_value . '"/>
+										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
 									</div>
 								</div>';
                     break;
                 case "float":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-										<input name="' . $row[ "field_name" ] . '" class="form-control" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row[ 'desc' ] . '</span> 
+										<input name="' . $row["field_name"] . '" class="form-control" type="text" value="' . $field_value . '"/>
+										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
 									</div>
 								</div>';
                     break;
                 case "datetime":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-										<input name="' . $row[ "field_name" ] . '" class="form-control datetimepicker" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row[ 'desc' ] . '</span> 
+										<input name="' . $row["field_name"] . '" class="form-control datetimepicker" type="text" value="' . $field_value . '"/>
+										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
 									</div>
 								</div>';
                     break;
                 case "date":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-										<input name="' . $row[ "field_name" ] . '" class="form-control datepicker" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row[ 'desc' ] . '</span> 
+										<input name="' . $row["field_name"] . '" class="form-control datepicker" type="text" value="' . $field_value . '"/>
+										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
 									</div>
 								</div>';
                     break;
                 case "option":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-									  <select data-placeholder="选择' . $row[ "show_name" ] . '..." name="' . $row[ "field_name" ] . '" class="chosen-select ' . $row[ "field_name" ] . '-chosen-select" style="width: 200px;" tabindex="2">
+									  <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" style="width: 200px;" tabindex="2">
 								';
-                    $option_arr = explode( ',', $row[ 'default' ] );
-                    foreach ( $option_arr as $va ) {
+                    $option_arr = explode(',', $row['default']);
+                    foreach ($option_arr as $va) {
                         $htmltxt .= '<option value="' . $va . '" hassubinfo="true">' . $va . '</option>';
                     }
                     $htmltxt .= '
@@ -222,14 +227,14 @@ class ChannelField extends CmsBase
                     break;
                 case "linkage":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-									  <select data-placeholder="选择' . $row[ "show_name" ] . '..." name="' . $row[ "field_name" ] . '" class="chosen-select ' . $row[ "field_name" ] . '-chosen-select" style="width: 200px;" tabindex="2">
+									  <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" style="width: 200px;" tabindex="2">
 								';
-                    $option_arr = explode( ',', $row[ 'default' ] );
-                    $option_arr = $this->cst_field_ext_linkage( $row[ 'default' ] );
-                    foreach ( $option_arr as $row ) {
-                        $htmltxt .= '<option value="' . $row[ 'id' ] . '" hassubinfo="true">' . $row[ 'name' ] . '</option>';
+                    $option_arr = explode(',', $row['default']);
+                    $option_arr = $this->cst_field_ext_linkage($row['default']);
+                    foreach ($option_arr as $row) {
+                        $htmltxt .= '<option value="' . $row['id'] . '" hassubinfo="true">' . $row['name'] . '</option>';
                     }
                     $htmltxt .= '
 									  </select>
@@ -238,14 +243,14 @@ class ChannelField extends CmsBase
                     break;
                 case "radio":
                     $htmltxt .= '<div class="form-group text-left">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
 										<div class="radio i-checks">
 								';
-                    $option_arr = explode( ',', $row[ 'default' ] );
-                    foreach ( $option_arr as $va ) {
-                        $checked = ( $va == $field_value ) ? "checked" : "";
-                        $htmltxt .= '<input type="radio" name="' . $row[ "field_name" ] . '" value="' . $va . '" ' . $checked . ' /> ' . $va . ' ';
+                    $option_arr = explode(',', $row['default']);
+                    foreach ($option_arr as $va) {
+                        $checked = ($va == $field_value) ? "checked" : "";
+                        $htmltxt .= '<input type="radio" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . ' /> ' . $va . ' ';
                     }
                     $htmltxt .= '
 									  </div>
@@ -254,13 +259,13 @@ class ChannelField extends CmsBase
                     break;
                 case "checkbox":
                     $htmltxt .= '<div class="form-group text-left">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
 										<div class="checkbox i-checks">
 								';
-                    $option_arr = explode( ',', $row[ 'default' ] );
-                    foreach ( $option_arr as $va ) {
-                        $htmltxt .= '<input type="checkbox" name="' . $row[ "field_name" ] . '" value="' . $va . '" ' . $checked . '/> ' . $va . ' ';
+                    $option_arr = explode(',', $row['default']);
+                    foreach ($option_arr as $va) {
+                        $htmltxt .= '<input type="checkbox" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . '/> ' . $va . ' ';
                     }
                     $htmltxt .= '
 									  </div>
@@ -268,14 +273,119 @@ class ChannelField extends CmsBase
 								</div>';
                     break;
                 case "img":
+                    $pic_div = '';
+                    if ($field_value) {
+                        $pic_url = get_picture_url($field_value);
+                        $pic_div = '<img  style="max-width:150px;" src="' . $pic_url . '"/>';
+                    }
                     $htmltxt .= '
                                         <div class="form-group text-left">
-                                            <label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
                                             <div class="col-sm-10">';
-                    $htmltxt .='
-                                        {assign name="'.$row[ "field_name" ].'" value="'.$field_value.'" /}
-                    {:hook(\'File\', [\'name\' => \''.$row[ "field_name" ].'\', \'value\' => $'.$row[ "field_name" ].', \'type\' => \'img\'])}
-                    ';
+                    $htmltxt .= '
+                                        <link rel="stylesheet" href="' . PATH_PUBLIC . 'static/addon/file/default.css">
+                                        <script src="' . PATH_PUBLIC . '/static/addon/file/jquery.Huploadify.js"></script>
+                                        <div id="upload_picture_' . $row["field_name"] . '"></div>
+                                        <input type="hidden" name="' . $row["field_name"] . '" id="' . $row["field_name"] . '" value="0">
+                                        <div class="upload-img-box' . $row["field_name"] . '"> ' . $pic_div . '</div>
+                                        <script type="text/javascript">
+                                            var maxwidth = "150px";
+                                            $("#upload_picture_' . $row["field_name"] . '").Huploadify({
+                                                auto: true,
+                                                height: 30,
+                                                fileObjName: "file",
+                                                buttonText: "上传图片",
+                                                uploader: "' . url('admin/File/pictureUpload', array('session_id' => session_id())) . '",
+                                                width: 120,
+                                                removeTimeout: 1,
+                                                fileSizeLimit:"51200",
+                                                fileTypeExts: "*.jpg; *.png; *.gif;",
+                                                onUploadComplete: uploadPicturelitpic    });
+                                            function uploadPicturelitpic(file, data)
+                                            {
+                                                var data = $.parseJSON(data);
+                                                $("#' . $row["field_name"] . '").val(data.id);
+                                                var src =\'/public/static/upload/picture/\' + data.path;
+                                                var src =src.replace(/\/static/g, \'\');
+                                                $(".upload-img-box' . $row["field_name"] . '").html(\'<div class="upload-pre-item"> <a target="_blank" href="\' + src + \'"> <img style="max-width: \' + maxwidth + \';" src="\' + src + \'"/></a></div>\');
+                                            }
+                                        </script>                
+                                        ';
+                    $htmltxt .= '</div></div>';
+                    break;
+                case "imgs":
+                    $pic_div = '';
+                    if ($field_value) {
+                        $pic_arr = explode(',', $field_value);
+                        foreach ($pic_arr as $value) {
+                            $pic_url = get_picture_url($value);
+                            $pic_div .= '
+                                        <div class="upload-pre-item" style="float:left; margin: 10px;">
+                                            <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this, ' . $value . ')" >
+                                                <img src="/addon/file/static/uploadify-cancel.png" />
+                                            </div>
+                                            <a target="_blank" href="' . $pic_url . '"> <img style="width:150px;" src="' . $pic_url . '"/>
+                                            </a>
+                                        </div>
+                            ';
+                        }
+                    }
+                    $htmltxt .= '
+                                        <div class="form-group text-left">
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+                                            <div class="col-sm-10">';
+                    $htmltxt .= '
+<link rel="stylesheet" href="' . PATH_PUBLIC . 'addon/file/default.css" />
+<script src="' . PATH_PUBLIC . 'addon/file/jquery.Huploadify.js"></script>
+
+<div id="upload_pictures_' . $row["field_name"] . '"></div>
+<input type="hidden" name="' . $row["field_name"] . '" id="' . $row["field_name"] . '" value="' . $field_value . '"/>
+<div class="upload-img-box' . $row["field_name"] . '">' . $pic_div . '</div>
+
+<script type="text/javascript">
+    var maxwidth = "150px";
+    $("#upload_pictures_' . $row["field_name"] . '").Huploadify({
+        auto: true,
+        height          : 30,
+        fileObjName     : "file",
+        buttonText      : "上传多个图片",
+       // uploader        : "{:url(\'admin/File/pictureUpload\',array(\'session_id\'=>session_id()))}",
+        uploader: "' . url('admin/File/pictureUpload', array('session_id' => session_id())) . '",
+        width         : 120,
+        removeTimeout	  : 1,
+        fileSizeLimit:"51200",
+        fileTypeExts: "*.jpg; *.png; *.gif;",
+        onUploadComplete : uploadPicture' . $row["field_name"] . '
+    });
+
+    function uploadPicture' . $row["field_name"] . '(file, data){
+        var data = $.parseJSON(data);
+        var addons_name = "' . $row["field_name"] . '";
+        var img_ids = $("#" + addons_name).val();
+        var add_id = data.id;
+        if(img_ids){ var lastChar = img_ids.charAt(img_ids.length - 1);  if(lastChar != \',\'){  add_id = img_ids + \',\' + add_id; } }
+        $("#" + addons_name).val(add_id);
+        //var src = \'/upload/picture/\' + data.path;
+        var src =\'__STATIC__/upload/picture/\' + data.path;
+        var src =src.replace(/\/static/g, \'\');
+        $(".upload-img-box" + addons_name).append(\'<div class="upload-pre-item" style="float:left; margin: 10px;"> <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this,\'+data.id+\')" ><img src="/addon/file/static/uploadify-cancel.png" /></div> <a target="_blank" href="\' + src + \'"> <img style="max-width: \' + maxwidth + \';" src="\' + src + \'"/></a></div>\');
+    }
+
+    function picDel' . $row["field_name"] . '(obj, pic_id)
+    {
+        var addons_name = "' . $row["field_name"] . '";
+        var img_ids = $("#" + addons_name).val();
+        if(img_ids.indexOf(",") > 0)
+        {
+            img_ids.indexOf(pic_id) == 0 ? img_ids = img_ids.replace(pic_id + \',\', \'\') : img_ids = img_ids.replace(\',\' + pic_id, \'\');
+            $("#" + addons_name).val(img_ids);
+        }else{
+            $("#" + addons_name).val(\'\');
+        }
+        $(obj).parent().remove();
+    }
+</script>
+                                            ';
                     $htmltxt .= '</div></div>';
                     break;
                 default:
@@ -284,5 +394,4 @@ class ChannelField extends CmsBase
         }
         return $htmltxt;
     }
-
 }

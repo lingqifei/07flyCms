@@ -139,7 +139,7 @@
             data: {'id': type_id},
             dataType: "json",
             success: function (data) {
-                if (data.ispart == '0') {
+                if (data.ispart == '0' || data.ispart == '2' ) {
                     ajaxSearchFormData = $("form").serialize();
                     turnPage(1);
                 } else {
