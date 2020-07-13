@@ -16,6 +16,18 @@ class Guestbook extends IndexBase{
     public $aid = '';
     public $type = '';
 
+
+    /**
+     * @return mixed
+     * created by Administrator at 2020/2/24 0024 15:15
+     */
+    public function index(){
+        $tagGlobal  = new \app\index\taglib\TagGlobal;
+        $name=$tagGlobal->getGlobal('seo_title');
+        $this->assign('title',$name);
+        return $this->fetch('guestbook.html');
+    }
+
     /**
      * @return mixed
      * created by Administrator at 2020/2/24 0024 15:15
