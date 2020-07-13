@@ -38,7 +38,8 @@ class ServiceBase extends ModelBase
      */
     public function driverConfig($driver_name = '')
     {
-        
+
+
         $driver_info = $this->modelDriver->getInfo(['driver_name' => $driver_name]);
         
         empty($driver_info) && exception('未安装此驱动，请先安装');

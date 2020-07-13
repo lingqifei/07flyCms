@@ -49,13 +49,20 @@ class Guestbook extends IndexBase
             'create_time'=>TIME_NOW,
             'update_time'=>TIME_NOW,
         ];
+
+        if(!empty($data['mobile'])){
+            $addData['mobile']=$data['mobile'];
+        }
+        if(!empty($data['content'])){
+            $addData['content']=$data['content'];
+        }
         foreach ($addfieldArr as $field){
             if(in_array($field,$extfieldArr)){
                 $val=!empty($data[$field])?$data[$field]:'';
                 $addData[$field]=$val;
             }
         }
-        $result=Db::table($table['addtable'])->insert($addData);
+        $result=Db::name($table['addtable'])->insert($addData);
 
         $result && action_log('新增', '新增留言信息，表单name：' . $data['addfield']);
 
@@ -84,7 +91,7 @@ class Guestbook extends IndexBase
 
         //扩展数据处理
         $where['gid']=['=',$data['gid']];
-        $list=Db::table($table['addtable'])
+        $list=Db::name($table['addtable'])
             ->where($where)
             ->order('create_time desc')
             ->paginate(DB_LIST_ROWS)
@@ -112,4 +119,21 @@ class Guestbook extends IndexBase
         $info=$this->modelGuestbook->getInfo(['id'=>$gid],'addtable,maintable');
         return $info;
     }
+
+
+
+    public function  send_sms($data=[]){
+        $parameter['nationCode']='86';
+        $parameter['mobile']='18030402705';
+        $parameter['template_id']='659759';
+        $parameter['params_array']=[$data['code'],'10'];
+        $parameter['sign']='人人海外';
+        $res= $this->serviceSms->driverTencent->sendSms($parameter);
+        if($res){
+            return [RESULT_SUCCESS,'发送成功'];
+        }else{
+            return [RESULT_ERROR,'发送失败'];
+        }
+    }
+
 }

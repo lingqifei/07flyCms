@@ -75,9 +75,22 @@ class TagChannel extends Base
 //            $typeid = M('arctype')->where($map)->order('sort_order asc')->limit(1)->getField('id');
 //            /*--end*/
 //        }
-        $result = $this->getSwitchType($typeid, $type, $notypeid);
-
-        return $result;
+        $result_array=[];
+        if (!empty($typeid)) {
+            if (!preg_match('/^\d+([\d\,]*)$/i', $typeid)) {
+                echo '标签arclist报错：typeid属性值语法错误，请正确填写栏目ID。';
+                return false;
+            }
+            // 过滤typeid中含有空值的栏目ID
+            $typeidArr_tmp = explode(',', $typeid);
+            foreach ($typeidArr_tmp as $tid ){
+                $result = $this->getSwitchType($tid, $type, $notypeid);
+                $result_array = array_merge($result_array,$result);
+            }
+        }else{
+            $result_array = $this->getSwitchType($typeid, $type, $notypeid);
+        }
+        return $result_array;
     }
 
     /**
@@ -153,8 +166,8 @@ class TagChannel extends Base
                 $result[$key] = $val;
             }
         }
-
         $result= list2tree($result,$typeid,0,'id','parent_id','typename');//把所以树形展示
+
 
 
         /*--end*/

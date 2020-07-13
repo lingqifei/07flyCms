@@ -36,11 +36,10 @@ class Arcext extends IndexBase
         if ($info) {
             is_object($info) && $info = $info->ToArray();
             $addtable = $info['addtable'];
-
             $condtion['archives_id']=$where['aid'];
             $condtion['arcext_id']=['=',$info['id']];
 
-            $ext_list = Db::table(SYS_DB_PREFIX.$addtable)
+            $ext_list = Db::name($addtable)
                 ->where($condtion)
                 ->paginate(false)
                 ->toArray();

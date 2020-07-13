@@ -37,7 +37,7 @@ class Yeepay extends Pay implements Driver
     public function driverInfo()
     {
         
-        return ['driver_name' => '易宝支付驱动', 'driver_class' => 'Yeepay', 'driver_describe' => '易宝支付', 'author' => 'Bigotry', 'version' => '1.0'];
+        return ['driver_name' => '易宝支付驱动', 'driver_class' => 'Yeepay', 'driver_describe' => '易宝支付', 'author' => 'lingqifei', 'version' => '1.0'];
     }
     
     /**

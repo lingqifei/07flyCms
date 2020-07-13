@@ -1,3 +1,3 @@
-DELETE FROM ln_hook WHERE `name` = 'File';
+DELETE FROM hook WHERE `name` = 'File';
 
-DELETE FROM ln_addon WHERE `name` = 'File';
+DELETE FROM addon WHERE `name` = 'File';
