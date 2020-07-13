@@ -180,75 +180,8 @@ class Archives extends IndexBase
     public function getArchivesFieldValue($where = [], $field = true)
     {
         $info = $this->modelArchives->getValue($where, $field);
-                return $info;
-            }
-        }
-    }
-
-
-    /**获取文档下一条
-     * @param $aid
-     * @return mixed|string
-     * Author: lingqifei created by at 2020/3/18 0018
-     */
-    public function getArchivesNext($aid, $channelid, $typeid)
-    {
-        $map['id'] = ['gt', $aid];
-        $map['channel_id'] = ['=', $channelid];
-        $map['type_id'] = ['=', $typeid];
-        $this->modelArchives->limit = 1;
-        $list = $this->modelArchives->getList($map, '', 'id asc', false)->toArray();
-
-        if ($list) {
-            $id = $list[0]['id'];
-            return $this->getArchivesInfo(['id' => $id]);
-        } else {
-            return '';
-        }
-
-    }
-
-    /**获取文档上一条
-     * @param $aid
-     * @return mixed|string
-     * Author: lingqifei created by at 2020/3/18 0018
-     */
-    public function getArchivesPre($aid, $channelid, $typeid)
-    {
-
-        $map['id'] = ['lt', $aid];
-        $map['channel_id'] = ['=', $channelid];
-        $map['type_id'] = ['=', $typeid];
-        $this->modelArchives->limit = 1;
-        $list = $this->modelArchives->getList($map, '', 'id desc', false)->toArray();
-
-        if ($list) {
-            $id = $list[0]['id'];
-            return $this->getArchivesInfo(['id' => $id]);
-        } else {
-            return '';
-        }
-
-    }
-
-
-    /**获取文章详细
-     * @param array $data
-     * @return mixed|string
-     * Author: lingqifei created by at 2020/2/27 0027
-     */
-    public function getArchivesFieldValue($where = [], $field = true)
-    {
-        $info = $this->modelArchives->getValue($where, $field);
-<<<<<<< .mine
         return $info;
     }
-
-=======
-        return $info;
-
-
->>>>>>> .theirs
 
     /**设置文章点击
      * @param array $data
