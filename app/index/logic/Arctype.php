@@ -154,13 +154,15 @@ class Arctype extends IndexBase
     public function getArctypeUrl($data=[])
     {
         if ($data['ispart'] == 2) {
-            $val['typeurl'] = $data['typedir'];
+            $data['typeurl'] = $data['typedir'];
             if (!is_http_url($data['typeurl'])) {
                 $typeurl = '//'.request()->host();
-                if (!preg_match('#^'.ROOT_DIR.'(.*)$#i', $data['typeurl'])) {
-                    $typeurl .= ROOT_DIR;
-                }
+//                if (!preg_match('#^'.DOMAIN.'(.*)$#i', $data['typeurl'])) {
+//                    $typeurl .= DOMAIN;
+//
+//                }
                 $typeurl .= '/'.trim($data['typeurl'], '/');
+                //echo  $typeurl;exit;
             }
         } else {
             $typeurl = url('index/lists/index', array('tid'=>$data['id']));

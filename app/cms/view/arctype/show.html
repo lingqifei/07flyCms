@@ -154,3 +154,28 @@
 
 
 </script>
+<link href="https://cdn.bootcdn.net/ajax/libs/jquery-contextmenu/2.4.5/jquery.contextMenu.css" rel="stylesheet">
+<!-- Script -->
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery-contextmenu/2.4.5/jquery.contextMenu.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery-contextmenu/2.4.5/jquery.ui.position.min.js"></script>
+<script>
+    $(function(){
+        //注册右键菜单的项与动作
+        $('#left-tree').contextMenu({
+            selector: 'li', // 选择器，为某一类元素绑定右键菜单
+            callback: function(key, options) {
+                var m = "clicked: " + key + " on " + $(this).text()+$(this).attr('id');
+                window.console && console.log(m) || alert(m);
+            },
+            items: {
+                "edit": {name: "Edit", icon: "edit"},
+                "cut": {name: "Cut", icon: "cut"},
+                "copy": {name: "Copy", icon: "copy"},
+                "paste": {name: "Paste", icon: "paste"},
+                "delete": {name: "Delete", icon: "delete"},
+                "sep1": "---------",
+                "quit": {name: "Quit", icon: function($element, key, item){ return 'context-menu-icon context-menu-icon-quit'; }}
+            }
+        });
+    });
+</script>

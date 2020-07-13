@@ -144,6 +144,12 @@ class TagArclist extends Base
             }
         }
 
+        if($addfields){
+            foreach ($result['data'] as &$row) {
+                $row=$logicArchives->getArchivesInfo(['id'=>$row['id']]);
+            }
+        }
+
         $data=[
             "list"=>$result['data'],
             "tag"=>'',
