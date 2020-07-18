@@ -216,9 +216,10 @@ class ChannelField extends CmsBase
 									<div class="col-sm-10">
 									  <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" style="width: 200px;" tabindex="2">
 								';
-                    $option_arr = explode(',', $row['default']);
+                    $option_arr = explode(',', $row['default_value']);
                     foreach ($option_arr as $va) {
-                        $htmltxt .= '<option value="' . $va . '" hassubinfo="true">' . $va . '</option>';
+                        $option_chk = ($va == $field_value) ? "selected" : "";
+                        $htmltxt .= '<option value="' . $va . '" hassubinfo="true" '.$option_chk.'>' . $va . '</option>';
                     }
                     $htmltxt .= '
 									  </select>
@@ -231,7 +232,6 @@ class ChannelField extends CmsBase
 									<div class="col-sm-10">
 									  <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" style="width: 200px;" tabindex="2">
 								';
-                    $option_arr = explode(',', $row['default']);
                     $option_arr = $this->cst_field_ext_linkage($row['default']);
                     foreach ($option_arr as $row) {
                         $htmltxt .= '<option value="' . $row['id'] . '" hassubinfo="true">' . $row['name'] . '</option>';
@@ -247,7 +247,7 @@ class ChannelField extends CmsBase
 									<div class="col-sm-10">
 										<div class="radio i-checks">
 								';
-                    $option_arr = explode(',', $row['default']);
+                    $option_arr = explode(',', $row['default_value']);
                     foreach ($option_arr as $va) {
                         $checked = ($va == $field_value) ? "checked" : "";
                         $htmltxt .= '<input type="radio" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . ' /> ' . $va . ' ';
@@ -263,7 +263,7 @@ class ChannelField extends CmsBase
 									<div class="col-sm-10">
 										<div class="checkbox i-checks">
 								';
-                    $option_arr = explode(',', $row['default']);
+                    $option_arr = explode(',', $row['default_value']);
                     foreach ($option_arr as $va) {
                         $htmltxt .= '<input type="checkbox" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . '/> ' . $va . ' ';
                     }
@@ -322,7 +322,7 @@ class ChannelField extends CmsBase
                             $pic_div .= '
                                         <div class="upload-pre-item" style="float:left; margin: 10px;">
                                             <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this, ' . $value . ')" >
-                                                <img src="/addon/file/static/uploadify-cancel.png" />
+                                                X
                                             </div>
                                             <a target="_blank" href="' . $pic_url . '"> <img style="width:150px;" src="' . $pic_url . '"/>
                                             </a>

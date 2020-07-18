@@ -129,7 +129,7 @@ class TagList extends Base
         if (strtolower(request()->controller()) == 'search') {
             $keywords = input('param.keywords/s', '');
             $typeid = input('param.typeid/s', '');
-            $where['a.title'] = ['like', "%{$keywords}%"];
+            $where['a.title|t.typename'] = ['like', "%{$keywords}%"];
             if($typeid){
                 $where['a.type_id'] = ['in', $typeid];
             }
@@ -154,7 +154,7 @@ class TagList extends Base
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
         $orderby = $logicArchives->getOrderBy($orderby, $orderway);
-        $result = $logicArchives->getArchivesPageList($where, true, $orderby, $pagesize);
+        $result = $logicArchives->getArchivesPageList($where, 'a.*', $orderby, $pagesize);
         $list = is_object($result)?$result->ToArray():$result;
 
         $logicArctype = new \app\index\logic\Arctype();

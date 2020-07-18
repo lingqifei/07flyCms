@@ -53,9 +53,14 @@ class Archives extends IndexBase
      * @return object 返回查询对像
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getArchivesPageList($where = [], $field = true, $order = '', $paginate = 15)
+    public function getArchivesPageList($where = [], $field = '', $order = '', $paginate = 15)
     {
         $this->modelArchives->alias('a');
+        $join = [
+            [SYS_DB_PREFIX . 'arctype t', 't.id = a.type_id','LEFT'],
+        ];
+
+        $this->modelArchives->join = $join;
         $list = $this->modelArchives->getList($where, $field, $order, $paginate);
         return $list;
     }
