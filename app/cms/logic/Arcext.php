@@ -223,7 +223,7 @@ ENGINE=MyISAM;";
         $result=Db::table(SYS_DB_PREFIX.$table['addtable'])->insert($data);
 
         $url = url('ext_list');
-        $result && action_log('编辑', '编辑内容：' . $data['content']);
+        $result && action_log('编辑', '编辑内容：' . $data['title']);
 
         return $result ? [RESULT_SUCCESS, ' 操作成功', $url] : [RESULT_ERROR, $this->modelArcext->getError()];
     }

@@ -124,7 +124,7 @@ class Guestbook extends IndexBase
 
     public function  send_sms($data=[]){
         $parameter['nationCode']='86';
-        $parameter['mobile']='18030402705';
+        $parameter['mobile']=$data['mobile'];
         $parameter['template_id']='659759';
         $parameter['params_array']=[$data['code'],'10'];
         $parameter['sign']='人人海外';
