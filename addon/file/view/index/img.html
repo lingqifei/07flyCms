@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="__STATIC__/addon/file/default.css" />
+<link rel="stylesheet" href="__STATIC__/addon/file/Huploadify.css" />
 <script src="__STATIC__/addon/file/jquery.Huploadify.js"></script>
 
 <div id="upload_picture_{$addons_data['name']}"></div>
@@ -6,6 +6,7 @@
 <div class="upload-img-box{$addons_data['name']}">
     {notempty name="$info[$addons_data['name']]"}
     <div class="upload-pre-item">
+        <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel{$addons_data.name}(this)" ><img src="__STATIC__/addon/file/uploadify-cancel.png" /></div>
         <a target="_blank" href="{$info[$addons_data['name']]|default='0'|get_picture_url}">
             <img  style="max-width: {$addons_config['maxwidth']};" src="{$info[$addons_data['name']]|default='0'|get_picture_url}"/>
         </a>
@@ -14,7 +15,6 @@
 </div>
 
 <script type="text/javascript">
-
     var maxwidth = "{$addons_config['maxwidth']}";
 
     $("#upload_picture_{$addons_data.name}").Huploadify({
@@ -42,6 +42,13 @@
         var src =src.replace(/\/static/g, '');
 
         $(".upload-img-box{$addons_data['name']}").html('<div class="upload-pre-item"> <a target="_blank" href="' + src + '"> <img style="max-width: ' + maxwidth + ';" src="' + src + '"/></a></div>');
+    }
+
+    function picDel{$addons_data.name}(obj)
+    {
+        var addons_name = "{$addons_data.name}";
+        $("#" + addons_name).val('');
+        $(obj).parent().remove();
     }
 
 </script>

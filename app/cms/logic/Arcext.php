@@ -212,7 +212,7 @@ ENGINE=MyISAM;";
     }
 
     /**
-     *  留言表单编辑
+     *  文章扩展内容添加
      */
     public function arcextExtAdd($data = [])
     {
@@ -229,7 +229,7 @@ ENGINE=MyISAM;";
     }
 
     /**
-     *  留言表单编辑
+     *  文章扩展内容编辑
      */
     public function arcextExtEdit($data = [])
     {
@@ -247,7 +247,7 @@ ENGINE=MyISAM;";
     }
 
     /**
-     *  留言表单删除
+     *  文章扩展内容删除
      */
     public function arcextExtDel($data = [])
     {
@@ -263,7 +263,7 @@ ENGINE=MyISAM;";
     }
 
     /**
-     *  留言表单管理处信息
+     *  文章扩展内容详细
      */
     public function getArcextExtInfo($data=[])
     {

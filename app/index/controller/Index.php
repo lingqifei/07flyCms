@@ -22,4 +22,15 @@ class Index extends IndexBase{
         $this->assign('title',$name);
         return $this->fetch('index.html');
     }
+
+
+
+    /**
+     * 设置选择地区
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/9/7 0007
+     */
+    public function  setArea(){
+        $this->logicSysArea->setSysAreaInfo($this->param);
+    }
+
 }

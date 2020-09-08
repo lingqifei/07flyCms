@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="__STATIC__/addon/file/default.css" />
+<link rel="stylesheet" href="__STATIC__/addon/file/Huploadify.css" />
 <script src="__STATIC__/addon/file/jquery.Huploadify.js"></script>
 
 <div id="upload_pictures_{$addons_data['name']}"></div>
@@ -9,7 +9,7 @@
         {volist name="img_ids_list" id='vo'}
             <div class="upload-pre-item" style="float:left; margin: 10px;">
                 <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel{$addons_data.name}(this, {$vo})" >
-                    <img src="/addon/file/static/uploadify-cancel.png" />
+                    <img src="__STATIC__/addon/file/uploadify-cancel.png" />
                 </div>
                 <a target="_blank" href="{$vo|default='0'|get_picture_url}"> <img style="max-width: {$addons_config['maxwidth']};" src="{$vo|default='0'|get_picture_url}"/>
                 </a>
@@ -59,7 +59,6 @@
     {
         
         var addons_name = "{$addons_data.name}";
-        
         var img_ids = $("#" + addons_name).val();
         
         

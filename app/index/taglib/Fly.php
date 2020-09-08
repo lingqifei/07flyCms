@@ -28,26 +28,27 @@ class Fly extends TagLib
         'arcclick'   => ['attr' => 'aid,value,type', 'close' => 0],
         'type' => ['attr' => 'typeid,empty,id,addfields,joinaid'],
 
-        //文章扩展表
+        //文章扩展列表
         'arcextlist' => ['attr' => 'channelid,eid,aid,row,offset,titlelen,limit,orderby,orderway,infolen,empty,mod,name,id,key,addfields,tagid,pagesize,thumb,joinaid'],
-
+        'arcsublist' => ['attr' => 'channelid,typeid,row,offset,titlelen,limit,orderby,orderway,infolen,empty,mod,name,id,key,addfields,tagid,pagesize,thumb,joinaid,linkfield,linkreg,linkvalue'],
+        'arcsubcount' => ['attr' => 'channelid,typeid,linkfield,linkreg,linkvalue', 'close' => 0],//统计下级文章个数
 
         // 相关文档
         'likearticle'    => ['attr' => 'channelid,limit,row,titlelen,infolen,typeid,empty,mod,name,id,key,thumb'],
         'prenext'    => ['attr' => 'get,titlelen,id,empty'],
+
         //文档列表
         'list' => ['attr' => 'channelid,typeid,notypeid,pagesize,titlelen,orderby,orderway,noflag,flag,infolen,empty,mod,id,key,addfields,thumb'],
         'pagelist' => ['attr' => 'listitem,listsize', 'close' => 0],
 
+
+        //查询地址
+        'searchurl'  => ['attr' => '', 'close' => 0],
+        'searchform' => ['attr' => 'channel,channelid,typeid,notypeid,flag,noflag,type,empty,id,mod,key', 'close'=>1],
         'ads' => ['attr' => 'aid,id'],
         'adslist' => ['attr' => 'adsid,row,order,where,id,empty,key,mod,currentstyle'],
         'tag' => ['attr' => 'aid,name,row,id,key,mod,typeid,getall,sort,empty,style,type'],
         'flink' => ['attr' => 'type,row,id,key,mod,titlelen,empty,limit'],
-
-
-        'searchurl'  => ['attr' => '', 'close' => 0],
-        'searchform' => ['attr' => 'channel,channelid,typeid,notypeid,flag,noflag,type,empty,id,mod,key', 'close'=>1],
-        'tag'        => ['attr' => 'aid,name,row,id,key,mod,typeid,getall,sort,empty,style,type'],
         'guestbookform'=> ['attr' => 'typeid,type,empty,id,mod,key,before,beforeSubmit'],
 
         //重写模板标签
@@ -485,6 +486,131 @@ class Fly extends TagLib
     }
 
     /**
+     * arcextlist标签解析 获取指定文档扩展列表（兼容tp的volist标签语法）
+     * 格式：
+     * {fly:arclist channelid='1' typeid='1' row='10' offset='0' titlelen='30' orderby ='aid desc'  infolen='160' empty='' id='field' mod='' name=''}
+     *  {$field.title}
+     *  {$field.typeid}
+     * {/fly:arclist}
+     * @access public
+     * @param array $tag 标签属性
+     * @param string $content 标签内容
+     * @return string|void
+     */
+    public function tagArcsublist($tag, $content)
+    {
+
+        $aid = !empty($tag['aid']) ? $tag['aid'] : '';
+        $aid = $this->varOrvalue($aid);
+
+        $linkfield = !empty($tag['linkfield']) ? $tag['linkfield'] : '';
+        $linkfield = $this->varOrvalue($linkfield);
+
+        $linkreg = !empty($tag['linkreg']) ? $tag['linkreg'] : '';
+        $linkreg = $this->varOrvalue($linkreg);
+
+        $linkvalue = !empty($tag['linkvalue']) ? $tag['linkvalue'] : '';
+        $linkvalue = $this->varOrvalue($linkvalue);
+
+        $typeid = !empty($tag['typeid']) ? $tag['typeid'] : '';
+        $typeid = $this->varOrvalue($typeid);
+
+        $notypeid = !empty($tag['notypeid']) ? $tag['notypeid'] : '';
+        $notypeid = $this->varOrvalue($notypeid);
+
+        $channelid = isset($tag['channelid']) ? $tag['channelid'] : '';
+        $channelid = $this->varOrvalue($channelid);
+
+        $name = !empty($tag['name']) ? $tag['name'] : '';
+        $id = isset($tag['id']) ? $tag['id'] : 'field';
+        $key = !empty($tag['key']) ? $tag['key'] : 'i';
+        $empty = isset($tag['empty']) ? $tag['empty'] : '';
+        $empty = htmlspecialchars($empty);
+        $mod = !empty($tag['mod']) && is_numeric($tag['mod']) ? $tag['mod'] : '2';
+        $orderby = isset($tag['orderby']) ? $tag['orderby'] : '';
+        if (isset($tag['orderWay'])) {
+            $orderway = $tag['orderWay'];
+        } else {
+            $orderway = isset($tag['orderway']) ? $tag['orderway'] : 'desc';
+        }
+        $pagesize = !empty($tag['pagesize']) && is_numeric($tag['pagesize']) ? intval($tag['pagesize']) : 0;
+        $thumb = !empty($tag['thumb']) ? $tag['thumb'] : 'on';
+        $titlelen = !empty($tag['titlelen']) && is_numeric($tag['titlelen']) ? intval($tag['titlelen']) : 100;
+        $infolen = !empty($tag['infolen']) && is_numeric($tag['infolen']) ? intval($tag['infolen']) : 160;
+        $offset = !empty($tag['offset']) && is_numeric($tag['offset']) ? intval($tag['offset']) : 0;
+        $row = !empty($tag['row']) && is_numeric($tag['row']) ? intval($tag['row']) : 10;
+        if (!empty($tag['limit'])) {
+            $limitArr = explode(',', $tag['limit']);
+            $offset = !empty($limitArr[0]) ? intval($limitArr[0]) : 0;
+            $row = !empty($limitArr[1]) ? intval($limitArr[1]) : 0;
+        }
+        $parseStr = '<?php ';
+        // 声明变量
+        $parseStr .= ' if(isset($ui_row) && !empty($ui_row)) : $row = $ui_row; else: $row = ' . $row . '; endif;';
+
+        if ($name) { // 从模板中传入数据集
+            $symbol = substr($name, 0, 1);
+            if (':' == $symbol) {
+                $name = $this->autoBuildVar($name);
+                $parseStr .= '$_result=' . $name . ';';
+                $name = '$_result';
+            } else {
+                $name = $this->autoBuildVar($name);
+            }
+            $parseStr .= 'if(is_array(' . $name . ') || ' . $name . ' instanceof \think\Collection || ' . $name . ' instanceof \think\Paginator): $' . $key . ' = 0; $e = 1;';
+            // 设置了输出数组长度
+            if (0 != $offset || 'null' != $row) {
+                $parseStr .= '$__LIST__ = is_array(' . $name . ') ? array_slice(' . $name . ',' . $offset . ',' . $row . ', true) : ' . $name . '->slice(' . $offset . ',' . $row . ', true); ';
+            } else {
+                $parseStr .= ' $__LIST__ = ' . $name . ';';
+            }
+
+        } else { // 查询数据库获取的数据集
+            $parseStr .= ' $param = array(';
+            $parseStr .= '      "aid"=> '.$aid.',';
+            $parseStr .= '      "typeid"=> '.$typeid.',';
+            $parseStr .= '      "channelid"=> '.$channelid.',';
+            $parseStr .= '      "notypeid"=> '.$notypeid.',';
+            $parseStr .= '      "linkfield"=> ' . $linkfield . ',';
+            $parseStr .= '      "linkreg"=> ' . $linkreg . ',';
+            $parseStr .= '      "linkvalue"=> ' . $linkvalue . ',';
+            $parseStr .= ' );';
+            $parseStr .= ' $tag = ' . var_export($tag, true) . ';';
+            $parseStr .= ' $tagArcsublist = new \app\index\taglib\TagArcsublist;';
+            $parseStr .= ' $_result = $tagArcsublist->getArcsublist($param, $row, "' . $orderby . '", "' . $orderway . '","' . $pagesize . '","' . $thumb . '");';
+
+            $parseStr .= 'if(is_array($_result["list"]) || $_result["list"] instanceof \think\Collection || $_result["list"] instanceof \think\Paginator): $' . $key . ' = 0; $e = 1;';
+            // 设置了输出数组长度
+            if (0 != $offset || 'null' != $row) {
+                $parseStr .= ' $__LIST__ = is_array($_result["list"]) ? array_slice($_result["list"],' . $offset . ', $row, true) : $_result["list"]->slice(' . $offset . ', $row, true); ';
+            } else {
+                $parseStr .= ' $__LIST__ = $_result["list"];';
+            }
+            $parseStr .= ' $__TAG__ = $_result["tag"];';
+        }
+        $parseStr .= 'if( count($__LIST__)==0 ) : echo htmlspecialchars_decode("' . $empty . '");';
+        $parseStr .= 'else: ';
+        $parseStr .= 'foreach($__LIST__ as $key=>$' . $id . '): ';
+        $parseStr .= '$aid = $' . $id . '["id"];';
+        $parseStr .= '$' . $id . '["title"] = text_msubstr($' . $id . '["title"], 0, ' . $titlelen . ', false);';
+        $parseStr .= '$' . $id . '["description"] = text_msubstr($' . $id . '["description"], 0, ' . $infolen . ', true);';
+
+        $parseStr .= '$' . $key . '= intval($key) + 1;?>';
+        $parseStr .= '<?php $mod = ($' . $key . ' % ' . $mod . ' ); ?>';
+        $parseStr .= $content;
+        $parseStr .= '<?php ++$e; ?>';
+        $parseStr .= '<?php $aid = 0; ?>';
+        $parseStr .= '<?php endforeach; endif; else: echo htmlspecialchars_decode("' . $empty . '");endif; ?>';
+        $parseStr .= '<?php $' . $id . ' = []; ?>'; // 清除变量值，只限于在标签内部使用
+
+        if (!empty($parseStr)) {
+            return $parseStr;
+        }
+        return;
+    }
+
+
+    /**
      * arcview标签解析 指定的单个栏目的链接
      * 格式：
      * {fly:arcview aid='' empty=''}
@@ -826,6 +952,55 @@ class Fly extends TagLib
 
         $parseStr .= ' $tagPosition = new \app\index\taglib\TagPosition;';
         $parseStr .= ' $__VALUE__ = $tagPosition->getPosition($typeid, "' . $symbol . '", "' . $style . '");';
+        $parseStr .= ' echo $__VALUE__;';
+        $parseStr .= ' ?>';
+
+        return $parseStr;
+    }
+
+
+    /**
+     * arcsubcount 标签解析
+     * 在模板中获取列表的分页
+     * 格式： {fly:arcsubcount channelid=''  linkfield='' linkreg='' linkvalue=''  typeid="" > "/}
+     * @access public
+     * @param array $tag 标签属性
+     * @return string
+     */
+    public function tagArcsubcount($tag)
+    {
+        $typeid = !empty($tag['typeid']) ? $tag['typeid'] : '';
+        $typeid = $this->varOrvalue($typeid);
+
+        $channelid = !empty($tag['channelid']) ? $tag['channelid'] : '';
+        $channelid = $this->varOrvalue($channelid);
+
+        $linkfield = !empty($tag['linkfield']) ? $tag['linkfield'] : '';
+        $linkfield = $this->varOrvalue($linkfield);
+
+        $linkreg = !empty($tag['linkreg']) ? $tag['linkreg'] : '';
+        $linkreg = $this->varOrvalue($linkreg);
+
+        $linkvalue = !empty($tag['linkvalue']) ? $tag['linkvalue'] : '';
+        $linkvalue = $this->varOrvalue($linkvalue);
+
+        $parseStr = ' <?php ';
+        /*typeid的优先级别从高到低：装修数据 -> 标签属性值 -> 外层标签channelartlist属性值*/
+        //$parseStr .= ' $typeid = ' . $typeid . ';';
+//        $parseStr .= ' if(empty($typeid) && isset($channelartlist["id"]) && !empty($channelartlist["id"])) : $typeid = intval($channelartlist["id"]); endif; ';
+        /*--end*/
+
+        // 查询数据库获取的数据集
+        $parseStr .= ' $param = array(';
+        $parseStr .= '      "typeid"=> '.$typeid.',';
+        $parseStr .= '      "channelid"=> ' . $channelid . ',';
+        $parseStr .= '      "linkfield"=> ' . $linkfield . ',';
+        $parseStr .= '      "linkreg"=> ' . $linkreg . ',';
+        $parseStr .= '      "linkvalue"=> ' . $linkvalue . ',';
+        $parseStr .= ' );';
+
+        $parseStr .= ' $tagArcsubcount = new \app\index\taglib\TagArcsubcount;';
+        $parseStr .= ' $__VALUE__ = $tagArcsubcount->getArcsubcount($param);';
         $parseStr .= ' echo $__VALUE__;';
         $parseStr .= ' ?>';
 

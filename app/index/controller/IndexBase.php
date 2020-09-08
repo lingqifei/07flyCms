@@ -20,6 +20,7 @@ use app\common\controller\ControllerBase;
 
 
 use think\Hook;
+use think\Session;
 
 /**
  * 基类控制器
@@ -34,7 +35,17 @@ class IndexBase extends ControllerBase
     {
         // 执行父类构造方法
         parent::__construct();
+
         $this->initBaseInfo();
+
+        //默认初始化地区信息,i不存在表示为第一次进入
+        if(!Session::has('sys_city_name') || !Session::has('sys_city_id')){
+           $this->logicSysArea->getSysAreaDefaultInfo();
+        }
+        $this->assign('sys_city_id', Session::get('sys_city_id'));
+        $this->assign('sys_city_name', Session::get('sys_city_name'));
+
+//        echo Session::get('sys_city_name');
 
     }
 
@@ -46,13 +57,14 @@ class IndexBase extends ControllerBase
     {
 
         $web_theme = $this->logicWebsite->getWebsiteConfig('web_theme');
+        $web_wap = $this->logicWebsite->getWebsiteConfig('web_wap');
+
         define('THEME_NAME', $web_theme );
         define('THEME_PATH', PATH_PUBLIC.$web_theme );
 
         $root_url = get_file_root_path();
-        //$this->assign('template_dir', STATIC_DOMAIN . SYS_DS_PROS . 'public/theme/' . $web_theme.'/');
         $this->assign('root_url', $root_url);
-        if(is_mobile()){
+        if(is_mobile() && $web_wap){
             $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/wap/');
         }else{
             $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/');
@@ -66,12 +78,13 @@ class IndexBase extends ControllerBase
     final protected function fetch($template = '', $vars = [], $replace = [], $config = [])
     {
 
-        if(is_mobile()){
+        $web_wap = $this->logicWebsite->getWebsiteConfig('web_wap');
+
+        if(is_mobile()  && $web_wap){
             $template=THEME_NAME.DS.'wap'.DS.$template;
         }else{
             $template=THEME_NAME.DS.$template;
         }
-
 
         //$template=THEME_NAME.DS.$template;
         $tpfilepath=PATH_PUBLIC.'theme'.DS.$template;

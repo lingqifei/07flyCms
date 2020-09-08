@@ -53,7 +53,7 @@ class Website extends IndexBase
         foreach ($list as $row){
             $config[$row['name']] =$row['value'];
         }
-        if(!empty($config[$name]) && $name){
+        if(isset($config[$name]) && $name){
             return $config[$name];
         }else{
             return $name.'标签不存在了~';

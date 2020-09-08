@@ -45,7 +45,7 @@ class Archives extends IndexBase
     }
 
 
-    /**文章列表查询
+    /**文章列表查询=>列表页
      * @param array $where
      * @param bool $field
      * @param string $order
@@ -66,7 +66,7 @@ class Archives extends IndexBase
     }
 
 
-    /**文章列表查询
+    /**文章列表查询=》相关文章
      * @param array $where
      * @param bool $field
      * @param string $order
@@ -81,6 +81,37 @@ class Archives extends IndexBase
         if ($limit) $this->modelArchives->limit = $limit;
 
         $list = $this->modelArchives->getList($where, $field, $order, false)->toArray();
+
+        $paginate === false && $list['data'] = $list;
+
+        foreach ($list['data'] as &$row) {
+            $row['litpic'] = get_picture_url($row['litpic']);
+            $row['arcurl'] = $this->getArchivesUrl($row);
+        }
+        return $list;
+    }
+
+    /**文章列表查询=》自已关联文章
+     * @param array $where
+     * @param bool $field
+     * @param string $order
+     * @param int $paginate
+     * @return array
+     * Author: lingqifei created by at 2020/2/27 0027
+     */
+    public function getArchivesSubList($where = [], $field = true, $order = '', $paginate = 15, $limit = '',$addtable)
+    {
+        $this->modelArchives->alias('a');
+
+        $join = [
+            [SYS_DB_PREFIX . $addtable.' b', 'a.id = b.id','LEFT'],
+        ];
+
+        $this->modelArchives->join = $join;
+
+        if ($limit) $this->modelArchives->limit = $limit;
+
+        $list = $this->modelArchives->getList($where, $field, $order, $paginate)->toArray();
 
         $paginate === false && $list['data'] = $list;
 

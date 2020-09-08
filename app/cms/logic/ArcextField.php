@@ -269,14 +269,119 @@ class ArcextField extends CmsBase
 								</div>';
                     break;
                 case "img":
+                    $pic_div = '';
+                    if ($field_value) {
+                        $pic_url = get_picture_url($field_value);
+                        $pic_div .= '<div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this)" ><img src="' . PATH_PUBLIC . '/addon/file/uploadify-cancel.png" /></div>';
+                        $pic_div  .= ' <a target="_blank" href="' . $pic_url . '"><img  style="max-width:150px;" src="' . $pic_url . '"/></a>';
+                    }
                     $htmltxt .= '
                                         <div class="form-group text-left">
-                                            <label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
                                             <div class="col-sm-10">';
-                    $htmltxt .='
-                                        {assign name="'.$row[ "field_name" ].'" value="'.$field_value.'" /}
-                    {:hook(\'File\', [\'name\' => \''.$row[ "field_name" ].'\', \'value\' => $"'.$row[ "field_name" ].'", \'type\' => \'img\'])}
-                    ';
+                    $htmltxt .= '
+                                        <link rel="stylesheet" href="' . PATH_PUBLIC . 'static/addon/file/Huploadify.css">
+                                        <script src="' . PATH_PUBLIC . '/static/addon/file/jquery.Huploadify.js"></script>
+                                        <div id="upload_picture_' . $row["field_name"] . '"></div>
+                                        <input type="hidden" name="' . $row["field_name"] . '" id="' . $row["field_name"] . '" value="0">
+                                        <div class="upload-img-box' . $row["field_name"] . '"> ' . $pic_div . '</div>
+                                        <script type="text/javascript">
+                                            var maxwidth = "150px";
+                                            $("#upload_picture_' . $row["field_name"] . '").Huploadify({
+                                                auto: true,
+                                                height: 30,
+                                                fileObjName: "file",
+                                                buttonText: "上传图片",
+                                                uploader: "' . url('admin/File/pictureUpload', array('session_id' => session_id())) . '",
+                                                width: 120,
+                                                removeTimeout: 1,
+                                                fileSizeLimit:"51200",
+                                                fileTypeExts: "*.jpg; *.png; *.gif;",
+                                                onUploadComplete: uploadPicturelitpic    });
+                                            function uploadPicturelitpic(file, data)
+                                            {
+                                                var data = $.parseJSON(data);
+                                                $("#' . $row["field_name"] . '").val(data.id);
+                                                var src =\'/public/static/upload/picture/\' + data.path;
+                                                var src =src.replace(/\/static/g, \'\');
+                                                $(".upload-img-box' . $row["field_name"] . '").html(\'<div class="upload-pre-item"> <a target="_blank" href="\' + src + \'"> <img style="max-width: \' + maxwidth + \';" src="\' + src + \'"/></a></div>\');
+                                            }
+                                        </script>                
+                                        ';
+                    $htmltxt .= '</div></div>';
+                    break;
+                case "imgs":
+                    $pic_div = '';
+                    if ($field_value) {
+                        $pic_arr = explode(',', $field_value);
+                        foreach ($pic_arr as $value) {
+                            $pic_url = get_picture_url($value);
+                            $pic_div .= '
+                                        <div class="upload-pre-item" style="float:left; margin: 10px;">
+                                            <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this, ' . $value . ')" >
+                                                <img src="' . PATH_PUBLIC . '/addon/file/uploadify-cancel.png" />
+                                            </div>
+                                            <a target="_blank" href="' . $pic_url . '"> <img style="width:150px;" src="' . $pic_url . '"/></a>
+                                        </div>
+                            ';
+                        }
+                    }
+                    $htmltxt .= '
+                                        <div class="form-group text-left">
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+                                            <div class="col-sm-10">';
+                    $htmltxt .= '
+<link rel="stylesheet" href="' . PATH_PUBLIC . 'addon/file/Huploadify.css" />
+<script src="' . PATH_PUBLIC . 'addon/file/jquery.Huploadify.js"></script>
+
+<div id="upload_pictures_' . $row["field_name"] . '"></div>
+<input type="hidden" name="' . $row["field_name"] . '" id="' . $row["field_name"] . '" value="' . $field_value . '"/>
+<div class="upload-img-box' . $row["field_name"] . '">' . $pic_div . '</div>
+
+<script type="text/javascript">
+    var maxwidth = "150px";
+    $("#upload_pictures_' . $row["field_name"] . '").Huploadify({
+        auto: true,
+        height          : 30,
+        fileObjName     : "file",
+        buttonText      : "上传多个图片",
+       // uploader        : "{:url(\'admin/File/pictureUpload\',array(\'session_id\'=>session_id()))}",
+        uploader: "' . url('admin/File/pictureUpload', array('session_id' => session_id())) . '",
+        width         : 120,
+        removeTimeout	  : 1,
+        fileSizeLimit:"51200",
+        fileTypeExts: "*.jpg; *.png; *.gif;",
+        onUploadComplete : uploadPicture' . $row["field_name"] . '
+    });
+
+    function uploadPicture' . $row["field_name"] . '(file, data){
+        var data = $.parseJSON(data);
+        var addons_name = "' . $row["field_name"] . '";
+        var img_ids = $("#" + addons_name).val();
+        var add_id = data.id;
+        if(img_ids){ var lastChar = img_ids.charAt(img_ids.length - 1);  if(lastChar != \',\'){  add_id = img_ids + \',\' + add_id; } }
+        $("#" + addons_name).val(add_id);
+        //var src = \'/upload/picture/\' + data.path;
+        var src =\'__STATIC__/upload/picture/\' + data.path;
+        var src =src.replace(/\/static/g, \'\');
+        $(".upload-img-box" + addons_name).append(\'<div class="upload-pre-item" style="float:left; margin: 10px;"> <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this,\'+data.id+\')" ><img src="' . PATH_PUBLIC . '/addon/file/uploadify-cancel.png" /></div> <a target="_blank" href="\' + src + \'"> <img style="max-width: \' + maxwidth + \';" src="\' + src + \'"/></a></div>\');
+    }
+
+    function picDel' . $row["field_name"] . '(obj, pic_id)
+    {
+        var addons_name = "' . $row["field_name"] . '";
+        var img_ids = $("#" + addons_name).val();
+        if(img_ids.indexOf(",") > 0)
+        {
+            img_ids.indexOf(pic_id) == 0 ? img_ids = img_ids.replace(pic_id + \',\', \'\') : img_ids = img_ids.replace(\',\' + pic_id, \'\');
+            $("#" + addons_name).val(img_ids);
+        }else{
+            $("#" + addons_name).val(\'\');
+        }
+        $(obj).parent().remove();
+    }
+</script>
+                                            ';
                     $htmltxt .= '</div></div>';
                     break;
                 default:
