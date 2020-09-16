@@ -50,24 +50,22 @@ class TagArcextlist extends Base
      * @param     string  $thumb  是否开启缩略图
      * @return    array
      */
-    public function getArcextlist($param = array(),  $row = 15, $orderby = '', $orderway = '', $pagesize = 0, $thumb = '')
+    public function getArcextlist($param = array(),  $row = 15, $orderby = '', $orderway = '', $pagesize = 20, $thumb = '')
     {
         $result = false;
 
         $param['aid'] = !empty($param['aid']) ? $param['aid'] : $this->aid;
 
         empty($orderway) && $orderway = 'desc';
-        $pagesize = empty($pagesize) ? intval($row) : intval($pagesize);
-        $limit = $row;
 
+        $pagesize = empty($pagesize) ? intval($row) : intval($pagesize);
 
         if (!empty($param['eid'])) {
             if (!preg_match('/^\d+([\d\,]*)$/i', $param['eid'])) {
-                echo '标签arclist报错：eid属性值语法错误，请正确填写栏目ID。';
+                echo '标签arclist报错：eid属性值语法错误，请正确填写模型扩展表ID编号。';
                 return false;
             }
         }
-
         /*获取文档列表*/
         $where = [];
         if(!empty($param['eid'])){
@@ -79,21 +77,14 @@ class TagArcextlist extends Base
             $where['aid']=['=',0];
         }
         $logicArchives = new \app\index\logic\Arcext();
-
         $orderby =$logicArchives->getOrderBy($orderby,$orderway);
-        $result = $logicArchives->getArcextList($where, true, $orderby,false);
-
-        //获取文档栏目信息
-        $logicArctype = new \app\index\logic\Arctype();
-        foreach ($result['data'] as &$row){
-            $row['litpic_array']=explode(',',$row['litpic']);
-//            $typeinfo=$logicArctype->getArctypeInfo(['id'=>$row['type_id']]);
-//            if($typeinfo){
-//                $row['typename']=$typeinfo['typename'];
-//                $row['typeurl']=$typeinfo['typeurl'];
-//            }
+        $result = $logicArchives->getArcextList($where, true, $orderby,$pagesize);
+        if(is_array($result['data'])){
+            foreach($result['data'] as &$row){
+                $row['litpic_array']=explode(',',$row['litpic']);
+            }
         }
-
+        //返回数据格式
         $data=[
             "list"=>$result['data'],
             "tag"=>'',

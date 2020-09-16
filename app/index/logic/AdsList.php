@@ -27,7 +27,7 @@ class AdsList extends IndexBase
      * @return mixed
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getAdsListList($where = [], $field = true, $order = '', $paginate = 15)
+    public function getAdsListList($where = [], $field = true, $order = 'sort asc', $paginate = 15)
     {
 
         $this->modelAdsList->alias('a');

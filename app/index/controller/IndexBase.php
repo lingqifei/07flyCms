@@ -45,7 +45,7 @@ class IndexBase extends ControllerBase
         $this->assign('sys_city_id', Session::get('sys_city_id'));
         $this->assign('sys_city_name', Session::get('sys_city_name'));
 
-//        echo Session::get('sys_city_name');
+        //echo Session::get('sys_city_name');
 
     }
 

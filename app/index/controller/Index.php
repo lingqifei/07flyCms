@@ -31,6 +31,21 @@ class Index extends IndexBase{
      */
     public function  setArea(){
         $this->logicSysArea->setSysAreaInfo($this->param);
+        $this->redirect('index/index');
+    }
+
+    /**
+     * 提取选择地区
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/9/7 0007
+     */
+    public function  getArea(){
+        $list=$this->logicSysArea->getSysAreaList('','','',false);
+        $html='<div class="sys_city_list">';
+        foreach ($list as $row){
+            $html .='<a href="'.url("index/setArea",array('id'=>$row['id'])).'">'.$row['name'].'</a>';
+        }
+        $html .='</div>';
+        return $html;
     }
 
 }

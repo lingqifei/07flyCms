@@ -39,12 +39,14 @@ class Arcext extends IndexBase
             $condtion['archives_id']=$where['aid'];
             $condtion['arcext_id']=['=',$info['id']];
 
-            $ext_list = Db::name($addtable)
+            $ext_list_result = Db::name($addtable)
+                ->alias('a')
                 ->where($condtion)
-                ->paginate(false)
-                ->toArray();
-            if ($ext_list) {
-                return $ext_list;
+                ->order($order)
+                ->limit($paginate)
+                ->select();
+            if ($ext_list_result) {
+                return array('data'=>$ext_list_result);
             } else {
                 return array('data'=>'');
             }

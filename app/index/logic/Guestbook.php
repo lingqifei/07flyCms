@@ -62,10 +62,10 @@ class Guestbook extends IndexBase
                 $addData[$field]=$val;
             }
         }
+
         $result=Db::name($table['addtable'])->insert($addData);
 
         $result && action_log('新增', '新增留言信息，表单name：' . $data['addfield']);
-
         return $result ? [RESULT_SUCCESS, '添加成功', $url] : [RESULT_ERROR, $this->modelGuestbook->getError()];
     }
 

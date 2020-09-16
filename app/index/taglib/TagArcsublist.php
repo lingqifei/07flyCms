@@ -54,10 +54,11 @@ class TagArcsublist extends Base
     {
         $result = false;
 
-        $param['aid'] = !empty($param['aid']) ? $param['aid'] : $this->aid;
+        //$param['aid'] = !empty($param['aid']) ? $param['aid'] : $this->aid;
 
         empty($orderway) && $orderway = 'desc';
 
+        $pagesize = empty($pagesize) ? intval($row) : intval($pagesize);
 
         if (empty($param['linkfield'])) {
             echo '标签arcsublist报错：linkfield属性值不能为空，请正确填写关联field。';
@@ -114,8 +115,12 @@ class TagArcsublist extends Base
             $where['a.channel_id'] = ['=', $param['channelid']];
 
             $addtable = Db::name('channel')->where('id', $param['channelid'])->value('addtable');
-            $addfield = Db::name('channel_field')->where('ext_table', $addtable)->column('field_name');
-
+            if(!empty($addtable)){
+                $addfield = Db::name('channel_field')->where('ext_table', $addtable)->column('field_name');
+            }else{
+                echo '标签arcsublist报错：channelid填写值出错，无法查询到输入id的信息';
+                return false;
+            }
             if(in_array($param['linkfield'],$addfield)){
                 $linkfield='b.'.$param['linkfield'];
             }else{
@@ -136,12 +141,12 @@ class TagArcsublist extends Base
 
         $logicArchives = new \app\index\logic\Archives();
         $orderby =$logicArchives->getOrderBy($orderby,$orderway);
-        $result = $logicArchives->getArchivesSubList($where, 'a.*,b.*', $orderby,$row,$limit='',$addtable);
+        $result = $logicArchives->getArchivesSubList($where, 'a.*,b.*', $orderby,$pagesize,$limit='',$addtable);
         //获取文档栏目信息
         $logicArctype = new \app\index\logic\Arctype();
         foreach ($result['data'] as &$row){
             $row['litpic_array']=explode(',',$row['litpic']);
-            $row=$logicArchives->getArchivesInfo(['id'=>$row['id']]);
+//$row=$logicArchives->getArchivesInfo(['id'=>$row['id']]);
 //            $typeinfo=$logicArctype->getArctypeInfo(['id'=>$row['type_id']]);
 //            if($typeinfo){
 //                $row['typename']=$typeinfo['typename'];

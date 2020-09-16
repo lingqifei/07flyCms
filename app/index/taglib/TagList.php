@@ -62,12 +62,11 @@ class TagList extends Base
     public function getList($param = array(), $pagesize = 10, $orderby = '', $addfields = '', $orderway = '', $thumb = '')
     {
         $result = false;
-
         $param['channelid'] = ("" != $param['channelid'] && is_numeric($param['channelid'])) ? intval($param['channelid']) : '';
         $param['typeid'] = !empty($param['typeid']) ? $param['typeid'] : $this->tid;
         empty($orderway) && $orderway = 'desc';
+
         $pagesize = empty($pagesize) ? intval($pagesize) : intval($pagesize);
-        $limit = $pagesize;
 
         if (!empty($param['channelid'])) {
             if (!preg_match('/^\d+([\d\,]*)$/i', $param['channelid'])) {
@@ -89,7 +88,6 @@ class TagList extends Base
                 echo '标签arclist报错：typeid属性值语法错误，请正确填写栏目ID。';
                 return false;
             }
-
             // 过滤typeid中含有空值的栏目ID
             $logicArctype = new \app\index\logic\Arctype();
             $typeidArr_tmp = explode(',', $param['typeid']);
@@ -103,9 +101,7 @@ class TagList extends Base
                     $typeid_son && $typeidArr_son=array_merge($typeidArr_son,$typeid_son);
                 }
             }
-
             $typeidArr_tmp = array_merge($typeidArr_tmp,$typeidArr_son);
-
             $param['typeid'] = implode(',', $typeidArr_tmp);
             // end
         }
@@ -142,26 +138,51 @@ class TagList extends Base
             if (!empty($tag)) {
                 $tagidArr = M('tagindex')->where(array('tag'=>array('LIKE', "%{$tag}%")))->column('id', 'id');
                 $aidArr = M('taglist')->field('aid')->where(array('tid'=>array('in', $tagidArr)))->column('aid', 'aid');
-                $condition['aid'] = array('in', $aidArr);
+                $where['a.id'] = array('in', $aidArr);
             } elseif ($tagid > 0) {
                 $aidArr = M('taglist')->field('aid')->where(array('tid'=>array('eq', $tagid)))->column('aid', 'aid');
-                $condition['aid'] = array('in', $aidArr);
+                $where['a.id'] = array('in', $aidArr);
             }
         }
-
-
 
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
         $orderby = $logicArchives->getOrderBy($orderby, $orderway);
-        $result = $logicArchives->getArchivesPageList($where, 'a.*', $orderby, $pagesize);
+
+        //判断是否查询指定频道扩展关联表
+        if (!empty($param['channelexttable'])) {
+
+            $fg = input('param.fg/s', '');
+            $fx = input('param.fx/s', '');
+            $mj = input('param.mj/s', '');
+            $level = input('param.level/s', '');
+            $scfg = input('param.scfg/s', '');
+
+            if(!empty($mj)){
+                $where['e.house_area'] = ['=', $mj];
+            }
+            if(!empty($fg)){
+                $where['e.house_style'] = ['=', $fg];
+            }
+            if(!empty($fx)){
+                $where['e.house_type'] = ['=', $fx];
+            }
+            if(!empty($level)){
+                $where['e.dg_level'] = ['=', $level];
+            }
+            if(!empty($scfg)){
+               $where['e.dg_scfg']=['like','%'.$scfg.'%'];
+            }
+            $result = $logicArchives->getArchivesExtablePageList($where, 'a.*,e.*', $orderby, $pagesize,$param['channelexttable']);
+        }else{
+            $result = $logicArchives->getArchivesPageList($where, 'a.*', $orderby, $pagesize);
+        }
+
+        //对像转为数组
+        //解析整理查询数据
         $list = is_object($result)?$result->ToArray():$result;
-
         $logicArctype = new \app\index\logic\Arctype();
-
-        //获取文档栏目信息
         foreach ($list['data'] as &$row) {
-            $row=$logicArchives->getArchivesInfo(["id"=>$row['id']], $field = true);
             $typeinfo = $logicArctype->getArctypeInfo(['id' => $row['type_id']]);
             if ($typeinfo) {
                 $row['typename'] = $typeinfo['typename'];
@@ -170,7 +191,8 @@ class TagList extends Base
             $row['litpic'] = get_picture_url($row['litpic']);
             $row['arcurl'] = $logicArchives->getArchivesUrl($row);
         }
-        //print_r($result);exit;
+
+//        print_r($result);exit;
         $data = [
             "list" => $list['data'],
             "pages" => $result,

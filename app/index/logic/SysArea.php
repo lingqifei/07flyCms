@@ -20,6 +20,15 @@ use \think\Session;
 class SysArea extends IndexBase
 {
 
+
+    public function getSysAreaList($where = [], $field = true, $order = '', $paginate = 15)
+    {
+
+        $this->modelSysArea->alias('a');
+        $list= $this->modelSysArea->getList($where, $field, $order, $paginate)->toArray();
+        return $list;
+    }
+
     public function  getSysAreaInfo($where=[],$field=true){
         return $this->modelSysArea->getInfo($where, $field);
     }

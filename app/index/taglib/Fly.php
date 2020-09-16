@@ -38,7 +38,7 @@ class Fly extends TagLib
         'prenext'    => ['attr' => 'get,titlelen,id,empty'],
 
         //文档列表
-        'list' => ['attr' => 'channelid,typeid,notypeid,pagesize,titlelen,orderby,orderway,noflag,flag,infolen,empty,mod,id,key,addfields,thumb'],
+        'list' => ['attr' => 'channelid,channelexttable,typeid,notypeid,pagesize,titlelen,orderby,orderway,noflag,flag,infolen,empty,mod,id,key,addfields,thumb'],
         'pagelist' => ['attr' => 'listitem,listsize', 'close' => 0],
 
 
@@ -839,6 +839,9 @@ class Fly extends TagLib
         $channelid = isset($tag['channelid']) ? $tag['channelid'] : '';
         $channelid = $this->varOrvalue($channelid);
 
+        $channelexttable = isset($tag['channelexttable']) ? $tag['channelexttable'] : '';
+        $channelexttable = $this->varOrvalue($channelexttable);
+
         $addfields = isset($tag['addfields']) ? $tag['addfields'] : '';
         $addfields = $this->varOrvalue($addfields);
 
@@ -850,8 +853,8 @@ class Fly extends TagLib
         $pagesize = !empty($tag['pagesize']) && is_numeric($tag['pagesize']) ? intval($tag['pagesize']) : 10;
         $thumb = !empty($tag['thumb']) ? $tag['thumb'] : 'on';
         $orderby = isset($tag['orderby']) ? $tag['orderby'] : '';
-        if (isset($tag['orderWay'])) {
-            $orderway = $tag['orderWay'];
+        if (isset($tag['orderway'])) {
+            $orderway = $tag['orderway'];
         } else {
             $orderway = isset($tag['orderway']) ? $tag['orderway'] : 'desc';
         }
@@ -874,6 +877,7 @@ class Fly extends TagLib
         $parseStr .= '      "flag"=> "' . $flag . '",';
         $parseStr .= '      "noflag"=> "' . $noflag . '",';
         $parseStr .= '      "channelid"=> ' . $channelid . ',';
+        $parseStr .= '      "channelexttable"=> ' . $channelexttable . ',';
         $parseStr .= ' );';
         // $parseStr .= ' $orderby = "'.$orderby.'";';
         $parseStr .= ' $tagList = new \app\index\taglib\TagList;';
