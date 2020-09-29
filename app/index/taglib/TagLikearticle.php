@@ -62,7 +62,31 @@ class TagLikearticle extends Base
             $where['a.channelid']=['in',$channelid];
         }
 
-        if($channelid){
+
+        if (!empty($typeid)) {
+            if (!preg_match('/^\d+([\d\,]*)$/i', $typeid)) {
+                echo '标签arclist报错：typeid属性值语法错误，请正确填写栏目ID。';
+                return false;
+            }
+            // 过滤typeid中含有空值的栏目ID
+            $logicArctype = new \app\index\logic\Arctype();
+            $typeidArr_tmp = explode(',', $typeid);
+            $typeidArr_tmp = array_unique($typeidArr_tmp);//过滤重复的
+            $typeidArr_son = [];//得到子级栏目
+            foreach ($typeidArr_tmp as $k => $v) {
+                if (empty($v)) {
+                    unset($typeidArr_tmp[$k]);
+                }else{
+                    $typeid_son=$logicArctype->getArctypeAllSon($v);
+                    $typeid_son && $typeidArr_son=array_merge($typeidArr_son,$typeid_son);
+                }
+            }
+            $typeidArr_tmp = array_merge($typeidArr_tmp,$typeidArr_son);
+            $typeid = implode(',', $typeidArr_tmp);
+            // end
+        }
+        
+        if($typeid){
             $where['a.type_id']=['in',$typeid];
         }
 
