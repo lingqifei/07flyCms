@@ -42,7 +42,6 @@ class Lists extends IndexBase{
             );
             $this->nid=$this->logicChannel->getChannelValue(['id'=>$type['channel_id']],'nid');
         }
-
         /*模板文件*/
         $tpfile= 'lists_' . $this->nid;
         //判断栏目类型0=列表，1=封面
@@ -51,6 +50,35 @@ class Lists extends IndexBase{
         }else if ($type['ispart'] == 1){
             $tpfile=$type['temp_index'];
         }
+
+        //start  动态添加搜索关键字变量 start *******************************************************
+        if(!empty($this->param['mj'])){//面积
+            $this->assign('mj', $this->param['mj']);
+        }else{
+            $this->assign('mj', '');
+        }
+        if(!empty($this->param['fx'])){//户型
+            $this->assign('fx', $this->param['fx']);
+        }else{
+            $this->assign('fx', '');
+        }
+        if(!empty($this->param['fg'])){//风格
+            $this->assign('fg', $this->param['fg']);
+        }else{
+            $this->assign('fg', '');
+        }
+        if(!empty($this->param['level'])){//风格
+            $this->assign('level', $this->param['level']);
+        }else{
+            $this->assign('level', '');
+        }
+        if(!empty($this->param['scfg'])){//风格
+            $this->assign('scfg', $this->param['scfg']);
+        }else{
+            $this->assign('scfg', '');
+        }
+        //end 动态添加搜索关键字变量 end *******************************************************
+
         $viewfile = !empty($tpfile)?strtolower($tpfile):$tpfile;
         $this->typeinfo =$rtnArray ;
         $this->assign('fly', $this->typeinfo);

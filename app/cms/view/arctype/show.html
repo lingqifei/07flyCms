@@ -96,14 +96,9 @@
     </tr>
     <% } %>
 </script>
-<script src="__STATIC__/module/admin/js/content.js?v=1.0.0"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-
-        //BindEvent();
-
         window.onload = onLoad();
-
         //页面加载
         function onLoad() {
             $('.searchForm').find("input[name='pid']").val('');
@@ -125,9 +120,7 @@
                     }
                 });
             }, "json");
-
             turnPage(1);//页面加载时初始化分页
-
         }
 
 

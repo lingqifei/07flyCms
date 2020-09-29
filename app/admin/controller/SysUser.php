@@ -26,21 +26,34 @@ class SysUser extends AdminBase
      */
     public function show()
     {
-
         return $this->fetch('show');
     }
 
+    /**
+     * 选择查看
+     */
+    public function lookup()
+    {
+        //input ids name
+        if (!empty($this->param['input_ids'])) {
+            $this->assign('input_ids', $this->param['input_ids']);
+        }else{
+            $this->assign('input_ids', 'input_ids');
+        }
+        //input texts name
+        if (!empty($this->param['input_text'])) {
+            $this->assign('input_text', $this->param['input_text']);
+        }else{
+            $this->assign('input_text', 'input_text');
+        }
+
+        return $this->fetch('lookup');
+    }
+
+
     public function show_json()
     {
-        $where = [];
-        if (!empty($this->param['keywords'])) {
-            $where['username|mobile|realname'] = ['like', '%' . $this->param['keywords'] . '%'];
-        }
-        if (!empty($this->param['pid'])) {
-            $ids=$this->logicSysDept->getDeptAllSon($this->param['pid']);
-            $ids[]=$this->param['pid'];
-            $where['dept_id'] = ['in', $ids];
-        }
+        $where =$this->logicSysUser->getWhere($this->param);
         $list = $this->logicSysUser->getSysUserList($where)->toArray();
         foreach ($list['data'] as &$row) {
             $row['sys_auth_name'] = arr2str(array_column($this->logicSysAuthAccess->getUserAuthListName($row['id']), 'name'), ',');

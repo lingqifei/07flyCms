@@ -35,7 +35,7 @@ function action_log($name = '', $describe = '')
             $v['level']          = $level + 1;
             $v['treename'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $level) . '|--' . $v[$name];
             $v['tags']           = $v['id'];
-            $v['text']           = $v[$name];
+            $v['text']           = $v[$name].'(ID:'.$v['id'].')';
             $tree[] = $v;
         }
     }

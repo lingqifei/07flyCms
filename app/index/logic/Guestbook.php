@@ -62,10 +62,10 @@ class Guestbook extends IndexBase
                 $addData[$field]=$val;
             }
         }
+
         $result=Db::name($table['addtable'])->insert($addData);
 
         $result && action_log('新增', '新增留言信息，表单name：' . $data['addfield']);
-
         return $result ? [RESULT_SUCCESS, '添加成功', $url] : [RESULT_ERROR, $this->modelGuestbook->getError()];
     }
 
@@ -124,7 +124,7 @@ class Guestbook extends IndexBase
 
     public function  send_sms($data=[]){
         $parameter['nationCode']='86';
-        $parameter['mobile']='18030402705';
+        $parameter['mobile']=$data['mobile'];
         $parameter['template_id']='659759';
         $parameter['params_array']=[$data['code'],'10'];
         $parameter['sign']='人人海外';

@@ -54,7 +54,7 @@ function list2tree($list, $pId = 0, $level = 0, $pk='id', $pidk = 'pid',$name='n
 }
 
 
-if (!function_exists("list2select")) {
+if (!function_exists("list2tree2menu")) {
 
     //得到把列表数据=》数形参数
     //导出为菜单格式

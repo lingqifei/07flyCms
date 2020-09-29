@@ -39,8 +39,6 @@ class View extends IndexBase{
                 echo "aid错误~";
                 exit;
             }
-            $archives['litpic']=get_picture_url($archives['litpic']);
-
             //栏目处理
             $type=$this->logicArctype->getArctypeInfo(['id'=>$archives['type_id']]);
             //模型处理

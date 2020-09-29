@@ -14,7 +14,7 @@
 namespace app\cms\logic;
 
 use app\common\logic\TableField;
-
+use think\Db;
 /**
  * 网站管理=》逻辑层
  */
@@ -42,11 +42,8 @@ class Website extends CmsBase
     {
 
         foreach ($data as $key=>$value){
-            $val=[
-                'value'=>$value
-            ];
             $map['name']=['=',$key];
-            $result = $this->modelWebsite->setFieldValue($map,'value',$value);
+            $result=Db::name('website')->where('name',$key)->setField('value', $value);
         }
         $url = url('show');
         $result && action_log('编辑', '编辑网站配置');
@@ -126,11 +123,15 @@ class Website extends CmsBase
 									<label class="col-sm-2 control-label">' . $row[ "title" ] . '</label>
 									<div class="col-sm-8">';
                 if($row['value']==1){
-                    $htmltxt .= '<input name="' . $row[ "name" ] . '" type="radio" value="1" checked/>  开启';
-                    $htmltxt .= '<input name="' . $row[ "name" ] . '" type="radio" value="0" />  关闭';
+                    $htmltxt .='<div class="checkbox i-checks">';
+                    $htmltxt .= '<input name="' . $row[ "name" ] . '" type="radio" value="1" checked/>开启&nbsp;&nbsp; ';
+                    $htmltxt .= '<input name="' . $row[ "name" ] . '" type="radio" value="0" /> 关闭';
+                    $htmltxt .='</div>';
                 }else{
-                    $htmltxt .= '<input name="' . $row[ "name" ] . '" type="radio" value="1"/>  开启';
-                    $htmltxt .= '<input name="' . $row[ "name" ] . '" type="radio" value="0" checked/>  关闭';
+                    $htmltxt .='<div class="radio i-checks">';
+                    $htmltxt .= '<input name="' . $row[ "name" ] . '" type="radio" value="1"/>开启&nbsp;&nbsp; ';
+                    $htmltxt .= '<input name="' . $row[ "name" ] . '" type="radio" value="0" checked/>关闭';
+                    $htmltxt .='</div>';
                 }
                 $htmltxt .='<span class="help-block m-b-none">' . $row[ 'describe' ] . '</span> 
 									</div>

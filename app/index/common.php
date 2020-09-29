@@ -69,3 +69,45 @@ function is_mobile()
     }
     return $is_mobile;
 }
+
+//获得访客的IP
+function get_ip()
+{
+    $ip = false;
+    if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
+        $ip = $_SERVER["HTTP_CLIENT_IP"];
+    }
+    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ips = explode(", ", $_SERVER['HTTP_X_FORWARDED_FOR']);
+        if ($ip) {
+            array_unshift($ips, $ip);
+            $ip = FALSE;
+        }
+        for ($i = 0; $i < count($ips); $i++) {
+            if (!preg_match("/^(10│172.16│192.168)./", $ips[$i])) {
+                $ip = $ips[$i];
+                break;
+            }
+        }
+    }
+    return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
+}
+
+
+/*
+ * 根据ip地址查询城市名称=》查询库中城市的IP地址
+ * */
+function get_city(){
+    $ip=get_ip();
+    $ip='220.166.203.183';
+    //echo $ip;exit;
+    $api_url="https://restapi.amap.com/v3/ip?ip=$ip&key=d775fd6b51c31589776004b109d43ff7";
+    //根据IP地址定位所在城市
+    $res = file_get_contents($api_url);
+    $res = json_decode($res,true);
+    if(!empty($res)){
+        return $res['city'];
+    }else{
+        return '';
+    }
+}

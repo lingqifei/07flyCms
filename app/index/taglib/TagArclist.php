@@ -71,7 +71,6 @@ class TagArclist extends Base
 
         empty($orderway) && $orderway = 'desc';
         $pagesize = empty($pagesize) ? intval($row) : intval($pagesize);
-        $limit = $row;
 
         if (!empty($param['channelid'])) {
             if (!preg_match('/^\d+([\d\,]*)$/i', $param['channelid'])) {
@@ -127,11 +126,10 @@ class TagArclist extends Base
             $where['a.flag']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
         }
 
-
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
         $orderby =$logicArchives->getOrderBy($orderby,$orderway);
-        $result = $logicArchives->getArchivesList($where, true, $orderby,false);
+        $result = $logicArchives->getArchivesList($where, true, $orderby,$pagesize);
 
         //获取文档栏目信息
         $logicArctype = new \app\index\logic\Arctype();
@@ -144,6 +142,7 @@ class TagArclist extends Base
             }
         }
 
+        //是引用扩展字段
         if($addfields){
             foreach ($result['data'] as &$row) {
                 $row=$logicArchives->getArchivesInfo(['id'=>$row['id']]);

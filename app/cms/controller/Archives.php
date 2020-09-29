@@ -39,8 +39,8 @@ class Archives extends CmsBase
                 $info = $this->logicArctype->getArctypeInfo(['id' => $this->param['id']]);
                 return $info;
             }
-
         }
+        $this->comm();
         return $this->fetch('show');
     }
 
@@ -90,8 +90,8 @@ class Archives extends CmsBase
             $this->jump( [RESULT_ERROR, 'id参数出错',url('archives/show')]);
         }
 
-        $arctype=$this->logicArctype->getArctypeInfoDetail($info['type_id']);
-        $ext_field= $this->logicChannelField->channelExtFieldHtml($arctype['addtable'],$info);
+        $channel=$this->logicChannel->getChannelInfo(['id'=>$info['channel_id']],'addtable');
+        $ext_field= $this->logicChannelField->channelExtFieldHtml($channel['addtable'],$info);
         $checkbox= $this->logicArcatt->getArcattCheckbox('flag',$info['flag']);//属性
         $this->assign('arcatt_checkbox_html', $checkbox);
         $this->assign('info', $info);
@@ -138,6 +138,9 @@ class Archives extends CmsBase
         $listtree= $this->logicArctype->getArctypeListTree($where='');
         $arctypelist= $this->logicArctype->getArctypeListSelect($listtree);
         $this->assign('arctypelist', $arctypelist);
+
+        $sys_area_list= $this->logicSysArea->getSysAreaTreeSelect();
+        $this->assign('sys_area_list', $sys_area_list);
 
     }
 

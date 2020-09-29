@@ -133,55 +133,6 @@ class Arctype extends CmsBase
         return $tree;
     }
 
-
-    //输出树形参数
-    function getArctypeListHtml($tree) {
-        $html = '';
-        foreach ( $tree as $row ) {
-            $kg=($row['visible']=='0')?'[ 隐藏 ]':'';
-            for($x=1;$x<$row['level'];$x++) {
-                $kg .="<i class='fly-fl'>|—</i>";
-            }
-            if ( $row[ 'nodes' ] == '' ) {
-                $html .= "<li><div class='row lines'>
-                                <div class='col-sm-1'>ID:".$row['id']."</div>
-								<i class='col-sm-1'>&nbsp;&nbsp;</i>
-								<div  class='col-sm-6'>".$kg . $row['typename']."</div>
-								<div class='col-sm-1'>文章</div>
-								<div  class='col-sm-2'>
-									<a class='ajax-open' data-url='".url('Arctype/add',array('id'=>$row["id"]))."'>增加下级</a> 
-									<a class='ajax-open' data-url='".url('Arctype/edit',array('id'=>$row["id"]))."'>修改</a> 
-									<a class='ajax-del' data-url='".url('Arctype/del',array('id'=>$row["id"]))."' >删除</a>
-								</div>
-								<div class='col-sm-1'>
-								    <input type='text'  data-url='".url('Arctype/set_sort',array('id'=>$row["id"]))."'  value='".$row['sort']."' class='form-control ajax-sort' title='排序'/>
-								 </div>
-							</div>
-						  </li>";
-            } else {
-                $html .= "<li>
-                                <div class='row lines'>
-                                <div class='col-sm-1'>ID:".$row['id']."</div>
-								<lable class='col-sm-1'>+</lable>
-								<div  class='col-sm-6'>".$kg. $row['typename']."</div>
-								<div class='col-sm-1'>文章</div>
-								<div  class='col-sm-2'>
-									<a class='ajax-open' data-url='".url('Arctype/add',array('id'=>$row["id"]))."'>增加下级</a> 
-									<a class='ajax-open' data-url='".url('Arctype/edit',array('id'=>$row["id"]))."'>修改</a> 
-									<a class='ajax-del' data-url='".url('Arctype/del',array('id'=>$row["id"]))."' >删除</a>
-								</div>
-								<div class='col-sm-1'>
-								    <input type='text'  data-url='".url('Arctype/set_sort',array('id'=>$row["id"]))."'  value='".$row['sort']."' class='form-control ajax-sort' title='排序'/>
-								 </div>
-							</div>
-							";
-                $html .= $this->getArctypeListHtml( $row[ 'nodes' ] );
-                $html .= "</li>";
-            }
-        }
-        return $html ? '<ul>' . $html . '</ul>': $html;
-    }
-
     //输出树形参数
     function getArctypeListSelect($tree) {
         if(!empty($tree)){

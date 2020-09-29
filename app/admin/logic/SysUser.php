@@ -233,5 +233,25 @@ class SysUser extends AdminBase
     }
 
 
+    /**
+     * 查询条件
+     * 
+     * @return array|mixed
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/7/19 0019
+     */
+    public function getWhere($data=[])
+    {
+        $where = [];
+        if (!empty($data['keywords'])) {
+            $where['username|mobile|realname'] = ['like', '%' . $data['keywords'] . '%'];
+        }
+        if (!empty($data['pid'])) {
+            $ids = $this->logicSysDept->getDeptAllSon($data['pid']);
+            $ids[] = $data['pid'];
+            $where['dept_id'] = ['in', $ids];
+        }
+
+        return $where;
+    }
 
 }

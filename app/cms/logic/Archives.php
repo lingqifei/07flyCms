@@ -85,6 +85,7 @@ class Archives extends CmsBase
             'channel_id'=>$arctype['channel_id'],
             'type_id'=>$data['type_id'],
             'type_id2'=>$data['type_id2'],
+            'sys_area_id'=>$data['sys_area_id'],
             'title'=>$data['title'],
             'shorttitle'=>$data['shorttitle'],
             'flag'=>(!empty($data['flag']))?implode(",",$data['flag']):'',
@@ -151,6 +152,7 @@ class Archives extends CmsBase
             'channel_id'=>$arctype['channel_id'],
             'type_id'=>$data['type_id'],
             'type_id2'=>$data['type_id2'],
+            'sys_area_id'=>$data['sys_area_id'],
             'title'=>$data['title'],
             'shorttitle'=>$data['shorttitle'],
             'flag'=>(!empty($data['flag']))?implode(",",$data['flag']):'',
@@ -221,12 +223,13 @@ class Archives extends CmsBase
     {
         $info=$this->modelArchives->getInfo($where, $field)->toArray();
         if($info){
-            $arctype=$this->logicArctype->getArctypeInfoDetail($info['type_id']);
-            $ext_info=Db::table(SYS_DB_PREFIX.$arctype['addtable'])->where('id',$info['id'])->find();
+            //$arctype=$this->logicArctype->getArctypeInfoDetail($info['type_id']);
+            $addtable = $this->modelChannel->getValue(['id' => $info['channel_id']], 'addtable');
+            $ext_info=Db::table(SYS_DB_PREFIX.$addtable)->where('id',$info['id'])->find();
             if($ext_info){
                 return array_merge($info,$ext_info);
             }else{
-                Db::table(SYS_DB_PREFIX.$arctype['addtable'])->insert(['id'=>$info['id']]);
+                Db::table(SYS_DB_PREFIX.$addtable)->insert(['id'=>$info['id']]);
                 return $info;
             }
         }
@@ -246,6 +249,9 @@ class Archives extends CmsBase
             $typeid[]=$data['type_id'];
             $where['a.type_id'] = ['in', $typeid];
         }
+
+        //地区
+        !empty($data['sys_area_id']) && $where['a.sys_area_id'] = ['=', $data['sys_area_id']];
 
         !empty($data['date_s']) && $where['a.driver_date'] = ['>=', $data['date_s']];
         !empty($data['date_e']) && $where['a.driver_date'] = ['<', $data['date_e']];

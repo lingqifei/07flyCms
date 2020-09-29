@@ -13,14 +13,14 @@
 * @version ：1.0
 * @link ：http://www.07fly.top
 */
+
 namespace app\cms\controller;
 
 use think\db;
 
 /**
-* 内容发布系统-栏目-控制器
-*/
-
+ * 内容发布系统-栏目-控制器
+ */
 class Arctype extends CmsBase
 {
 
@@ -29,9 +29,9 @@ class Arctype extends CmsBase
      */
     public function show()
     {
-        $listtree=$this->logicArctype->getArctypeListTree($where='');
-        $listtree=$this->logicArctype->getArctypeListHtml($listtree);
-        $this->assign('listtree', $listtree);
+        $listtree = $this->logicArctype->getArctypeListTree($where = '');
+//        $listtree = $this->logicArctype->getArctypeListHtml($listtree);
+//        $this->assign('listtree', $listtree);
         return $this->fetch('show');
     }
 
@@ -47,10 +47,10 @@ class Arctype extends CmsBase
         if (!empty($this->param['pid'])) {
             //$ids=$this->logicSysDept->getDeptAllSon($this->param['pid']);
             $where['parent_id'] = ['in', $this->param['pid']];
-        }else{
+        } else {
             $where['parent_id'] = ['in', '0'];
         }
-        $list=$this->logicArctype->getArctypeList($where);
+        $list = $this->logicArctype->getArctypeList($where);
         return $list;
     }
 
@@ -63,7 +63,8 @@ class Arctype extends CmsBase
         return $info;
     }
 
-    public function  get_list_tree(){
+    public function get_list_tree()
+    {
         $tree = $this->logicArctype->getArctypeListTree();
         return $tree;
     }
@@ -75,6 +76,11 @@ class Arctype extends CmsBase
     {
         IS_POST && $this->jump($this->logicArctype->arctypeAdd($this->param));
         $this->comm();
+        if (!empty($this->param['pid'])) {
+            $this->assign('pid', $this->param['pid']);
+        } else {
+            $this->assign('pid', 0);
+        }
         return $this->fetch('add');
     }
 
@@ -87,8 +93,8 @@ class Arctype extends CmsBase
         IS_POST && $this->jump($this->logicArctype->arctypeEdit($this->param));
 
         $info = $this->logicArctype->getArctypeInfo(['id' => $this->param['id']]);
-        if(empty($info)){
-            $this->jump( [RESULT_ERROR, 'id参数出错',url('arctype/show')]);
+        if (empty($info)) {
+            $this->jump([RESULT_ERROR, 'id参数出错', url('arctype/show')]);
         }
         $this->assign('info', $info);
         $this->comm();
@@ -104,8 +110,8 @@ class Arctype extends CmsBase
         IS_POST && $this->jump($this->logicArctype->arctypeEdit($this->param));
 
         $info = $this->logicArctype->getArctypeInfo(['id' => $this->param['id']]);
-        if(empty($info)){
-            $this->jump( [RESULT_ERROR, 'id参数出错',url('arctype/show')]);
+        if (empty($info)) {
+            $this->jump([RESULT_ERROR, 'id参数出错', url('arctype/show')]);
         }
         $this->assign('info', $info);
         $this->comm();
@@ -137,10 +143,11 @@ class Arctype extends CmsBase
         $this->jump($this->logicCmsBase->setField('Arctype', $this->param));
     }
 
-    public function comm(){
-        $channellist=$this->logicChannel->getChannelList('','','',false);
-        $listtree= $this->logicArctype->getArctypeListTree($where='');
-        $arctypelist= $this->logicArctype->getArctypeListSelect($listtree);
+    public function comm()
+    {
+        $channellist = $this->logicChannel->getChannelList('', '', '', false);
+        $listtree = $this->logicArctype->getArctypeListTree($where = '');
+        $arctypelist = $this->logicArctype->getArctypeListSelect($listtree);
         $this->assign('channellist', $channellist);
         $this->assign('arctypelist', $arctypelist);
     }

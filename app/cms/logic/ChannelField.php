@@ -153,8 +153,7 @@ class ChannelField extends CmsBase
         $list = $this->modelChannelField->getList($where, "", 'sort asc', false)->toArray();
         $htmltxt = "";
         foreach ($list as $key => $row) {
-            //是否存在字段值
-            $field_value = array_key_exists($row["field_name"], $field_val_arr) ? $field_val_arr[$row["field_name"]] : "";
+            $field_value = array_key_exists($row["field_name"], $field_val_arr) ? $field_val_arr[$row["field_name"]] : "";//是否存在字段值
             switch ($row['field_type']) {
                 case "varchar":
                     $htmltxt .= '<div class="form-group">
@@ -227,12 +226,13 @@ class ChannelField extends CmsBase
 								</div>';
                     break;
                 case "linkage":
-                    $htmltxt .= '<div class="form-group">
+                    $htmltxt .= '
+                                <div class="form-group">
 									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-									  <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" style="width: 200px;" tabindex="2">
+									  <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" >
 								';
-                    $option_arr = $this->cst_field_ext_linkage($row['default']);
+                    $option_arr = $this->channelExtFieldLinkage($row['default_value']);
                     foreach ($option_arr as $row) {
                         $htmltxt .= '<option value="' . $row['id'] . '" hassubinfo="true">' . $row['name'] . '</option>';
                     }
@@ -276,14 +276,15 @@ class ChannelField extends CmsBase
                     $pic_div = '';
                     if ($field_value) {
                         $pic_url = get_picture_url($field_value);
-                        $pic_div = '<img  style="max-width:150px;" src="' . $pic_url . '"/>';
+                        $pic_div .= '<div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this)" ><img src="' . PATH_PUBLIC . '/addon/file/uploadify-cancel.png" /></div>';
+                        $pic_div  .= ' <a target="_blank" href="' . $pic_url . '"><img  style="max-width:150px;" src="' . $pic_url . '"/></a>';
                     }
                     $htmltxt .= '
                                         <div class="form-group text-left">
                                             <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
                                             <div class="col-sm-10">';
                     $htmltxt .= '
-                                        <link rel="stylesheet" href="' . PATH_PUBLIC . 'static/addon/file/default.css">
+                                        <link rel="stylesheet" href="' . PATH_PUBLIC . 'static/addon/file/Huploadify.css">
                                         <script src="' . PATH_PUBLIC . '/static/addon/file/jquery.Huploadify.js"></script>
                                         <div id="upload_picture_' . $row["field_name"] . '"></div>
                                         <input type="hidden" name="' . $row["field_name"] . '" id="' . $row["field_name"] . '" value="0">
@@ -322,10 +323,9 @@ class ChannelField extends CmsBase
                             $pic_div .= '
                                         <div class="upload-pre-item" style="float:left; margin: 10px;">
                                             <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this, ' . $value . ')" >
-                                                X
+                                                <img src="' . PATH_PUBLIC . '/addon/file/uploadify-cancel.png" />
                                             </div>
-                                            <a target="_blank" href="' . $pic_url . '"> <img style="width:150px;" src="' . $pic_url . '"/>
-                                            </a>
+                                            <a target="_blank" href="' . $pic_url . '"> <img style="width:150px;" src="' . $pic_url . '"/></a>
                                         </div>
                             ';
                         }
@@ -335,7 +335,7 @@ class ChannelField extends CmsBase
                                             <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
                                             <div class="col-sm-10">';
                     $htmltxt .= '
-<link rel="stylesheet" href="' . PATH_PUBLIC . 'addon/file/default.css" />
+<link rel="stylesheet" href="' . PATH_PUBLIC . 'addon/file/Huploadify.css" />
 <script src="' . PATH_PUBLIC . 'addon/file/jquery.Huploadify.js"></script>
 
 <div id="upload_pictures_' . $row["field_name"] . '"></div>
@@ -368,7 +368,7 @@ class ChannelField extends CmsBase
         //var src = \'/upload/picture/\' + data.path;
         var src =\'__STATIC__/upload/picture/\' + data.path;
         var src =src.replace(/\/static/g, \'\');
-        $(".upload-img-box" + addons_name).append(\'<div class="upload-pre-item" style="float:left; margin: 10px;"> <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this,\'+data.id+\')" ><img src="/addon/file/static/uploadify-cancel.png" /></div> <a target="_blank" href="\' + src + \'"> <img style="max-width: \' + maxwidth + \';" src="\' + src + \'"/></a></div>\');
+        $(".upload-img-box" + addons_name).append(\'<div class="upload-pre-item" style="float:left; margin: 10px;"> <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this,\'+data.id+\')" ><img src="' . PATH_PUBLIC . '/addon/file/uploadify-cancel.png" /></div> <a target="_blank" href="\' + src + \'"> <img style="max-width: \' + maxwidth + \';" src="\' + src + \'"/></a></div>\');
     }
 
     function picDel' . $row["field_name"] . '(obj, pic_id)
@@ -394,4 +394,18 @@ class ChannelField extends CmsBase
         }
         return $htmltxt;
     }
+
+    public function channelExtFieldLinkage($linkpage){
+        $data = [];
+        switch ( $linkpage ) {
+            case "sys_user":
+                $sql = "select id,name from fly_sys_user";
+                $data = $this->C( $this->cacheDir )->findAll( $sql );
+                break;
+            default:
+                echo "Your favorite fruit is neither apple, banana, or orange!";
+        }
+        return $data;
+    }
+
 }
