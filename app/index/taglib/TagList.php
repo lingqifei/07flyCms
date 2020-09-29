@@ -65,7 +65,6 @@ class TagList extends Base
         $param['channelid'] = ("" != $param['channelid'] && is_numeric($param['channelid'])) ? intval($param['channelid']) : '';
         $param['typeid'] = !empty($param['typeid']) ? $param['typeid'] : $this->tid;
         empty($orderway) && $orderway = 'desc';
-
         $pagesize = empty($pagesize) ? intval($pagesize) : intval($pagesize);
 
         if (!empty($param['channelid'])) {
@@ -102,6 +101,16 @@ class TagList extends Base
                 }
             }
             $typeidArr_tmp = array_merge($typeidArr_tmp,$typeidArr_son);
+
+            //过滤另去除的notypeid
+            if (!empty($param['notypeid'])) {
+                if (!preg_match('/^\d+([\d\,]*)$/i', $param['notypeid'])) {
+                    echo '标签arclist报错：notypeid属性值语法错误，请正确填写栏目ID。';
+                    return false;
+                }
+                $notypeidArr_tmp = explode(',', $param['notypeid']);
+                $typeidArr_tmp = array_diff($typeidArr_tmp, $notypeidArr_tmp);
+            }
             $param['typeid'] = implode(',', $typeidArr_tmp);
             // end
         }
@@ -120,6 +129,8 @@ class TagList extends Base
             $where['a.flag'] = ['exp', Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
         }
        // $param = input('param.');
+
+
 
         //搜索查询
         if (strtolower(request()->controller()) == 'search') {
