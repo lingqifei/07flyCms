@@ -93,19 +93,20 @@ class TagLikearticle extends Base
         if($this->aid){
             $where['a.id']=['notin',$this->aid];
         }
-
 //        $reg_txt=str_replace(",","|",$param['flag']);
 //        $where['a.flag']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
 
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
-
         $info = $logicArchives->getArchivesInfo(['id'=>$this->aid]);
-
-        //通过插件分析关键字
-        $keywords=getKeywords($info['title'],$info['body']);
-
-        $reg_txt=implode('|',$keywords);
+        if(empty($info['keywords'])){
+            //通过插件分析关键字
+            $keywords=getKeywords($info['title'],$info['body']);
+            $reg_txt=implode('|',$keywords);
+        }else{
+            $reg_txt=preg_replace("/(\n)|(\s)|(\t)|(\')|(')|(，)/" ,',' ,$info['keywords']);
+            $reg_txt=str_replace(',','|',$reg_txt);
+        }
 
         $where['a.keywords']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
 

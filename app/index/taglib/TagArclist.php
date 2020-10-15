@@ -74,7 +74,7 @@ class TagArclist extends Base
 
         if (!empty($param['channelid'])) {
             if (!preg_match('/^\d+([\d\,]*)$/i', $param['channelid'])) {
-                echo '标签arclist报错：typeid属性值语法错误，请正确填写栏目ID。';
+                echo '标签arclist报错：channelid属性值语法错误，请正确填写栏目ID。';
                 return false;
             }
             // 过滤channelid中含有空值的栏目ID
@@ -84,6 +84,22 @@ class TagArclist extends Base
                 if (empty($v)) unset($channelidArr_tmp[$k]);
             }
             $param['channelid'] = implode(',', $channelidArr_tmp);
+            // end
+        }
+
+        //文章按地区显示
+        if (!empty($param['cityid'])) {
+            if (!preg_match('/^\d+([\d\,]*)$/i', $param['cityid'])) {
+                echo '标签arclist报错：cityid属性值语法错误，请正确填写城市ID。';
+                return false;
+            }
+            // 过滤cityid中含有空值的栏目ID
+            $channelidArr_tmp = explode(',', $param['cityid']);
+            $channelidArr_tmp = array_unique($channelidArr_tmp);
+            foreach($channelidArr_tmp as $k => $v){
+                if (empty($v)) unset($channelidArr_tmp[$k]);
+            }
+            $param['cityid'] = implode(',', $channelidArr_tmp);
             // end
         }
 
@@ -115,6 +131,10 @@ class TagArclist extends Base
         $where = [];
         if(!empty($param['channelid'])){
             $where['a.channelid']=['in',$param['channelid']];
+        }
+
+        if(!empty($param['cityid'])){
+            $where['a.sys_area_id']=['in',$param['cityid']];
         }
 
         if(!empty($param['typeid'])){
