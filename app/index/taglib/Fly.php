@@ -23,7 +23,7 @@ class Fly extends TagLib
         'global' => ['attr' => 'name', 'close' => 0],
         'position' => ['attr' => 'symbol,style', 'close' => 0],
         'channel' => ['attr' => 'typeid,notypeid,reid,type,row,currentstyle,id,name,key,empty,mod,titlelen,offset,limit'],
-        'arclist' => ['attr' => 'channelid,typeid,notypeid,row,offset,titlelen,limit,orderby,orderway,noflag,flag,infolen,empty,mod,name,id,key,addfields,tagid,pagesize,thumb,joinaid'],
+        'arclist' => ['attr' => 'channelid,typeid,notypeid,cityid,row,offset,titlelen,limit,orderby,orderway,noflag,flag,infolen,empty,mod,name,id,key,addfields,tagid,pagesize,thumb,joinaid'],
         'arcview' => ['attr' => 'aid,empty,id,addfields,joinaid'],
         'arcclick'   => ['attr' => 'aid,value,type', 'close' => 0],
         'type' => ['attr' => 'typeid,empty,id,addfields,joinaid'],
@@ -38,7 +38,7 @@ class Fly extends TagLib
         'prenext'    => ['attr' => 'get,titlelen,id,empty'],
 
         //文档列表
-        'list' => ['attr' => 'channelid,channelexttable,typeid,notypeid,pagesize,titlelen,orderby,orderway,noflag,flag,infolen,empty,mod,id,key,addfields,thumb'],
+        'list' => ['attr' => 'channelid,channelexttable,typeid,notypeid,cityid,pagesize,titlelen,orderby,orderway,noflag,flag,infolen,empty,mod,id,key,addfields,thumb'],
         'pagelist' => ['attr' => 'listitem,listsize', 'close' => 0],
 
 
@@ -276,6 +276,9 @@ class Fly extends TagLib
         $notypeid = !empty($tag['notypeid']) ? $tag['notypeid'] : '';
         $notypeid = $this->varOrvalue($notypeid);
 
+        $cityid = !empty($tag['cityid']) ? $tag['cityid'] : '';
+        $cityid = $this->varOrvalue($cityid);
+
         $channelid = isset($tag['channelid']) ? $tag['channelid'] : '';
         $channelid = $this->varOrvalue($channelid);
 
@@ -343,6 +346,7 @@ class Fly extends TagLib
             $parseStr .= ' $param = array(';
             $parseStr .= '      "typeid"=> $typeid,';
             $parseStr .= '      "notypeid"=> ' . $notypeid . ',';
+            $parseStr .= '      "cityid"=> ' . $cityid . ',';
             $parseStr .= '      "flag"=> "' . $flag . '",';
             $parseStr .= '      "noflag"=> "' . $noflag . '",';
             $parseStr .= '      "channelid"=> $channelid,';
@@ -836,6 +840,9 @@ class Fly extends TagLib
         $notypeid = !empty($tag['notypeid']) ? $tag['notypeid'] : '';
         $notypeid = $this->varOrvalue($notypeid);
 
+        $cityid = isset($tag['cityid']) ? $tag['cityid'] : '';
+        $cityid = $this->varOrvalue($cityid);
+
         $channelid = isset($tag['channelid']) ? $tag['channelid'] : '';
         $channelid = $this->varOrvalue($channelid);
 
@@ -874,6 +881,7 @@ class Fly extends TagLib
         $parseStr .= ' $param = array(';
         $parseStr .= '      "typeid"=> $typeid,';
         $parseStr .= '      "notypeid"=> ' . $notypeid . ',';
+        $parseStr .= '      "cityid"=> ' . $cityid . ',';
         $parseStr .= '      "flag"=> "' . $flag . '",';
         $parseStr .= '      "noflag"=> "' . $noflag . '",';
         $parseStr .= '      "channelid"=> ' . $channelid . ',';

@@ -65,7 +65,6 @@ class TagList extends Base
         $param['channelid'] = ("" != $param['channelid'] && is_numeric($param['channelid'])) ? intval($param['channelid']) : '';
         $param['typeid'] = !empty($param['typeid']) ? $param['typeid'] : $this->tid;
         empty($orderway) && $orderway = 'desc';
-
         $pagesize = empty($pagesize) ? intval($pagesize) : intval($pagesize);
 
         if (!empty($param['channelid'])) {
@@ -83,9 +82,24 @@ class TagList extends Base
             // end
         }
 
+        //文章按地区显示
+        if (!empty($param['cityid'])) {
+            if (!preg_match('/^\d+([\d\,]*)$/i', $param['cityid'])) {
+                echo '标签list报错：cityid属性值语法错误，请正确填写城市ID。';
+                return false;
+            }
+            // 过滤cityid中含有空值的栏目ID
+            $channelidArr_tmp = explode(',', $param['cityid']);
+            $channelidArr_tmp = array_unique($channelidArr_tmp);
+            foreach($channelidArr_tmp as $k => $v){
+                if (empty($v)) unset($channelidArr_tmp[$k]);
+            }
+            $param['cityid'] = implode(',', $channelidArr_tmp);
+            // end
+        }
         if (!empty($param['typeid'])) {
             if (!preg_match('/^\d+([\d\,]*)$/i', $param['typeid'])) {
-                echo '标签arclist报错：typeid属性值语法错误，请正确填写栏目ID。';
+                echo '标签list报错：typeid属性值语法错误，请正确填写栏目ID。';
                 return false;
             }
             // 过滤typeid中含有空值的栏目ID
@@ -102,6 +116,16 @@ class TagList extends Base
                 }
             }
             $typeidArr_tmp = array_merge($typeidArr_tmp,$typeidArr_son);
+
+            //过滤另去除的notypeid
+            if (!empty($param['notypeid'])) {
+                if (!preg_match('/^\d+([\d\,]*)$/i', $param['notypeid'])) {
+                    echo '标签list报错：notypeid属性值语法错误，请正确填写栏目ID。';
+                    return false;
+                }
+                $notypeidArr_tmp = explode(',', $param['notypeid']);
+                $typeidArr_tmp = array_diff($typeidArr_tmp, $notypeidArr_tmp);
+            }
             $param['typeid'] = implode(',', $typeidArr_tmp);
             // end
         }
@@ -109,6 +133,10 @@ class TagList extends Base
         $where = [];
         if (!empty($param['channelid'])) {
             $where['a.channelid'] = ['in', $param['channelid']];
+        }
+
+        if(!empty($param['cityid'])){
+            $where['a.sys_area_id']=['in',$param['cityid']];
         }
 
         if (!empty($param['typeid'])) {
@@ -120,6 +148,8 @@ class TagList extends Base
             $where['a.flag'] = ['exp', Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
         }
        // $param = input('param.');
+
+
 
         //搜索查询
         if (strtolower(request()->controller()) == 'search') {

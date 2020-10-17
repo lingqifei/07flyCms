@@ -92,7 +92,7 @@ class Archives extends IndexBase
     public function getArchiveslikeList($where = [], $field = true, $order = '', $paginate = false, $limit = '')
     {
         $this->modelArchives->alias('a');
-        if ($limit) $this->modelArchives->limit = $limit;
+        if ($paginate) $this->modelArchives->limit = $paginate;
         $list = $this->modelArchives->getList($where, $field, $order, false)->toArray();
         $paginate === false && $list['data'] = $list;
         foreach ($list['data'] as &$row) {
@@ -113,17 +113,15 @@ class Archives extends IndexBase
      * @return mixed
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/9/9 0009
      */
-    public function getArchivesSubList($where = [], $field = true, $order = '', $paginate = false, $limit = '', $addtable)
+    public function getArchivesSubList($where = [], $field = true, $order = '', $paginate = false, $addtable)
     {
         $this->modelArchives->alias('a');
         $join = [
             [SYS_DB_PREFIX . $addtable.' b', 'a.id = b.id','LEFT'],
         ];
         $this->modelArchives->join = $join;
-        if ($limit) $this->modelArchives->limit = $limit;
-        $list = $this->modelArchives->getList($where, $field, $order, $paginate)->toArray();
-
-        $paginate === false && $list['data'] = $list;
+        if ($paginate) $this->modelArchives->limit = $paginate;
+        $list['data'] = $this->modelArchives->getList($where, $field, $order, false)->toArray();
         foreach ($list['data'] as &$row) {
             $row['litpic'] = get_picture_url($row['litpic']);
             $row['arcurl'] = $this->getArchivesUrl($row);
