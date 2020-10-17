@@ -107,7 +107,6 @@ class TagArcsublist extends Base
             // end
         }
 
-
         /*获取文档列表*/
         $where = [];
         if (!empty($param['channelid'])) {
@@ -138,10 +137,9 @@ class TagArcsublist extends Base
         if(!empty($param['typeid'])){
             $where['type_id']=['in',$param['typeid']];
         }
-
         $logicArchives = new \app\index\logic\Archives();
         $orderby =$logicArchives->getOrderBy($orderby,$orderway);
-        $result = $logicArchives->getArchivesSubList($where, 'a.*,b.*', $orderby,$pagesize,$limit='',$addtable);
+        $result = $logicArchives->getArchivesSubList($where, 'a.*,b.*', $orderby,$pagesize,$addtable);
         //获取文档栏目信息
         $logicArctype = new \app\index\logic\Arctype();
         foreach ($result['data'] as &$row){
