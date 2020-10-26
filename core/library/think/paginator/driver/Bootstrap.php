@@ -105,21 +105,50 @@ class Bootstrap extends Paginator
             'last'   => null
         ];
 
-        $side   = 3;
+        //$side   = 3;
         $window = $side * 2;
 
-        if ($this->lastPage < $window + 6) {
-            $block['first'] = $this->getUrlRange(1, $this->lastPage);
-        } elseif ($this->currentPage <= $window) {
-            $block['first'] = $this->getUrlRange(1, $window + 2);
-            $block['last']  = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
-        } elseif ($this->currentPage > ($this->lastPage - $window)) {
-            $block['first'] = $this->getUrlRange(1, 2);
-            $block['last']  = $this->getUrlRange($this->lastPage - ($window + 2), $this->lastPage);
+//        if ($this->lastPage < $window + 1) {
+//            $block['first'] = $this->getUrlRange(1, $this->lastPage);
+//        } elseif ($this->currentPage <= $window) {
+//            $block['first'] = $this->getUrlRange(1, $window + 2);
+//            $block['last']  = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
+//        } elseif ($this->currentPage > ($this->lastPage - $window)) {
+//            $block['first'] = $this->getUrlRange(1, 2);
+//            $block['last']  = $this->getUrlRange($this->lastPage - ($window + 2), $this->lastPage);
+//        } else {
+//            $block['first']  = $this->getUrlRange(1, 2);
+//            $block['slider'] = $this->getUrlRange($this->currentPage - $side, $this->currentPage + $side);
+//            $block['last']   = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
+//        }
+//
+//        $html = '';
+//
+//        if (is_array($block['first'])) {
+//            $html .= $this->getUrlLinks($block['first']);
+//        }
+//
+//        if (is_array($block['slider'])) {
+//            //$html .= $this->getDots();
+//            $html .= $this->getUrlLinks($block['slider']);
+//        }
+//
+//        if (is_array($block['last'])) {
+//            //$html .= $this->getDots();
+//            $html .= $this->getUrlLinks($block['last']);
+//        }
+        if ($this->lastPage < $window +1) {
+            $block['slider'] = $this->getUrlRange(1, $this->lastPage);
+
+        } elseif ($this->currentPage <= $window-1) {
+
+            $block['slider'] = $this->getUrlRange(1, $window + 1);
+        } elseif ($this->currentPage > ($this->lastPage - $window+1)) {
+            $block['slider']  = $this->getUrlRange($this->lastPage - ($window), $this->lastPage);
+
         } else {
-            $block['first']  = $this->getUrlRange(1, 2);
+
             $block['slider'] = $this->getUrlRange($this->currentPage - $side, $this->currentPage + $side);
-            $block['last']   = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
         }
 
         $html = '';
@@ -129,15 +158,12 @@ class Bootstrap extends Paginator
         }
 
         if (is_array($block['slider'])) {
-            $html .= $this->getDots();
             $html .= $this->getUrlLinks($block['slider']);
         }
 
         if (is_array($block['last'])) {
-            $html .= $this->getDots();
             $html .= $this->getUrlLinks($block['last']);
         }
-
         return $html;
     }
 
