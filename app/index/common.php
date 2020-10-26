@@ -99,7 +99,6 @@ function get_ip()
  * */
 function get_city(){
     $ip=get_ip();
-    $ip='220.166.203.183';
     //echo $ip;exit;
     $api_url="https://restapi.amap.com/v3/ip?ip=$ip&key=d775fd6b51c31589776004b109d43ff7";
     //根据IP地址定位所在城市

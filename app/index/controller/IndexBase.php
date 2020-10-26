@@ -38,12 +38,12 @@ class IndexBase extends ControllerBase
 
         $this->initBaseInfo();
 
-        //默认初始化地区信息,i不存在表示为第一次进入
-        if(!Session::has('sys_city_name') || !Session::has('sys_city_id')){
-           $this->logicSysArea->getSysAreaDefaultInfo();
-        }
-        $this->assign('sys_city_id', Session::get('sys_city_id'));
-        $this->assign('sys_city_name', Session::get('sys_city_name'));
+//        //默认初始化地区信息,i不存在表示为第一次进入
+//        if(!Session::has('sys_city_name') || !Session::has('sys_city_id')){
+//           $this->logicSysArea->getSysAreaDefaultInfo();
+//        }
+//        $this->assign('sys_city_id', Session::get('sys_city_id'));
+//        $this->assign('sys_city_name', Session::get('sys_city_name'));
 
         //echo Session::get('sys_city_name');
 
