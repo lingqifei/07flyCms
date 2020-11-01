@@ -96,6 +96,8 @@ class Archives extends CmsBase
             'writer'=>$data['writer'],
             'source'=>$data['source'],
             'pubdate'=>$data['pubdate'],
+            'is_jump'=>empty($data['is_jump'])?'0':'1',
+            'jump_url'=>$data['jump_url'],
         ];
         $aid = $this->modelArchives->setInfo($main_data);
 
@@ -162,6 +164,8 @@ class Archives extends CmsBase
             'click'=>$data['click'],
             'writer'=>$data['writer'],
             'pubdate'=>$data['pubdate'],
+            'is_jump'=>empty($data['is_jump'])?'0':'1',
+            'jump_url'=>$data['jump_url'],
         ];
         $this->modelArchives->setInfo($main_data);
 

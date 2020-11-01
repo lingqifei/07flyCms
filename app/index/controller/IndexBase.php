@@ -93,6 +93,8 @@ class IndexBase extends ControllerBase
             exit;
         }
 
+        $replace=['{sys_city_name}'=>Session::get('sys_city_name')];
+
         $template=str_replace('.html' , '', strtolower($template));
         $template=str_replace('.htm' , '', strtolower($template));
         return parent::fetch($template, $vars, $replace, $config);
