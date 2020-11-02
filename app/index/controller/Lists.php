@@ -20,13 +20,13 @@ class Lists extends IndexBase{
      * @return mixed
      * created by Administrator at 2020/2/24 0024 15:15
      */
-    public function index($tid=0){
-        if(empty($tid)){
+    public function index($data=[]){
+        if(empty($data)){
             if(empty($this->param['tid'])){
                 $this->tid=$this->param['tid'];
             }
         }else{
-            $this->tid=$tid;
+            $this->tid=$data['tid'];
         }
         if(empty($this->tid)){
             echo "tid不能为空~";
@@ -83,6 +83,15 @@ class Lists extends IndexBase{
         $this->typeinfo =$rtnArray ;
         $this->assign('fly', $this->typeinfo);
         return $this->fetch($viewfile);
+    }
+
+    /**
+     * 后台调用方法，可以配合路由配置
+     * @return mixed
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/11/2 0002
+     */
+    public function show(){
+        return $this->index($this->param);
     }
 
 }

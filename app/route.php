@@ -18,8 +18,10 @@ return [
 //        ':name' => ['index/hello', ['method' => 'post']],
 //    ],
 
-    '[hello]'     => [
-        'lists/:tid' => ['index/lists/index'],
-    ],
-
+//    '[list]'     => [
+//        'tid/:tid' => ['index/lists/index'],
+//    ],
+    'list/:tid' => 'index/lists/index',
+    //'show/[:aid]' => 'index/view/index',
+    'show/[:aid]' => ['index/view/index',['method'=>'get','ext'=>'html']],
 ];

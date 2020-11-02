@@ -20,14 +20,14 @@ class View extends IndexBase{
      * @return mixed
      * created by Administrator at 2020/2/24 0024 15:15
      */
-    public function index($aid=0){
+    public function index($data=[]){
 
-        if(empty($aid)){
+        if(empty($data)){
             if(empty($this->param['aid'])){
                 $this->aid=$this->param['aid'];
             }
         }else{
-            $this->aid=$aid;
+            $this->aid=$data['aid'];
         }
         if(empty($this->aid)){
             echo "aid不能为空~";
@@ -60,4 +60,14 @@ class View extends IndexBase{
         $this->assign('fly', $this->typeinfo);
         return $this->fetch($tpfile);
     }
+
+    /**
+     * 后台调用方法，可以配合路由配置
+     * @return mixed
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/11/2 0002
+     */
+    public function show(){
+       return  $this->index($this->param);
+    }
+
 }
