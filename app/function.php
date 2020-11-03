@@ -21,11 +21,9 @@
  */
 function date_calc($time = null, $caclVal="0", $type="day", $format = 'Y-m-d')
 {
-
     if (null === $time) {
         $time = TIME_NOW;
     }
-
     return date($format,strtotime (" $caclVal $type", strtotime($time)));
 
 }

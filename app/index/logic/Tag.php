@@ -27,7 +27,7 @@ class Tag extends IndexBase
      * @return mixed
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getTagsList($where = [], $field = true, $order = '', $paginate = 15)
+    public function getTagList($where = [], $field = true, $order = '', $paginate = 15)
     {
         $this->modelTags->alias('a');
         $list= $this->modelTags->getList($where, $field, $order, $paginate)->toArray();
@@ -42,23 +42,71 @@ class Tag extends IndexBase
     }
 
 
-    /**列表查询
+    /**
+     * 获取标签的信息
      * @param array $where
      * @param bool $field
-     * @param string $order
-     * @param int $paginate
      * @return mixed
-     * Author: lingqifei created by at 2020/2/27 0027
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/11/3 0003
      */
-    public function getTagindexList($where = [], $field = true, $order = '', $paginate = 15)
+    public function getTagindexInfo($where = [], $field = true)
     {
-        $list= $this->modelTagindex->getList($where, $field, $order, $paginate)->toArray();
-        if($paginate===false) $list['data']=$list;
-        if(!empty($list['data'])){
-            return $list['data'];
-        }else{
-            return $list;
-        }
+        return $this->modelTagindex->getInfo($where, $field);
     }
+
+
+    /**
+     * 传入标签信息,更新标签索引的点击，浏览，统计数据
+     * @param array $data
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/11/3 0003
+     */
+    public function getTagindexUpdate($tagindexInfo=[])
+    {
+        $map['tid']=['=',$tagindexInfo['id']];
+        $total=$this->modelTaglist->stat($map,'count','tid');
+
+        $updata=[
+            'total'=>$total,
+            'count'=>$tagindexInfo['count']+1,
+            'weekcc'=>$tagindexInfo['weekcc']+1,
+            'monthcc'=>$tagindexInfo['monthcc']+1,
+        ];
+
+        $ntime=time();
+        $oneday = 24 * 3600;
+        //周统计
+        if(ceil( ($ntime - $tagindexInfo['weekup'])/$oneday ) > 7)
+        {
+            $updata['weekcc']=0;
+            $updata['weekup']=$ntime;
+        }
+        //月统计
+        if(ceil( ($ntime - $tagindexInfo['monthup'])/$oneday ) > 30)
+        {
+            $updata['monthcc']=0;
+            $updata['monthcc']=$ntime;
+        }
+        $this->modelTagindex->updateInfo(['id'=>$tagindexInfo['id']],$updata);
+    }
+
+
+    /**
+     * 获取调用标签相关文档aid
+     * @param null $tag
+     * @param null $tagid
+     * @return array;
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/11/3 0003
+     */
+    public  function  getTaglistAid($tag=null, $tagid=null){
+        if (!empty($tag)) {
+            $map['tag']=['like', "%{$tag}%"];
+            $tagidArr = $this->modelTagindex->getColumn($map, "id");
+            $aidArr = $this->modelTaglist->getColumn(array('tid'=>array('in', $tagidArr)), "aid");
+        } elseif ($tagid > 0) {
+            $aidArr = $this->modelTaglist->getColumn(['tid'=>$tagid], "aid");
+        }
+        return $aidArr;
+    }
+
 
 }

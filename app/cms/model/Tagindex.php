@@ -10,12 +10,12 @@
  * Author: kfrs <goodkfrs@QQ.com> 574249366
  * Date: 2019-10-3
  */
-namespace app\index\model;
+namespace app\cms\model;
 
 /**
- * 主标签库 =》模型
+ * 标签索引=》模型
  */
-class Tags extends IndexBase
+class Tagindex extends CmsBase
 {
 
 }

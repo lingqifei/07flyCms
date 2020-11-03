@@ -45,79 +45,33 @@ class Tags extends IndexBase{
         $tagid = isset($param['tagid']) ? $param['tagid'] : '';
         $tag = isset($param['tag']) ? trim($param['tag']) : '';
         if (!empty($tag)) {
-            $
+            $map['tag']=['=',$tag];
+            $tagindexInfo = $this->logicTag->getTagindexInfo($map);
         } elseif (intval($tagid) > 0) {
-            $tagindexInfo = M('tagindex')->where([
-                'id'   => $tagid,
-                'lang'  => $this->home_lang,
-            ])->find();
+            $map['id']=['=',$tagid];
+            $tagindexInfo = $this->logicTag->getTagindexInfo($map);
         }
 
         if (!empty($tagindexInfo)) {
             $tagid = $tagindexInfo['id'];
             $tag = $tagindexInfo['tag'];
-            //更新浏览量和记录数
-            $map = array(
-                'tid'   => array('eq', $tagid),
-                'arcrank'   => array('gt', -1),
-                'lang'  => $this->home_lang,
-            );
-            $total = M('taglist')->where($map)
-                ->count('tid');
-            M('tagindex')->where([
-                'id'    => $tagid,
-                'lang'  => $this->home_lang,
-            ])->inc('count')
-                ->inc('weekcc')
-                ->inc('monthcc')
-                ->update(array('total'=>$total));
-
-            $ntime = getTime();
-            $oneday = 24 * 3600;
-
-            //周统计
-            if(ceil( ($ntime - $tagindexInfo['weekup'])/$oneday ) > 7)
-            {
-                M('tagindex')->where([
-                    'id'    => $tagid,
-                    'lang'  => $this->home_lang,
-                ])->update(array('weekcc'=>0, 'weekup'=>$ntime));
-            }
-
-            //月统计
-            if(ceil( ($ntime - $tagindexInfo['monthup'])/$oneday ) > 30)
-            {
-                M('tagindex')->where([
-                    'id'    => $tagid,
-                    'lang'  => $this->home_lang,
-                ])->update(array('monthcc'=>0, 'monthup'=>$ntime));
-            }
+            //更新统计、点击数据
+            $this->logicTag->getTagindexUpdate($tagindexInfo);
         }
 
         $field_data = array(
             'tag'   => $tag,
             'tagid'   => $tagid,
         );
-        $eyou = array(
+        $rtnArray = array(
             'field'  => $field_data,
         );
-        $this->eyou = array_merge($this->eyou, $eyou);
-        $this->assign('eyou', $this->eyou);
+
+        $this->assign('fly', $rtnArray);
 
         /*模板文件*/
-        $viewfile = 'lists_tags';
-        /*--end*/
-
-        /*多语言内置模板文件名*/
-        if (!empty($this->home_lang)) {
-            $viewfilepath = TEMPLATE_PATH.$this->theme_style_path.DS.$viewfile."_{$this->home_lang}.".$this->view_suffix;
-            if (file_exists($viewfilepath)) {
-                $viewfile .= "_{$this->home_lang}";
-            }
-        }
-        /*--end*/
-
-        return $this->fetch(":{$viewfile}");
+        $viewfile = 'tags_list.html';
+        return $this->fetch($viewfile);
     }
 
 }

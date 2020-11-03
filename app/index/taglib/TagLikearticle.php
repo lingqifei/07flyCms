@@ -99,8 +99,7 @@ class TagLikearticle extends Base
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
         $info = $logicArchives->getArchivesInfo(['id'=>$this->aid]);
-        if(empty($info['keywords'])){
-            //通过插件分析关键字
+        if(empty($info['keywords'])){//通过插件分析关键字
             $keywords=getKeywords($info['title'],$info['body']);
             $reg_txt=implode('|',$keywords);
         }else{

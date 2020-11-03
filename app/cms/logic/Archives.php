@@ -79,7 +79,6 @@ class Archives extends CmsBase
         }else{
             $description=html_msubstr($data['body'],0,200);
         }
-
         //2、主表数据
         $main_data=[
             'channel_id'=>$arctype['channel_id'],
@@ -101,6 +100,8 @@ class Archives extends CmsBase
         ];
         $aid = $this->modelArchives->setInfo($main_data);
 
+        //调用ag标签接口
+        $this->logicTagindex->tagindexAddArchives($keywords,$data['id'],$data['type_id']);
         //3、添加附加表
         $ext_field=$this->logicChannelField->getExtTableFieldList($arctype['maintable'],$arctype['addtable']);
         $ext_data=array(
@@ -133,13 +134,16 @@ class Archives extends CmsBase
         }
 
         //1、关键字处理
-        $arctype=$this->logicArctype->getArctypeInfoDetail($data['type_id']);
+        $arctype=$this->logicArctype->getArctypeInfoDetail($data['type_id']);//栏目相关扩展参数
         if(!empty($data['keywords'])){
             $keywords=$data['keywords'];
         }else{
             $keywords=getKeywords($data['title'],html_msubstr($data['body'],0));
             $keywords && $keywords=arr2str($keywords,',');
         }
+
+        //调用ag标签接口
+        $this->logicTagindex->tagindexAddArchives($keywords,$data['id'],$data['type_id']);
 
         //简介处理
         if(!empty($data['description'])){
@@ -171,7 +175,7 @@ class Archives extends CmsBase
 
 
         //2、更新附表数据
-        $ext_field=$this->logicChannelField->getExtTableFieldList($arctype['maintable'],$arctype['addtable']);
+        $ext_field=$this->logicChannelField->getExtTableFieldList($arctype['maintable'],$arctype['addtable']);//文章扩展字段
         $ext_data=array(
             "id"=>$data['id'],
             "type_id"=>$data['type_id'],

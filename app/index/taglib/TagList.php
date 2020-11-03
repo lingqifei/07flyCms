@@ -165,14 +165,9 @@ class TagList extends Base
         if (strtolower(request()->controller()) == 'tags') {
             $tag = input('param.tag/s', '');
             $tagid = input('param.tagid/d', 0);
-            if (!empty($tag)) {
-                $tagidArr = M('tagindex')->where(array('tag'=>array('LIKE', "%{$tag}%")))->column('id', 'id');
-                $aidArr = M('taglist')->field('aid')->where(array('tid'=>array('in', $tagidArr)))->column('aid', 'aid');
-                $where['a.id'] = array('in', $aidArr);
-            } elseif ($tagid > 0) {
-                $aidArr = M('taglist')->field('aid')->where(array('tid'=>array('eq', $tagid)))->column('aid', 'aid');
-                $where['a.id'] = array('in', $aidArr);
-            }
+            $logicTag = new \app\index\logic\Tag();
+            $aidArr=$logicTag->getTaglistAid($tag,$tagid);
+            $where['a.id'] = array('in', $aidArr);
         }
 
         /*获取文档列表*/

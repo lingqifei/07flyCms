@@ -13,6 +13,7 @@
 
 namespace app\index\taglib;
 
+use app\index\logic\IndexBase;
 use think\Db;
 use think\Request;
 
@@ -20,9 +21,9 @@ use think\Request;
 /**
  * 标签调用
  */
-class TagTag extends Base
+class TagTag extends IndexBase
 {
-
+    public $aid = '';
     //初始化
     protected function _initialize()
     {
@@ -46,25 +47,23 @@ class TagTag extends Base
      */
     public function getTag($getall = 0, $typeid = '', $aid = 0, $row = 30, $sort = 'new', $type = '')
     {
+
         $aid = !empty($aid) ? $aid : $this->aid;
         $getall = intval($getall);
         !empty($typeid) && $getall = 1;
-        $result = false;
+        $result = [];
         $where = array();
-
-        $logicTag = new \app\index\logic\Tag();
-
         //带aid调用文档标签
         if ($getall == 0 && $aid > 0) {
             $where['aid'] = array('eq', $aid);
-            $result = $logicTag->getTagindexList($where, '*, tid AS tagid', '',$row);
+            $list = $this->modelTaglist->getList($where, "*, tid AS tagid", true, $row);
         } else {//不带aid就调用所有共性标签
             if (!empty($typeid)) {
                 $typeid = $this->getTypeids($typeid, $type);
                 $where['typeid'] = array('in', $typeid);
             }
-
-
+            $tid_list = $this->modelTaglist->getColumn($where, "tid");
+            $where['id'] = array('in', $tid_list);
 
             switch ($sort) {
                 case 'rand':
@@ -86,15 +85,15 @@ class TagTag extends Base
                     $orderby = 'create_time DESC ';
                     break;
             }
-            $logicTags = new \app\index\logic\Tag();
-            $result = $logicTags->getTagsTaglibList($where, '*, id AS tagid', $orderby,$row);
+            $list = $this->modelTagindex->getList($where, "*, id AS tagid", $orderby, $row);
         }
 
+        is_object($list) && $list=$list->toArray();
+        if(!empty($list['data'])) $result=$list['data'];
         foreach ($result as $key => $val) {
             $val['link'] = url('index/tags/lists', array('tagid'=>$val['tagid']));
             $result[$key] = $val;
         }
-
         return $result;
     }
 
