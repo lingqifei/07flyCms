@@ -74,7 +74,7 @@
     <tr>
         <td><input name="id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
         <td><%=data[i]['id']%></td>
-        <td><a class="ajax-goto" href="{:url('index/lists/show')}" data-ids="{'tid':'<%=data[i]['id']%>'}" target="_blank"><%=data[i]['typename']%></a></td>
+        <td><a class="ajax-goto" href="{:url('index/lists/adminindex')}" data-ids="{'tid':'<%=data[i]['id']%>'}" target="_blank"><%=data[i]['typename']%></a></td>
         <td><%=data[i]['ispart_text']%></td>
         <td><%=data[i]['channel_text']%></td>
         <td><input type="text" name="sort" value="<%=data[i]['sort']%>" class="form-control w50 ajax-sort"

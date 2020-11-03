@@ -22,12 +22,13 @@ class Lists extends IndexBase{
      */
     public function index($data=[]){
         if(empty($data)){
-            if(empty($this->param['tid'])){
+            if(!empty($this->param['tid'])){
                 $this->tid=$this->param['tid'];
             }
         }else{
             $this->tid=$data['tid'];
         }
+
         if(empty($this->tid)){
             echo "tid不能为空~";
             exit;
@@ -90,7 +91,7 @@ class Lists extends IndexBase{
      * @return mixed
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/11/2 0002
      */
-    public function show(){
+    public function adminindex(){
         return $this->index($this->param);
     }
 

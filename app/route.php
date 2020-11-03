@@ -13,15 +13,15 @@ return [
     '__pattern__' => [
         'name' => '\w+',
     ],
-//    '[hello]'     => [
-//        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
-//        ':name' => ['index/hello', ['method' => 'post']],
-//    ],
+    '[hello]'     => [
+        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
+        ':name' => ['index/hello', ['method' => 'post']],
+    ],
 
 //    '[list]'     => [
 //        'tid/:tid' => ['index/lists/index'],
 //    ],
     'list/:tid' => 'index/lists/index',
-    //'show/[:aid]' => 'index/view/index',
-    'show/[:aid]' => ['index/view/index',['method'=>'get','ext'=>'html']],
+    'show/:aid' => 'index/view/index',
+    //'show/[:aid]' => ['index/view/index',['method'=>'get','ext'=>'html']],
 ];

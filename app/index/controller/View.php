@@ -23,7 +23,7 @@ class View extends IndexBase{
     public function index($data=[]){
 
         if(empty($data)){
-            if(empty($this->param['aid'])){
+            if(!empty($this->param['aid'])){
                 $this->aid=$this->param['aid'];
             }
         }else{
@@ -66,7 +66,7 @@ class View extends IndexBase{
      * @return mixed
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/11/2 0002
      */
-    public function show(){
+    public function adminindex(){
        return  $this->index($this->param);
     }
 
