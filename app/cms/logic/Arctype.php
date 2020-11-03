@@ -120,8 +120,9 @@ class Arctype extends CmsBase
         ];
 
         $this->modelArctype->join = $join;
-
-        return $this->modelArctype->getInfo($where, 'a.*,c.nid,c.maintable,c.addtable')->toArray();
+        $info=$this->modelArctype->getInfo($where, 'a.*,c.nid,c.maintable,c.addtable');
+        is_object($info) && $info->toArray();
+        return $info;
     }
 
 

@@ -115,7 +115,10 @@ class AdminBase extends ControllerBase
         $this->title = $this->logicSysMenu->getDefaultTitle();
 
         // 获取当前登录帐号组织机组
-        $this->org = get_org_info();
+        $this->org = $this->logicSysOrg->getSysOrgInfo(SYS_ORG_ID);
+
+        // 设置组织机组
+        $this->assign('sys_org', $this->org);
 
         // 设置组织机组
         $this->assign('page_org', $this->org);

@@ -52,36 +52,59 @@ class TagTag extends Base
         $result = false;
         $where = array();
 
+        $logicTag = new \app\index\logic\Tag();
+
+        //带aid调用文档标签
         if ($getall == 0 && $aid > 0) {
             $where['aid'] = array('eq', $aid);
-            $logicTaglist = new \app\index\logic\Taglist();
-            $result = $logicTaglist->getTaglistTaglibList($where, '*, tid AS tagid', '',false,$row);
-
-        } else {
-
+            $result = $logicTag->getTagindexList($where, '*, tid AS tagid', '',$row);
+        } else {//不带aid就调用所有共性标签
             if (!empty($typeid)) {
                 $typeid = $this->getTypeids($typeid, $type);
                 $where['typeid'] = array('in', $typeid);
             }
-            if($sort == 'rand') $orderby = 'rand() ';
-            else if($sort == 'week') $orderby=' weekcc DESC ';
-            else if($sort == 'month') $orderby=' monthcc DESC ';
-            else if($sort == 'hot') $orderby=' count DESC ';
-            else if($sort == 'total') $orderby=' total DESC ';
-            else $orderby = 'create_time DESC  ';
 
-            $logicTags = new \app\index\logic\Tags();
-            $result = $logicTags->getTagsTaglibList($where, '*, id AS tagid', $orderby,false,$row);
+
+
+            switch ($sort) {
+                case 'rand':
+                    $orderby = 'rand() ';
+                    break;
+                case 'week':
+                    $orderby = 'week desc ';
+                    break;
+                case 'month':
+                    $orderby = 'month desc ';
+                    break;
+                case 'hot':
+                    $orderby = 'count desc ';
+                    break;
+                case 'total':
+                    $orderby = 'total desc ';
+                    break;
+                default:
+                    $orderby = 'create_time DESC ';
+                    break;
+            }
+            $logicTags = new \app\index\logic\Tag();
+            $result = $logicTags->getTagsTaglibList($where, '*, id AS tagid', $orderby,$row);
         }
 
         foreach ($result as $key => $val) {
-            $val['link'] = url('index/Tags/lists', array('tagid'=>$val['tagid']));
+            $val['link'] = url('index/tags/lists', array('tagid'=>$val['tagid']));
             $result[$key] = $val;
         }
 
         return $result;
     }
 
+    /**
+     * 栏目 typeid 处理理
+     * @param $typeid
+     * @param string $type
+     * @return array
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/11/3 0003
+     */
     private function getTypeids($typeid, $type = '')
     {
         $typeidArr = $typeid;
@@ -115,7 +138,6 @@ class TagTag extends Base
                     ];
                     break;
             }
-
             if (!empty($result)) {
                 $typeids = array_merge($typeids, get_arr_column($result, 'id'));
             }

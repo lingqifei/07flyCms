@@ -16,7 +16,7 @@ use \think\Db;
 /**
  * 文章标签列表=》逻辑层
  */
-class Tags extends IndexBase
+class Tag extends IndexBase
 {
 
     /**列表查询
@@ -50,19 +50,15 @@ class Tags extends IndexBase
      * @return mixed
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getTagsTaglibList($where = [], $field = true, $order = '', $paginate = 15,$limit = '')
+    public function getTagindexList($where = [], $field = true, $order = '', $paginate = 15)
     {
-
-        $this->modelTags->alias('a');
-        $this->modelTags->limit=$limit;
-        $list= $this->modelTags->getList($where, $field, $order, false)->toArray();
-
-        foreach ($list as &$row){
-//            $row['links'] =$row['url'];
-//            $row['logo'] =get_picture_url($row['logo']);
-//            $row['target'] = ($row['target'] == 1) ? 'target="_blank"' : 'target="_self"';
+        $list= $this->modelTagindex->getList($where, $field, $order, $paginate)->toArray();
+        if($paginate===false) $list['data']=$list;
+        if(!empty($list['data'])){
+            return $list['data'];
+        }else{
+            return $list;
         }
-        return $list;
     }
 
 }

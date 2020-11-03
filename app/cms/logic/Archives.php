@@ -213,7 +213,9 @@ class Archives extends CmsBase
         $arclist=$this->modelArchives->getList($where,true,true,false);
         foreach ($arclist as $row){
             $arctype=$this->logicArctype->getArctypeInfoDetail($row['type_id']);
-            Db::table(SYS_DB_PREFIX.$arctype['addtable'])->delete($row['id'],true);
+            if(!empty($arctype)){
+                Db::table(SYS_DB_PREFIX.$arctype['addtable'])->delete($row['id'],true);
+            }
             $result = $this->modelArchives->deleteInfo($where,true);
         }
         $result && action_log('删除', '删除文档，where：' . http_build_query($where));

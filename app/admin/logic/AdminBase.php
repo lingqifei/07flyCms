@@ -170,7 +170,7 @@ class AdminBase extends LogicBase
         $data['php_version'] = PHP_VERSION;
 
         // 产品信息
-        $data['product_name'] = '零起飞管理系统';
+        $data['product_name'] = '07FLY-CMS-PHP';
         $data['author'] = '零起飞';
         $data['website'] = 'www.07fly.top';
         $data['qun'] = '<a href="//shang.qq.com/wpa/qunwpa?idkey=b587b0c97d7a7e17b805c05f5c2e4aa1a2a16958edee01c2d5208ac675e6d4aa" target="_blank">575085787</a>';
