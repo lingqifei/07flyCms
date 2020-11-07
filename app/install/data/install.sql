@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
--- 主机:                           127.0.0.1
--- 服务器版本:                        5.5.53 - MySQL Community Server (GPL)
--- 服务器OS:                        Win32
+-- 主机:                           59.110.26.169
+-- 服务器版本:                        5.5.62-log - MySQL Community Server (GPL)
+-- 服务器OS:                        Win64
 -- HeidiSQL 版本:                  10.2.0.5599
 -- --------------------------------------------------------
 
@@ -11,7 +11,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table 20629_renrenhw.lqf_action_log
+-- Dumping structure for table zdtop_net.lqf_action_log
 CREATE TABLE IF NOT EXISTS `lqf_action_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `sys_user_id` int(10) unsigned DEFAULT '0' COMMENT '执行会员id',
@@ -24,14 +24,17 @@ CREATE TABLE IF NOT EXISTS `lqf_action_log` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '执行行为的时间',
   `org_id` int(11) NOT NULL DEFAULT '1' COMMENT '组织',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=1371 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
--- Dumping data for table 20629_renrenhw.lqf_action_log: 0 rows
+-- Dumping data for table zdtop_net.lqf_action_log: 2 rows
 DELETE FROM `lqf_action_log`;
 /*!40000 ALTER TABLE `lqf_action_log` DISABLE KEYS */;
+INSERT INTO `lqf_action_log` (`id`, `sys_user_id`, `username`, `ip`, `name`, `describe`, `url`, `update_time`, `create_time`, `org_id`) VALUES
+	(1370, 1, 'admin', '171.214.233.64', '删除', '数据库备份文件删除，path：C:\\wwwroot\\zdtop.net\\data\\20200427-105236-*.sql*', '/admin/Database/backupDel/time/1587955956.html', 0, 1604725044, 1),
+	(1369, 1, 'admin', '171.214.233.64', '删除', '数据库备份文件删除，path：C:\\wwwroot\\zdtop.net\\data\\20201009-143751-*.sql*', '/admin/Database/backupDel/time/1602225471.html', 0, 1604725040, 1);
 /*!40000 ALTER TABLE `lqf_action_log` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_addon
+-- Dumping structure for table zdtop_net.lqf_addon
 CREATE TABLE IF NOT EXISTS `lqf_addon` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(40) NOT NULL DEFAULT '' COMMENT '插件名或标识',
@@ -47,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `lqf_addon` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
--- Dumping data for table 20629_renrenhw.lqf_addon: 4 rows
+-- Dumping data for table zdtop_net.lqf_addon: 4 rows
 DELETE FROM `lqf_addon`;
 /*!40000 ALTER TABLE `lqf_addon` DISABLE KEYS */;
 INSERT INTO `lqf_addon` (`id`, `name`, `title`, `describe`, `config`, `author`, `version`, `status`, `create_time`, `update_time`, `org_id`) VALUES
@@ -57,7 +60,7 @@ INSERT INTO `lqf_addon` (`id`, `name`, `title`, `describe`, `config`, `author`, 
 	(6, 'Region', '区域选择', '区域选择插件', '', 'lingqifei', '1.0', 1, 0, 0, 1);
 /*!40000 ALTER TABLE `lqf_addon` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_ads
+-- Dumping structure for table zdtop_net.lqf_ads
 CREATE TABLE IF NOT EXISTS `lqf_ads` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(60) NOT NULL DEFAULT '' COMMENT '广告位置名称',
@@ -73,18 +76,17 @@ CREATE TABLE IF NOT EXISTS `lqf_ads` (
   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '新增时间',
   `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='广告位置表';
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='广告位置表';
 
--- Dumping data for table 20629_renrenhw.lqf_ads: 3 rows
+-- Dumping data for table zdtop_net.lqf_ads: 2 rows
 DELETE FROM `lqf_ads`;
 /*!40000 ALTER TABLE `lqf_ads` DISABLE KEYS */;
 INSERT INTO `lqf_ads` (`id`, `title`, `width`, `height`, `litpic`, `links`, `intro`, `visible`, `target`, `lang`, `sys_user_id`, `create_time`, `update_time`) VALUES
 	(1, '首页-大幻灯片', 1920, 550, '19', 'http://www.07fly.com', '广告图片的宽高度随着浏览器大小而改变', 1, 0, 'cn', 0, 1524209276, 1582859018),
-	(2, '手机-首页-大幻灯片', 640, 270, '0', 'http://www.07fly.com', '广告图片的宽高度随着浏览器大小而改变', 1, 0, 'en', 0, 1524209276, 1594112752),
-	(8, '导航菜广告', 0, 0, '', 'http://www.07fly.com', '', 1, 0, 'cn', 0, 1593670864, 0);
+	(2, 'en首页-大幻灯片', 1920, 550, '0', '0', '广告图片的宽高度随着浏览器大小而改变', 1, 0, 'en', 0, 1524209276, 1524209365);
 /*!40000 ALTER TABLE `lqf_ads` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_ads_list
+-- Dumping structure for table zdtop_net.lqf_ads_list
 CREATE TABLE IF NOT EXISTS `lqf_ads_list` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '广告id',
   `ads_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '广告位置ID',
@@ -110,26 +112,19 @@ CREATE TABLE IF NOT EXISTS `lqf_ads_list` (
   PRIMARY KEY (`id`),
   KEY `position_id` (`ads_id`) USING BTREE,
   KEY `status` (`visible`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='广告列表';
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='广告列表';
 
--- Dumping data for table 20629_renrenhw.lqf_ads_list: 11 rows
+-- Dumping data for table zdtop_net.lqf_ads_list: 4 rows
 DELETE FROM `lqf_ads_list`;
 /*!40000 ALTER TABLE `lqf_ads_list` DISABLE KEYS */;
 INSERT INTO `lqf_ads_list` (`id`, `ads_id`, `media_type`, `title`, `links`, `litpic`, `start_time`, `end_time`, `intro`, `link_man`, `link_email`, `link_phone`, `click`, `bgcolor`, `visible`, `sort`, `target`, `sys_user_id`, `lang`, `create_time`, `update_time`) VALUES
-	(1, 1, 1, '大1-3', 'http://www.07fly.com', '61', 1524215594, 0, '这里广告内容的填写哟', '', '', '', 0, '', 1, 4, '0', 0, 'cn', 1524215652, 1593671065),
-	(16, 2, 1, '大2-1', 'http://www.07fly.com', '78', 0, 0, '234234', '', '', '', 0, '', 1, 1, '1', 1, 'cn', 1553046945, 1594112778),
-	(2, 1, 1, '大1-2', 'http://www.07fly.com', '60', 0, 0, '<p>填写广告的备注信息，方便于后期的跟进</p>', '', '', '', 0, '', 1, 3, '0', 0, 'cn', 1524214017, 1593671057),
-	(5, 1, 1, '大1-1', 'http://www.07fl', '59', 0, 0, '234234', '', '', '', 0, '', 1, 2, '1', 1, 'cn', 1553046945, 1593671047),
-	(17, 8, 0, '11', 'http://www.07fly.com', '60', 0, 0, '', '', '', '', 0, '', 1, 0, '', 0, 'cn', 1593670886, 1594305273),
-	(18, 8, 0, '222', 'http://www.07fly.com', '61', 0, 0, '', '', '', '', 0, '', 1, 0, '', 0, 'cn', 1593670895, 1594305291),
-	(19, 1, 0, '大1-4', 'http://www.07fly.com', '62', 0, 0, '', '', '', '', 0, '', 1, 0, '', 0, 'cn', 1593671090, 0),
-	(20, 1, 0, '大1-5', 'http://www.07fly.com', '63', 0, 0, '', '', '', '', 0, '', 1, 0, '', 0, 'cn', 1593671105, 0),
-	(21, 2, 0, '小二1-2', 'http://www.07fly.com', '79', 0, 0, '', '', '', '', 0, '', 1, 0, '', 0, 'cn', 1594112804, 0),
-	(22, 8, 0, '1-3', 'http://www.07fly.com', '59', 0, 0, '', '', '', '', 0, '', 1, 0, '', 0, 'cn', 1594305318, 0),
-	(23, 8, 0, '1-4', 'http://www.07fly.com', '62', 0, 0, '', '', '', '', 0, '', 1, 0, '', 0, 'cn', 1594305405, 0);
+	(1, 1, 1, '大1-3', 'http://wd.s5.07fly.com', '35', 1524215594, 0, '这里广告内容的填写哟', '', '', '', 0, '', 1, 4, '0', 0, 'cn', 1524215652, 1587623758),
+	(16, 2, 1, '大2-1', 'http://www.07fly.com', '33', 0, 0, '234234', '', '', '', 0, '', 1, 1, '1', 1, 'cn', 1553046945, 1587521413),
+	(2, 1, 1, '大1-2', 'http://wd.s5.07fly.com', '34', 0, 0, '<p>填写广告的备注信息，方便于后期的跟进</p>', '', '', '', 0, '', 1, 3, '0', 0, 'cn', 1524214017, 1587623753),
+	(5, 1, 1, '大1-1', 'http://wd.s5.07fly.com', '36', 0, 0, '234234', '', '', '', 0, '', 1, 2, '1', 1, 'cn', 1553046945, 1587623748);
 /*!40000 ALTER TABLE `lqf_ads_list` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_arcatt
+-- Dumping structure for table zdtop_net.lqf_arcatt
 CREATE TABLE IF NOT EXISTS `lqf_arcatt` (
   `sortid` smallint(6) NOT NULL DEFAULT '0',
   `att` char(10) NOT NULL DEFAULT '' COMMENT '属性标志',
@@ -137,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `lqf_arcatt` (
   PRIMARY KEY (`att`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章属性表';
 
--- Dumping data for table 20629_renrenhw.lqf_arcatt: 8 rows
+-- Dumping data for table zdtop_net.lqf_arcatt: 8 rows
 DELETE FROM `lqf_arcatt`;
 /*!40000 ALTER TABLE `lqf_arcatt` DISABLE KEYS */;
 INSERT INTO `lqf_arcatt` (`sortid`, `att`, `attname`) VALUES
@@ -151,194 +146,13 @@ INSERT INTO `lqf_arcatt` (`sortid`, `att`, `attname`) VALUES
 	(6, 'b', '加粗');
 /*!40000 ALTER TABLE `lqf_arcatt` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_arcext
-CREATE TABLE IF NOT EXISTS `lqf_arcext` (
-  `id` smallint(6) NOT NULL AUTO_INCREMENT,
-  `channel_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '关联模块',
-  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '名称',
-  `nid` varchar(64) NOT NULL DEFAULT '' COMMENT '标识',
-  `maintable` varchar(64) NOT NULL DEFAULT '' COMMENT '主表',
-  `addtable` varchar(64) NOT NULL DEFAULT '' COMMENT '附表',
-  `tablename` varchar(30) NOT NULL DEFAULT '' COMMENT '数据表',
-  `create_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `update_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='文章扩展表';
-
--- Dumping data for table 20629_renrenhw.lqf_arcext: 4 rows
-DELETE FROM `lqf_arcext`;
-/*!40000 ALTER TABLE `lqf_arcext` DISABLE KEYS */;
-INSERT INTO `lqf_arcext` (`id`, `channel_id`, `name`, `nid`, `maintable`, `addtable`, `tablename`, `create_time`, `update_time`, `sort`) VALUES
-	(1, 1, '项目优势', 'project', 'arcext', 'arcext_project', '', 1593653489, 0, 0),
-	(2, 1, '项目展示', 'case', 'arcext', 'arcext_case', '', 1593653523, 0, 0),
-	(3, 1, '申请指南', 'faq', 'arcext', 'arcext_faq', '', 1593653550, 0, 0),
-	(4, 1, '其他要求', 'its', 'arcext', 'arcext_its', '', 1593653586, 0, 0);
-/*!40000 ALTER TABLE `lqf_arcext` ENABLE KEYS */;
-
--- Dumping structure for table 20629_renrenhw.lqf_arcext_case
-CREATE TABLE IF NOT EXISTS `lqf_arcext_case` (
-  `id` int(22) unsigned NOT NULL AUTO_INCREMENT,
-  `arcext_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `archives_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `sort` int(11) unsigned NOT NULL DEFAULT '0',
-  `content` text,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `litpic` varchar(255) NOT NULL DEFAULT '',
-  `pubdate` datetime DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `arcext_id` (`arcext_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='文章扩展表单扩展表';
-
--- Dumping data for table 20629_renrenhw.lqf_arcext_case: 9 rows
-DELETE FROM `lqf_arcext_case`;
-/*!40000 ALTER TABLE `lqf_arcext_case` DISABLE KEYS */;
-INSERT INTO `lqf_arcext_case` (`id`, `arcext_id`, `archives_id`, `sort`, `content`, `title`, `litpic`, `pubdate`, `create_time`) VALUES
-	(1, 2, 118, 100, '<span style="color:#222222;font-family:Consolas, &quot;font-size:12px;font-style:normal;font-weight:400;background-color:#FFFFFF;">英国伦敦传统富人区豪华公寓</span>', '英国伦敦传统富人区豪华公寓', '71,72,73,74', '2020-07-06 10:43:00', '2020-07-06 10:45:16'),
-	(2, 2, 125, 100, '<span style="color:#222222;font-family:Consolas, &quot;font-size:12px;font-style:normal;font-weight:400;background-color:#FFFFFF;">美国奥兰多迪士尼旁度假联排别墅</span>', '美国奥兰多迪士尼旁度假联排别墅', '100,101,102', '2020-07-09 09:51:00', '2020-07-09 09:51:40'),
-	(3, 2, 125, 100, '<span style="color:#222222;font-family:Consolas, &quot;font-size:12px;font-style:normal;font-weight:400;background-color:#FFFFFF;">美国尔湾别致套房式别墅</span>', '美国尔湾别致套房式别墅', '103,104,105', '2020-07-09 09:54:00', '2020-07-09 09:52:16'),
-	(4, 2, 125, 100, '<span style="color:#222222;font-family:Consolas, &quot;font-size:12px;font-style:normal;font-weight:400;background-color:#FFFFFF;">美国洛杉矶新地标稀缺豪华公寓</span>', '美国洛杉矶新地标稀缺豪华公寓', '106,107,108', '2020-07-09 09:54:00', '2020-07-09 09:52:49'),
-	(5, 2, 125, 100, '<span style="color:#222222;font-family:Consolas, &quot;font-size:12px;font-style:normal;font-weight:400;background-color:#FFFFFF;">美国西雅图市中心奢华公寓</span>', '美国西雅图市中心奢华公寓', '108,109,110', '2020-07-09 09:55:00', '2020-07-09 09:53:15'),
-	(6, 2, 117, 100, '移民投资', '移民投资', '102,112,113', '2020-07-09 13:20:00', '2020-07-09 13:19:01'),
-	(7, 2, 117, 100, '移民投资项目', '移民投资项目', '112,101,102', '2020-07-09 13:21:00', '2020-07-09 13:19:30'),
-	(8, 2, 117, 100, '成功移民投资项目', '成功移民投资项目', '110,108,109', '2020-07-09 13:21:00', '2020-07-09 13:19:52'),
-	(9, 2, 117, 100, '住宅移民投资项目', '住宅移民投资项目', '107,114,108', '2020-07-09 13:22:00', '2020-07-09 13:20:27');
-/*!40000 ALTER TABLE `lqf_arcext_case` ENABLE KEYS */;
-
--- Dumping structure for table 20629_renrenhw.lqf_arcext_faq
-CREATE TABLE IF NOT EXISTS `lqf_arcext_faq` (
-  `id` int(22) unsigned NOT NULL AUTO_INCREMENT,
-  `arcext_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `archives_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `sort` int(11) unsigned NOT NULL DEFAULT '0',
-  `content` text,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `litpic` varchar(255) NOT NULL DEFAULT '',
-  `pubdate` datetime DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `arcext_id` (`arcext_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='文章扩展表单扩展表';
-
--- Dumping data for table 20629_renrenhw.lqf_arcext_faq: 10 rows
-DELETE FROM `lqf_arcext_faq`;
-/*!40000 ALTER TABLE `lqf_arcext_faq` DISABLE KEYS */;
-INSERT INTO `lqf_arcext_faq` (`id`, `arcext_id`, `archives_id`, `sort`, `content`, `title`, `litpic`, `pubdate`, `create_time`) VALUES
-	(1, 3, 118, 100, '<ul>\r\n	<li>\r\n		&nbsp;&nbsp;&nbsp; 申请人受雇于总部及主要经营地点在英国境外的公司（下称母公司*）\r\n	</li>\r\n	<li>\r\n		&nbsp;&nbsp;&nbsp; 申请人在母公司任职高管（但不是主要股东**），并拥有全权代表母公司做出决定的权限\r\n	</li>\r\n	<li>\r\n		&nbsp;&nbsp;&nbsp; 申请人将作为母公司的唯一英国境内代表人，在英国建立第一家全资子公司或者分支机构。在英国的分支机构或全资子公司必须从事与母公司相同的业务\r\n	</li>\r\n	<li>\r\n		&nbsp;&nbsp;&nbsp; 申请人在母公司所从事的业务范围内拥有一定的工作经验和专业知识\r\n	</li>\r\n	<li>\r\n		&nbsp;&nbsp;&nbsp; 英语达到 CEFR&nbsp; A1级别（等同于雅思life skill A1级别）***\r\n	</li>\r\n</ul>\r\n<div>\r\n	<p>\r\n		*母公司营业额在五百万人民币以上，并产生利润\r\n	</p>\r\n	<p>\r\n		**夫妻双方股份不超过10%\r\n	</p>\r\n	<p>\r\n		***雅思Life Skill考试科目为听、说两类考试，通过A1级别考试等同于雅思G类考试2-3分\r\n	</p>\r\n<br />\r\n</div>', '申请要求', '', '2020-07-04 21:27:00', '2020-07-04 21:15:30'),
-	(2, 3, 118, 100, '<ul>\r\n	<li>\r\n		免费咨询签订合同\r\n	</li>\r\n	<li>\r\n		准备文件\r\n	</li>\r\n	<li>\r\n		体检正式递交申请\r\n	</li>\r\n	<li>\r\n		电话面谈（一般情况下）\r\n	</li>\r\n	<li>\r\n		获批签证(30天有效期)\r\n	</li>\r\n	<li>\r\n		登陆英国\r\n	</li>\r\n	<li>\r\n		领取居留卡(3年有效期)\r\n	</li>\r\n	<li>\r\n		创办企业\r\n	</li>\r\n</ul>', '申请流程', '', '2020-07-04 21:27:00', '2020-07-04 21:16:54'),
-	(3, 3, 118, 100, '<ul>\r\n	<li>\r\n		免费咨询签订合同\r\n	</li>\r\n	<li>\r\n		准备文件\r\n	</li>\r\n	<li>\r\n		体检正式递交申请\r\n	</li>\r\n	<li>\r\n		电话面谈（一般情况下）\r\n	</li>\r\n	<li>\r\n		获批签证(30天有效期)\r\n	</li>\r\n	<li>\r\n		登陆英国\r\n	</li>\r\n	<li>\r\n		领取居留卡(3年有效期)\r\n	</li>\r\n	<li>\r\n		创办企业\r\n	</li>\r\n</ul>', '申请流程', '', '2020-07-04 21:24:00', '2020-07-04 21:16:54'),
-	(4, 3, 118, 100, '<ul>\r\n	<li>\r\n		免费咨询签订合同\r\n	</li>\r\n	<li>\r\n		准备文件\r\n	</li>\r\n	<li>\r\n		体检正式递交申请\r\n	</li>\r\n	<li>\r\n		电话面谈（一般情况下）\r\n	</li>\r\n	<li>\r\n		获批签证(30天有效期)\r\n	</li>\r\n	<li>\r\n		登陆英国\r\n	</li>\r\n	<li>\r\n		领取居留卡(3年有效期)\r\n	</li>\r\n	<li>\r\n		创办企业\r\n	</li>\r\n</ul>', '申请流程', '', '2020-07-04 21:24:00', '2020-07-04 21:16:54'),
-	(5, 3, 125, 100, '<ul>\r\n	<li>\r\n		主申请人年满18岁*\r\n	</li>\r\n	<li>\r\n		*部分州对投资人年龄有不同规定\r\n	</li>\r\n	<li>\r\n		投资金额：佛罗里达州特许学校为区域中心项目，投资额为美金90万元\r\n	</li>\r\n	<li>\r\n		移民局官方要求投资款需要符合风险性投资\r\n	</li>\r\n	<li>\r\n		可随同主申请人移民的受养人包括：\r\n	</li>\r\n	<li>\r\n		*配偶及21周岁以下的未婚子女\r\n	</li>\r\n</ul>', '申请要求', '', '2020-07-09 09:56:00', '2020-07-09 09:54:05'),
-	(6, 3, 125, 100, '<ul>\r\n	<li>\r\n		免费咨询\r\n	</li>\r\n	<li>\r\n		签订合约\r\n	</li>\r\n	<li>\r\n		准备文件 支付投资款\r\n	</li>\r\n	<li>\r\n		律师审核文件\r\n	</li>\r\n	<li>\r\n		递交申请\r\n	</li>\r\n	<li>\r\n		取得档案编号\r\n	</li>\r\n	<li>\r\n		获得批准\r\n	</li>\r\n	<li>\r\n		个案转至国家签证中心\r\n	</li>\r\n	<li>\r\n		收到面谈通知\r\n	</li>\r\n	<li>\r\n		辅导 体检 面谈\r\n	</li>\r\n	<li>\r\n		取得签证 半年内登陆 取得绿卡\r\n	</li>\r\n	<li>\r\n		登陆后第21个月提交解除绿卡限制申请\r\n	</li>\r\n	<li>\r\n		投资期满返还投资款\r\n	</li>\r\n</ul>\r\n<div>\r\n	<div align="left">\r\n		<p style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n			*申请时间从取得档案编号起至取得签证计算约为2.5-3年\r\n			</p>\r\n<p style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n			*由于中国内地出生申请人受排期影响，申请时间约为8-10年\r\n		</p>\r\n<p style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n			*申请流程及时间仅供参考，以官方实际审批为准\r\n			</p>\r\n				</div>\r\n<br />\r\n			</div>', '申请流程', '', '2020-07-09 09:57:00', '2020-07-09 09:54:44'),
-	(7, 3, 117, 100, '<ul>\r\n	<li>\r\n		必须拥有丰富的商业经历以及成功的创业背景\r\n	</li>\r\n	<li>\r\n		经营公司至少3年\r\n	</li>\r\n	<li>\r\n		持有公司30%或以上的股份（私人公司）\r\n	</li>\r\n	<li>\r\n		公司上一年的主营业额必须达到新币2亿（约10亿人民币）以上\r\n	</li>\r\n	<li>\r\n		最近三年的主营业平均额必须达到新币2亿（约10亿人民币）以上\r\n	</li>\r\n	<li>\r\n		可合并本人所拥有的不多于2家公司的营业额以达到要求\r\n	</li>\r\n	<li>\r\n		需由指定审计机构出具财务报表（在中国成立的公司需由排名前50的会计师事务所出具）\r\n	</li>\r\n	<li>\r\n		公司主营业务需与行业列表匹配\r\n	</li>\r\n</ul>', '申请要求', '', '2020-07-09 13:24:00', '2020-07-09 13:22:14'),
-	(8, 3, 117, 100, '<ul>\r\n	<li>\r\n		免费咨询\r\n	</li>\r\n	<li>\r\n		签订合约\r\n	</li>\r\n	<li>\r\n		递交申请\r\n	</li>\r\n	<li>\r\n		面试通知\r\n	</li>\r\n	<li>\r\n		面试辅导\r\n	</li>\r\n	<li>\r\n		面试\r\n	</li>\r\n	<li>\r\n		获得原则批准书\r\n	</li>\r\n	<li>\r\n		完成投资(6个月内)\r\n	</li>\r\n	<li>\r\n		最后批复\r\n	</li>\r\n	<li>\r\n		完成体检\r\n	</li>\r\n	<li>\r\n		取得签证登陆(*取得签证后，需在签证规定的有效期内完成登陆)\r\n	</li>\r\n</ul>', '申请流程', '', '2020-07-09 13:24:00', '2020-07-09 13:22:48'),
-	(9, 3, 115, 100, '<ul>\r\n	<li>\r\n		申请人年龄需18岁或以上\r\n	</li>\r\n	<li>\r\n		具备良好的学历及财政能力，满足两套计分制度其中一套的分数要求\r\n	</li>\r\n	<li>\r\n		具备良好中文或英文的书写及口语能力（中文口语指普通话或粤语）\r\n	</li>\r\n	<li>\r\n		*计划不适用于以下国民：阿富汗、古巴、老挝、朝鲜、尼泊尔及越南\r\n	</li>\r\n</ul>', '申请要求', '', '2020-07-09 13:32:00', '2020-07-09 13:30:36'),
-	(10, 3, 115, 100, '<ul>\r\n	<li>\r\n		免费咨询\r\n	</li>\r\n	<li>\r\n		签订委托合约\r\n	</li>\r\n	<li>\r\n		递交申请\r\n	</li>\r\n	<li>\r\n		获得档案编号\r\n	</li>\r\n	<li>\r\n		补充文件（如需）\r\n	</li>\r\n	<li>\r\n		面谈\r\n	</li>\r\n	<li>\r\n		获得批准\r\n	</li>\r\n	<li>\r\n		获得入境签注*\r\n	</li>\r\n	<li>\r\n		办理香港身份证\r\n	</li>\r\n	<li>\r\n		期满后续期签注\r\n	</li>\r\n</ul>', '申请流程', '', '2020-07-09 13:32:00', '2020-07-09 13:30:58');
-/*!40000 ALTER TABLE `lqf_arcext_faq` ENABLE KEYS */;
-
--- Dumping structure for table 20629_renrenhw.lqf_arcext_field
-CREATE TABLE IF NOT EXISTS `lqf_arcext_field` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `arcext_id` int(16) NOT NULL DEFAULT '0' COMMENT '扩展表id',
-  `channel_id` int(16) NOT NULL DEFAULT '0' COMMENT '频道表id',
-  `main_table` varchar(50) NOT NULL COMMENT '关联主表',
-  `ext_table` varchar(50) NOT NULL COMMENT '扩展表名',
-  `show_name` varchar(256) NOT NULL COMMENT '字段表单名称',
-  `field_name` varchar(256) NOT NULL COMMENT '字段名称',
-  `field_type` varchar(50) NOT NULL COMMENT '单文本=varchar,文本=text,多行文本=textarea,整数=int,小数=float,图片=img,下拉=option,单选=radio,复选=checkbox',
-  `default_value` varchar(256) NOT NULL COMMENT '字段默认值',
-  `maxlength` varchar(256) NOT NULL COMMENT '最大值',
-  `desc` varchar(256) NOT NULL COMMENT '表单说明',
-  `visible` smallint(1) NOT NULL DEFAULT '1' COMMENT '是否使用',
-  `is_system` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否为系统字段，1=是（不能删除）0=否',
-  `is_must` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否改填',
-  `sort` int(16) NOT NULL DEFAULT '0' COMMENT '显示排序',
-  `create_time` int(11) NOT NULL DEFAULT '0',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `sys_user_id` int(16) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章扩展表字段';
-
--- Dumping data for table 20629_renrenhw.lqf_arcext_field: 0 rows
-DELETE FROM `lqf_arcext_field`;
-/*!40000 ALTER TABLE `lqf_arcext_field` DISABLE KEYS */;
-/*!40000 ALTER TABLE `lqf_arcext_field` ENABLE KEYS */;
-
--- Dumping structure for table 20629_renrenhw.lqf_arcext_its
-CREATE TABLE IF NOT EXISTS `lqf_arcext_its` (
-  `id` int(22) unsigned NOT NULL AUTO_INCREMENT,
-  `arcext_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `archives_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `sort` int(11) unsigned NOT NULL DEFAULT '0',
-  `content` text,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `litpic` varchar(255) NOT NULL DEFAULT '',
-  `pubdate` datetime DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `arcext_id` (`arcext_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='文章扩展表单扩展表';
-
--- Dumping data for table 20629_renrenhw.lqf_arcext_its: 8 rows
-DELETE FROM `lqf_arcext_its`;
-/*!40000 ALTER TABLE `lqf_arcext_its` DISABLE KEYS */;
-INSERT INTO `lqf_arcext_its` (`id`, `arcext_id`, `archives_id`, `sort`, `content`, `title`, `litpic`, `pubdate`, `create_time`) VALUES
-	(1, 4, 118, 100, '<ul>\r\n	<li>\r\n		母公司在英国境外正常运营\r\n	</li>\r\n	<li>\r\n		申请人仍受雇于同一家母公司并出具相关证明\r\n	</li>\r\n	<li>\r\n		申请人是母公司的唯一英国境内代表人，并已在英国建立并运营第一家全资子公司或者分支机构\r\n	</li>\r\n</ul>', '续期要求', '', '2020-07-05 10:06:00', '2020-07-05 10:06:37'),
-	(2, 4, 118, 100, '<ul>\r\n	<li>\r\n		年龄在18岁以上\r\n	</li>\r\n	<li>\r\n		通过英语B1测试\r\n	</li>\r\n	<li>\r\n		通过“生活在英国”的测试\r\n	</li>\r\n	<li>\r\n		申请入籍前的5年内没有违反任何移民条例\r\n	</li>\r\n	<li>\r\n		在申请当日计算起的过往5年当中，申请人需在英国居住，并在境外逗留的时间不能超过450天\r\n	</li>\r\n	<li>\r\n		在递交申请前的12个月内，申请人已经获得永居身份，并在境外逗留的累计时间不超过90天\r\n	</li>\r\n	<li>\r\n		上述5年开始的第一天申请人必须在英国境内\r\n	</li>\r\n</ul>', '入籍要求', '', '2020-07-05 10:11:00', '2020-07-05 10:11:29'),
-	(3, 4, 118, 100, '<ul>\r\n	<li>\r\n		在英国居住5年后，可以申请永居- 每年离开英国不可以超过6个月（180天）<br />\r\n- 过去5年内，母公司在英国境外正常运营<br />\r\n- 过去5年内，申请人作为母公司的唯一英国境内代表人，一直受雇于母公司并一直维持在英国的全资子公司/分支机构的积极运营，且将会继续运营此公司<br />\r\n- 能保障自己的生活、住宿及其它生活需要<br />\r\n- 通过英语B1测试<br />\r\n- 通过“生活在英国”的测试（65岁或以上或18岁以下可豁免）\r\n	</li>\r\n	<li>\r\n		成为永居后，每次离开英国的时间不可超过连续的2年\r\n	</li>\r\n</ul>', '永居要求', '', '2020-07-08 11:47:00', '2020-07-05 10:12:06'),
-	(4, 4, 125, 100, '<ul>\r\n	<li>\r\n		在美国以永久居民身份至少住了5年（或者，如果申请人与美国公民结婚并共同居住3年），其中每次在美国境外逗留时间不超过1年\r\n	</li>\r\n	<li>\r\n		在过去5年中，至少在美国待了30个月的时间（或者，如果申请人与美国公民结婚并共同居住，并在过去3年中在美国至少待了18个月）\r\n	</li>\r\n	<li>\r\n		申请之前，申请人至少要在某个州或USCIS地区居住3个月\r\n	</li>\r\n</ul>', '入籍要求', '', '2020-07-09 09:58:00', '2020-07-09 09:56:38'),
-	(5, 4, 125, 100, '<ul>\r\n	<li>\r\n		佛罗里达州人口约1,990万，是美国第四大人口聚集地\r\n	</li>\r\n	<li>\r\n		该州国内生产总值为9,673亿美元，经济发展程度全美排名第四\r\n	</li>\r\n	<li>\r\n		项目开发商 Jacksonville Classical Academy, Inc.经验丰富，已在佛罗里达州成功开发多家特许学校，也是全美成功特许学校运营商之一\r\n	</li>\r\n	<li>\r\n		项目所在地地理位置优越，人口密度高、学位需求大\r\n	</li>\r\n	<li>\r\n		超过890笔投资，并已超过510位获批\r\n	</li>\r\n	<li>\r\n		30所竣工学校\r\n	</li>\r\n	<li>\r\n		第一期到第四期以及第八期项目已完成投资款返还\r\n	</li>\r\n	<li>\r\n		州政府全力支持特许学校的建立，并全资资助运营，平均每名学生7616.3美元\r\n	</li>\r\n	<li>\r\n		投资者享有第一顺位的担保抵押权，学校有土地，还有校舍和产权作为担保抵押物\r\n	</li>\r\n</ul>', '特许学校项目优势', '', '2020-07-09 09:59:00', '2020-07-09 09:57:23'),
-	(6, 4, 125, 100, '<ul>\r\n	<li>\r\n		申请人EB-5申请获批后，可凭签证登陆并在美国境内申请两年有效的、有条件限制的“绿卡”\r\n	</li>\r\n	<li>\r\n		登陆后21-24个月，申请人需办理解除绿卡的限制手续，申请永久“绿卡”\r\n	</li>\r\n	<li>\r\n		美国移民法关注人们定居美国的意向。如离开美国超过半年的，再次入境前需申请返美证\r\n	</li>\r\n</ul>', '永居要求', '', '2020-07-09 09:59:00', '2020-07-09 09:57:49'),
-	(7, 4, 117, 100, '<ul>\r\n	<li>\r\n		方案A 投资至少250万新币开拓新的生意或者扩充现有的生意\r\n	</li>\r\n	<li>\r\n		方案B 投资至少250万新币予GIP计划下的基金\r\n	</li>\r\n	<li>\r\n		方案C 投资不少于新币两百五十万元于一家成立于新加坡的新或现有单一家族理财办公室。该办公室必须管理不少于新币两亿元的资产\r\n	</li>\r\n</ul>', '投资要求', '', '2020-07-09 13:25:00', '2020-07-09 13:23:21'),
-	(8, 4, 115, 100, '<ul>\r\n	<li>\r\n		顶尖人才的逗留期限模式为“2+6”年，不受其他逗留条件限制\r\n	</li>\r\n	<li>\r\n		其资格标准为：\r\n	</li>\r\n	<li>\r\n		--申请人已经根据 “优秀人才计划”留港不少于两年；及\r\n	</li>\r\n	<li>\r\n		--申请人在上一评税年度的薪俸税应评税入息达200万港元或以上\r\n	</li>\r\n	<li>\r\n		如在获准逗留期间转换工作，只需以书面通知入境处即可\r\n	</li>\r\n</ul>', '顶尖人才', '', '2020-07-09 13:33:00', '2020-07-09 13:32:00');
-/*!40000 ALTER TABLE `lqf_arcext_its` ENABLE KEYS */;
-
--- Dumping structure for table 20629_renrenhw.lqf_arcext_project
-CREATE TABLE IF NOT EXISTS `lqf_arcext_project` (
-  `id` int(22) unsigned NOT NULL AUTO_INCREMENT,
-  `arcext_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `archives_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `sort` int(11) unsigned NOT NULL DEFAULT '0',
-  `content` text,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `litpic` varchar(255) NOT NULL DEFAULT '',
-  `pubdate` datetime DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `arcext_id` (`arcext_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='文章扩展表单扩展表';
-
--- Dumping data for table 20629_renrenhw.lqf_arcext_project: 18 rows
-DELETE FROM `lqf_arcext_project`;
-/*!40000 ALTER TABLE `lqf_arcext_project` DISABLE KEYS */;
-INSERT INTO `lqf_arcext_project` (`id`, `arcext_id`, `archives_id`, `sort`, `content`, `title`, `litpic`, `pubdate`, `create_time`) VALUES
-	(1, 1, 0, 0, '好的啊', '项目优势', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-	(2, 1, 0, 0, '好的啊', '项目优势', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-	(3, 1, 0, 0, '好的啊', '项目优势', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-	(4, 1, 118, 100, '无学历、语言、工作经验、商业背景、资金来源要求，申请手续简便', '短', '70', '2020-07-04 21:12:00', '2020-07-03 16:10:52'),
-	(5, 1, 118, 100, '审批快捷，约2-3个月即获5年黄金居留许可身份', '快', '69', '2020-07-04 21:12:00', '2020-07-03 16:21:05'),
-	(6, 1, 118, 100, '一人投资，三代移民', '多', '68', '2020-07-04 21:12:00', '2020-07-03 16:21:27'),
-	(7, 1, 118, 100, '&nbsp; 无居住要求，省却移民监的烦忧', '省', '67', '2020-07-04 20:59:00', '2020-07-03 16:21:48'),
-	(8, 1, 118, 100, '选择众多，搭配灵活，升值空间大', '优', '66', '2020-07-04 20:58:00', '2020-07-03 16:22:12'),
-	(9, 1, 125, 100, '无语言和年龄要求<span style="color:#FFFFFF;font-family:&quot;font-size:16px;font-style:normal;font-weight:400;background-color:#FFFFFF;"></span>', '门槛低', '98', '2020-07-09 09:48:00', '2020-07-09 09:46:59'),
-	(10, 1, 125, 100, '无工作要求投资移民申请成功即获得绿卡', '简单快捷', '99', '2020-07-09 09:50:00', '2020-07-09 09:47:38'),
-	(11, 1, 125, 100, '登陆后，申请人可以在美国的任何地方居住或从事各种生意活动', '自由定居', '67', '2020-07-09 09:50:00', '2020-07-09 09:49:11'),
-	(12, 1, 117, 100, '没有学历、年龄、语言的要求', '简单', '98', '2020-07-09 10:04:00', '2020-07-09 10:02:39'),
-	(13, 1, 117, 100, '申请成功即可取得永居身份，持有永居身份2年即可申请入籍', '便捷', '99', '2020-07-09 10:04:00', '2020-07-09 10:03:17'),
-	(14, 1, 117, 100, '一人申请，三代移民。主申请人可携带配偶及子女（21周岁以下）一同申请', '全家随行', '69', '2020-07-09 10:05:00', '2020-07-09 10:03:39'),
-	(15, 1, 117, 100, '申请周期短，最快6个月即可登录新加坡', '快速', '111', '2020-07-09 10:06:00', '2020-07-09 10:04:30'),
-	(16, 1, 115, 100, '无生育限制，在香港出生的子女即可取得特区护照', '特区护照', '99', '2020-07-09 13:29:00', '2020-07-09 13:28:03'),
-	(17, 1, 115, 100, '无须在来港定居前先获得本地雇主聘任，无须投资', '要求简单', '116', '2020-07-09 13:30:00', '2020-07-09 13:28:36'),
-	(18, 1, 115, 100, '定居快捷\r\n申请流程快，9-12个月可到港定居', '定居快捷', '111', '2020-07-09 13:30:00', '2020-07-09 13:28:58');
-/*!40000 ALTER TABLE `lqf_arcext_project` ENABLE KEYS */;
-
--- Dumping structure for table 20629_renrenhw.lqf_archives
+-- Dumping structure for table zdtop_net.lqf_archives
 CREATE TABLE IF NOT EXISTS `lqf_archives` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `channel_id` smallint(6) NOT NULL DEFAULT '1' COMMENT '频道',
   `type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '所属主栏目编号',
   `type_id2` varchar(90) NOT NULL DEFAULT '0' COMMENT '所属副栏目编号',
+  `sys_area_id` int(11) NOT NULL DEFAULT '0',
   `sortrank` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `flag` set('c','h','p','f','s','j','a','b') DEFAULT NULL COMMENT '文章属性',
   `is_jump` tinyint(2) DEFAULT '0' COMMENT '是否跳转',
@@ -371,85 +185,64 @@ CREATE TABLE IF NOT EXISTS `lqf_archives` (
   KEY `sortrank` (`sortrank`),
   KEY `mainindex` (`arcrank`,`type_id`,`channel_id`,`flag`,`member_id`),
   KEY `lastpost` (`lastpost`,`scores`,`goodpost`,`badpost`,`notpost`)
-) ENGINE=MyISAM AUTO_INCREMENT=126 DEFAULT CHARSET=utf8 COMMENT='文章信息主表';
+) ENGINE=MyISAM AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COMMENT='文章信息主表';
 
--- Dumping data for table 20629_renrenhw.lqf_archives: 21 rows
+-- Dumping data for table zdtop_net.lqf_archives: 11 rows
 DELETE FROM `lqf_archives`;
 /*!40000 ALTER TABLE `lqf_archives` DISABLE KEYS */;
-INSERT INTO `lqf_archives` (`id`, `channel_id`, `type_id`, `type_id2`, `sortrank`, `flag`, `is_jump`, `jump_url`, `ismake`, `arcrank`, `click`, `money`, `title`, `keywords`, `shorttitle`, `description`, `color`, `writer`, `source`, `litpic`, `member_id`, `lastpost`, `scores`, `goodpost`, `badpost`, `notpost`, `filename`, `weight`, `sort`, `create_time`, `update_time`, `pubdate`) VALUES
-	(94, 1, 40, '0', 0, 'h', 0, '', 0, 0, 100, 0, 'o2o电子商务的优点有哪些？', '网站建设', '', '111这个东西还是不错的哟', '', '管理员', '还可以吧', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 0, 1587538017, '2020-04-22 14:46:00'),
-	(99, 1, 57, '0', 0, '', 0, '', 0, 0, 100, 0, '12323123', '用来查找相关文', '', '&nbsp;', '', '管理员', '', '65', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582090860, 1594039894, '2020-07-06 20:51:00'),
-	(111, 1, 55, '0', 0, 'p', 0, '', 0, 0, 100, 0, '成都做网站要多少钱?成都网站建设公司哪一家好', '企业,nbsp,成都,公司,网站建设,网站', '', '么做好一个网 站的，流程是怎样的。', '', '管理员', '原创', '65', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582982230, 1594083684, '2020-07-07 09:01:00'),
-	(105, 1, 40, '0', 0, '', 0, '', 0, 0, 100, 0, '网站建设完成后，为什么每年都要进行续费', '网站,续费,每年,支付,什么,费用', '', '对于这个问题，零起飞网络的很多客户都曾经问过，下面小编就具体谈一谈网站什么要续费，续费内容都包含什么，不续费会有什么后果。 网站为什么要续费？ 网站建设完成后，并不是放在网上以后什么都不用管了。首先，为了使网站能够被访问，要保证域名可以正常使用，而域名是按年来交费的，所以域名是每年续费之一；其次，网站的程序、内容及图片是保存在服务器上的，而现在大部分网站都是租用的服务器，为了保证网站的正常运行，所', '', '', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582095666, 1587451647, '0000-00-00 00:00:00'),
-	(106, 1, 40, '0', 0, 'c,h', 0, '', 0, 0, 100, 0, '用来查找相关文章，可输入多个关键字', '用来,相关,文章,可输入,多个,关键字', '', '用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字', '', '管理员', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582096856, 1587538008, '2020-04-22 14:46:00'),
-	(107, 1, 38, '0', 0, '', 0, '', 0, 0, 100, 0, 'thinkphp5的vendor和extend的区别', 'thinkphp5,extend,区别,vendor,h1,', '', '用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字', '', '管理员', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 50, 1582096931, 1587550745, '2020-04-22 11:32:00'),
-	(108, 1, 38, '0', 0, 's', 0, '', 0, 0, 100, 0, '网站建设，静态页面和动态页面如何选择', '网站建设', '', '网站建设，静态页面和动态页面如何选择　　电商网站建设为什么要使用静态页面制作。我们都知道，网站制作有分为静态页面制作和动态网页制作，那么建设电商网站采用哪种网站设计技术更好呢?　　我们建设网站最终目的是为了给用户浏览，所以从用户的角度出发进行思考才是最实际的，使用动态网页制作技术虽然网页美观度大大提升了，但是却不利于网站优化，今天小编重点和大家谈谈，网站建设为什么要使用静态页面制作。 　　做静态网', '', '李大哥', '零起飞', '10', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582097252, 1587550745, '0000-00-00 00:00:00'),
-	(109, 1, 38, '0', 0, '', 0, '', 0, 0, 100, 0, '网站设计师怎么脱颖而出？', '网站,设计师,怎么,脱颖而出,设计,拥有', '', '没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。', '', '管理员', '原创', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582981815, 1587451858, '0000-00-00 00:00:00'),
-	(110, 1, 38, '0', 0, '', 0, '', 0, 0, 100, 0, '2020年网站设计师怎么脱颖而出？', '0px,style,font-style,#ffffff,b', '', '没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。', '', '管理员', '原创', '92', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582981874, 1594116676, '2020-07-07 18:10:00'),
-	(113, 1, 51, '0', 0, 'c,p,b', 0, '', 0, 0, 100, 0, '如何进行品牌设计？品牌设计误区有哪些？', '品牌,nbsp,企业,产品,品牌设计,消费者', '', ' 一个好的品牌设计关乎着这个品牌是否能受到大众的青睐，在市场上赢得一席位置，品牌设计已发展成一种由商品与消费者之间一种复杂的关系，那么如何进行品牌设计?品牌设计误区有哪些?下面小编为大家详细介绍。 一、如何进行品牌设计? 1、树立现代品牌策略意识 (1)企业的领导一方面要树立现代品牌策略意识，重视品牌工作;另一方面，要对品牌策略有一个正确的认识，企业在激烈的', '', '管理员', '原创', '64', 0, 0, 0, 0, 0, 0, '', 0, 100, 1587451719, 1594181105, '2020-07-08 12:04:00'),
-	(122, 25, 62, '0', 0, 'p', 0, '', 0, 0, 100, 0, '2020优选笋盘就在这里', '优选,2020,项目,在这里,笋盘,土耳其', '', '2020优选笋盘就在这里', '', '管理员', '原创', '88', 0, 0, 0, 0, 0, 0, '', 0, 100, 1594115496, 0, '2020-07-07 17:51:00'),
-	(123, 25, 62, '0', 0, 'p', 0, '', 0, 0, 100, 0, '人生需要Plan B,中产家庭也需要守护家庭财富', '家庭,需要,中产,守护,财富,人生', '', '谁说中产家庭就不用合理的资产配置？！更需要学会守护家庭财富！赢在2020专家教您如何巧用身份实现合理资产配置！', '', '管理员', '原创', '89', 0, 0, 0, 0, 0, 0, '', 0, 100, 1594115612, 0, '2020-07-07 17:52:00'),
-	(124, 25, 62, '0', 0, 'p', 0, '', 0, 0, 100, 0, '想全家畅享优质生活，尽早锁定名额？机会来了！', '名额,nbsp,全家,锁定,畅享,优质', '', '想全家畅享优质生活，尽早锁定名额？机会来了！', '', '管理员', '原创', '90', 0, 0, 0, 0, 0, 0, '', 0, 100, 1594115669, 0, '2020-07-07 17:53:00'),
-	(115, 1, 46, '0', 0, 'p', 0, '', 0, 0, 100, 0, '优秀人才入境计划(优才计划)', '优秀人才入境计划(优才计划)', '', '优秀人才入境计划(优才计划)', '', '管理员', '原创', '115', 0, 0, 0, 0, 0, 0, '', 0, 100, 1588241677, 1594272444, '2020-07-09 13:27:00'),
-	(116, 1, 47, '0', 0, 'p', 0, '', 0, 0, 100, 0, '成功案例2', '成功案例,2222', '', '22', '', '管理员', '原创', '96', 0, 0, 0, 0, 0, 0, '', 0, 100, 1588241963, 1594192275, '2020-07-08 15:10:00'),
-	(117, 1, 49, '0', 0, 'c,h,p', 0, '', 0, 0, 100, 0, '全球商业投资者计划', '全球商业投资者计划', '', '全球商业投资者计划', '', '管理员', '原创', '95', 0, 0, 0, 0, 0, 0, '', 0, 100, 1588241991, 1594306523, '2020-07-09 22:57:00'),
-	(118, 1, 44, '0', 0, '', 0, '', 0, 0, 100, 0, '土耳其商人签证', '成功案例', '', '1973年英国加入欧共体后，英国同意土耳其籍人士可到英国创业或帮助经营企业，在满足一定的居住条件后，主申请人和全家可申请英国永居。', '', '管理员', '原创', '94', 0, 0, 0, 0, 0, 0, '', 0, 100, 1588242007, 1594192217, '2020-07-08 15:09:00'),
-	(119, 1, 31, '0', 0, '', 0, '', 0, 0, 100, 0, '荣誉资质', '荣誉,资质', '', '荣誉资质', '', '管理员', '原创', '75', 0, 0, 0, 0, 0, 0, '', 0, 100, 1594021196, 0, '2020-07-06 15:39:00'),
-	(120, 25, 31, '0', 0, 'p', 0, '', 0, 0, 100, 0, '资质荣誉', '资质荣誉', '', '资质荣誉', '', '管理员', '原创', '76', 0, 0, 0, 0, 0, 0, '', 0, 100, 1594021679, 0, '2020-07-06 15:47:00'),
-	(121, 25, 31, '0', 0, 'p', 0, '', 0, 0, 100, 0, '资质荣誉', '资质荣誉', '', '资质荣誉', '', '管理员', '原创', '77', 0, 0, 0, 0, 0, 0, '', 0, 100, 1594021695, 0, '2020-07-06 15:48:00'),
-	(125, 1, 61, '0', 0, '', 0, '', 0, 0, 100, 0, 'EB-5投资移民计划', '投资,美金,EB-5,项目,投资移民,情况', '', '项目地点\r\n杰克逊维尔（ Jacksonville ）\r\n\r\n项目情况\r\n总占地面积8,130平方米 ，将招募1034名学生，设置从K年级至12年级\r\n\r\n投资情况\r\n总投资约2,221.6万美金，发行方投资约601.6万美金，投资者贷款1,620万美金\r\n\r\n项目名额\r\n共18名，每位投资90万美金\r\n\r\n就业机会\r\n项目创造就业机会339个就业岗位，高于移民局要求88.3%', '', '管理员', '原创', '95', 0, 0, 0, 0, 0, 0, '', 0, 100, 1594259163, 1594259963, '2020-07-09 10:01:00');
+INSERT INTO `lqf_archives` (`id`, `channel_id`, `type_id`, `type_id2`, `sys_area_id`, `sortrank`, `flag`, `is_jump`, `jump_url`, `ismake`, `arcrank`, `click`, `money`, `title`, `keywords`, `shorttitle`, `description`, `color`, `writer`, `source`, `litpic`, `member_id`, `lastpost`, `scores`, `goodpost`, `badpost`, `notpost`, `filename`, `weight`, `sort`, `create_time`, `update_time`, `pubdate`) VALUES
+	(94, 1, 40, '0', 0, 0, 'h', 0, '', 0, 0, 100, 0, 'o2o电子商务的优点有哪些？', '网站建设', '', '111这个东西还是不错的哟', '', '管理员', '还可以吧', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 0, 1587538017, '2020-04-22 14:46:00'),
+	(99, 1, 40, '0', 0, 0, '', 0, '', 0, 0, 100, 0, '12323123', '用来查找相关文', '', '', '', '', '', '10', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582090860, 1587550714, '0000-00-00 00:00:00'),
+	(111, 1, 38, '0', 0, 0, 'p', 0, '', 0, 0, 100, 0, '成都做网站要多少钱?成都网站建设公司哪一家好', '企业,nbsp,成都,公司,网站建设,网站', '', '么做好一个网 站的，流程是怎样的。', '', '管理员', '原创', '28', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582982230, 1587453789, '2020-04-21 15:22:00'),
+	(105, 1, 40, '0', 0, 0, '', 0, '', 0, 0, 100, 0, '网站建设完成后，为什么每年都要进行续费', '网站,续费,每年,支付,什么,费用', '', '对于这个问题，零起飞网络的很多客户都曾经问过，下面小编就具体谈一谈网站什么要续费，续费内容都包含什么，不续费会有什么后果。 网站为什么要续费？ 网站建设完成后，并不是放在网上以后什么都不用管了。首先，为了使网站能够被访问，要保证域名可以正常使用，而域名是按年来交费的，所以域名是每年续费之一；其次，网站的程序、内容及图片是保存在服务器上的，而现在大部分网站都是租用的服务器，为了保证网站的正常运行，所', '', '', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582095666, 1587451647, '0000-00-00 00:00:00'),
+	(106, 1, 40, '0', 0, 0, 'c,h', 0, '', 0, 0, 100, 0, '用来查找相关文章，可输入多个关键字', '用来,相关,文章,可输入,多个,关键字', '', '用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字', '', '管理员', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582096856, 1587538008, '2020-04-22 14:46:00'),
+	(107, 1, 38, '0', 0, 0, '', 0, '', 0, 0, 100, 0, 'thinkphp5的vendor和extend的区别', 'thinkphp5,extend,区别,vendor,h1,', '', '用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字用来查找相关文章，可输入多个关键字', '', '管理员', '', '0', 0, 0, 0, 0, 0, 0, '', 0, 50, 1582096931, 1587550745, '2020-04-22 11:32:00'),
+	(108, 1, 38, '0', 0, 0, 's', 0, '', 0, 0, 100, 0, '网站建设，静态页面和动态页面如何选择', '网站建设', '', '网站建设，静态页面和动态页面如何选择　　电商网站建设为什么要使用静态页面制作。我们都知道，网站制作有分为静态页面制作和动态网页制作，那么建设电商网站采用哪种网站设计技术更好呢?　　我们建设网站最终目的是为了给用户浏览，所以从用户的角度出发进行思考才是最实际的，使用动态网页制作技术虽然网页美观度大大提升了，但是却不利于网站优化，今天小编重点和大家谈谈，网站建设为什么要使用静态页面制作。 　　做静态网', '', '李大哥', '零起飞', '10', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582097252, 1587550745, '0000-00-00 00:00:00'),
+	(109, 1, 38, '0', 0, 0, '', 0, '', 0, 0, 100, 0, '网站设计师怎么脱颖而出？', '网站,设计师,怎么,脱颖而出,设计,拥有', '', '没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。', '', '管理员', '原创', '0', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582981815, 1587451858, '0000-00-00 00:00:00'),
+	(110, 1, 38, '0', 0, 0, '', 0, '', 0, 0, 100, 0, '2020年网站设计师怎么脱颖而出？', '0px,style,font-style,#ffffff,b', '', '没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。', '', '管理员', '原创', '30', 0, 0, 0, 0, 0, 0, '', 0, 100, 1582981874, 1587452766, '0000-00-00 00:00:00'),
+	(113, 1, 38, '0', 0, 0, 'p,b', 0, '', 0, 0, 100, 0, '如何进行品牌设计？品牌设计误区有哪些？', '品牌,nbsp,企业,产品,品牌设计,消费者', '', ' 一个好的品牌设计关乎着这个品牌是否能受到大众的青睐，在市场上赢得一席位置，品牌设计已发展成一种由商品与消费者之间一种复杂的关系，那么如何进行品牌设计?品牌设计误区有哪些?下面小编为大家详细介绍。 一、如何进行品牌设计? 1、树立现代品牌策略意识 (1)企业的领导一方面要树立现代品牌策略意识，重视品牌工作;另一方面，要对品牌策略有一个正确的认识，企业在激烈的', '', '管理员', '原创', '29', 0, 0, 0, 0, 0, 0, '', 0, 100, 1587451719, 1587869280, '2020-04-26 10:49:00'),
+	(114, 1, 31, '0', 0, 0, 'p', 0, '', 0, 0, 102, 0, '您的需求我们来实现，用我们的真诚打造您的品牌。', '网站建设,成都网站建设', '', '成都零起飞网络是一个具有专业水平和非凡创意的制作者的组合，主要从事网站策划运营推广、SEO搜索引擎优化、网站建设、域名注册、主机租用、软件定制开发等业务。我们拥有丰富的 网站推广及制作经验，良好的企业电子商务解决方案。根据企业主营业务和网站建设目的，分析并确定包括网站客户群定位、网站形象定位、网站功能定位、信息结构设计、栏目设计等内容。为您量身订制出一套完整的电子商务宣传平台让您的网站真正为您带来源源不断的客户。', '', '管理员', '原创', '330', 0, 0, 0, 0, 0, 0, '', 0, 100, 1587460694, 1604723564, '2020-11-07 12:34:00');
 /*!40000 ALTER TABLE `lqf_archives` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_archives_article
+-- Dumping structure for table zdtop_net.lqf_archives_article
 CREATE TABLE IF NOT EXISTS `lqf_archives_article` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目id',
   `body` mediumtext COMMENT '内容',
   `redirecturl` varchar(255) NOT NULL DEFAULT '' COMMENT '跳转地址',
-  `ym_type` varchar(250) DEFAULT NULL,
-  `ym_jlxk` varchar(250) DEFAULT NULL,
-  `ym_tzje` varchar(250) DEFAULT NULL,
-  `ym_ymzq` varchar(250) DEFAULT NULL,
-  `ym_jzyq` varchar(250) DEFAULT NULL,
-  `ym_sxry` varchar(250) DEFAULT NULL,
+  `ks_name` varchar(250) DEFAULT NULL COMMENT '这是科室',
   PRIMARY KEY (`id`),
   KEY `typeid` (`type_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=126 DEFAULT CHARSET=utf8 COMMENT='文章扩展表';
+) ENGINE=MyISAM AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COMMENT='文章扩展表';
 
--- Dumping data for table 20629_renrenhw.lqf_archives_article: 27 rows
+-- Dumping data for table zdtop_net.lqf_archives_article: 21 rows
 DELETE FROM `lqf_archives_article`;
 /*!40000 ALTER TABLE `lqf_archives_article` DISABLE KEYS */;
-INSERT INTO `lqf_archives_article` (`id`, `type_id`, `body`, `redirecturl`, `ym_type`, `ym_jlxk`, `ym_tzje`, `ym_ymzq`, `ym_jzyq`, `ym_sxry`) VALUES
-	(5, 4, '<p>完了那我那个老卡<img src="/upload/image/20190703/1562161648306558.gif" title="1562161648306558.gif" alt="TB2xTh.z9FmpuFjSZFrXXayOXXa_!!1809307101.gif"/></p><p><br/></p><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">1）使用join 和 rand() 耗时 0.009</p><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><pre style="margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word; font-family: &quot;Courier New&quot; !important; font-size: 12px !important;">SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;*FROM\r\n&nbsp;&nbsp;&nbsp;&nbsp;`t_topic`&nbsp;AS&nbsp;t1JOIN&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROUND(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RAND()&nbsp;*&nbsp;(\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(SELECT&nbsp;MAX(id)&nbsp;FROM&nbsp;`t_topic`)&nbsp;-&nbsp;(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;+&nbsp;(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;AS&nbsp;id\r\n)&nbsp;AS&nbsp;t2WHERE\r\n&nbsp;&nbsp;&nbsp;&nbsp;t1.id&nbsp;&gt;=&nbsp;t2.idORDER&nbsp;BY\r\n&nbsp;&nbsp;&nbsp;&nbsp;t1.id\r\nLIMIT&nbsp;10;</pre><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">&nbsp;</p><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">2) 下面这条比上面那个还要慢几秒</p><pre style="margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word; font-family: &quot;Courier New&quot; !important; font-size: 12px !important;">SELECT&nbsp;*&nbsp;FROM&nbsp;`t_topic`&nbsp;\r\nWHERE&nbsp;id&nbsp;&gt;=&nbsp;(SELECT&nbsp;floor(&nbsp;RAND()&nbsp;*&nbsp;((SELECT&nbsp;MAX(id)&nbsp;FROM&nbsp;`t_topic`)-(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`))&nbsp;+&nbsp;(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`)))&nbsp;&nbsp;\r\nORDER&nbsp;BY&nbsp;id&nbsp;LIMIT&nbsp;10;</pre><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">3）或者使用下面这个也可以测试也是 耗时0.0012</p><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><pre style="margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word; font-family: &quot;Courier New&quot; !important; font-size: 12px !important;">SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;*FROM\r\n&nbsp;&nbsp;&nbsp;&nbsp;`t_topic`WHERE\r\n&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;&gt;=&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;floor(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RAND()&nbsp;*&nbsp;(SELECT&nbsp;MAX(id)&nbsp;FROM&nbsp;`t_topic`)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)\r\n&nbsp;&nbsp;&nbsp;&nbsp;)ORDER&nbsp;BY\r\n&nbsp;&nbsp;&nbsp;&nbsp;id\r\nLIMIT&nbsp;10;</pre><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><p><br/></p>', '', '', '', '', '', '', ''),
-	(91, 4, '<p>这是那里呀</p><p>摇篮<br/></p>', '', '', '', '', '', '', ''),
-	(92, 2, '<p>1111111111</p>', '', '', '', '', '', '', ''),
-	(93, 2, '<p>1112222222222</p>', '', '', '', '', '', '', ''),
-	(94, 40, '<p>\r\n	111这个东西还是不错的哟\r\n</p>', '', '', '', '', '', '', ''),
-	(95, 4, '散去革，这是一具好的东西啊，还是真不错的哟，你要不要来的哟<br />', '', '', '', '', '', '', ''),
-	(96, 3, '散去革，这是一具好的东西啊，还是真不错的哟，你要不要来的哟<br />', '', '', '', '', '', '', ''),
-	(97, 3, '散去革，这是一具好的东西啊，还是真不错的哟，你要不要来的哟<br />', '', '', '', '', '', '', ''),
-	(99, 57, '<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	&nbsp; &nbsp; 软件系统投入使用，通过验收并超过免费维护期，公司每年向用户单位收取一定的维护费，这点得到越来越多的用户单位领导认可。可是，这维护费到底该怎么收，该收多少，收了维护费公司该给用户什么样的服务，这些问题常常让用户单位感到疑惑。\r\n	</div>\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	&nbsp;\r\n</div>\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	&nbsp; &nbsp; 不久前我就因为一个新开发的项目，跟客户单位的林主任洽谈有关合同条款，双方就合同上的条款基本上都达成了一致，可就是在软件系统免费维护期后的维护费产生了分岐。我原先提出一万多元的维护费，他给改成了一千多元，对此我提出异议。因为我们原先就熟识，既是老朋友说话也就直来直去，以下是我们的一段对话：\r\n	</div>', '', '', '', '', '', '', ''),
-	(101, 3, '<span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span>', '', '', '', '', '', '', ''),
-	(102, 3, '<span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span>', '', '', '', '', '', '', ''),
-	(108, 4, '<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	网站建设，静态页面和动态页面如何选择\r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　电商网站建设为什么要使用静态页面制作。我们都知道，网站制作有分为静态页面制作和动态网页制作，那么建设电商网站采用哪种网站设计技术更好呢?\r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　我们建设网站最终目的是为了给用户浏览，所以从用户的角度出发进行思考才是最实际的，使用动态网页制作技术虽然网页美观度大大提升了，但是却不利于网站优化，今天小编重点和大家谈谈，网站建设为什么要使用静态页面制作。\r\n</p>\r\n<p>\r\n	<img style="height:auto!important;" src="http://localhost:8011/uploads/ueditor/20190114/47caf8cc457ff50c8a66f4c4a23cfeb1.png" title="网站建设，静态页面和动态页面如何选择(图1)" alt="网站建设，静态页面和动态页面如何选择(图1)" /> \r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　做静态网站建设所采用的技术原理是一对一的形式，也就是说这样的网站上面，一个内容对应的就是一个页面，无论网站访问者如何操作都只是让服务器把固有的数据传送给请求者，没有脚本计算和后台数据库读取过程，大大降低了部分安全隐患。静态网站设计除了拥有上述的速度快，安全性高这两个特点之外还具有跨平台，跨服务器功能。\r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　现在熟悉搜索引擎原理工作原理的朋友应该都知道，它所提供给广大用户的信息是本身就存在于数据库当中的信息而不是实时的信息，固定的信息内容更容易接受和保存。我们可能常常会遇到这样的问题，当我们搜索自己所需要的信息时得出来的结果可能已经失效，这就是静态页面网站设计的不足之处，但又因为它的稳定，所以久久不会被删除。\r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　与静态页面网站设计不同，生成的动态页面信息不但不易被搜索引擎所检索，而且打开速度慢，再者也不稳定，这就是为什么这么多专业网站建设公司都一再建议客户使用静态形式的网站设计的原因，有些网站建设公司会考虑把页面进行伪静态处理，但不知道大家有没有注意过，伪静态处理的URL通常是不规则的。\r\n</p>\r\n<br />', '', '', '', '', '', '', ''),
-	(106, 40, '为什么这个没的内容的呢<br />', '', '', '', '', '', '', ''),
-	(107, 3, '<h1 class="title-article" style="font-size:28px;font-family:" color:#000000;font-style:normal;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	thinkphp5的vendor和extend的区别\r\n	</h1>\r\n<h1 class="title-article" style="font-size:28px;font-family:" color:#000000;font-style:normal;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	thinkphp5的vendor和extend的区别\r\n</h1>', '', '', '', '', '', '', ''),
-	(110, 38, '<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	1.&nbsp;了解当前和最新的设计发展的趋势\r\n	</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。\r\n</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-indent:0px;background-color:#ffffff;text-align:center;"=""> <img alt="网站设计" src="/public/upload/picture/20200707/1811160.jpg" title="网站设计" style="border:1px solid #E0E0E0;" /> \r\n	</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	2.&nbsp;从成功的案例中获得灵感\r\n</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	每一个成功的案例都有其值得学习的地方，善于发现，善于学习，善于分析和思考，不但要从自己的成功的案例中获得灵感，还要了解竞争对手的成功案例。尤其是一些大型的成功的网站。\r\n	</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	3.&nbsp;为小型企业取得成功提供优势\r\n</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	小型企业的市场更加宽广，如果您能为小型的企业提供在繁忙的市场中取得成功所需的优势，那您就或得到更多的机会，争取更多的业务，久而久之，您的口碑在小型企业中广为流传，赢得客户的信任，让您在人群中脱颖而出。\r\n	</p>\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	本文零起飞网络为您整理编辑,版权归原作者所有，转载请注明原文来源出处。<br />\r\n本文章链接：<a href="http://www.07fly.com/News/trends/9747.html">http://www.07fly.com/News/trends/9747.html</a><br />\r\n07FLY专业做网站，网站建设，网站优化，主机托管，网站推广一条龙服务，让您省心到底\r\n		</div>', '', '', '', '', '', '', ''),
-	(109, 38, '没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。', '', '', '', '', '', '', ''),
-	(111, 55, '<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">导读:” 做网站要多少钱?”，有关于网站价格问题，这是无法避免的，很多企业都会咨询这个问题，在这里我很想知道一个问题， 企业在咨询之前，有没有认真的考虑过企业做网站的目的，网站该设计成什么风格，具备哪些功能，是否具备营销力，是否容易优化推广,这些企业都没有考虑，在他们眼中，所有的网站类型，都是一样，没有区别，认为弄出各种叫法，这是建站公司的包装，真实情况真的是这样吗?</span><br />\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 关心</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">价格，这个可以理解，但是什么都没有聊，一上来就问“你们做网站要多少钱”,对于这种问题，如果是做模板网站的，那肯定是有固定价格，都有现成的网站，随便选择，如果是做个性化定制，那就需要做市场调研、营销策划、网站结构、网站设计、网站程序、内容编辑等，这些都是需要针对企业重新定制，这是得根据企业的要求，投入的成本，来收取费用的，如果什么都没有聊，就直接报价，那这是对企业的不负责任，如果能直接给你报价，要么就是做模板网站，要么就是制作中，会增加费用，在资讯</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">公司之前，还是建议企业先自己思考以下三点。</span><br />\r\n<br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;text-align:center;"=""> <img alt="成都做网站要多少钱?成都网站建设公司哪一家好" src="/public/upload/picture/20200702/1618150.jpg" title="成都做网站要多少钱?成都网站建设公司哪一家好" style="border:1px solid #E0E0E0;" width="730" height="412" /> \r\n	</div>\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 1、企业做网站的目的。这一点很多企业都应该知道，企业做网站是为了更好的服务自己的精准客户，那么怎么为自己的客户服务，有没有考虑客户的习性，关注的问题，产生的疑问等等,而企业又是怎么对外宣传，展示企业的优势以及产品的核心卖点，如果自己不懂，那就多问，问建站公司是怎么做好一个网 站的，流程是怎样的。</span><br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	&nbsp; &nbsp; &nbsp;&nbsp;\r\n	<div>\r\n		&nbsp; &nbsp; 2、网站费用产生的来源。也就说要知道网站建设费用是怎么来的，一般分为网站基本费用、制作费用和维护费用，基础费用就是网站空间、域名，而制作费用包括网站策划、设计、制作、功能、建站公司实力等，制作费用占的比例比较大，成本投入越大，收费自然就会高，最后就是网站的维护费用，网站上线之后，交给企业自己去打理，做优化、做推广，如果在这过程中网站出现问题或者需求修改图片等，这些都是维护费里面，帮企业避免了很多麻烦。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、网站的制作方式。这个企业要清楚，不同价位的制作方式是不同的，不同的要求，网站制作方式也是不一样，如果没有什么要求，或者贪图便宜，一般都是模板网站，价格就1000-5000元左右，如果懂一点营销，但不想做那么贵的网站，一般就是普通展示型网站，要么就是直接复制别人的网站，这种网站价格5000-&nbsp;15000元左右，如果是做个性化定制，功能比较到复杂的，那网站制作费用15000以上，根据实际需求收费。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总之，企业不要动不动的就是问“做网站要多少钱?"，一定先要清楚自己企业的需求，选择专业的建站公司，不要只看广告，看网站建设价格，一定要看实力，看建站公司制作的案例，看建站公司办公环境，网站制作流程以及建站团队，这样才能选择靠谱并适合自己企业的建站公司，如果只重视网站建设价格，只关注网站建设价格，很容易被不专业的建站公司所忽悠，相信有很多企业吃过这样的亏，所以千万不要把价格放在第一位，更不要以价格高低来选择建站公司。以上就是深度网对“做网站要多少钱”的分享，仅供参考!\r\n	</div>\r\n</div>', '', '', '', '', '', '', ''),
-	(112, 3, '<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">导读:” 做网站要多少钱?”，有关于网站价格问题，这是无法避免的，很多企业都会咨询这个问题，在这里我很想知道一个问题， 企业在咨询之前，有没有认真的考虑过企业做网站的目的，网站该设计成什么风格，具备哪些功能，是否具备营销力，是否容易优化推广,这些企业都没有考虑，在他们眼中，所有的网站类型，都是一样，没有区别，认为弄出各种叫法，这是建站公司的包装，真实情况真的是这样吗?</span><br />\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 关心</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">价格，这个可以理解，但是什么都没有聊，一上来就问“你们做网站要多少钱”,对于这种问题，如果是做模板网站的，那肯定是有固定价格，都有现成的网站，随便选择，如果是做个性化定制，那就需要做市场调研、营销策划、网站结构、网站设计、网站程序、内容编辑等，这些都是需要针对企业重新定制，这是得根据企业的要求，投入的成本，来收取费用的，如果什么都没有聊，就直接报价，那这是对企业的不负责任，如果能直接给你报价，要么就是做模板网站，要么就是制作中，会增加费用，在资讯</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">公司之前，还是建议企业先自己思考以下三点。</span><br />\r\n<br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;text-align:center;"=""> <img alt="成都做网站要多少钱?成都网站建设公司哪一家好" src="http://www.07fly.com/uploads/allimg/200227/1021201G4-0.jpg" title="成都做网站要多少钱?成都网站建设公司哪一家好" style="border:1px solid #E0E0E0;" width="730" height="412" /> \r\n	</div>\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 1、企业做网站的目的。这一点很多企业都应该知道，企业做网站是为了更好的服务自己的精准客户，那么怎么为自己的客户服务，有没有考虑客户的习性，关注的问题，产生的疑问等等,而企业又是怎么对外宣传，展示企业的优势以及产品的核心卖点，如果自己不懂，那就多问，问建站公司是怎么做好一个网 站的，流程是怎样的。</span><br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	&nbsp; &nbsp; &nbsp;&nbsp;\r\n	<div>\r\n		&nbsp; &nbsp; 2、网站费用产生的来源。也就说要知道网站建设费用是怎么来的，一般分为网站基本费用、制作费用和维护费用，基础费用就是网站空间、域名，而制作费用包括网站策划、设计、制作、功能、建站公司实力等，制作费用占的比例比较大，成本投入越大，收费自然就会高，最后就是网站的维护费用，网站上线之后，交给企业自己去打理，做优化、做推广，如果在这过程中网站出现问题或者需求修改图片等，这些都是维护费里面，帮企业避免了很多麻烦。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、网站的制作方式。这个企业要清楚，不同价位的制作方式是不同的，不同的要求，网站制作方式也是不一样，如果没有什么要求，或者贪图便宜，一般都是模板网站，价格就1000-5000元左右，如果懂一点营销，但不想做那么贵的网站，一般就是普通展示型网站，要么就是直接复制别人的网站，这种网站价格5000-&nbsp;15000元左右，如果是做个性化定制，功能比较到复杂的，那网站制作费用15000以上，根据实际需求收费。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总之，企业不要动不动的就是问“做网站要多少钱?"，一定先要清楚自己企业的需求，选择专业的建站公司，不要只看广告，看网站建设价格，一定要看实力，看建站公司制作的案例，看建站公司办公环境，网站制作流程以及建站团队，这样才能选择靠谱并适合自己企业的建站公司，如果只重视网站建设价格，只关注网站建设价格，很容易被不专业的建站公司所忽悠，相信有很多企业吃过这样的亏，所以千万不要把价格放在第一位，更不要以价格高低来选择建站公司。以上就是深度网对“做网站要多少钱”的分享，仅供参考!\r\n	</div>\r\n</div>', '', '', '', '', '', '', ''),
-	(105, 40, '<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	对于这个问题，零起飞网络的很多客户都曾经问过，下面小编就具体谈一谈网站什么要续费，续费内容都包含什么，不续费会有什么后果。\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<img src="http://www.07fly.com/uploads/allimg/200107/1H51U423-0.jpg" style="border:0px;height:auto;" /> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<span style="font-weight:700;">网站为什么要续费？</span> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a>完成后，并不是放在网上以后什么都不用管了。\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	首先，为了使网站能够被访问，要保证域名可以正常使用，而域名是按年来交费的，所以域名是每年续费之一；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	其次，网站的程序、内容及图片是保存在服务器上的，而现在大部分网站都是租用的服务器，为了保证网站的正常运行，所以每年都需要交付网站服务器的租金；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	再次，在网站的日常运行中，往往会出现运行故障，内容修改，黑客攻击，忘记管理密码等等的问题，这就需要有专业人员进行维护，所以为保证网站的稳定，需要想支付技术支持的费用；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	另外，对于一些网站管理系统，是需要每年进行授权的，所以还需要支付每年网站系统的授权费；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	除了上诉的基本费用，如果你选择了<a href="http://www.07fly.com/a/tuoguan/" target="_blank"><u>网站托管</u></a>，网络推广，SEO等服务，你每年还需要再额外支付这些服务费用。\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<span style="font-weight:700;">续费内容都包含什么？</span> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	其实这个问题，在回答第一个问题时已经做了回答，这里再总结以下，续费内容包括：\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	基本费用：域名+服务器+技术支持+授权费\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	增值服务：网站托管，网络推广，SEO等服务（如果选择了这些服务需支付，否则不需要）\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<span style="font-weight:700;">不续费会有什么后果？</span> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	如果域名，服务器到期不续费，网站到期立刻无法访问；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	如果不支付技术支持费用，网站安全则得不到保障，出问题无人解决；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	如果不支付授权费用，网站将会被立即下线，无法正常访问，或可能被追究侵权责任；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	总之，做网站不是一次性投资，而是需要长期投资，为了保证网站稳定的运行，还是要注意按时续费。\r\n</p>', '', '', '', '', '', '', ''),
-	(113, 51, '<p style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;text-indent:0px;background-color:#FFFFFF;">\r\n	&nbsp;一个好的品牌设计关乎着这个品牌是否能受到大众的青睐，在市场上赢得一席位置，品牌设计已发展成一种由商品与消费者之间一种复杂的关系，那么如何进行品牌设计?品牌设计误区有哪些?下面小编为大家详细介绍。\r\n</p>\r\n<p style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-indent:0px;background-color:#FFFFFF;text-align:center;">\r\n	<img src="/public/upload/picture/20200421/1630030.jpg" alt="" style="border:0px;height:auto;" width="600" height="334" /> \r\n</p>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	<span style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;font-weight:normal;font-style:normal;color:#FF0000;">一、如何进行品牌设计?</span> \r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	1、树立现代品牌策略意识\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	(1)企业的领导一方面要树立现代品牌策略意识，重视品牌工作;另一方面，要对品牌策略有一个正确的认识，企业在激烈的市场竞争中靠什么来生存?靠的是自己的产品。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	(2)产品靠什么来进入市场?靠的就是品牌。只有品牌搞上去了，产品的销路才会好，企业才能站住脚，才会在消费者的心里留下良好的印象，最终树立起企业良好的品牌形象。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	2、准确的市场定位\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	(1)市场定位也称为产品定位或竞争性定位，是根据竞争者现有产品在细分市场上所处的地位和顾客对产品某些属性的重视程度，塑造出本企业产品与众不同的鲜明个性或形象并传递给目标顾客，使产品在市场上占有一定优势。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	(2)对中小企业而言，没有什么比建立品牌更重要的了。而要建立一个品牌，首要任务就是产品的定位，它是一个产品品牌能否长久生存和腾飞的基石。只有拥有了属于自己的品牌，企业在竞争中才不会落败。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	3、要大力宣传自己的品牌\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	创品牌要通过媒体大力宣传自己的产品，提高产品的知名度。我们的一些企业在资金紧张时，首先是削减广告费，企业因经营困难而不做广告，但不做广告反而会使经营更困难。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	4、要积极保护自己的品牌\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	要培育一只品牌不容易，要保护一只品牌也不容易。企业要积极打击侵权、假冒行为，这是培育品牌不可缺少的一项重要工作，也是维护企业良好品牌形象的重要工作。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	5、要更多取得产品“通行证”来强化品牌\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	产品质量是企业保持基业长青的致胜法宝，企业领导应真正重视各种国际通行的质量体系认证，此外还要注意ISO14000环保认证及各种专业性、地区性的产品认证。这是企业产品进入国际、国内市场的通行证，也是企业在激烈的市场竞争中制胜的有力武器。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	<span style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;font-weight:normal;font-style:normal;color:#FF0000;">二、品牌设计误区</span> \r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	1、营销成功的关键在于满足消费者需要，随着环境的不断变化，营销的本质发生了变化，它不是一场满足消费者需求的战争，而是一场企业之间争夺顾客有限心智的战争。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	2、更好的产品、更佳的团队、更大的投入，必将胜出，但是很多企业的投资项目都是“肉包子打狗，一去无回”。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	3、企业形象与品牌形象是促进销售的核心力量，但随着越来越多的品牌注重形象，消费者就更青睐接受简单而直接的诉求。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	4、品牌延伸可以利用现有的品牌资产在新领域获得竞争力，但忽略了消费者的认同感。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	5、做大规模才能增强企业竞争力，规模不等于竞争力，消费者心智中的强势地位及品牌才是真正的竞争力。没有心智资源的企业，规模再大也没有意义。\r\n</div>', '', '', '', '', '', '', ''),
-	(114, 31, '<h2 style="text-align:start;">\r\n	&nbsp;\r\n</h2>\r\n<h2 style="text-align:start;">\r\n	| 风小厨的DNA——风小厨是谁？\r\n</h2>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	我们跳出餐饮红海打开脑路试图找到属于风小厨的品牌路。品牌名称是第一联想。风——联想丰富，差异化所在，值得挖掘；小厨——明确的美食属性，兼具亲和力。什么是风呢？它存在于可感与无感之间，时而温柔、时而激烈；时而性感、时而调皮；时而暖心、时而高冷。\r\n</p>\r\n<p style="text-align:start;">\r\n	风的个性与风小厨有什么联系？中国线上零食市场65%为女性消费者，女性代理商占80%（第一财经商业数据中心（CBNData）《中国线上零食消费趋势报告》）针对女性审美/女性认同男性化的人格更具有优势，且在大众普遍接受中有造诣的厨师以男性为主。将风小厨人格化展开，如风般丝丝入心。\r\n</p>\r\n<p style="text-align:start;">\r\n	我们用偶像剧的手法去塑造一个风度翩翩的、风狂如痴的风趣有度的风小厨。基于品牌个性的品牌形象化。我们注入快时尚的Low poly视觉表现手法，设计出“风一样的美男子”形象。\r\n</p>\r\n<p style="text-align:start;">\r\n	<img src="/public/upload/picture/20200421/1720390.jpg" alt="" style="border:0px;height:auto;" width="1200" height="675" /> \r\n</p>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	<img src="/public/upload/picture/20200421/1720393.jpg" alt="" style="border:0px;height:auto;" width="1200" height="675" /> \r\n</p>\r\n<h2 style="text-align:start;">\r\n	&nbsp;\r\n</h2>\r\n<h2 style="text-align:start;">\r\n	|&nbsp;风小厨的故事——如何狂飚人生？\r\n</h2>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	我们开始思考，如何丰富风小厨的故事。从风开始回到历史中去，风姓是中国最古老姓，传说“伏羲”及其父“燧人氏”为风姓鼻祖。由此风姓被称“中华第一姓”。\r\n</p>\r\n<p style="text-align:start;">\r\n	——品牌烙印一：伏羲后人。\r\n</p>\r\n<p style="text-align:start;">\r\n	春秋战国时期，御厨风伯为秦国烹饪，辅佐建秦统一中国\r\n</p>\r\n<p style="text-align:start;">\r\n	——品牌烙印二：御厨 盐帮\r\n</p>\r\n<p style="text-align:start;">\r\n	自明清以来，万商云集，盐船漫合。京、鲁、豫、苏等各省名厨麇集沱江流域（内江、自贡、宜宾）形成川菜一派“盐帮菜”。\r\n</p>\r\n<p style="text-align:start;">\r\n	——品牌烙印三：变身 超能力\r\n</p>\r\n<p style="text-align:start;">\r\n	<br />\r\n</p>\r\n<p style="text-align:start;">\r\n	从历史结合现代的主旋律。传承与创新，开脑洞，结合时下流行元素——变身与超能力。\r\n</p>\r\n<p style="text-align:start;">\r\n	白昼——御厨天赋，风狂厨痴；\r\n</p>\r\n<p style="text-align:start;">\r\n	夜晚——风度翩翩，风趣公子。\r\n</p>', '', '', '', '', '', '', ''),
-	(115, 46, '香港优秀人才入境计划 （Quality Migrant Admission Scheme），简称优才计划，是香港特区政府推出的一个计划，目的是为了吸引优秀外地人才来香港定居。计划于2006年2月23日公布，2006年6月正式推出。<br />', '', '技术移民', '非永居', '无', '9-12个月', '以香港为家', '两代移民'),
-	(116, 47, '222', '', '', '', '', '', '', ''),
-	(117, 49, '全球商业投资者计划全球商业投资者计划', '', '商业项目', '永居', '至少250新币', '6个月', '无', '两代移民'),
-	(118, 44, '<span style="color:#333333;font-family:" font-size:16px;font-style:normal;font-weight:400;background-color:#ffffff;"="">1973年英国加入欧共体后，英国同意土耳其籍人士可到英国创业或帮助经营企业，在满足一定的居住条件后，主申请人和全家可申请英国永居。</span>', '', '技术', '永居', '100万', '1-2年', '无居住要求', '三代移民'),
-	(119, 31, '荣誉资质', '', '', '', '', '', '', ''),
-	(125, 61, '项目地点<br />\r\n杰克逊维尔（ Jacksonville ）<br />\r\n<br />\r\n项目情况<br />\r\n总占地面积8,130平方米 ，将招募1034名学生，设置从K年级至12年级<br />\r\n<br />\r\n投资情况<br />\r\n总投资约2,221.6万美金，发行方投资约601.6万美金，投资者贷款1,620万美金<br />\r\n<br />\r\n项目名额<br />\r\n共18名，每位投资90万美金<br />\r\n<br />\r\n就业机会<br />\r\n项目创造就业机会339个就业岗位，高于移民局要求88.3%', '', '商业移民', '永居', '90万美元', '2.5-3年', '不能在美国境外逗留超过6个月', '两代移民');
+INSERT INTO `lqf_archives_article` (`id`, `type_id`, `body`, `redirecturl`, `ks_name`) VALUES
+	(5, 4, '<p>完了那我那个老卡<img src="/upload/image/20190703/1562161648306558.gif" title="1562161648306558.gif" alt="TB2xTh.z9FmpuFjSZFrXXayOXXa_!!1809307101.gif"/></p><p><br/></p><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">1）使用join 和 rand() 耗时 0.009</p><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><pre style="margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word; font-family: &quot;Courier New&quot; !important; font-size: 12px !important;">SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;*FROM\r\n&nbsp;&nbsp;&nbsp;&nbsp;`t_topic`&nbsp;AS&nbsp;t1JOIN&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROUND(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RAND()&nbsp;*&nbsp;(\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(SELECT&nbsp;MAX(id)&nbsp;FROM&nbsp;`t_topic`)&nbsp;-&nbsp;(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;+&nbsp;(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;AS&nbsp;id\r\n)&nbsp;AS&nbsp;t2WHERE\r\n&nbsp;&nbsp;&nbsp;&nbsp;t1.id&nbsp;&gt;=&nbsp;t2.idORDER&nbsp;BY\r\n&nbsp;&nbsp;&nbsp;&nbsp;t1.id\r\nLIMIT&nbsp;10;</pre><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">&nbsp;</p><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">2) 下面这条比上面那个还要慢几秒</p><pre style="margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word; font-family: &quot;Courier New&quot; !important; font-size: 12px !important;">SELECT&nbsp;*&nbsp;FROM&nbsp;`t_topic`&nbsp;\r\nWHERE&nbsp;id&nbsp;&gt;=&nbsp;(SELECT&nbsp;floor(&nbsp;RAND()&nbsp;*&nbsp;((SELECT&nbsp;MAX(id)&nbsp;FROM&nbsp;`t_topic`)-(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`))&nbsp;+&nbsp;(SELECT&nbsp;MIN(id)&nbsp;FROM&nbsp;`t_topic`)))&nbsp;&nbsp;\r\nORDER&nbsp;BY&nbsp;id&nbsp;LIMIT&nbsp;10;</pre><p style="margin: 10px auto; padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">3）或者使用下面这个也可以测试也是 耗时0.0012</p><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><pre style="margin: 0px; padding: 0px; white-space: pre-wrap; overflow-wrap: break-word; font-family: &quot;Courier New&quot; !important; font-size: 12px !important;">SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;*FROM\r\n&nbsp;&nbsp;&nbsp;&nbsp;`t_topic`WHERE\r\n&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;&gt;=&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;floor(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RAND()&nbsp;*&nbsp;(SELECT&nbsp;MAX(id)&nbsp;FROM&nbsp;`t_topic`)\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)\r\n&nbsp;&nbsp;&nbsp;&nbsp;)ORDER&nbsp;BY\r\n&nbsp;&nbsp;&nbsp;&nbsp;id\r\nLIMIT&nbsp;10;</pre><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; font-family: &quot;Courier New&quot; !important; font-size: 12px !important; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-decoration: underline; background-color: rgb(245, 245, 245) !important; border: none !important;"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"/></a></span></p><p><br/></p>', '', ''),
+	(91, 4, '<p>这是那里呀</p><p>摇篮<br/></p>', '', ''),
+	(92, 2, '<p>1111111111</p>', '', ''),
+	(93, 2, '<p>1112222222222</p>', '', ''),
+	(94, 40, '<p>\r\n	111这个东西还是不错的哟\r\n</p>', '', ''),
+	(95, 4, '散去革，这是一具好的东西啊，还是真不错的哟，你要不要来的哟<br />', '', ''),
+	(96, 3, '散去革，这是一具好的东西啊，还是真不错的哟，你要不要来的哟<br />', '', ''),
+	(97, 3, '散去革，这是一具好的东西啊，还是真不错的哟，你要不要来的哟<br />', '', ''),
+	(99, 3, '<div style="color:#333333;font-family:&quot;font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp; &nbsp; 软件系统投入使用，通过验收并超过免费维护期，公司每年向用户单位收取一定的维护费，这点得到越来越多的用户单位领导认可。可是，这维护费到底该怎么收，该收多少，收了维护费公司该给用户什么样的服务，这些问题常常让用户单位感到疑惑。\r\n</div>\r\n<div style="color:#333333;font-family:&quot;font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="color:#333333;font-family:&quot;font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp; &nbsp; 不久前我就因为一个新开发的项目，跟客户单位的林主任洽谈有关合同条款，双方就合同上的条款基本上都达成了一致，可就是在软件系统免费维护期后的维护费产生了分岐。我原先提出一万多元的维护费，他给改成了一千多元，对此我提出异议。因为我们原先就熟识，既是老朋友说话也就直来直去，以下是我们的一段对话：\r\n</div>', '', '零起飞科技'),
+	(101, 3, '<span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span>', '', '2去234234'),
+	(102, 3, '<span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span><span class="help-block m-b-none">用来查找相关文章，可输入多个关键字</span>', '', ''),
+	(108, 4, '<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	网站建设，静态页面和动态页面如何选择\r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　电商网站建设为什么要使用静态页面制作。我们都知道，网站制作有分为静态页面制作和动态网页制作，那么建设电商网站采用哪种网站设计技术更好呢?\r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　我们建设网站最终目的是为了给用户浏览，所以从用户的角度出发进行思考才是最实际的，使用动态网页制作技术虽然网页美观度大大提升了，但是却不利于网站优化，今天小编重点和大家谈谈，网站建设为什么要使用静态页面制作。\r\n</p>\r\n<p>\r\n	<img style="height:auto!important;" src="http://localhost:8011/uploads/ueditor/20190114/47caf8cc457ff50c8a66f4c4a23cfeb1.png" title="网站建设，静态页面和动态页面如何选择(图1)" alt="网站建设，静态页面和动态页面如何选择(图1)" /> \r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　做静态网站建设所采用的技术原理是一对一的形式，也就是说这样的网站上面，一个内容对应的就是一个页面，无论网站访问者如何操作都只是让服务器把固有的数据传送给请求者，没有脚本计算和后台数据库读取过程，大大降低了部分安全隐患。静态网站设计除了拥有上述的速度快，安全性高这两个特点之外还具有跨平台，跨服务器功能。\r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　现在熟悉搜索引擎原理工作原理的朋友应该都知道，它所提供给广大用户的信息是本身就存在于数据库当中的信息而不是实时的信息，固定的信息内容更容易接受和保存。我们可能常常会遇到这样的问题，当我们搜索自己所需要的信息时得出来的结果可能已经失效，这就是静态页面网站设计的不足之处，但又因为它的稳定，所以久久不会被删除。\r\n</p>\r\n<p style="background-color:#FFFFFF;color:#333333;font-family:宋体;font-size:14px;">\r\n	　　与静态页面网站设计不同，生成的动态页面信息不但不易被搜索引擎所检索，而且打开速度慢，再者也不稳定，这就是为什么这么多专业网站建设公司都一再建议客户使用静态形式的网站设计的原因，有些网站建设公司会考虑把页面进行伪静态处理，但不知道大家有没有注意过，伪静态处理的URL通常是不规则的。\r\n</p>\r\n<br />', '', '23234234'),
+	(106, 40, '为什么这个没的内容的呢<br />', '', ''),
+	(107, 3, '<h1 class="title-article" style="font-size:28px;font-family:" color:#000000;font-style:normal;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	thinkphp5的vendor和extend的区别\r\n	</h1>\r\n<h1 class="title-article" style="font-size:28px;font-family:" color:#000000;font-style:normal;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	thinkphp5的vendor和extend的区别\r\n</h1>', '', ''),
+	(110, 38, '<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	1.&nbsp;了解当前和最新的设计发展的趋势\r\n	</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。\r\n</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-indent:0px;background-color:#ffffff;text-align:center;"=""> <img alt="网站设计" src="http://www.07fly.com/uploads/allimg/200227/105R12627-0.jpg" title="网站设计" style="border:1px solid #E0E0E0;" /> \r\n	</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	2.&nbsp;从成功的案例中获得灵感\r\n</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	每一个成功的案例都有其值得学习的地方，善于发现，善于学习，善于分析和思考，不但要从自己的成功的案例中获得灵感，还要了解竞争对手的成功案例。尤其是一些大型的成功的网站。\r\n	</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	3.&nbsp;为小型企业取得成功提供优势\r\n</p>\r\n<p style="margin-left:0px;color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#ffffff;"="">\r\n	小型企业的市场更加宽广，如果您能为小型的企业提供在繁忙的市场中取得成功所需的优势，那您就或得到更多的机会，争取更多的业务，久而久之，您的口碑在小型企业中广为流传，赢得客户的信任，让您在人群中脱颖而出。\r\n	</p>\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	本文零起飞网络为您整理编辑,版权归原作者所有，转载请注明原文来源出处。<br />\r\n本文章链接：<a href="http://www.07fly.com/News/trends/9747.html">http://www.07fly.com/News/trends/9747.html</a><br />\r\n07FLY专业做网站，网站建设，网站优化，主机托管，网站推广一条龙服务，让您省心到底\r\n		</div>', '', ''),
+	(109, 38, '没有人喜欢一成不变的东西。同样的事情在短时间可能会吸引很多用户，但是如果长时间没有改变，您之前的用户也会舍你而去。因此，作为网站设计师，不但要拥有设计领域的专业知识和技能，还要不断的学习，充实自己，了解当前和最新的设计发展的趋势，与时俱进。', '', ''),
+	(111, 38, '<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">导读:” 做网站要多少钱?”，有关于网站价格问题，这是无法避免的，很多企业都会咨询这个问题，在这里我很想知道一个问题， 企业在咨询之前，有没有认真的考虑过企业做网站的目的，网站该设计成什么风格，具备哪些功能，是否具备营销力，是否容易优化推广,这些企业都没有考虑，在他们眼中，所有的网站类型，都是一样，没有区别，认为弄出各种叫法，这是建站公司的包装，真实情况真的是这样吗?</span><br />\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 关心</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">价格，这个可以理解，但是什么都没有聊，一上来就问“你们做网站要多少钱”,对于这种问题，如果是做模板网站的，那肯定是有固定价格，都有现成的网站，随便选择，如果是做个性化定制，那就需要做市场调研、营销策划、网站结构、网站设计、网站程序、内容编辑等，这些都是需要针对企业重新定制，这是得根据企业的要求，投入的成本，来收取费用的，如果什么都没有聊，就直接报价，那这是对企业的不负责任，如果能直接给你报价，要么就是做模板网站，要么就是制作中，会增加费用，在资讯</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">公司之前，还是建议企业先自己思考以下三点。</span><br />\r\n<br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;text-align:center;"=""> <img alt="成都做网站要多少钱?成都网站建设公司哪一家好" src="http://www.07fly.com/uploads/allimg/200227/1021201G4-0.jpg" title="成都做网站要多少钱?成都网站建设公司哪一家好" style="border:1px solid #E0E0E0;" width="730" height="412" /> \r\n	</div>\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 1、企业做网站的目的。这一点很多企业都应该知道，企业做网站是为了更好的服务自己的精准客户，那么怎么为自己的客户服务，有没有考虑客户的习性，关注的问题，产生的疑问等等,而企业又是怎么对外宣传，展示企业的优势以及产品的核心卖点，如果自己不懂，那就多问，问建站公司是怎么做好一个网 站的，流程是怎样的。</span><br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	&nbsp; &nbsp; &nbsp;&nbsp;\r\n	<div>\r\n		&nbsp; &nbsp; 2、网站费用产生的来源。也就说要知道网站建设费用是怎么来的，一般分为网站基本费用、制作费用和维护费用，基础费用就是网站空间、域名，而制作费用包括网站策划、设计、制作、功能、建站公司实力等，制作费用占的比例比较大，成本投入越大，收费自然就会高，最后就是网站的维护费用，网站上线之后，交给企业自己去打理，做优化、做推广，如果在这过程中网站出现问题或者需求修改图片等，这些都是维护费里面，帮企业避免了很多麻烦。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、网站的制作方式。这个企业要清楚，不同价位的制作方式是不同的，不同的要求，网站制作方式也是不一样，如果没有什么要求，或者贪图便宜，一般都是模板网站，价格就1000-5000元左右，如果懂一点营销，但不想做那么贵的网站，一般就是普通展示型网站，要么就是直接复制别人的网站，这种网站价格5000-&nbsp;15000元左右，如果是做个性化定制，功能比较到复杂的，那网站制作费用15000以上，根据实际需求收费。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总之，企业不要动不动的就是问“做网站要多少钱?"，一定先要清楚自己企业的需求，选择专业的建站公司，不要只看广告，看网站建设价格，一定要看实力，看建站公司制作的案例，看建站公司办公环境，网站制作流程以及建站团队，这样才能选择靠谱并适合自己企业的建站公司，如果只重视网站建设价格，只关注网站建设价格，很容易被不专业的建站公司所忽悠，相信有很多企业吃过这样的亏，所以千万不要把价格放在第一位，更不要以价格高低来选择建站公司。以上就是深度网对“做网站要多少钱”的分享，仅供参考!\r\n	</div>\r\n</div>', '', ''),
+	(112, 3, '<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">导读:” 做网站要多少钱?”，有关于网站价格问题，这是无法避免的，很多企业都会咨询这个问题，在这里我很想知道一个问题， 企业在咨询之前，有没有认真的考虑过企业做网站的目的，网站该设计成什么风格，具备哪些功能，是否具备营销力，是否容易优化推广,这些企业都没有考虑，在他们眼中，所有的网站类型，都是一样，没有区别，认为弄出各种叫法，这是建站公司的包装，真实情况真的是这样吗?</span><br />\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 关心</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">价格，这个可以理解，但是什么都没有聊，一上来就问“你们做网站要多少钱”,对于这种问题，如果是做模板网站的，那肯定是有固定价格，都有现成的网站，随便选择，如果是做个性化定制，那就需要做市场调研、营销策划、网站结构、网站设计、网站程序、内容编辑等，这些都是需要针对企业重新定制，这是得根据企业的要求，投入的成本，来收取费用的，如果什么都没有聊，就直接报价，那这是对企业的不负责任，如果能直接给你报价，要么就是做模板网站，要么就是制作中，会增加费用，在资讯</span><a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a><span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">公司之前，还是建议企业先自己思考以下三点。</span><br />\r\n<br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;text-align:center;"=""> <img alt="成都做网站要多少钱?成都网站建设公司哪一家好" src="http://www.07fly.com/uploads/allimg/200227/1021201G4-0.jpg" title="成都做网站要多少钱?成都网站建设公司哪一家好" style="border:1px solid #E0E0E0;" width="730" height="412" /> \r\n	</div>\r\n<br />\r\n<span style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;background-color:#ffffff;"="">&nbsp; &nbsp; &nbsp; 1、企业做网站的目的。这一点很多企业都应该知道，企业做网站是为了更好的服务自己的精准客户，那么怎么为自己的客户服务，有没有考虑客户的习性，关注的问题，产生的疑问等等,而企业又是怎么对外宣传，展示企业的优势以及产品的核心卖点，如果自己不懂，那就多问，问建站公司是怎么做好一个网 站的，流程是怎样的。</span><br />\r\n<div style="color:#333333;font-family:" font-size:14px;font-style:normal;font-weight:400;text-align:start;background-color:#ffffff;"="">\r\n	&nbsp; &nbsp; &nbsp;&nbsp;\r\n	<div>\r\n		&nbsp; &nbsp; 2、网站费用产生的来源。也就说要知道网站建设费用是怎么来的，一般分为网站基本费用、制作费用和维护费用，基础费用就是网站空间、域名，而制作费用包括网站策划、设计、制作、功能、建站公司实力等，制作费用占的比例比较大，成本投入越大，收费自然就会高，最后就是网站的维护费用，网站上线之后，交给企业自己去打理，做优化、做推广，如果在这过程中网站出现问题或者需求修改图片等，这些都是维护费里面，帮企业避免了很多麻烦。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、网站的制作方式。这个企业要清楚，不同价位的制作方式是不同的，不同的要求，网站制作方式也是不一样，如果没有什么要求，或者贪图便宜，一般都是模板网站，价格就1000-5000元左右，如果懂一点营销，但不想做那么贵的网站，一般就是普通展示型网站，要么就是直接复制别人的网站，这种网站价格5000-&nbsp;15000元左右，如果是做个性化定制，功能比较到复杂的，那网站制作费用15000以上，根据实际需求收费。<br />\r\n<br />\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总之，企业不要动不动的就是问“做网站要多少钱?"，一定先要清楚自己企业的需求，选择专业的建站公司，不要只看广告，看网站建设价格，一定要看实力，看建站公司制作的案例，看建站公司办公环境，网站制作流程以及建站团队，这样才能选择靠谱并适合自己企业的建站公司，如果只重视网站建设价格，只关注网站建设价格，很容易被不专业的建站公司所忽悠，相信有很多企业吃过这样的亏，所以千万不要把价格放在第一位，更不要以价格高低来选择建站公司。以上就是深度网对“做网站要多少钱”的分享，仅供参考!\r\n	</div>\r\n</div>', '', ''),
+	(105, 40, '<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	对于这个问题，零起飞网络的很多客户都曾经问过，下面小编就具体谈一谈网站什么要续费，续费内容都包含什么，不续费会有什么后果。\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<img src="http://www.07fly.com/uploads/allimg/200107/1H51U423-0.jpg" style="border:0px;height:auto;" /> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<span style="font-weight:700;">网站为什么要续费？</span> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<a href="http://www.07fly.com/a/website/" target="_blank"><u>网站建设</u></a>完成后，并不是放在网上以后什么都不用管了。\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	首先，为了使网站能够被访问，要保证域名可以正常使用，而域名是按年来交费的，所以域名是每年续费之一；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	其次，网站的程序、内容及图片是保存在服务器上的，而现在大部分网站都是租用的服务器，为了保证网站的正常运行，所以每年都需要交付网站服务器的租金；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	再次，在网站的日常运行中，往往会出现运行故障，内容修改，黑客攻击，忘记管理密码等等的问题，这就需要有专业人员进行维护，所以为保证网站的稳定，需要想支付技术支持的费用；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	另外，对于一些网站管理系统，是需要每年进行授权的，所以还需要支付每年网站系统的授权费；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	除了上诉的基本费用，如果你选择了<a href="http://www.07fly.com/a/tuoguan/" target="_blank"><u>网站托管</u></a>，网络推广，SEO等服务，你每年还需要再额外支付这些服务费用。\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<span style="font-weight:700;">续费内容都包含什么？</span> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	其实这个问题，在回答第一个问题时已经做了回答，这里再总结以下，续费内容包括：\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	基本费用：域名+服务器+技术支持+授权费\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	增值服务：网站托管，网络推广，SEO等服务（如果选择了这些服务需支付，否则不需要）\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	<span style="font-weight:700;">不续费会有什么后果？</span> \r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	如果域名，服务器到期不续费，网站到期立刻无法访问；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	如果不支付技术支持费用，网站安全则得不到保障，出问题无人解决；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	如果不支付授权费用，网站将会被立即下线，无法正常访问，或可能被追究侵权责任；\r\n</p>\r\n<p style="font-style:normal;font-weight:400;text-align:start;text-indent:0px;background-color:#FFFFFF;font-size:16px;color:#191919;font-family:;">\r\n	总之，做网站不是一次性投资，而是需要长期投资，为了保证网站稳定的运行，还是要注意按时续费。\r\n</p>', '', ''),
+	(113, 38, '<p style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;text-indent:0px;background-color:#FFFFFF;">\r\n	&nbsp;一个好的品牌设计关乎着这个品牌是否能受到大众的青睐，在市场上赢得一席位置，品牌设计已发展成一种由商品与消费者之间一种复杂的关系，那么如何进行品牌设计?品牌设计误区有哪些?下面小编为大家详细介绍。\r\n</p>\r\n<p style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-indent:0px;background-color:#FFFFFF;text-align:center;">\r\n	<img src="/upload/picture/20200217/df202b413c9e89c343fd48df6184f9ef.jpg" alt="" width="800" height="669" />\r\n</p>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	<span style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;font-weight:normal;font-style:normal;color:#FF0000;">一、如何进行品牌设计?</span> \r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	1、树立现代品牌策略意识\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	(1)企业的领导一方面要树立现代品牌策略意识，重视品牌工作;另一方面，要对品牌策略有一个正确的认识，企业在激烈的市场竞争中靠什么来生存?靠的是自己的产品。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	(2)产品靠什么来进入市场?靠的就是品牌。只有品牌搞上去了，产品的销路才会好，企业才能站住脚，才会在消费者的心里留下良好的印象，最终树立起企业良好的品牌形象。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	2、准确的市场定位\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	(1)市场定位也称为产品定位或竞争性定位，是根据竞争者现有产品在细分市场上所处的地位和顾客对产品某些属性的重视程度，塑造出本企业产品与众不同的鲜明个性或形象并传递给目标顾客，使产品在市场上占有一定优势。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	(2)对中小企业而言，没有什么比建立品牌更重要的了。而要建立一个品牌，首要任务就是产品的定位，它是一个产品品牌能否长久生存和腾飞的基石。只有拥有了属于自己的品牌，企业在竞争中才不会落败。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	3、要大力宣传自己的品牌\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	创品牌要通过媒体大力宣传自己的产品，提高产品的知名度。我们的一些企业在资金紧张时，首先是削减广告费，企业因经营困难而不做广告，但不做广告反而会使经营更困难。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	4、要积极保护自己的品牌\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	要培育一只品牌不容易，要保护一只品牌也不容易。企业要积极打击侵权、假冒行为，这是培育品牌不可缺少的一项重要工作，也是维护企业良好品牌形象的重要工作。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	5、要更多取得产品“通行证”来强化品牌\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	产品质量是企业保持基业长青的致胜法宝，企业领导应真正重视各种国际通行的质量体系认证，此外还要注意ISO14000环保认证及各种专业性、地区性的产品认证。这是企业产品进入国际、国内市场的通行证，也是企业在激烈的市场竞争中制胜的有力武器。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	<span style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;font-weight:normal;font-style:normal;color:#FF0000;">二、品牌设计误区</span> \r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	1、营销成功的关键在于满足消费者需要，随着环境的不断变化，营销的本质发生了变化，它不是一场满足消费者需求的战争，而是一场企业之间争夺顾客有限心智的战争。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	2、更好的产品、更佳的团队、更大的投入，必将胜出，但是很多企业的投资项目都是“肉包子打狗，一去无回”。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	3、企业形象与品牌形象是促进销售的核心力量，但随着越来越多的品牌注重形象，消费者就更青睐接受简单而直接的诉求。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	4、品牌延伸可以利用现有的品牌资产在新领域获得竞争力，但忽略了消费者的认同感。\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	&nbsp;\r\n</div>\r\n<div style="font-family:Regular, 微软雅黑, Arial, Helvetica, sans-serif;padding:0px;margin:0px 0px 10px;font-weight:400;font-style:normal;color:#595757;font-size:14px;text-align:start;background-color:#FFFFFF;">\r\n	5、做大规模才能增强企业竞争力，规模不等于竞争力，消费者心智中的强势地位及品牌才是真正的竞争力。没有心智资源的企业，规模再大也没有意义。\r\n</div>', '', ''),
+	(114, 31, '<p class="MsoNormal">\r\n	<span style="font-family:宋体;font-size:10.5000pt;"></span> \r\n</p>\r\n<p class="MsoNormal" style="text-indent:21.0000pt;">\r\n	<span style="font-family:宋体;font-size:10.5000pt;"><span>成都零起飞</span></span><span style="font-family:宋体;font-size:10.5000pt;"><span>网络</span></span><span style="font-family:宋体;font-size:10.5000pt;"><span>是一个具有专业水平和非凡创意的制作者的组合，主要从事网站策划运营推广、</span>SEO搜索引擎优化、网站建设、域名注册、主机租用</span><span style="font-family:宋体;font-size:10.5000pt;"><span>、</span></span><span style="font-family:宋体;font-size:10.5000pt;"><span>软件定制开发</span></span><span style="font-family:宋体;font-size:10.5000pt;"><span>等</span></span><span style="font-family:宋体;font-size:10.5000pt;"><span>业</span></span><span style="font-family:宋体;font-size:10.5000pt;"><span>务。我们拥有丰富的</span> <span>网站推广及制作经验，良好的企业电子商务解决方案。根据企业主营业务和网站建设目的，分析并确定包括网站客户群定位、网站形象定位、网站功能定位、信息结构设计、栏目设计等内容。为您量身订制出一套完整的电子商务宣传平台让您的网站真正为您带来源源不断的客户。</span></span><span style="font-family:宋体;font-size:10.5000pt;"></span> \r\n</p>\r\n<p class="MsoNormal" style="text-indent:21.0000pt;">\r\n	<span style="font-family:宋体;font-size:10.5000pt;">&nbsp;</span> \r\n</p>\r\n<p class="MsoNormal">\r\n	<b><span style="font-family:宋体;font-weight:bold;font-size:10.5000pt;"><span>您的需求我们来实现，用我们的真诚打造您的品牌。</span></span></b><b><span style="font-family:宋体;font-weight:bold;font-size:10.5000pt;"></span></b> \r\n</p>\r\n<p class="MsoNormal" style="text-indent:21.0000pt;">\r\n	<span style="font-family:宋体;font-size:10.5000pt;">&nbsp;</span> \r\n</p>\r\n<p class="MsoNormal" style="text-indent:21.0000pt;">\r\n	<span style="font-family:宋体;font-size:10.5000pt;"><span>如果您只有一个模糊概念，那么让我们一起来帮您分析策划出一套趋于完美的方案与您探讨</span>,如果您有构想，我们将竭尽全力为您打造您所需要的，当然，同时我们也会利用专业审美和精湛的技术帮您实现的更加完美。市场只相信实力！我们热烈欢迎一切有需要的企业、团体、组织或个人联系我们。</span><span style="font-family:宋体;font-size:10.5000pt;"></span> \r\n</p>\r\n<p class="MsoNormal">\r\n	<span style="font-family:宋体;font-size:10.5000pt;">&nbsp;</span> \r\n</p>\r\n<p class="MsoNormal" style="text-indent:21.0000pt;">\r\n	<span style="font-family:宋体;font-size:10.5000pt;"><span>我们深信一个好的网站取决于它给企业带来多大的效益，如果一个没有访问量的网站，没有给企业承包带来直正客户的网站，做得再好，也只能是一个垃圾，而当前社会众多企业却还把这种</span>“垃圾网站”视为自身所谓“企业形象”这是一个相当愚昧的思想！如何来摆脱这种可怕的思想？ 让我们从零开始来帮助您解决这一切...</span><span style="font-family:宋体;font-size:10.5000pt;"></span> \r\n</p>\r\n<br />', '', '');
 /*!40000 ALTER TABLE `lqf_archives_article` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_archives_case
+-- Dumping structure for table zdtop_net.lqf_archives_case
 CREATE TABLE IF NOT EXISTS `lqf_archives_case` (
   `id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `typeid` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -462,15 +255,13 @@ CREATE TABLE IF NOT EXISTS `lqf_archives_case` (
   KEY `typeid` (`typeid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='扩展表';
 
--- Dumping data for table 20629_renrenhw.lqf_archives_case: 1 rows
+-- Dumping data for table zdtop_net.lqf_archives_case: 0 rows
 DELETE FROM `lqf_archives_case`;
 /*!40000 ALTER TABLE `lqf_archives_case` DISABLE KEYS */;
-INSERT INTO `lqf_archives_case` (`id`, `typeid`, `body`, `redirecturl`, `templet`, `userip`, `goto_url`) VALUES
-	(117, 0, '', '', '', '', '');
 /*!40000 ALTER TABLE `lqf_archives_case` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_archives_document
-CREATE TABLE IF NOT EXISTS `lqf_archives_document` (
+-- Dumping structure for table zdtop_net.lqf_archives_online
+CREATE TABLE IF NOT EXISTS `lqf_archives_online` (
   `id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `typeid` smallint(5) unsigned NOT NULL DEFAULT '0',
   `body` mediumtext,
@@ -481,20 +272,77 @@ CREATE TABLE IF NOT EXISTS `lqf_archives_document` (
   KEY `typeid` (`typeid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='扩展表';
 
--- Dumping data for table 20629_renrenhw.lqf_archives_document: 6 rows
-DELETE FROM `lqf_archives_document`;
-/*!40000 ALTER TABLE `lqf_archives_document` DISABLE KEYS */;
-INSERT INTO `lqf_archives_document` (`id`, `typeid`, `body`, `redirecturl`, `templet`, `userip`) VALUES
-	(119, 0, '', '', '', ''),
-	(120, 0, '资质荣誉', '', '', ''),
-	(121, 0, '资质荣誉', '', '', ''),
-	(122, 0, '<h1 style="font-size:32px;font-family:&quot;font-weight:bold;color:#333333;font-style:normal;text-align:start;text-indent:0px;background-color:#FFFFFF;">\r\n	<p style="font-style:normal;font-weight:400;text-indent:0px;background-color:#FFFFFF;color:rgba(0, 0, 0, 0.8);font-family:-apple-system-font, BlinkMacSystemFont, &quot;font-size:17px;text-align:center;">\r\n		<span style="font-size:16px;">近10年全球增长速度最快、</span>\r\n	</p>\r\n	<p style="font-style:normal;font-weight:400;text-indent:0px;background-color:#FFFFFF;color:rgba(0, 0, 0, 0.8);font-family:-apple-system-font, BlinkMacSystemFont, &quot;font-size:17px;text-align:center;">\r\n		<span style="font-size:16px;">租金去年涨幅全球第四的城市——</span>\r\n	</p>\r\n	<p style="font-style:normal;font-weight:400;text-indent:0px;background-color:#FFFFFF;color:rgba(0, 0, 0, 0.8);font-family:-apple-system-font, BlinkMacSystemFont, &quot;font-size:17px;text-align:center;">\r\n		<span style="color:#AC39FF;"><strong><span style="font-size:16px;">土耳其，伊斯坦布尔！</span></strong></span>\r\n	</p>\r\n	<p style="font-style:normal;font-weight:400;text-indent:0px;background-color:#FFFFFF;color:rgba(0, 0, 0, 0.8);font-family:-apple-system-font, BlinkMacSystemFont, &quot;font-size:17px;text-align:center;">\r\n		<span style="font-size:16px;">在这个投资胜地中，</span>\r\n	</p>\r\n	<p style="font-style:normal;font-weight:400;text-indent:0px;background-color:#FFFFFF;color:rgba(0, 0, 0, 0.8);font-family:-apple-system-font, BlinkMacSystemFont, &quot;font-size:17px;text-align:center;">\r\n		<span style="font-size:16px;">究竟有什么高投资价值的项目值得推荐？</span>\r\n	</p>\r\n<img alt="重磅首发！投资新贵土耳其，2020优选笋盘就在这里！" class="__bg_gif" src="https://mmbiz.qpic.cn/mmbiz_gif/vWLLpvkicedx62VXibUXmV0ia8v40l92IjpBAObtQawTed1DcrK68DdL8hUOXeicoD2GtxYP7Qf3BFMrQqNsp1fr5Q/640?wx_fmt=gif" style="border:0px;width:30px;height:auto !important;" />\r\n	<p style="font-style:normal;font-weight:400;text-indent:0px;background-color:#FFFFFF;color:rgba(0, 0, 0, 0.8);font-family:-apple-system-font, BlinkMacSystemFont, &quot;font-size:17px;text-align:center;">\r\n		<span style="background-color:#AC39FF;color:#FFFFFF;"><strong><span style="font-size:16px;">6月24日（周三）15：00</span></strong></span>\r\n	</p>\r\n	<p style="font-style:normal;font-weight:400;text-indent:0px;background-color:#FFFFFF;color:rgba(0, 0, 0, 0.8);font-family:-apple-system-font, BlinkMacSystemFont, &quot;font-size:17px;text-align:center;">\r\n		<span style="color:#AC39FF;"><strong><span style="font-size:16px;">土耳其无竞品独家项目重磅首发！</span></strong></span>\r\n	</p>\r\n	<p style="font-style:normal;font-weight:400;text-indent:0px;background-color:#FFFFFF;color:rgba(0, 0, 0, 0.8);font-family:-apple-system-font, BlinkMacSystemFont, &quot;font-size:17px;text-align:center;">\r\n		<span style="font-size:16px;">伊斯坦布尔核心区域、</span>\r\n	</p>\r\n	<p style="font-style:normal;font-weight:400;text-indent:0px;background-color:#FFFFFF;color:rgba(0, 0, 0, 0.8);font-family:-apple-system-font, BlinkMacSystemFont, &quot;font-size:17px;text-align:center;">\r\n		<span style="color:#AC39FF;"><strong><span style="font-size:16px;">5+5包租，年收益5%</span></strong></span><span style="font-size:16px;">的优选项目，</span>\r\n	</p>\r\n	<p style="font-style:normal;font-weight:400;text-indent:0px;background-color:#FFFFFF;color:rgba(0, 0, 0, 0.8);font-family:-apple-system-font, BlinkMacSystemFont, &quot;font-size:17px;text-align:center;">\r\n		<span style="font-size:16px;">您舍得错过吗？</span>\r\n	</p>\r\n</h1>', '', '', ''),
-	(123, 0, '<span style="color:#333333;font-family:&quot;font-size:16px;font-style:normal;font-weight:400;background-color:#FFFFFF;">资产配置只是高净值人士才需要考虑？</span><br />\r\n<span style="color:#333333;font-family:&quot;font-size:16px;font-style:normal;font-weight:400;background-color:#FFFFFF;">谁说中产家庭就不用合理的资产配置？！</span><br />\r\n<br />\r\n<span style="color:#333333;font-family:&quot;font-size:16px;font-style:normal;font-weight:400;background-color:#FFFFFF;">后疫情时代，</span><br />\r\n<span style="color:#333333;font-family:&quot;font-size:16px;font-style:normal;font-weight:400;background-color:#FFFFFF;">更需要学会守护家庭财富！</span><br />\r\n<br />\r\n<span style="color:#333333;font-family:&quot;font-size:16px;font-style:normal;font-weight:400;background-color:#FFFFFF;">6月11日（周四）20:00</span><br />\r\n<span style="color:#333333;font-family:&quot;font-size:16px;font-style:normal;font-weight:400;background-color:#FFFFFF;">赢在2020</span><br />\r\n<span style="color:#333333;font-family:&quot;font-size:16px;font-style:normal;font-weight:400;background-color:#FFFFFF;">新中产家庭资产配置全攻略</span><br />\r\n<br />\r\n<span style="color:#333333;font-family:&quot;font-size:16px;font-style:normal;font-weight:400;background-color:#FFFFFF;">专家教您如何巧用身份实现合理资产配置！</span><span id="__kindeditor_bookmark_start_0__"></span>', '', '', ''),
-	(124, 0, '<span style="font-size:16px;">想全家畅享优质生活！</span><span style="font-size:16px;">子女享全球一级教育资源！</span><span style="font-size:16px;">说的就是</span><span style="font-size:16px;color:#17CAA8;"><strong>澳洲移民</strong></span>&nbsp;<span style="font-size:16px;">澳洲7月新财年即将开放移民配额</span><span style="font-size:16px;">如何把握先机，抢先一步</span><span style="font-size:16px;">及早锁定名额？</span>&nbsp;<img alt="可回放！想全家畅享优质生活，尽早锁定名额？机会来了！" class="__bg_gif" src="https://mmbiz.qpic.cn/mmbiz_gif/vWLLpvkicedwVmpAFAHqp7diaFeo4icfxdlxkzDCaHNS7J3956WHAMejGuibxEq6fynqurEKInaV6yHYJRgvAXzlPg/640?wx_fmt=gif" style="border:0px;width:30px;height:auto !important;" />\r\n<p>\r\n	&nbsp;\r\n</p>\r\n<span style="color:#FFFFFF;background-color:#29E2B7;"><strong>5月30日（周六） 15：00</strong></span><span style="font-size:16px;color:#17CAA8;"><strong>澳洲资深持牌律师、移民专家</strong></span><span style="font-size:16px;">独家解析澳洲移民优势</span>&nbsp;', '', '', '');
-/*!40000 ALTER TABLE `lqf_archives_document` ENABLE KEYS */;
+-- Dumping data for table zdtop_net.lqf_archives_online: 0 rows
+DELETE FROM `lqf_archives_online`;
+/*!40000 ALTER TABLE `lqf_archives_online` DISABLE KEYS */;
+/*!40000 ALTER TABLE `lqf_archives_online` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_arctype
+-- Dumping structure for table zdtop_net.lqf_arctype
 CREATE TABLE IF NOT EXISTS `lqf_arctype` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '父级id',
+  `top_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '顶级',
+  `sort` smallint(5) unsigned NOT NULL DEFAULT '50' COMMENT '排序',
+  `typename` char(30) NOT NULL DEFAULT '' COMMENT '名称',
+  `typedir` char(60) NOT NULL DEFAULT '' COMMENT '目录',
+  `litpic` int(11) DEFAULT '0' COMMENT '图片编号',
+  `isdefault` smallint(6) NOT NULL DEFAULT '0',
+  `defaultname` char(15) NOT NULL DEFAULT 'index.html' COMMENT '默认名称',
+  `issend` smallint(6) NOT NULL DEFAULT '0' COMMENT '是否发布',
+  `channel_id` smallint(6) DEFAULT '1' COMMENT '频道id',
+  `maxpage` smallint(6) NOT NULL DEFAULT '-1',
+  `ispart` smallint(6) NOT NULL DEFAULT '0' COMMENT '0：最终列表栏目；1：频道封面；2：外部连接',
+  `corank` smallint(6) NOT NULL DEFAULT '0',
+  `temp_index` char(50) NOT NULL DEFAULT '' COMMENT '主页模板',
+  `temp_list` char(50) NOT NULL DEFAULT '' COMMENT '列表模板',
+  `temp_article` char(50) NOT NULL DEFAULT '' COMMENT '文章模板',
+  `name_rule_article` char(50) NOT NULL DEFAULT '' COMMENT '文章名称',
+  `name_rule_list` char(50) NOT NULL DEFAULT '' COMMENT '列表名称规则',
+  `modname` char(20) NOT NULL DEFAULT '',
+  `description` char(150) NOT NULL DEFAULT '' COMMENT '描述',
+  `keywords` varchar(60) NOT NULL DEFAULT '' COMMENT '关键字',
+  `seotitle` varchar(80) NOT NULL DEFAULT '' COMMENT 'seo标题',
+  `moresite` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `sitepath` char(60) NOT NULL DEFAULT '',
+  `siteurl` char(50) NOT NULL DEFAULT '',
+  `visible` smallint(6) NOT NULL DEFAULT '1' COMMENT '0=隐藏\r\n1=显示',
+  `cross` tinyint(1) NOT NULL DEFAULT '0',
+  `crossid` text,
+  `content` text,
+  `smalltypes` text,
+  `create_time` int(11) DEFAULT NULL,
+  `update_time` int(11) DEFAULT NULL,
+  `sys_user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `reid` (`parent_id`,`isdefault`,`channel_id`,`ispart`,`corank`,`top_id`,`visible`),
+  KEY `sortrank` (`sort`)
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='文章栏目表';
+
+-- Dumping data for table zdtop_net.lqf_arctype: 17 rows
+DELETE FROM `lqf_arctype`;
+/*!40000 ALTER TABLE `lqf_arctype` DISABLE KEYS */;
+INSERT INTO `lqf_arctype` (`id`, `parent_id`, `top_id`, `sort`, `typename`, `typedir`, `litpic`, `isdefault`, `defaultname`, `issend`, `channel_id`, `maxpage`, `ispart`, `corank`, `temp_index`, `temp_list`, `temp_article`, `name_rule_article`, `name_rule_list`, `modname`, `description`, `keywords`, `seotitle`, `moresite`, `sitepath`, `siteurl`, `visible`, `cross`, `crossid`, `content`, `smalltypes`, `create_time`, `update_time`, `sys_user_id`) VALUES
+	(1, 0, 0, 1, '关于我们', '', 327, 0, '', 0, 1, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '<p style="text-align:justify;">\r\n	正度介绍\r\n</p>\r\n<p style="text-align:justify;">\r\n	随着市场竞争程度的加剧，市场供需和大众审美都在被互联网思维重新定义，而瞳创团队始终筹谋思变，以引领前沿的年轻思维重新诠释品牌定位，为企业品牌发展注入新生血液，力求为客户提供适合的、全面的品牌发展策略。\r\n</p>\r\n<p style="text-align:justify;">\r\n	<br />\r\n</p>\r\n<p style="text-align:justify;">\r\n	我们不断融合创作激情与战略视野，迎接新的挑战，向巅峰迈进。当我们同客户站在一起时，我们表现出更多的理解和热情。我们深知，只有真正融入品牌的发展进程，关注企业面临的问题，才能争取到客户对设计价值的认可。内外兼顾，知人者智，让瞳创成为你的品牌智囊团，与你的品牌一起成长！\r\n</p>\r\n<p style="text-align:justify;">\r\n	<br />\r\n</p>\r\n我们的优势\r\n<p style="text-align:justify;">\r\n	—\r\n</p>\r\n<p style="text-align:justify;">\r\n	基于洞察之上的创想，我们始终专注于一件事：品牌形象策划与设计。 由资深创作人员亲自沟通，扁平化的组织架构，确保内外部沟通高效，精确的表现品牌诉求。对每一个案子都精益求精，拒绝大规模经营的流水线式低端作业。众多的成功案例和客户好评证明了勿道的专业。\r\n</p>', '', 0, 1604721937, 0),
+	(2, 0, 0, 3, '核心业务', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'service.html', 'service.html', 'service.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 0, 1587522546, 0),
+	(3, 0, 0, 4, '新闻中心', '/html/', 10, 0, 'index.html', 0, 1, -1, 0, 0, 'index_article.html', 'list_article.html', 'view_article.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '<p align="left">\r\n	在专业领域的探索与思考让我们深入了解设计的本质。\r\n</p>\r\n<p align="left">\r\n	我们为超过100 个企业提供了创新的品牌设计解决方案，帮助客户实现品牌革新，并向互联网发展。\r\n</p>', '', 0, 1587522548, 0),
+	(4, 2, 0, 100, '品牌咨询', '/htmll', 21, 0, 'index.html', 0, 1, -1, 1, 0, 'service.htm', 'service.html', 'service.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉', '', 'BRAND', 0, '', '', 1, 0, '', '<p>\r\n	透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉\r\n</p>\r\n<br />', '', 0, 1587434677, 0),
+	(5, 0, 0, 5, '企业文化', '/html/', 10, 0, 'index.html', 0, 1, -1, 1, 0, 'honor.html', 'honor.html', 'honor.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '联系我们联系我们联系我们<br />', '', 1581929689, 1587522550, 0),
+	(31, 1, 0, 3, '服务客户', '/html/', 328, 0, 'index.html', 0, 1, -1, 0, 0, 'list_case.html', 'list_case.html', 'view_case.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉， 让用户透过设计去体验您的品牌信息。', '', '', 0, '', '', 1, 0, '', '透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉，<br />\r\n让用户透过设计去体验您的品牌信息。', '', 1582948987, 1604721981, 0),
+	(32, 2, 0, 50, '公关传播', '/html/', 22, 0, 'index.html', 0, 1, -1, 1, 0, 'service.htm', 'service.htm', 'service.htm', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '公关传播业的方向应是文化 在华语圈内,用年度汉字来反映过去一年的焦点已经成为一种文化', '', 'SPREAD', 0, '', '', 1, 0, '', '公关传播业的方向应是文化 在华语圈内,用年度汉字来反映过去一年的焦点已经成为一种文化', '', 1587366405, 1587434665, 0),
+	(33, 2, 0, 50, '数字营销', '/html/', 23, 0, 'index.html', 0, 1, -1, 1, 0, 'service.htm', 'service.htm', 'service.htm', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '数字营销是使用数字传播渠道来推广产品和服务的实践活动，从而以一种及时、相关、定制化和节省成本的方式与消费者进行沟通', '', 'MARKET', 0, '', '', 1, 0, '', '数字营销是使用数字传播渠道来推广产品和服务的实践活动，从而以一种及时、相关、定制化和节省成本的方式与消费者进行沟通', '', 1587366446, 1587434685, 0),
+	(34, 2, 0, 50, '创意制作', '/html/', 24, 0, 'index.html', 0, 1, -1, 1, 0, 'service.htm', 'service.htm', 'service.htm', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '影视广告创意与制作两者是不可缺少的。一个好的影视广告制作要在好的创意基础上,一个好的创意也需要一个好的制作', '', 'IDEA', 0, '', '', 1, 0, '', '影视广告创意与制作两者是不可缺少的。一个好的影视广告制作要在好的创意基础上,一个好的创意也需要一个好的制作', '', 1587366470, 1587434691, 0),
+	(35, 5, 0, 50, '使命', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'honor.html', 'honor.html', 'honor.htm', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '企业确定的使命为企业确立了一个经营的基本指导思想、原则、方向、经营哲学等', '', '', 0, '', '', 1, 0, '', '企业使命是企业形象的一个颇为直接的描述。 企业生产经营的哲学定位，也就是经营观念。企业确定的使命为企业确立了一个经营的基本指导思想、原则、方向、经营哲学等，它不是企业具体的战略目标，或者是抽象地存在，不一定表述为文字，但影响经营者的决策和思维。<br />', '', 1587367032, 1587522267, 0),
+	(36, 5, 0, 50, '愿景', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'honor.html', 'honor.html', 'honor.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '企业愿景是组织在未来所能达到的一种状态的蓝图，阐述的是企业存在的最终目的。', '', '', 0, '', '', 1, 0, '', '<span>企业愿景是组织在未来所能达到的一种状态的蓝图，阐述的是企业存在的最终目的。回答的是“去哪里”的问题。愿景是关于理想的一幅独特的画面，它面向未来，可以为众人带来共同利益</span>', '', 1587367054, 1587522275, 0),
+	(37, 5, 0, 50, '价值观', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'honor.html', 'honor.html', 'honor.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '企业价值观是指企业及其员工的价值取向，是指企业在追求经营成功过程中所推崇的基本信念和奉行的目标', '', '', 0, '', '', 1, 0, '', '<em>企业价值观</em>是指<em>企业</em>及其员工的<em>价值</em>取向，是指<em>企业</em>在追求经营成功过程中所推崇的基本信念和奉行的目标。从哲学上说，<em>价值观</em>是关于对象对主体有用性的一种观念。而<em>企业价值观</em>是<em>企业</em>全体或多数员工一致赞同的关于<em>企业</em>意义的终极判断。', '', 1587367081, 1587522283, 0),
+	(38, 3, 0, 50, '2020', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'index_article.html', 'list_article.html', 'view_article.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1587370361, 1587452165, 0),
+	(39, 2, 0, 50, '活动策划', '/html/', 25, 0, 'index.html', 0, 1, -1, 1, 0, 'service.html', 'service.html', 'service.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '提高市场占有率的有效行为，一份可执行、可操作、创意突出的活动策划案，可有效提升企业的知名度及品牌美誉度', '', 'EVENT', 0, '', '', 1, 0, '', '提高市场占有率的有效行为，一份可执行、可操作、创意突出的活动策划案，可有效提升企业的知名度及品牌美誉度', '', 1587370818, 1587434701, 0),
+	(40, 3, 0, 50, '2019', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'list_article.html', 'list_article.html', 'view_article.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1587451565, 1587452176, 0),
+	(41, 1, 0, 2, '管理团队', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1587522683, 1587522772, 0),
+	(42, 1, 0, 1, '公司简介', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1587522764, 1587522769, 0);
+/*!40000 ALTER TABLE `lqf_arctype` ENABLE KEYS */;
+
+-- Dumping structure for table zdtop_net.lqf_arctype1
+CREATE TABLE IF NOT EXISTS `lqf_arctype1` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '父级id',
   `top_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '顶级',
@@ -531,47 +379,60 @@ CREATE TABLE IF NOT EXISTS `lqf_arctype` (
   PRIMARY KEY (`id`),
   KEY `reid` (`parent_id`,`isdefault`,`channel_id`,`ispart`,`corank`,`top_id`,`visible`),
   KEY `sortrank` (`sort`)
-) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COMMENT='文章栏目表';
+) ENGINE=MyISAM AUTO_INCREMENT=99 DEFAULT CHARSET=utf8 COMMENT='文章栏目表';
 
--- Dumping data for table 20629_renrenhw.lqf_arctype: 32 rows
-DELETE FROM `lqf_arctype`;
-/*!40000 ALTER TABLE `lqf_arctype` DISABLE KEYS */;
-INSERT INTO `lqf_arctype` (`id`, `parent_id`, `top_id`, `sort`, `typename`, `typedir`, `litpic`, `isdefault`, `defaultname`, `issend`, `channel_id`, `maxpage`, `ispart`, `corank`, `temp_index`, `temp_list`, `temp_article`, `name_rule_article`, `name_rule_list`, `modname`, `description`, `keywords`, `seotitle`, `moresite`, `sitepath`, `siteurl`, `visible`, `cross`, `crossid`, `content`, `smalltypes`, `create_time`, `update_time`) VALUES
-	(1, 0, 0, 1, '关于我们', '', 27, 0, '', 0, 1, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '<p style="text-align:justify;">\r\n	人人海外致力于为所有谋求长远发展的各类企业提供品牌创建、品牌更新、品牌管理设计服务。以策略为导向，注重实效，结合对市场、企业、消费者、文化的深刻理解和对时尚潮流的准确把握，协助客户提升产品的销售力和形象力，打造“最具有赢响力”的品牌核心价值。以视觉为沟通语言，以设计为传达媒介，创造整合性、全面性、国际性的视觉传播系统，为客户提供完整而有效的品牌锐变方案。\r\n</p>\r\n<p style="text-align:justify;">\r\n	随着市场竞争程度的加剧，市场供需和大众审美都在被互联网思维重新定义，而瞳创团队始终筹谋思变，以引领前沿的年轻思维重新诠释品牌定位，为企业品牌发展注入新生血液，力求为客户提供适合的、全面的品牌发展策略。\r\n</p>\r\n<p style="text-align:justify;">\r\n	<br />\r\n</p>\r\n<p style="text-align:justify;">\r\n	我们不断融合创作激情与战略视野，迎接新的挑战，向巅峰迈进。当我们同客户站在一起时，我们表现出更多的理解和热情。我们深知，只有真正融入品牌的发展进程，关注企业面临的问题，才能争取到客户对设计价值的认可。内外兼顾，知人者智，让瞳创成为你的品牌智囊团，与你的品牌一起成长！\r\n</p>\r\n<p style="text-align:justify;">\r\n	<br />\r\n</p>\r\n我们的优势\r\n<p style="text-align:justify;">\r\n	—\r\n</p>\r\n<p style="text-align:justify;">\r\n	基于洞察之上的创想，我们始终专注于一件事：品牌形象策划与设计。 由资深创作人员亲自沟通，扁平化的组织架构，确保内外部沟通高效，精确的表现品牌诉求。对每一个案子都精益求精，拒绝大规模经营的流水线式低端作业。众多的成功案例和客户好评证明了勿道的专业。\r\n</p>', '', 0, 1594042089),
+-- Dumping data for table zdtop_net.lqf_arctype1: 45 rows
+DELETE FROM `lqf_arctype1`;
+/*!40000 ALTER TABLE `lqf_arctype1` DISABLE KEYS */;
+INSERT INTO `lqf_arctype1` (`id`, `parent_id`, `top_id`, `sort`, `typename`, `typedir`, `litpic`, `isdefault`, `defaultname`, `issend`, `channel_id`, `maxpage`, `ispart`, `corank`, `temp_index`, `temp_list`, `temp_article`, `name_rule_article`, `name_rule_list`, `modname`, `description`, `keywords`, `seotitle`, `moresite`, `sitepath`, `siteurl`, `visible`, `cross`, `crossid`, `content`, `smalltypes`, `create_time`, `update_time`) VALUES
+	(1, 0, 0, 1, '关于我们', '', 27, 0, '', 0, 1, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '关于我们', '关于我们', '关于我们', 0, '', '', 1, 0, '', '<p style="text-align:justify;">\r\n	人人海外 全球海外生活规划平台<br />\r\n人人海外积淀了丰富的海内外资源，聚集了移民行业深耕多年的资深专业人士，只致力于极高净值客户的独立咨询，我们以客户的底层根本需求为导向，为客户提供全球主流国家的投资移民，海外房产，海外资产规划等的专业咨询。最注重全面的精细服务，赢得了客户一致称赞！\r\n</p>\r\n<p style="text-align:justify;">\r\n	<br />\r\n</p>\r\n<p style="text-align:justify;">\r\n	<br />\r\n</p>', '', 0, 1600422875),
 	(2, 0, 0, 4, '美洲移民', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '<img src="/public/upload/picture/20200430/97d09f96f672a8031f258ca10a6a59d2.png" alt="" /><img src="/public/upload/picture/20200430/4e492bd0ff622d22abd2604091f4e059.png" alt="" /><img src="/public/upload/picture/20200430/a4cd5633a91940d6259d4e932d85e608.png" alt="" /><img src="/public/upload/picture/20200430/5b28e8d2236b76bc757a95e7fa1e55db.png" alt="" /><img src="/public/upload/picture/20200430/323442438625f86b6a8b1eb8dd0b6593.png" alt="" /><img src="/public/upload/picture/20200430/ae55d6723680eafc4c408c96bea21cf6.png" alt="" /><img src="/public/upload/picture/20200430/cd79bdac85c785334ee9895d45fa3561.png" alt="" /><img src="/public/upload/picture/20200430/0c67454e1561f15a90d3fb3130ee0ac8.png" alt="" />', '', 0, 1593673689),
-	(3, 0, 0, 8, '新闻中心', '/html/', 10, 0, 'index.html', 0, 1, -1, 0, 0, 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '<p align="left">\r\n	在专业领域的探索与思考让我们深入了解设计的本质。\r\n</p>\r\n<p align="left">\r\n	我们为超过100 个企业提供了创新的品牌设计解决方案，帮助客户实现品牌革新，并向互联网发展。\r\n</p>', '', 0, 1593654158),
-	(5, 0, 0, 9, '联系我们', '/html/', 10, 0, 'index.html', 0, 1, -1, 1, 0, 'contact.html', 'contact.html', 'contact.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '联系我们联系我们联系我们<br />', '', 1581929689, 1593654160),
-	(31, 1, 0, 3, '资质荣誉', '/html/', 0, 0, 'index.html', 0, 25, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉， 让用户透过设计去体验您的品牌信息。', '', '', 0, '', '', 1, 0, '', '透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉，<br />\r\n让用户透过设计去体验您的品牌信息。', '', 1582948987, 1594021260),
+	(3, 0, 0, 8, '新闻中心', '/html/', 10, 0, 'index.html', 0, 1, -1, 0, 0, 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 0, 0, '', '<p align="left">\r\n	在专业领域的探索与思考让我们深入了解设计的本质。\r\n</p>\r\n<p align="left">\r\n	我们为超过100 个企业提供了创新的品牌设计解决方案，帮助客户实现品牌革新，并向互联网发展。\r\n</p>', '', 0, 1596986877),
+	(5, 0, 0, 9, '联系我们', '/html/', 10, 0, 'index.html', 0, 1, -1, 1, 0, 'contact.html', 'contact.html', 'contact.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '<p style="text-align:left;margin-left:0in;">\r\n	官网：www. renrenhaiwai.com\r\n</p>\r\n<p style="text-align:left;margin-left:0in;">\r\n	电话：400-6869-877\r\n</p>\r\n<p style="text-align:left;margin-left:0in;">\r\n	地址：成都市高新区交子大道177号中海国际中心B座5层\r\n</p>\r\n<br />', '', 1581929689, 1599269503),
+	(31, 1, 0, 3, '资质荣誉', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉， 让用户透过设计去体验您的品牌信息。', '', '', 0, '', '', 1, 0, '', '透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉，<br />\r\n让用户透过设计去体验您的品牌信息。', '', 1582948987, 1596980131),
 	(32, 0, 0, 3, '欧洲移民', '/html/', 22, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '公关传播业的方向应是文化 在华语圈内,用年度汉字来反映过去一年的焦点已经成为一种文化', '', 'SPREAD', 0, '', '', 1, 0, '', '<img src="/public/upload/picture/20200430/a8f42282688fd3fd875102765f66d5c7.png" alt="" />&nbsp;&nbsp;&nbsp; <img src="/public/upload/picture/20200430/259c155ccd4b7a89b4df46da09140768.png" alt="" />&nbsp;&nbsp;&nbsp; <img src="/public/upload/picture/20200430/b28333d3c41051d8d162b2cf61b371cd.png" alt="" /> &nbsp; &nbsp; &nbsp;&nbsp; <img src="/public/upload/picture/20200430/f785b3862970354578a6c1f83156b581.png" alt="" /> &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; <img src="/public/upload/picture/20200430/875ad2d24923e07d86a220d09389ccdb.png" alt="" /> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <img src="/public/upload/picture/20200430/7927922d6b2c636abd84c5a6960286c9.png" alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />', '', 1587366405, 1593653935),
-	(33, 0, 0, 2, '亚洲移民', '/html/', 23, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '数字营销是使用数字传播渠道来推广产品和服务的实践活动，从而以一种及时、相关、定制化和节省成本的方式与消费者进行沟通', '', 'MARKET', 0, '', '', 1, 0, '', '数字营销是使用数字传播渠道来推广产品和服务的实践活动，从而以一种及时、相关、定制化和节省成本的方式与消费者进行沟通', '', 1587366446, 1593673684),
-	(46, 33, 0, 50, '中国香港', '/html/', 80, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1588154031, 1594112892),
-	(47, 33, 0, 50, '马来西亚', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1588154031, 1593653800),
-	(48, 33, 0, 50, '韩国', '/html/', 81, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1588154031, 1594112936),
+	(33, 0, 0, 2, '亚洲移民', '/html/', 23, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '数字营销是使用数字传播渠道来推广产品和服务的实践活动，从而以一种及时、相关、定制化和节省成本的方式与消费者进行沟通', '', 'MARKET', 0, '', '', 1, 0, '', '数字营销是使用数字传播渠道来推广产品和服务的实践活动，从而以一种及时、相关、定制化和节省成本的方式与消费者进行沟通', '', 1587366446, 1595727199),
+	(74, 53, 0, 50, '澳洲', '/html/', 151, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 0, 0, '', '', '', 1595750660, 1595994852),
+	(66, 32, 0, 50, '爱尔兰', '/html/', 146, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595571941, 1595922266),
+	(47, 33, 0, 50, '马来西亚', '/html/', 147, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '&nbsp;人人海外', '', 1588154031, 1595922447),
 	(49, 33, 0, 50, '新加坡', '/html/', 82, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1588154031, 1594112971),
-	(50, 2, 0, 50, '加拿大', '/html/', 86, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1588154031, 1594113113),
+	(50, 2, 0, 50, '加拿大', '/html/', 86, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1588154031, 1595921192),
 	(51, 3, 0, 4, '生活手册', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1588752999, 1594114910),
 	(52, 3, 0, 3, '海外资讯', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1588753061, 1594115033),
 	(38, 3, 0, 1, '公司动态', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1587370361, 1594114995),
-	(44, 32, 0, 50, '英国', '/html/', 84, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1588154031, 1594113071),
 	(45, 32, 0, 50, '希腊', '/html/', 83, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1588154031, 1594113048),
 	(40, 3, 0, 2, '国内资讯', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1587451565, 1594115026),
-	(41, 1, 0, 2, '企业介绍', '/html/', 0, 0, 'index.html', 0, 25, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '<p style="text-align:justify;">\r\n	人人海外致力于为所有谋求长远发展的各类企业提供品牌创建、品牌更新、品牌管理设计服务。以策略为导向，注重实效，结合对市场、企业、消费者、文化的深刻理解和对时尚潮流的准确把握，协助客户提升产品的销售力和形象力，打造“最具有赢响力”的品牌核心价值。以视觉为沟通语言，以设计为传达媒介，创造整合性、全面性、国际性的视觉传播系统，为客户提供完整而有效的品牌锐变方案。\r\n</p>\r\n<p style="text-align:justify;">\r\n	随着市场竞争程度的加剧，市场供需和大众审美都在被互联网思维重新定义，而瞳创团队始终筹谋思变，以引领前沿的年轻思维重新诠释品牌定位，为企业品牌发展注入新生血液，力求为客户提供适合的、全面的品牌发展策略。\r\n</p>\r\n<p style="text-align:justify;">\r\n	<br />\r\n</p>\r\n<p style="text-align:justify;">\r\n	我们不断融合创作激情与战略视野，迎接新的挑战，向巅峰迈进。当我们同客户站在一起时，我们表现出更多的理解和热情。我们深知，只有真正融入品牌的发展进程，关注企业面临的问题，才能争取到客户对设计价值的认可。内外兼顾，知人者智，让瞳创成为你的品牌智囊团，与你的品牌一起成长！\r\n</p>\r\n<p style="text-align:justify;">\r\n	<br />\r\n</p>\r\n我们的优势\r\n<p style="text-align:justify;">\r\n	—\r\n</p>\r\n<p style="text-align:justify;">\r\n	基于洞察之上的创想，我们始终专注于一件事：品牌形象策划与设计。 由资深创作人员亲自沟通，扁平化的组织架构，确保内外部沟通高效，精确的表现品牌诉求。对每一个案子都精益求精，拒绝大规模经营的流水线式低端作业。众多的成功案例和客户好评证明了勿道的专业。\r\n</p>', '', 1587522683, 1594114756),
+	(41, 1, 0, 2, '企业介绍', '/html/', 0, 0, 'index.html', 0, 1, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '<p style="text-align:justify;">\r\n	人人海外 全球海外生活规划平台<br />\r\n人人海外积淀了丰富的海内外资源，聚集了移民行业深耕多年的资深专业人士，只致力于极高净值客户的独立咨询，我们以客户的底层根本需求为导向，为客户提供全球主流国家的投资移民，海外房产，海外资产规划等的专业咨询。最注重全面的精细服务，赢得了客户一致称赞！\r\n</p>\r\n<p style="text-align:justify;">\r\n	<br />\r\n</p>\r\n<p style="text-align:justify;">\r\n	<br />\r\n</p>', '', 1587522683, 1600422869),
 	(42, 1, 0, 1, '企业文化', '/html/', 0, 0, 'index.html', 0, 25, -1, 1, 0, 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1587522764, 1594021274),
-	(53, 0, 0, 5, '澳洲移民', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1593654067, 1593759459),
+	(53, 0, 0, 5, '大洋洲移民', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1593654067, 1595997757),
 	(54, 0, 0, 6, '跨境服务', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 0, 0, '', '', '', 1593654105, 1593654147),
 	(55, 0, 0, 7, '成功案例', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'case_list.html', 'case_list.html', 'case_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 0, 0, '', '', '', 1593654135, 1593654156),
-	(56, 53, 0, 50, '澳大利亚', '/html/', 87, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1593673872, 1594113136),
-	(57, 53, 0, 50, '新西兰', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1593673932, 1593674291),
+	(70, 53, 0, 50, '澳洲', '/html/', 151, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 0, 0, '', '', '', 1595663601, 1595994853),
+	(93, 33, 0, 50, '菲律宾', '/html/', 164, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1596026777, 1596027493),
 	(58, 54, 0, 50, '公司注册', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1593674036, 1593674288),
 	(59, 54, 0, 50, '公司开户', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1593674074, 1593674287),
 	(60, 54, 0, 50, '银行开户', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1593674074, 1593674287),
-	(61, 2, 0, 50, '美利坚', '/html/', 85, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1593759574, 1594113084),
 	(62, 0, 0, 50, '人人活动', '/html/', 0, 0, 'index.html', 0, 25, -1, 0, 0, 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 0, 0, '', '', '', 1594115075, 0),
 	(63, 55, 0, 50, '英国', '/html/', 0, 0, 'index.html', 0, 25, -1, 0, 0, 'case_list.html', 'case_list.html', 'case_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1594190567, 1594190877),
-	(64, 55, 0, 50, '新加坡', '/html/', 0, 0, 'index.html', 0, 25, -1, 0, 0, 'case_list.html', 'case_list.html', 'case_list.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1594190598, 1594190877);
-/*!40000 ALTER TABLE `lqf_arctype` ENABLE KEYS */;
+	(64, 55, 0, 50, '新加坡', '/html/', 0, 0, 'index.html', 0, 25, -1, 0, 0, 'case_list.html', 'case_list.html', 'case_list.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1594190598, 1594190877),
+	(69, 69, 0, 50, '澳洲132签证', '/html/', 0, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595662399, 1595663400),
+	(75, 53, 0, 50, '澳洲', '/html/', 151, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 0, 0, '', '', '', 1595751692, 1595994854),
+	(76, 53, 0, 50, '澳洲', '/html/', 151, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595753088, 1595996526),
+	(77, 2, 0, 50, '多米尼克', '/html/', 149, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595753932, 1595922723),
+	(78, 2, 0, 50, '格林纳达', '/html/', 148, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595754938, 1595922714),
+	(79, 32, 0, 50, '马耳他', '/html/', 145, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595833104, 1595922252),
+	(82, 2, 0, 60, '美利坚', '/html/', 147, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595840124, 1596444053),
+	(84, 2, 0, 50, '圣基茨和尼维斯', '/html/', 150, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595901784, 1595996587),
+	(85, 32, 0, 50, '葡萄牙', '/html/', 143, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595903013, 1595921830),
+	(87, 32, 0, 50, '塞浦路斯', '/html/', 144, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595920103, 1595922013),
+	(90, 33, 0, 50, '土耳其', '/html/', 153, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595924241, 1595925088),
+	(91, 53, 0, 50, '瓦努阿图', '/html/', 155, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595925256, 1595997714),
+	(92, 32, 0, 50, '西班牙', '/html/', 157, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1595926000, 1595926004),
+	(95, 33, 0, 50, '日本', '/html/', 171, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1596030206, 1596030226),
+	(98, 33, 0, 50, '泰国', '/html/', 174, 0, 'index.html', 0, 1, -1, 0, 0, 'ym_list.html', 'ym_list.html', 'ym_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', 0, '', '', 1, 0, '', '', '', 1596032509, 1596032524);
+/*!40000 ALTER TABLE `lqf_arctype1` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_channel
+-- Dumping structure for table zdtop_net.lqf_channel
 CREATE TABLE IF NOT EXISTS `lqf_channel` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `nid` varchar(20) NOT NULL DEFAULT '' COMMENT '模型ID',
@@ -606,7 +467,7 @@ CREATE TABLE IF NOT EXISTS `lqf_channel` (
   KEY `nid` (`nid`,`isshow`,`arcsta`,`sendrank`)
 ) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='频道栏目表';
 
--- Dumping data for table 20629_renrenhw.lqf_channel: 3 rows
+-- Dumping data for table zdtop_net.lqf_channel: 3 rows
 DELETE FROM `lqf_channel`;
 /*!40000 ALTER TABLE `lqf_channel` DISABLE KEYS */;
 INSERT INTO `lqf_channel` (`id`, `nid`, `name`, `maintable`, `addtable`, `addcon`, `mancon`, `editcon`, `useraddcon`, `usermancon`, `usereditcon`, `fieldset`, `listfields`, `allfields`, `issystem`, `isshow`, `issend`, `arcsta`, `usertype`, `sendrank`, `isdefault`, `needdes`, `needpic`, `titlename`, `onlyone`, `dfcid`, `create_time`, `update_time`, `sort`) VALUES
@@ -615,8 +476,165 @@ INSERT INTO `lqf_channel` (`id`, `nid`, `name`, `maintable`, `addtable`, `addcon
 	(25, 'document', '文章模块', 'archives', 'archives_document', '', '', '', '', '', '', '', '', '', 0, 1, 0, -1, '', 10, 0, 1, 1, '标题', 0, 0, 1594021236, 1594021287, 0);
 /*!40000 ALTER TABLE `lqf_channel` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_channel_field
+-- Dumping structure for table zdtop_net.lqf_channel_field
 CREATE TABLE IF NOT EXISTS `lqf_channel_field` (
+  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
+  `main_table` varchar(50) NOT NULL COMMENT '关联主表',
+  `ext_table` varchar(50) NOT NULL COMMENT '扩展表名',
+  `show_name` varchar(256) NOT NULL COMMENT '字段表单名称',
+  `field_name` varchar(256) NOT NULL COMMENT '字段名称',
+  `field_type` varchar(50) NOT NULL COMMENT '单文本=varchar,文本=text,多行文本=textarea,整数=int,小数=float,图片=img,下拉=option,单选=radio,复选=checkbox',
+  `default_value` varchar(256) NOT NULL COMMENT '字段默认值',
+  `maxlength` varchar(256) NOT NULL COMMENT '最大值',
+  `desc` varchar(256) NOT NULL COMMENT '表单说明',
+  `visible` smallint(1) NOT NULL DEFAULT '1' COMMENT '是否使用',
+  `is_system` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否为系统字段，1=是（不能删除）0=否',
+  `is_must` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否改填',
+  `sort` int(16) NOT NULL DEFAULT '0' COMMENT '显示排序',
+  `create_time` int(11) NOT NULL DEFAULT '0',
+  `update_time` int(11) NOT NULL DEFAULT '0',
+  `sys_user_id` int(16) NOT NULL DEFAULT '0',
+  `channel_id` int(16) NOT NULL DEFAULT '0' COMMENT '频道模型id',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='字段扩展表';
+
+-- Dumping data for table zdtop_net.lqf_channel_field: 8 rows
+DELETE FROM `lqf_channel_field`;
+/*!40000 ALTER TABLE `lqf_channel_field` DISABLE KEYS */;
+INSERT INTO `lqf_channel_field` (`id`, `main_table`, `ext_table`, `show_name`, `field_name`, `field_type`, `default_value`, `maxlength`, `desc`, `visible`, `is_system`, `is_must`, `sort`, `create_time`, `update_time`, `sys_user_id`, `channel_id`) VALUES
+	(19, 'archives', 'archives_article', '称民类型', 'ym_type', 'varchar', '', '250', '', 1, 0, 0, 100, 1593653246, 0, 0, 1),
+	(18, 'archives', 'archives_case', '跳转网址', 'goto_url', 'varchar', 'http://www.baidu.com', '250', '0', 1, 0, 0, 100, 1581772028, 1593573654, 0, 24),
+	(20, 'archives', 'archives_article', '居留许可', 'ym_jlxk', 'varchar', '', '250', '', 1, 0, 0, 100, 1593653276, 0, 0, 1),
+	(21, 'archives', 'archives_article', '投资金额', 'ym_tzje', 'varchar', '', '250', '', 1, 0, 0, 100, 1593653296, 0, 0, 1),
+	(22, 'archives', 'archives_article', '移民周期', 'ym_ymzq', 'varchar', '', '250', '', 1, 0, 0, 100, 1593653309, 0, 0, 1),
+	(23, 'archives', 'archives_article', '居住要求', 'ym_jzyq', 'varchar', '', '250', '', 1, 0, 0, 100, 1593653322, 0, 0, 1),
+	(24, 'archives', 'archives_article', '随行人员', 'ym_sxry', 'varchar', '', '250', '', 1, 0, 0, 100, 1593653337, 0, 0, 1),
+	(25, 'archives', 'archives_article', '项目类型', 'title_type', 'option', '投资移民,创业移民,护照移民', '250', '项目类型菜单导航分类', 1, 0, 0, 1, 1595057124, 1595057128, 0, 1);
+/*!40000 ALTER TABLE `lqf_channel_field` ENABLE KEYS */;
+
+-- Dumping structure for table zdtop_net.lqf_config
+CREATE TABLE IF NOT EXISTS `lqf_config` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '配置ID',
+  `name` varchar(30) NOT NULL DEFAULT '' COMMENT '配置名称',
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '配置类型',
+  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '配置标题',
+  `group` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '配置分组',
+  `extra` varchar(255) NOT NULL DEFAULT '' COMMENT '配置选项',
+  `describe` varchar(255) NOT NULL DEFAULT '' COMMENT '配置说明',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `visible` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否启用',
+  `value` text NOT NULL COMMENT '配置值',
+  `sort` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_name` (`name`),
+  KEY `type` (`type`),
+  KEY `group` (`group`)
+) ENGINE=MyISAM AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COMMENT='配置表';
+
+-- Dumping data for table zdtop_net.lqf_config: 27 rows
+DELETE FROM `lqf_config`;
+/*!40000 ALTER TABLE `lqf_config` DISABLE KEYS */;
+INSERT INTO `lqf_config` (`id`, `name`, `type`, `title`, `group`, `extra`, `describe`, `create_time`, `update_time`, `visible`, `value`, `sort`) VALUES
+	(1, 'title', 1, '系统标题', 1, '', '网站标题前台显示标题，优先级低于SEO模块', 1378898976, 1604725018, 1, '成都零起飞网络', 3),
+	(2, 'description', 2, '系统描述', 1, '', '网站搜索引擎描述，优先级低于SEO模块', 1378898976, 1604725018, 1, '成都零起飞网络是一个具有专业水平和非凡创意的制作者的组合，主要从事网站策划运营推广、SEO搜索引擎优化、网站建设、域名注册、主机租用、软件定制开发等业务。我们拥有丰富的 网站推广及制作经验，良好的企业电子商务解决方案。根据企业主营业务和网站建设目的，分析并确定包括网站客户群定位、网站形象定位、网站功能定位、信息结构设计、栏目设计等内容。为您量身订制出一套完整的电子商务宣传平台让您的网站真正为您带来源源不断的客户。', 100),
+	(3, 'keywords', 2, '系统关键字', 1, '', '网站搜索引擎关键字，优先级低于SEO模块', 1378898976, 1604725018, 1, '成都零起飞网络', 99),
+	(9, 'config_type_list', 3, '配置类型列表', 3, '', '主要用于数据解析和页面表单的生成', 1378898976, 1587614212, 1, '0:数字\r\n1:字符\r\n2:文本\r\n3:数组\r\n4:枚举\r\n5:图片\r\n6:文件\r\n7:富文本\r\n8:单选\r\n9:多选\r\n10:日期\r\n11:时间\r\n12:颜色', 100),
+	(20, 'config_group_list', 3, '配置分组', 3, '', '配置分组', 1379228036, 1587614212, 1, '1:基础\r\n2:数据\r\n3:系统\r\n4:API', 100),
+	(25, 'list_rows', 0, '每页数据记录数', 2, '', '数据每页显示记录数', 1379503896, 1578896156, 1, '10', 10),
+	(29, 'data_backup_part_size', 0, '数据库备份卷大小', 2, '', '该值用于限制压缩后的分卷最大长度。单位：B', 1381482488, 1578895496, 1, '52428800', 7),
+	(30, 'data_backup_compress', 4, '数据库备份文件是否启用压缩', 2, '0:不压缩\r\n1:启用压缩', '压缩备份文件需要PHP环境支持gzopen,gzwrite函数', 1381713345, 1578895496, 1, '1', 9),
+	(31, 'data_backup_compress_level', 4, '数据库备份文件压缩级别', 2, '1:普通\r\n4:一般\r\n9:最高', '数据库备份文件的压缩级别，该配置在开启压缩时生效', 1381713408, 1578895496, 1, '9', 10),
+	(33, 'allow_url', 3, '不受权限验证的url', 3, '', '', 1386644047, 1587614212, 1, '0:file/pictureupload\r\n1:addon/execute\r\n2:admin/index/index\r\n3:admin/index/main\r\n4:index/main', 100),
+	(43, 'empty_list_describe', 1, '数据列表为空时的描述信息', 2, '', '', 1492278127, 1578895496, 1, 'aOh! 暂时还没有数据~', 0),
+	(44, 'trash_config', 3, '回收站配置', 3, '', 'key为模型名称，值为显示列。', 1492312698, 1587614212, 1, 'Config:name\r\nAuthGroup:name\r\nMember:nickname\r\nMenu:name\r\nArticle:name\r\nArticleCategory:name\r\nAddon:name\r\nPicture:name\r\nFile:name\r\nActionLog:describe\r\nApi:name\r\nApiGroup:name\r\nBlogroll:name\r\nExeLog:exe_url\r\nSeo:name', 0),
+	(49, 'static_domain', 1, '静态资源域名', 1, '', '若静态资源为本地资源则此项为空，若为外部资源则为存放静态资源的域名', 1502430387, 1604725018, 1, '', 2),
+	(52, 'team_developer', 3, '研发团队人员', 4, '', '', 1504236453, 1582430537, 1, '0:零起飞\r\n1:开发人生', 0),
+	(53, 'api_status_option', 3, 'API接口状态', 4, '', '', 1504242433, 1582430537, 1, '0:待研发\r\n1:研发中\r\n2:测试中\r\n3:已完成', 0),
+	(54, 'api_data_type_option', 0, 'API数据类型', 4, '', '', 1504328208, 1582430704, 1, '0:字符\r\n1:文本\r\n2:数组\r\n3:文件', 0),
+	(55, 'web_theme', 1, '前端主题', 1, '', '', 1504762360, 1604725018, 1, '07fly', 0),
+	(56, 'api_domain', 1, 'API部署域名', 4, '', '', 1504779094, 1582430537, 1, 'https://demo.07fly.org', 0),
+	(57, 'api_key', 0, 'API加密KEY', 4, '', '泄露后API将存在安全隐患', 1505302112, 1582430779, 1, 'l2V|gfZp{8`;jzR~6Y1_', 0),
+	(58, 'loading_icon', 4, '页面Loading图标设置', 1, '1:图标1\r\n2:图标2\r\n3:图标3\r\n4:图标4\r\n5:图标5\r\n6:图标6\r\n7:图标7', '页面Loading图标支持7种图标切换', 1505377202, 1604725018, 1, '7', 80),
+	(59, 'sys_file_field', 3, '文件字段配置', 3, '', 'key为模型名，值为文件列名。', 1505799386, 1587614212, 1, '0_article:file_id', 0),
+	(60, 'sys_picture_field', 0, '图片字段配置', 3, '', 'key为模型名，值为图片列名。', 1506315422, 1587614212, 1, '0_article:cover_id1_article:img_ids', 0),
+	(61, 'jwt_key', 0, 'JWT加密KEY', 3, '', '', 1506748805, 1587614212, 1, 'l2V|DSFXXXgfZp{8`;FjzR~6Y1_', 0),
+	(64, 'is_write_exe_log', 4, '是否写入执行记录', 3, '0:否\r\n1:是', '', 1510544340, 1587614212, 1, '1', 101),
+	(65, 'admin_allow_ip', 2, '超级管理员登录IP', 3, '', '后台超级管理员登录IP限制，其他角色不受限。', 1510995580, 1587614212, 1, '0:27.22.112.250', 0),
+	(66, 'pjax_mode', 8, 'PJAX模式', 3, '0:否\r\n1:是', '若为PJAX模式则浏览器不会刷新，若为常规模式则为AJAX+刷新', 1512370397, 1512982406, 1, '1', 120),
+	(69, '121212', 3, '1212', 0, '', '', 1587720082, 0, 1, '', 0);
+/*!40000 ALTER TABLE `lqf_config` ENABLE KEYS */;
+
+-- Dumping structure for table zdtop_net.lqf_driver
+CREATE TABLE IF NOT EXISTS `lqf_driver` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `service_name` varchar(40) NOT NULL DEFAULT '' COMMENT '服务标识',
+  `driver_name` varchar(20) NOT NULL DEFAULT '' COMMENT '驱动标识',
+  `config` text NOT NULL COMMENT '配置',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='插件表';
+
+-- Dumping data for table zdtop_net.lqf_driver: 3 rows
+DELETE FROM `lqf_driver`;
+/*!40000 ALTER TABLE `lqf_driver` DISABLE KEYS */;
+INSERT INTO `lqf_driver` (`id`, `service_name`, `driver_name`, `config`, `status`, `create_time`, `update_time`) VALUES
+	(1, 'Pay', 'Alipay', 'a:6:{s:14:"alipay_account";s:5:"34345";s:14:"alipay_partner";s:0:"";s:10:"alipay_key";s:0:"";s:12:"alipay_appid";s:0:"";s:20:"alipay_rsaPrivateKey";s:0:"";s:25:"alipay_alipayrsaPublicKey";s:0:"";}', 1, 1577678491, 1577678512),
+	(2, 'Pay', 'Wxpay', 'a:4:{s:5:"appid";s:3:"app";s:9:"appsecret";s:0:"";s:9:"partnerid";s:0:"";s:10:"partnerkey";s:0:"";}', 1, 1585016761, 0),
+	(4, 'Sms', 'Tencent', 'a:2:{s:6:"app_id";s:10:"1400398383";s:7:"app_key";s:32:"2710810b835c5915a394f378801f8440";}', 1, 1594522417, 1594546315);
+/*!40000 ALTER TABLE `lqf_driver` ENABLE KEYS */;
+
+-- Dumping structure for table zdtop_net.lqf_friendlink
+CREATE TABLE IF NOT EXISTS `lqf_friendlink` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(1) DEFAULT '1' COMMENT '类型：1=文字链接，2=图片链接',
+  `title` varchar(50) DEFAULT '' COMMENT '网站标题',
+  `url` varchar(100) DEFAULT '' COMMENT '网站地址',
+  `logo` varchar(255) DEFAULT '' COMMENT '网站LOGO',
+  `sort` int(11) DEFAULT '0' COMMENT '排序号',
+  `target` tinyint(1) DEFAULT '0' COMMENT '是否开启浏览器新窗口',
+  `email` varchar(50) DEFAULT NULL,
+  `intro` text COMMENT '网站简况',
+  `visible` tinyint(1) DEFAULT '1' COMMENT '状态(1=显示，0=屏蔽)',
+  `lang` varchar(50) DEFAULT 'cn' COMMENT '语言标识',
+  `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
+  `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='友情链接表';
+
+-- Dumping data for table zdtop_net.lqf_friendlink: 1 rows
+DELETE FROM `lqf_friendlink`;
+/*!40000 ALTER TABLE `lqf_friendlink` DISABLE KEYS */;
+INSERT INTO `lqf_friendlink` (`id`, `type`, `title`, `url`, `logo`, `sort`, `target`, `email`, `intro`, `visible`, `lang`, `create_time`, `update_time`) VALUES
+	(1, 1, '人人海外', 'http://www.renrenhaiwai.com/', '10', 50, 1, '', '', 1, 'cn', 1524975826, 1595080356);
+/*!40000 ALTER TABLE `lqf_friendlink` ENABLE KEYS */;
+
+-- Dumping structure for table zdtop_net.lqf_guestbook
+CREATE TABLE IF NOT EXISTS `lqf_guestbook` (
+  `id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '表单名称',
+  `nid` varchar(64) NOT NULL DEFAULT '' COMMENT '表单标识',
+  `maintable` varchar(64) NOT NULL DEFAULT '',
+  `addtable` varchar(64) NOT NULL DEFAULT '',
+  `tablename` varchar(30) NOT NULL DEFAULT '' COMMENT '数据表',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `opentype` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '公开程度',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='留言表主表';
+
+-- Dumping data for table zdtop_net.lqf_guestbook: 1 rows
+DELETE FROM `lqf_guestbook`;
+/*!40000 ALTER TABLE `lqf_guestbook` DISABLE KEYS */;
+INSERT INTO `lqf_guestbook` (`id`, `name`, `nid`, `maintable`, `addtable`, `tablename`, `create_time`, `update_time`, `sort`, `opentype`) VALUES
+	(25, '在线预约', 'online', 'guestbook', 'guestbook_online', '', 1583056280, 1594086701, 0, 0);
+/*!40000 ALTER TABLE `lqf_guestbook` ENABLE KEYS */;
+
+-- Dumping structure for table zdtop_net.lqf_guestbook_field
+CREATE TABLE IF NOT EXISTS `lqf_guestbook_field` (
   `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
   `main_table` varchar(50) NOT NULL COMMENT '关联主表',
   `ext_table` varchar(50) NOT NULL COMMENT '扩展表名',
@@ -637,170 +655,17 @@ CREATE TABLE IF NOT EXISTS `lqf_channel_field` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='字段扩展表';
 
--- Dumping data for table 20629_renrenhw.lqf_channel_field: 7 rows
-DELETE FROM `lqf_channel_field`;
-/*!40000 ALTER TABLE `lqf_channel_field` DISABLE KEYS */;
-INSERT INTO `lqf_channel_field` (`id`, `main_table`, `ext_table`, `show_name`, `field_name`, `field_type`, `default_value`, `maxlength`, `desc`, `visible`, `is_system`, `is_must`, `sort`, `create_time`, `update_time`, `sys_user_id`, `channel_id`) VALUES
-	(19, 'archives', 'archives_article', '称民类型', 'ym_type', 'varchar', '', '250', '', 1, 0, 0, 100, 1593653246, 0, 0, 1),
-	(18, 'archives', 'archives_case', '跳转网址', 'goto_url', 'varchar', 'http://www.baidu.com', '250', '0', 1, 0, 0, 100, 1581772028, 1593573654, 0, 24),
-	(20, 'archives', 'archives_article', '居留许可', 'ym_jlxk', 'varchar', '', '250', '', 1, 0, 0, 100, 1593653276, 0, 0, 1),
-	(21, 'archives', 'archives_article', '投资金额', 'ym_tzje', 'varchar', '', '250', '', 1, 0, 0, 100, 1593653296, 0, 0, 1),
-	(22, 'archives', 'archives_article', '移民周期', 'ym_ymzq', 'varchar', '', '250', '', 1, 0, 0, 100, 1593653309, 0, 0, 1),
-	(23, 'archives', 'archives_article', '居住要求', 'ym_jzyq', 'varchar', '', '250', '', 1, 0, 0, 100, 1593653322, 0, 0, 1),
-	(24, 'archives', 'archives_article', '随行人员', 'ym_sxry', 'varchar', '', '250', '', 1, 0, 0, 100, 1593653337, 0, 0, 1);
-/*!40000 ALTER TABLE `lqf_channel_field` ENABLE KEYS */;
-
--- Dumping structure for table 20629_renrenhw.lqf_config
-CREATE TABLE IF NOT EXISTS `lqf_config` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '配置ID',
-  `name` varchar(30) NOT NULL DEFAULT '' COMMENT '配置名称',
-  `type` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '配置类型',
-  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '配置标题',
-  `group` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '配置分组',
-  `extra` varchar(255) NOT NULL DEFAULT '' COMMENT '配置选项',
-  `describe` varchar(255) NOT NULL DEFAULT '' COMMENT '配置说明',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `visible` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否启用',
-  `value` text NOT NULL COMMENT '配置值',
-  `sort` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_name` (`name`),
-  KEY `type` (`type`),
-  KEY `group` (`group`)
-) ENGINE=MyISAM AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COMMENT='配置表';
-
--- Dumping data for table 20629_renrenhw.lqf_config: 27 rows
-DELETE FROM `lqf_config`;
-/*!40000 ALTER TABLE `lqf_config` DISABLE KEYS */;
-INSERT INTO `lqf_config` (`id`, `name`, `type`, `title`, `group`, `extra`, `describe`, `create_time`, `update_time`, `visible`, `value`, `sort`) VALUES
-	(1, 'title', 1, '系统标题', 1, '', '网站标题前台显示标题，优先级低于SEO模块', 1378898976, 1587723785, 1, '零起飞网络', 3),
-	(2, 'description', 2, '系统描述', 1, '', '网站搜索引擎描述，优先级低于SEO模块', 1378898976, 1587723796, 1, '07fly', 100),
-	(3, 'keywords', 2, '系统关键字', 1, '', '网站搜索引擎关键字，优先级低于SEO模块', 1378898976, 1587723819, 1, '07fly', 99),
-	(9, 'config_type_list', 3, '配置类型列表', 3, '', '主要用于数据解析和页面表单的生成', 1378898976, 1587614212, 1, '0:数字\r\n1:字符\r\n2:文本\r\n3:数组\r\n4:枚举\r\n5:图片\r\n6:文件\r\n7:富文本\r\n8:单选\r\n9:多选\r\n10:日期\r\n11:时间\r\n12:颜色', 100),
-	(20, 'config_group_list', 3, '配置分组', 3, '', '配置分组', 1379228036, 1587614212, 1, '1:基础\r\n2:数据\r\n3:系统\r\n4:API', 100),
-	(25, 'list_rows', 0, '每页数据记录数', 2, '', '数据每页显示记录数', 1379503896, 1578896156, 1, '10', 10),
-	(29, 'data_backup_part_size', 0, '数据库备份卷大小', 2, '', '该值用于限制压缩后的分卷最大长度。单位：B', 1381482488, 1578895496, 1, '52428800', 7),
-	(30, 'data_backup_compress', 4, '数据库备份文件是否启用压缩', 2, '0:不压缩\r\n1:启用压缩', '压缩备份文件需要PHP环境支持gzopen,gzwrite函数', 1381713345, 1578895496, 1, '1', 9),
-	(31, 'data_backup_compress_level', 4, '数据库备份文件压缩级别', 2, '1:普通\r\n4:一般\r\n9:最高', '数据库备份文件的压缩级别，该配置在开启压缩时生效', 1381713408, 1578895496, 1, '9', 10),
-	(33, 'allow_url', 3, '不受权限验证的url', 3, '', '', 1386644047, 1587614212, 1, '0:file/pictureupload\r\n1:addon/execute\r\n2:admin/index/index\r\n3:admin/index/main\r\n4:index/main', 100),
-	(43, 'empty_list_describe', 1, '数据列表为空时的描述信息', 2, '', '', 1492278127, 1578895496, 1, 'aOh! 暂时还没有数据~', 0),
-	(44, 'trash_config', 3, '回收站配置', 3, '', 'key为模型名称，值为显示列。', 1492312698, 1587614212, 1, 'Config:name\r\nAuthGroup:name\r\nMember:nickname\r\nMenu:name\r\nArticle:name\r\nArticleCategory:name\r\nAddon:name\r\nPicture:name\r\nFile:name\r\nActionLog:describe\r\nApi:name\r\nApiGroup:name\r\nBlogroll:name\r\nExeLog:exe_url\r\nSeo:name', 0),
-	(49, 'static_domain', 1, '静态资源域名', 1, '', '若静态资源为本地资源则此项为空，若为外部资源则为存放静态资源的域名', 1502430387, 1583981308, 1, '', 2),
-	(52, 'team_developer', 3, '研发团队人员', 4, '', '', 1504236453, 1582430537, 1, '0:零起飞\r\n1:开发人生', 0),
-	(53, 'api_status_option', 3, 'API接口状态', 4, '', '', 1504242433, 1582430537, 1, '0:待研发\r\n1:研发中\r\n2:测试中\r\n3:已完成', 0),
-	(54, 'api_data_type_option', 0, 'API数据类型', 4, '', '', 1504328208, 1582430704, 1, '0:字符\r\n1:文本\r\n2:数组\r\n3:文件', 0),
-	(55, 'web_theme', 1, '前端主题', 1, '', '', 1504762360, 1583981330, 1, 'default', 0),
-	(56, 'api_domain', 1, 'API部署域名', 4, '', '', 1504779094, 1582430537, 1, 'https://demo.07fly.org', 0),
-	(57, 'api_key', 0, 'API加密KEY', 4, '', '泄露后API将存在安全隐患', 1505302112, 1582430779, 1, 'l2V|gfZp{8`;jzR~6Y1_', 0),
-	(58, 'loading_icon', 4, '页面Loading图标设置', 1, '1:图标1\r\n2:图标2\r\n3:图标3\r\n4:图标4\r\n5:图标5\r\n6:图标6\r\n7:图标7', '页面Loading图标支持7种图标切换', 1505377202, 1582529044, 1, '7', 80),
-	(59, 'sys_file_field', 3, '文件字段配置', 3, '', 'key为模型名，值为文件列名。', 1505799386, 1587614212, 1, '0_article:file_id', 0),
-	(60, 'sys_picture_field', 0, '图片字段配置', 3, '', 'key为模型名，值为图片列名。', 1506315422, 1587614212, 1, '0_article:cover_id1_article:img_ids', 0),
-	(61, 'jwt_key', 0, 'JWT加密KEY', 3, '', '', 1506748805, 1587614212, 1, 'l2V|DSFXXXgfZp{8`;FjzR~6Y1_', 0),
-	(64, 'is_write_exe_log', 4, '是否写入执行记录', 3, '0:否\r\n1:是', '', 1510544340, 1587614212, 1, '1', 101),
-	(65, 'admin_allow_ip', 2, '超级管理员登录IP', 3, '', '后台超级管理员登录IP限制，其他角色不受限。', 1510995580, 1587614212, 1, '0:27.22.112.250', 0),
-	(66, 'pjax_mode', 8, 'PJAX模式', 3, '0:否\r\n1:是', '若为PJAX模式则浏览器不会刷新，若为常规模式则为AJAX+刷新', 1512370397, 1512982406, 1, '1', 120),
-	(69, '121212', 3, '1212', 0, '', '', 1587720082, 0, 1, '', 0);
-/*!40000 ALTER TABLE `lqf_config` ENABLE KEYS */;
-
--- Dumping structure for table 20629_renrenhw.lqf_driver
-CREATE TABLE IF NOT EXISTS `lqf_driver` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `service_name` varchar(40) NOT NULL DEFAULT '' COMMENT '服务标识',
-  `driver_name` varchar(20) NOT NULL DEFAULT '' COMMENT '驱动标识',
-  `config` text NOT NULL COMMENT '配置',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='插件表';
-
--- Dumping data for table 20629_renrenhw.lqf_driver: ~3 rows (大约)
-DELETE FROM `lqf_driver`;
-/*!40000 ALTER TABLE `lqf_driver` DISABLE KEYS */;
-INSERT INTO `lqf_driver` (`id`, `service_name`, `driver_name`, `config`, `status`, `create_time`, `update_time`) VALUES
-	(1, 'Pay', 'Alipay', 'a:6:{s:14:"alipay_account";s:5:"34345";s:14:"alipay_partner";s:0:"";s:10:"alipay_key";s:0:"";s:12:"alipay_appid";s:0:"";s:20:"alipay_rsaPrivateKey";s:0:"";s:25:"alipay_alipayrsaPublicKey";s:0:"";}', 1, 1577678491, 1577678512),
-	(2, 'Pay', 'Wxpay', 'a:4:{s:5:"appid";s:3:"app";s:9:"appsecret";s:0:"";s:9:"partnerid";s:0:"";s:10:"partnerkey";s:0:"";}', 1, 1585016761, 0),
-	(4, 'Sms', 'Tencent', 'a:2:{s:6:"app_id";s:10:"1400398383";s:7:"app_key";s:32:"2710810b835c5915a394f378801f8440";}', 1, 1594522417, 1594546315);
-/*!40000 ALTER TABLE `lqf_driver` ENABLE KEYS */;
-
--- Dumping structure for table 20629_renrenhw.lqf_friendlink
-CREATE TABLE IF NOT EXISTS `lqf_friendlink` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` tinyint(1) DEFAULT '1' COMMENT '类型：1=文字链接，2=图片链接',
-  `title` varchar(50) DEFAULT '' COMMENT '网站标题',
-  `url` varchar(100) DEFAULT '' COMMENT '网站地址',
-  `logo` varchar(255) DEFAULT '' COMMENT '网站LOGO',
-  `sort` int(11) DEFAULT '0' COMMENT '排序号',
-  `target` tinyint(1) DEFAULT '0' COMMENT '是否开启浏览器新窗口',
-  `email` varchar(50) DEFAULT NULL,
-  `intro` text COMMENT '网站简况',
-  `visible` tinyint(1) DEFAULT '1' COMMENT '状态(1=显示，0=屏蔽)',
-  `lang` varchar(50) DEFAULT 'cn' COMMENT '语言标识',
-  `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
-  `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='友情链接表';
-
--- Dumping data for table 20629_renrenhw.lqf_friendlink: 1 rows
-DELETE FROM `lqf_friendlink`;
-/*!40000 ALTER TABLE `lqf_friendlink` DISABLE KEYS */;
-INSERT INTO `lqf_friendlink` (`id`, `type`, `title`, `url`, `logo`, `sort`, `target`, `email`, `intro`, `visible`, `lang`, `create_time`, `update_time`) VALUES
-	(1, 1, '人人海外', 'http://rrhw.s5.07fly.com/', '10', 50, 1, '', '', 1, 'cn', 1524975826, 1594304405);
-/*!40000 ALTER TABLE `lqf_friendlink` ENABLE KEYS */;
-
--- Dumping structure for table 20629_renrenhw.lqf_guestbook
-CREATE TABLE IF NOT EXISTS `lqf_guestbook` (
-  `id` smallint(6) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '表单名称',
-  `nid` varchar(64) NOT NULL DEFAULT '' COMMENT '表单标识',
-  `maintable` varchar(64) NOT NULL DEFAULT '',
-  `addtable` varchar(64) NOT NULL DEFAULT '',
-  `tablename` varchar(30) NOT NULL DEFAULT '' COMMENT '数据表',
-  `create_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `update_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `opentype` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '公开程度',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='留言表主表';
-
--- Dumping data for table 20629_renrenhw.lqf_guestbook: 1 rows
-DELETE FROM `lqf_guestbook`;
-/*!40000 ALTER TABLE `lqf_guestbook` DISABLE KEYS */;
-INSERT INTO `lqf_guestbook` (`id`, `name`, `nid`, `maintable`, `addtable`, `tablename`, `create_time`, `update_time`, `sort`, `opentype`) VALUES
-	(25, '在线预约', 'online', 'guestbook', 'guestbook_online', '', 1583056280, 1594086701, 0, 0);
-/*!40000 ALTER TABLE `lqf_guestbook` ENABLE KEYS */;
-
--- Dumping structure for table 20629_renrenhw.lqf_guestbook_field
-CREATE TABLE IF NOT EXISTS `lqf_guestbook_field` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-  `main_table` varchar(50) NOT NULL COMMENT '关联主表',
-  `ext_table` varchar(50) NOT NULL COMMENT '扩展表名',
-  `show_name` varchar(256) NOT NULL COMMENT '字段表单名称',
-  `field_name` varchar(256) NOT NULL COMMENT '字段名称',
-  `field_type` varchar(50) NOT NULL COMMENT '单文本=varchar,文本=text,多行文本=textarea,整数=int,小数=float,图片=img,下拉=option,单选=radio,复选=checkbox',
-  `default_value` varchar(256) NOT NULL COMMENT '字段默认值',
-  `maxlength` varchar(256) NOT NULL COMMENT '最大值',
-  `desc` varchar(256) NOT NULL COMMENT '表单说明',
-  `visible` smallint(1) NOT NULL DEFAULT '1' COMMENT '是否使用',
-  `is_system` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否为系统字段，1=是（不能删除）0=否',
-  `is_must` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否改填',
-  `sort` int(16) NOT NULL DEFAULT '0' COMMENT '显示排序',
-  `create_time` int(11) NOT NULL DEFAULT '0',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `sys_user_id` int(16) NOT NULL DEFAULT '0',
-  `channel_id` int(16) NOT NULL DEFAULT '0' COMMENT '频道模型id',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='字段扩展表';
-
--- Dumping data for table 20629_renrenhw.lqf_guestbook_field: 1 rows
+-- Dumping data for table zdtop_net.lqf_guestbook_field: 4 rows
 DELETE FROM `lqf_guestbook_field`;
 /*!40000 ALTER TABLE `lqf_guestbook_field` DISABLE KEYS */;
 INSERT INTO `lqf_guestbook_field` (`id`, `main_table`, `ext_table`, `show_name`, `field_name`, `field_type`, `default_value`, `maxlength`, `desc`, `visible`, `is_system`, `is_must`, `sort`, `create_time`, `update_time`, `sys_user_id`, `channel_id`) VALUES
-	(21, 'guestbook', 'guestbook_online', '名称', 'username', 'varchar', '', '250', '', 1, 0, 0, 100, 1594086794, 0, 0, 25);
+	(21, 'guestbook', 'guestbook_online', '名称', 'username', 'varchar', '', '250', '', 1, 0, 0, 100, 1594086794, 0, 0, 25),
+	(22, 'guestbook', 'guestbook_online', '年龄', 'age', 'varchar', '', '250', '', 1, 0, 0, 100, 1594560672, 0, 0, 25),
+	(23, 'guestbook', 'guestbook_online', '国家', 'guojia', 'varchar', '', '250', '', 1, 0, 0, 100, 1594560684, 0, 0, 25),
+	(24, 'guestbook', 'guestbook_online', '预算', 'yusuan', 'varchar', '', '250', '', 1, 0, 0, 100, 1594560698, 0, 0, 25);
 /*!40000 ALTER TABLE `lqf_guestbook_field` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_guestbook_online
+-- Dumping structure for table zdtop_net.lqf_guestbook_online
 CREATE TABLE IF NOT EXISTS `lqf_guestbook_online` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `gid` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -810,31 +675,26 @@ CREATE TABLE IF NOT EXISTS `lqf_guestbook_online` (
   `create_time` int(11) DEFAULT NULL,
   `update_time` int(11) DEFAULT NULL,
   `username` varchar(250) DEFAULT NULL,
+  `age` varchar(250) DEFAULT NULL,
+  `guojia` varchar(250) DEFAULT NULL,
+  `yusuan` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `typeid` (`gid`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='扩展表';
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COMMENT='扩展表';
 
--- Dumping data for table 20629_renrenhw.lqf_guestbook_online: 14 rows
+-- Dumping data for table zdtop_net.lqf_guestbook_online: 6 rows
 DELETE FROM `lqf_guestbook_online`;
 /*!40000 ALTER TABLE `lqf_guestbook_online` DISABLE KEYS */;
-INSERT INTO `lqf_guestbook_online` (`id`, `gid`, `content`, `reply`, `mobile`, `create_time`, `update_time`, `username`) VALUES
-	(2, 25, '', '', '18030402587', 1583056280, 1583056280, ''),
-	(3, 0, '', '', '', 0, 0, ''),
-	(4, 0, '', '', '', 0, 0, ''),
-	(5, 25, '', '这不是一个好的现象哟', '', 1583805658, 1583805658, ''),
-	(6, 25, '', '', '', 1594094643, 1594094643, '张三'),
-	(10, 25, '在线预约咨询', '', '123123123', 1594305059, 1594305059, 't1123'),
-	(9, 25, '在线预约咨询', '', 'test', 1594303825, 1594303825, 'zhangjiaao'),
-	(11, 25, '在线预约咨询', '11', '123456', 1594305064, 1594305064, 'admin'),
-	(12, 25, '在线预约咨询', NULL, '123', 1594547710, 1594547710, '121'),
-	(13, 25, '在线预约咨询', NULL, '18030402705', 1594549153, 1594549153, '121'),
-	(14, 25, '在线预约咨询', NULL, '18030402705', 1594549746, 1594549746, '121'),
-	(15, 25, '在线预约咨询', NULL, '18030402705', 1594549799, 1594549799, '121'),
-	(16, 25, '在线预约咨询如何进行品牌设计？品牌设计误区有哪些？人人海外移', NULL, '18030402705', 1594553671, 1594553671, '张三'),
-	(17, 25, '在线预约咨询如何进行品牌设计？品牌设计误区有哪些？人人海外移', NULL, '18030402705', 1594553704, 1594553704, '张三');
+INSERT INTO `lqf_guestbook_online` (`id`, `gid`, `content`, `reply`, `mobile`, `create_time`, `update_time`, `username`, `age`, `guojia`, `yusuan`) VALUES
+	(34, 25, '在线预约咨询：澳洲132签证人人海外移', '', '13699466786', 1600418056, 1600418056, '祝', '', '', ''),
+	(32, 25, '在线预约咨询：移民-人人海外移', '', '18012345858', 1597454381, 1597454381, '张三', '', '', ''),
+	(31, 25, '在线预约咨询：移民-人人海外移', '', '18012345858', 1597453220, 1597453220, '张三', '', '', ''),
+	(29, 25, '', '', '13699466786', 1597372732, 1597372732, '祝', '28', '美国', '100万'),
+	(30, 25, '在线预约咨询：移民-人人海外移', '', '18012345858', 1597453216, 1597453216, '张三', '', '', ''),
+	(28, 25, '在线预约咨询：马来西亚测试项目人人海外移', '', '13438800605', 1596985486, 1596985486, '张家奥', '', '', '');
 /*!40000 ALTER TABLE `lqf_guestbook_online` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_hook
+-- Dumping structure for table zdtop_net.lqf_hook
 CREATE TABLE IF NOT EXISTS `lqf_hook` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(40) NOT NULL DEFAULT '' COMMENT '钩子名称',
@@ -847,7 +707,7 @@ CREATE TABLE IF NOT EXISTS `lqf_hook` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='钩子表';
 
--- Dumping data for table 20629_renrenhw.lqf_hook: 4 rows
+-- Dumping data for table zdtop_net.lqf_hook: 4 rows
 DELETE FROM `lqf_hook`;
 /*!40000 ALTER TABLE `lqf_hook` DISABLE KEYS */;
 INSERT INTO `lqf_hook` (`id`, `name`, `describe`, `addon_list`, `status`, `update_time`, `create_time`, `org_id`) VALUES
@@ -857,7 +717,7 @@ INSERT INTO `lqf_hook` (`id`, `name`, `describe`, `addon_list`, `status`, `updat
 	(39, 'RegionSelect', '区域选择', 'Region', 1, 0, 0, 1);
 /*!40000 ALTER TABLE `lqf_hook` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_picture
+-- Dumping structure for table zdtop_net.lqf_picture
 CREATE TABLE IF NOT EXISTS `lqf_picture` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id自增',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '图片名称',
@@ -868,9 +728,9 @@ CREATE TABLE IF NOT EXISTS `lqf_picture` (
   `update_time` int(11) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=117 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='图片表';
+) ENGINE=MyISAM AUTO_INCREMENT=332 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='图片表';
 
--- Dumping data for table 20629_renrenhw.lqf_picture: 116 rows
+-- Dumping data for table zdtop_net.lqf_picture: 331 rows
 DELETE FROM `lqf_picture`;
 /*!40000 ALTER TABLE `lqf_picture` DISABLE KEYS */;
 INSERT INTO `lqf_picture` (`id`, `name`, `path`, `url`, `sha1`, `create_time`, `update_time`, `status`) VALUES
@@ -989,10 +849,225 @@ INSERT INTO `lqf_picture` (`id`, `name`, `path`, `url`, `sha1`, `create_time`, `
 	(113, 'e80ea9e6dce785d2c52834b4635f3007.png', '20200709/e80ea9e6dce785d2c52834b4635f3007.png', '', '98da5d714824aea9f57f4e2edb8a9bdb9b43d1ee', 1594271940, 0, 1),
 	(114, '5d25263352ed8529145bfc9f81cd9376.png', '20200709/5d25263352ed8529145bfc9f81cd9376.png', '', '8cbff5670eb01315df36755ab6def29258f2b60e', 1594272026, 0, 1),
 	(115, '9b6c287cde7d18c70047f9648dc574a8.png', '20200709/9b6c287cde7d18c70047f9648dc574a8.png', '', 'e2fc36998da74a08ee29c07a26a10458b04eae32', 1594272442, 0, 1),
-	(116, '75f52bb44fe53edd87e032df7ac30c23.png', '20200709/75f52bb44fe53edd87e032df7ac30c23.png', '', '27bd53d900ec80c3179eb4d38c373a67befeb41a', 1594272507, 0, 1);
+	(116, '75f52bb44fe53edd87e032df7ac30c23.png', '20200709/75f52bb44fe53edd87e032df7ac30c23.png', '', '27bd53d900ec80c3179eb4d38c373a67befeb41a', 1594272507, 0, 1),
+	(117, 'c4029ffa9876a92a94e35ca3ddbcc0f7.jpg', '20200721/c4029ffa9876a92a94e35ca3ddbcc0f7.jpg', '', '1101e9bdb9be8460b92c470285854fc9a70e96e3', 1595334577, 0, 1),
+	(118, 'f955cddea8bc338381eec136ee6ef33e.jpg', '20200721/f955cddea8bc338381eec136ee6ef33e.jpg', '', '75784769251056902eec960710e24aceb0de9862', 1595334789, 0, 1),
+	(119, 'db44ad36e2d6aafb69f0b1b5368d41a2.jpg', '20200721/db44ad36e2d6aafb69f0b1b5368d41a2.jpg', '', 'd9974222a1daa64f97b0c376f7c36e6eee337860', 1595334813, 0, 1),
+	(120, '56c973b512653d6332ff64c132e26887.jpg', '20200721/56c973b512653d6332ff64c132e26887.jpg', '', 'e278b074c2924ced018046289b5a7eb83dded7b2', 1595334826, 0, 1),
+	(121, '36bcda463061b8af3657f84664611ce4.jpg', '20200721/36bcda463061b8af3657f84664611ce4.jpg', '', '79bc1c9c28682dde015c5d8b3a1d7b57116274c0', 1595334839, 0, 1),
+	(122, '7b4c0f107d106b2aec46a338590d2a46.jpg', '20200721/7b4c0f107d106b2aec46a338590d2a46.jpg', '', '820cbb33f27732d5951e78bd1dc1450f9d1d2c75', 1595342223, 0, 1),
+	(123, '14d771480023dca0f503e421f03fb8f6.jpg', '20200721/14d771480023dca0f503e421f03fb8f6.jpg', '', '98456cec9c0edc82c6c20b097ac07a28040b042f', 1595342285, 0, 1),
+	(124, '98b10e72bd4aeae8b94bc2dd9d9222ab.jpg', '20200725/98b10e72bd4aeae8b94bc2dd9d9222ab.jpg', '', 'f4a3368d2dd586ef0854f3ba3e58d247d973939f', 1595647961, 0, 1),
+	(125, 'fe8b02f397caabbd51dd7e4bc29efca0.jpg', '20200725/fe8b02f397caabbd51dd7e4bc29efca0.jpg', '', '0033a85afc417673f9268c3222a4e911a7b13bb8', 1595660677, 0, 1),
+	(126, '6903a9a9583c30ae63921eee1ef92e64.jpg', '20200725/6903a9a9583c30ae63921eee1ef92e64.jpg', '', 'c901a5b559f1588e3082dad44e5dde2c1d326eff', 1595660774, 0, 1),
+	(127, '266e968aab5297a3f25f1c3475d0c5eb.jpg', '20200725/266e968aab5297a3f25f1c3475d0c5eb.jpg', '', '3866e3cc28be1e83da718eaef96f0c4144235ccd', 1595663867, 0, 1),
+	(128, 'f16d42a2c723741f287e22c1a4113035.jpg', '20200726/f16d42a2c723741f287e22c1a4113035.jpg', '', '3a66881ce7f7673fb7d62db66026494523a95b4f', 1595754410, 0, 1),
+	(129, 'c3459cb9f7addeb36e862879686e8868.png', '20200726/c3459cb9f7addeb36e862879686e8868.png', '', 'ba19c65a20d0409dc2ec8a66b6eec1d8f5673edb', 1595755441, 0, 1),
+	(130, '325829a6f75952c398e0ee94eba77e50.jpg', '20200727/325829a6f75952c398e0ee94eba77e50.jpg', '', 'ed4713b5bbadddcfcc4da9e01c6f4cd9dbd079e2', 1595820689, 0, 1),
+	(131, '8f1771b9b37af426080249a07d30a3e6.jpg', '20200727/8f1771b9b37af426080249a07d30a3e6.jpg', '', '3d7444b30e5331d4ba80cc581184b2f783443ee0', 1595821253, 0, 1),
+	(132, 'efa8f3bda7ea21c1defb0e664db1f462.png', '20200727/efa8f3bda7ea21c1defb0e664db1f462.png', '', 'e6964d9f94e7a940c221e78534f8a893c71867f6', 1595821343, 0, 1),
+	(133, 'e5e7eab4d5c84788a747bdcf1a0b5fc3.jpg', '20200727/e5e7eab4d5c84788a747bdcf1a0b5fc3.jpg', '', '7a83d9f221a30546d29397122eea1e998750c7a7', 1595833834, 0, 1),
+	(134, '33bb2ada3997ae6f2c070d4377a2bdb5.jpg', '20200727/33bb2ada3997ae6f2c070d4377a2bdb5.jpg', '', '7f6bb0ff6c5b0539317f47abe35efa68bbf769cf', 1595838550, 0, 1),
+	(135, '903cd7d229ce35283abcca0b3de26ea4.jpg', '20200728/903cd7d229ce35283abcca0b3de26ea4.jpg', '', '5bf079686cf17196e4bcd24f029e371d52e4f2c9', 1595899895, 0, 1),
+	(136, '7c5cb5d524a0fc3137d52b13f253211b.jpg', '20200728/7c5cb5d524a0fc3137d52b13f253211b.jpg', '', 'b82911b44e3a0ba71c30711d83d119b991d936d3', 1595900056, 0, 1),
+	(137, 'e0a30843b3407955ae2941204be76f72.jpg', '20200728/e0a30843b3407955ae2941204be76f72.jpg', '', '857d6ae2c41026dbc20226a051a1348a17c38dc7', 1595902311, 0, 1),
+	(138, 'cc3ec5f528ad0da4edbef06e92d4e725.jpg', '20200728/cc3ec5f528ad0da4edbef06e92d4e725.jpg', '', '1fe9f53740eab31748c6958ac4d8da1484799c63', 1595903315, 0, 1),
+	(139, '71d09ddaf3429f39ed5666838168c727.jpg', '20200728/71d09ddaf3429f39ed5666838168c727.jpg', '', 'f2488284165dae0d2f963ba40019389b8d1214ed', 1595919571, 0, 1),
+	(140, '482ee42f4f3e7d37b574acf3dcfb409e.png', '20200728/482ee42f4f3e7d37b574acf3dcfb409e.png', '', '5091109971990f6fdc82f31a71bed02fee0103c8', 1595920177, 0, 1),
+	(141, 'dd7d01ad7e361c7bf4b1173e40a1ffe9.jpg', '20200728/dd7d01ad7e361c7bf4b1173e40a1ffe9.jpg', '', '1158b99fe8db2f8243744cd987c70926b0e6ae38', 1595921240, 0, 1),
+	(142, '1e2c3032d43b9c4e63cfec5a4314a97a.jpg', '20200728/1e2c3032d43b9c4e63cfec5a4314a97a.jpg', '', '12a49ea8d7fd00959f198366a4b7da818c397e43', 1595921301, 0, 1),
+	(143, '7ceb20e2e871ada433a4680363952e98.jpg', '20200728/7ceb20e2e871ada433a4680363952e98.jpg', '', 'ab63d7d4bdd8670a809c12ffcb1cb28871e1e33e', 1595921829, 0, 1),
+	(144, 'bfa6ca4fa4a9ec4e7e31ea62514ac208.jpg', '20200728/bfa6ca4fa4a9ec4e7e31ea62514ac208.jpg', '', '09ced4627c5f05921e81734acf4b978fd258cd02', 1595922012, 0, 1),
+	(145, '14e8a1505a8ad4a641f32cc114eeafde.jpg', '20200728/14e8a1505a8ad4a641f32cc114eeafde.jpg', '', '3a1d2a3e880b2e5ee8917526f53b388ddb16a25b', 1595922250, 0, 1),
+	(146, 'a37a3bd09402828f6f5e03bb141f5617.jpg', '20200728/a37a3bd09402828f6f5e03bb141f5617.jpg', '', 'fd1f9b7273c92b86fe136aef6c3abde43cafefb5', 1595922264, 0, 1),
+	(147, 'd9b61624b1c9257d74cf22d46a4d6bbe.jpg', '20200728/d9b61624b1c9257d74cf22d46a4d6bbe.jpg', '', '0b1cd6f0333c3c3b8a4053dd4de9c204e03f1699', 1595922445, 0, 1),
+	(148, 'dbe833149d35a652da58ed4fb662a17b.jpg', '20200728/dbe833149d35a652da58ed4fb662a17b.jpg', '', 'f83d3bfb38368f8d9f7ca7c1a27aed52d74a5afd', 1595922712, 0, 1),
+	(149, '6c2894e5b8d31ae5fe433b51831ce9f0.jpg', '20200728/6c2894e5b8d31ae5fe433b51831ce9f0.jpg', '', '3bef837b70e98fa7e9385230a6cebbd069a578df', 1595922722, 0, 1),
+	(150, 'a2d5a9ba55481af66fdfeb31e03c69ea.jpg', '20200728/a2d5a9ba55481af66fdfeb31e03c69ea.jpg', '', 'f386d175a51dc342081931b5161e11934d90471b', 1595922793, 0, 1),
+	(151, 'b7fbcc09c611d225f33879644c563d5f.jpg', '20200728/b7fbcc09c611d225f33879644c563d5f.jpg', '', '8d04681926e802721468869d2d9ea2caf519a2b9', 1595923052, 0, 1),
+	(152, '4063db0e95c2f1c9e4294860d265af61.jpg', '20200728/4063db0e95c2f1c9e4294860d265af61.jpg', '', 'c9df720da431a9c3548b53289cc702de518c29e9', 1595923280, 0, 1),
+	(153, '395414b42fab9f8406733a4e87167d76.jpg', '20200728/395414b42fab9f8406733a4e87167d76.jpg', '', '4ced387a2378f3d46250e43b9027228e82121ef1', 1595924127, 0, 1),
+	(154, '865fdacf1ea4589e59afce85d709692c.jpg', '20200728/865fdacf1ea4589e59afce85d709692c.jpg', '', 'bc20216edaf516b3f17aa1810c6b042c8f935141', 1595924343, 0, 1),
+	(155, 'b7852848dd7cf5c70bfed2d191f3d9ed.jpg', '20200728/b7852848dd7cf5c70bfed2d191f3d9ed.jpg', '', '662aa5bf21de8de2c26bb3b05a47a0e95c68512b', 1595925235, 0, 1),
+	(156, '2d55b4d0b35396a42dcd575454e094e5.jpg', '20200728/2d55b4d0b35396a42dcd575454e094e5.jpg', '', '4c031f851d9905c2d4ad274263a4727e146790b2', 1595925540, 0, 1),
+	(157, 'c78d82961c3e4c29c228d53939be6c2f.jpg', '20200728/c78d82961c3e4c29c228d53939be6c2f.jpg', '', 'bbd46258ca273630641870e6e4fd48867c45f124', 1595925958, 0, 1),
+	(158, '1270e0e0570d86e4e05df97b0bc64348.jpg', '20200728/1270e0e0570d86e4e05df97b0bc64348.jpg', '', 'c42625d6dbeacb22a5649167dec21d0d8f422cb8', 1595926228, 0, 1),
+	(159, '875eba4b6212225c52bcfafe7a4bf709.jpg', '20200728/875eba4b6212225c52bcfafe7a4bf709.jpg', '', 'e7778df340981bef5ffca4b46bcb418c4b16125e', 1595926876, 0, 1),
+	(160, '8799f86423be834041f0b7a7c9c99bbf.jpg', '20200728/8799f86423be834041f0b7a7c9c99bbf.jpg', '', '1b78f1694b5e58241d3f9ac948757759f0b42f3c', 1595927511, 0, 1),
+	(161, '97d0605ee3dd485a7a604cfdb896e370.jpg', '20200729/97d0605ee3dd485a7a604cfdb896e370.jpg', '', '1b56a4a5ceef3c55fd6c820c913cc933200ce179', 1595996932, 0, 1),
+	(162, 'fb81f1441e0129544e24694ba0477e40.jpg', '20200729/fb81f1441e0129544e24694ba0477e40.jpg', '', '510434e2922b0749320af30c0b9586dbc3e43b59', 1595997093, 0, 1),
+	(163, '78fcf29700aea364f0e1fe0435ce1246.jpg', '20200729/78fcf29700aea364f0e1fe0435ce1246.jpg', '', '0d8e82335ddfd0306584189df48cae01d94d0241', 1596026912, 0, 1),
+	(164, 'd40431d3de4e32e0ba1b6a87af42305a.jpg', '20200729/d40431d3de4e32e0ba1b6a87af42305a.jpg', '', 'c0968c9b261035b886bdc539409995d52a04b9d5', 1596027491, 0, 1),
+	(165, '1be5615d547b73929d0cecb68ad9b255.jpg', '20200729/1be5615d547b73929d0cecb68ad9b255.jpg', '', '74ec55d69948352bba1a764531c3d5a443aa47e4', 1596027651, 0, 1),
+	(166, '99ddcb81aa01275d5524b2d7f2f3898c.jpg', '20200729/99ddcb81aa01275d5524b2d7f2f3898c.jpg', '', '7ad1956a4c794772216b65981b89452aec1e7ef4', 1596027714, 0, 1),
+	(167, 'b046c2a67195a64ab2a4d83685b53bd0.jpg', '20200729/b046c2a67195a64ab2a4d83685b53bd0.jpg', '', '19442b2753404fbc12b459e9aa0956f3d1f7b7d8', 1596028259, 0, 1),
+	(168, 'd9f2860e1cb91edadd90e50e6d9134fc.jpg', '20200729/d9f2860e1cb91edadd90e50e6d9134fc.jpg', '', 'f840a6616ad2563aadf9e3185a724aa217d673cc', 1596028506, 0, 1),
+	(169, 'eb240a571438f397f63b5b0426ae2beb.jpg', '20200729/eb240a571438f397f63b5b0426ae2beb.jpg', '', '1196305c5eef99668901cd00a68b0d358ccf979d', 1596028666, 0, 1),
+	(170, '75825b88110624b8901a6f056d8b1adc.jpg', '20200729/75825b88110624b8901a6f056d8b1adc.jpg', '', '696ced649ecccf052d563e666fc888e432550408', 1596028768, 0, 1),
+	(171, 'b0448166d7de2753379353b80f41eaff.jpg', '20200729/b0448166d7de2753379353b80f41eaff.jpg', '', 'be309e39aa53ffca3f3ebabea84b0bd45bc2808a', 1596030203, 0, 1),
+	(172, 'e61d4faf11ace04fa7ff552e4e0cc8f6.jpg', '20200729/e61d4faf11ace04fa7ff552e4e0cc8f6.jpg', '', 'd8549d46a22d20018d51f7888856a9633ff636a8', 1596030762, 0, 1),
+	(173, '6c7b0f0ceef5a1aa8f036462db6bd2fe.jpg', '20200729/6c7b0f0ceef5a1aa8f036462db6bd2fe.jpg', '', 'a9ce0244f666dfd6e89990711f94b8592b00af46', 1596030782, 0, 1),
+	(174, '8f6a1a36d553b028c9a23c2be0a6879e.jpg', '20200729/8f6a1a36d553b028c9a23c2be0a6879e.jpg', '', 'aa3ab7ea795d4c7a462f183e45a9eb55ab43e52e', 1596031622, 0, 1),
+	(175, '66e8ef015eb83ae5dff39f0337a96287.jpg', '20200729/66e8ef015eb83ae5dff39f0337a96287.jpg', '', '62c9918e05a2773aa5afbc4f9333168b95c7f2eb', 1596032640, 0, 1),
+	(176, 'befb2af9b0aa0e620546c6380d590fee.jpg', '20200729/befb2af9b0aa0e620546c6380d590fee.jpg', '', 'e00b4c00c45410627b0c13b2d24660f75ba4098a', 1596033268, 0, 1),
+	(177, '8930cacceaea1aa0ef42935cd026f94e.jpg', '20200729/8930cacceaea1aa0ef42935cd026f94e.jpg', '', 'c41a4d563f4808548a53285f8920fd8a884d3e79', 1596033362, 0, 1),
+	(178, '7a767667f9d27d62c676c594b0f9583d.jpg', '20200729/7a767667f9d27d62c676c594b0f9583d.jpg', '', '9eaac78e99dbbd431475bd79df75109b14d1dbfc', 1596033459, 0, 1),
+	(179, 'd911d4c10a86e39857306764cce61e23.jpg', '20200729/d911d4c10a86e39857306764cce61e23.jpg', '', 'd827617a66f6a6deda42b231bb84a38e9f244a99', 1596033508, 0, 1),
+	(180, 'd626b3b76046081da76cd689e452948c.png', '20200729/d626b3b76046081da76cd689e452948c.png', '', '902ef67052cbab0b969679bbd70e5a27b30fc65c', 1596033918, 0, 1),
+	(181, 'e4a070787cfa2ecc121e4a191781801e.png', '20200729/e4a070787cfa2ecc121e4a191781801e.png', '', '7daa1d0d8e7bb8b81e8a911046a7d84d774d8859', 1596034060, 0, 1),
+	(182, '880baee317b3d957622a2c845e80c524.jpg', '20200729/880baee317b3d957622a2c845e80c524.jpg', '', '554ab588572c843f89be6bdf315a9b68b658fb79', 1596034218, 0, 1),
+	(183, 'db0ff5caa49c205ab37a197f71bb6f58.png', '20200731/db0ff5caa49c205ab37a197f71bb6f58.png', '', '3e032ca17bed14c3600e39c3cdadce599b8efdc2', 1596164378, 0, 1),
+	(184, '338f116e6b5897771b2d0cbe93018a2a.jpg', '20200803/338f116e6b5897771b2d0cbe93018a2a.jpg', '', '5b6c3fb448e2c7b10694183c9f23f0ed7b94e0a7', 1596443368, 0, 1),
+	(185, '3ca1266eb284468e90633737025d05ed.jpg', '20200803/3ca1266eb284468e90633737025d05ed.jpg', '', 'cbd1f03d93aedab5180713d1409272410330de0d', 1596444166, 0, 1),
+	(186, 'b26e66d9260fb23f27196d966f04ec0c.jpg', '20200803/b26e66d9260fb23f27196d966f04ec0c.jpg', '', '0c892aeec724bd566440f9e8d357899aeea2f236', 1596444424, 0, 1),
+	(187, 'b19871d7aefe87f8e5f684ea4517fd92.jpg', '20200803/b19871d7aefe87f8e5f684ea4517fd92.jpg', '', 'fb9df8bb857bcf278d2789272e320f1325ca211e', 1596444434, 0, 1),
+	(188, '1703ba81fe08da8d88538646b9846ec8.jpg', '20200803/1703ba81fe08da8d88538646b9846ec8.jpg', '', '05bbedfd31acf57ee0c8e7f09fa36d7beb21bee8', 1596444443, 0, 1),
+	(189, '931d407df647f7de5cf0e2241016f2cf.jpg', '20200803/931d407df647f7de5cf0e2241016f2cf.jpg', '', '2e1c3cf4353f51dc6ee7ed4c01650f798af3a9cf', 1596444656, 0, 1),
+	(190, '31e9f6e6eb63ed2ed54af11d535f8f21.jpg', '20200803/31e9f6e6eb63ed2ed54af11d535f8f21.jpg', '', 'c1e9d1d9e9bcc445232b63b776dd08e7b2853e45', 1596445892, 0, 1),
+	(191, 'fe066109f74e884272d6484899936d2a.jpg', '20200807/fe066109f74e884272d6484899936d2a.jpg', '', '8187c77a12fedb2c662334d696e925d026e3865e', 1596781972, 0, 1),
+	(192, 'be9e32b2df201d32acbf1da040f5c319.jpg', '20200807/be9e32b2df201d32acbf1da040f5c319.jpg', '', 'c622e97efeec830e54f90319fa8d495bb1d10b31', 1596782351, 0, 1),
+	(193, '758f089426dd2d95f0b11757b5a91887.jpg', '20200807/758f089426dd2d95f0b11757b5a91887.jpg', '', 'db500b6e1e185c346fbf7abf56dd2040a043b9e9', 1596782512, 0, 1),
+	(194, '8e5943b98b9cc3976b212cb7da57839e.jpg', '20200807/8e5943b98b9cc3976b212cb7da57839e.jpg', '', '7b4f297fee7846477b7f74706f3decf22847f3c5', 1596782662, 0, 1),
+	(195, '77c752e32285ab0f351d33926341d41e.jpg', '20200807/77c752e32285ab0f351d33926341d41e.jpg', '', '7d39e78f5284566926cac444ea0423f5cc18ee08', 1596782815, 0, 1),
+	(196, 'd0aeada74c53d58c4b2780966188803c.jpg', '20200807/d0aeada74c53d58c4b2780966188803c.jpg', '', '47e85b7867290a06209c2653b0e74601b00b93af', 1596783009, 0, 1),
+	(197, 'dddc689102fdc103a1aedbd5dbb0d225.jpg', '20200807/dddc689102fdc103a1aedbd5dbb0d225.jpg', '', 'c4f0f7e64323164bf1952429b139827baec1dbdc', 1596783282, 0, 1),
+	(198, '9698c56e876ccaedcb82caee22f82d24.jpg', '20200809/9698c56e876ccaedcb82caee22f82d24.jpg', '', 'dfd5f12591b65abe23320a670a8edbc19f5c762b', 1596984378, 0, 1),
+	(199, 'fa49778b76f921800c2c90b26c11dee0.png', '20200809/fa49778b76f921800c2c90b26c11dee0.png', '', '2f89e9b74ce85a17906060723bf50134889dd0d4', 1596984389, 0, 1),
+	(200, 'bf751f272903810ea93c995532a432ba.png', '20200809/bf751f272903810ea93c995532a432ba.png', '', 'd901746823eb3dfe7545ee87ba1a606ee4b18b16', 1596984582, 0, 1),
+	(201, '4ab287676ef22f559aa366edd7114b17.png', '20200809/4ab287676ef22f559aa366edd7114b17.png', '', '75d3c92c8eea795d48bf57eafc539cd0ef4ac753', 1596984593, 0, 1),
+	(202, '12cacdfdf3b27521c65f1ed1a9f2b9c3.jpg', '20200809/12cacdfdf3b27521c65f1ed1a9f2b9c3.jpg', '', 'cb1408b3884491affddeb6c1621cb97b64dc7ccb', 1596984633, 0, 1),
+	(203, '077a7806020cef7d263ed26c3cc5656b.png', '20200809/077a7806020cef7d263ed26c3cc5656b.png', '', 'b367a424e8d01e2020064c1f5b6b80e958c8fdf1', 1596984681, 0, 1),
+	(204, '31c2a9304fdfebca255c832a53226885.jpg', '20200809/31c2a9304fdfebca255c832a53226885.jpg', '', 'aafbeda65648773e6d7f0f5d1c22dad2c046a67b', 1596984765, 0, 1),
+	(205, '3705f769ce6e0c3bf117ec72c1060285.jpg', '20200809/3705f769ce6e0c3bf117ec72c1060285.jpg', '', '69c405a7078f92961a80dc291fdf382b51a5be59', 1596984772, 0, 1),
+	(206, '9f1aace63b63fa54ccdec4b9fd034cbb.jpg', '20200809/9f1aace63b63fa54ccdec4b9fd034cbb.jpg', '', '5df935d7840214fb042f538daf710fc2f9592040', 1596984884, 0, 1),
+	(207, '9f187c3ec6fe41a6a4448b88585019c4.jpg', '20200809/9f187c3ec6fe41a6a4448b88585019c4.jpg', '', 'c259cad6e320b287807a0e70f94f332b548725ef', 1596984884, 0, 1),
+	(208, 'edee1ae2bb439a35337c0d9ca9a7b3dd.jpg', '20200809/edee1ae2bb439a35337c0d9ca9a7b3dd.jpg', '', '32e43b7b3d6c27e234cd94e4cc6d967684ee364b', 1596984884, 0, 1),
+	(209, '0011282c0ecb9c2b867f7cd7de40d1f0.jpg', '20200811/0011282c0ecb9c2b867f7cd7de40d1f0.jpg', '', '5418dda7c822a03eb96cb07203279b688614d195', 1597113267, 0, 1),
+	(210, '0ab3a444d04b4087ef00391a7a05debc.jpg', '20200811/0ab3a444d04b4087ef00391a7a05debc.jpg', '', 'd9d9d06f7f55f8c2fc24ef191d32b9e64fd1b363', 1597113480, 0, 1),
+	(211, 'dcafc198f233f00c4889b7e013daed03.jpg', '20200811/dcafc198f233f00c4889b7e013daed03.jpg', '', 'aef5b6ad57c2dc0b1f18186392fd3dabe35c957f', 1597113498, 0, 1),
+	(212, '80389c29e5205e81b094d318eb413a0a.jpg', '20200811/80389c29e5205e81b094d318eb413a0a.jpg', '', 'd728382fb5ecf53cc3847be61ddca7d521160900', 1597113587, 0, 1),
+	(213, 'ce6b32f159ead1d468ca73de50c814c5.jpg', '20200811/ce6b32f159ead1d468ca73de50c814c5.jpg', '', 'c4ff384b27bc74c518feadddc872be02eba983a3', 1597113697, 0, 1),
+	(214, '2155e574a20abdeadabc02ff4057d716.jpg', '20200811/2155e574a20abdeadabc02ff4057d716.jpg', '', '1b241a7c1045fe129bc9b8ab5764b3309bb0d88f', 1597114343, 0, 1),
+	(215, '5a3c315a21adfe307d622f8b44f23808.jpg', '20200811/5a3c315a21adfe307d622f8b44f23808.jpg', '', '072d1c23420445be5a33ce5df348f852f2d4cee0', 1597114367, 0, 1),
+	(216, '9b28a4ab642789d38bb58ccc73ff84b8.jpg', '20200811/9b28a4ab642789d38bb58ccc73ff84b8.jpg', '', '2d6f399bf0324b8054a0e758acf5e9f56e23603f', 1597114387, 0, 1),
+	(217, 'e4ccb985fe872028cad54d3632b0935a.jpg', '20200811/e4ccb985fe872028cad54d3632b0935a.jpg', '', '879af805c40f3b8e729833dcaa417dcad5cb19a9', 1597114404, 0, 1),
+	(218, '683794a01275def419a7f1eb1496c63c.jpg', '20200811/683794a01275def419a7f1eb1496c63c.jpg', '', '4de60a301df733fff451a0b2b2ccb70dc4ac46bb', 1597114438, 0, 1),
+	(219, '8079d676f7f8705798c5e9a7761cebe0.jpg', '20200811/8079d676f7f8705798c5e9a7761cebe0.jpg', '', '7990f257625bfce11fc21d660e91c343554e99da', 1597114633, 0, 1),
+	(220, 'b46b4e927e493b31094470330ce9c02b.jpg', '20200811/b46b4e927e493b31094470330ce9c02b.jpg', '', '0c87b8ef1ad3e3ba7311e3b15b24e807d5f5a4ce', 1597114645, 0, 1),
+	(221, '092cd0e309150ae300d4e9a205ff803a.jpg', '20200811/092cd0e309150ae300d4e9a205ff803a.jpg', '', 'e9a3319bb8857c36e182f6868b0a1e4fb656abef', 1597114655, 0, 1),
+	(222, '84e0ddf85b92ae6a759fa6ce81e73d8d.jpg', '20200811/84e0ddf85b92ae6a759fa6ce81e73d8d.jpg', '', '29f91857d3c007ae6a8962327f547fa7643d6cf6', 1597114689, 0, 1),
+	(223, '7c27255f84e48cc28e27bc6a8af00d78.jpg', '20200811/7c27255f84e48cc28e27bc6a8af00d78.jpg', '', '84b983c08c6f77c698da02ee66ef88242286f2a4', 1597114764, 0, 1),
+	(224, '0d154aea8775f895c51352621b5aba71.jpg', '20200811/0d154aea8775f895c51352621b5aba71.jpg', '', '76641bfc99f343c34e385afd4ba399f58e2a23e9', 1597114860, 0, 1),
+	(225, '8194d4b2e26674a4419c4e09c7f5f4ed.jpg', '20200811/8194d4b2e26674a4419c4e09c7f5f4ed.jpg', '', 'b168b7c6613dd568d16d7492b469df98e8ea9e96', 1597114883, 0, 1),
+	(226, '0a3bbbaef2c08b987e8bc5e438d8540a.jpg', '20200811/0a3bbbaef2c08b987e8bc5e438d8540a.jpg', '', '7b3fb01c7c085cf816f8c9c1f9e9b499f1cc6778', 1597114899, 0, 1),
+	(227, '1aa4aec6f27a5194c95821cb395088b1.jpg', '20200811/1aa4aec6f27a5194c95821cb395088b1.jpg', '', '75416ecfcda3ec050069b784cef59fabb5882931', 1597114922, 0, 1),
+	(228, '4f36b4cf5f4a6d33f84a5f8dbef407b1.jpg', '20200811/4f36b4cf5f4a6d33f84a5f8dbef407b1.jpg', '', 'c3726983ff4848c844de0038ccf811bd27875756', 1597114989, 0, 1),
+	(229, 'c9880bda8056c42ccc63a9f98eed9730.jpg', '20200811/c9880bda8056c42ccc63a9f98eed9730.jpg', '', 'db26eb6493e59268216ac0e39028f06854054ca0', 1597115387, 0, 1),
+	(230, '9fcf77fd69a3e4ff03e6b44d7e4fb144.jpg', '20200811/9fcf77fd69a3e4ff03e6b44d7e4fb144.jpg', '', 'd5e5f2b656b2980f2f94e7be989333193daf2374', 1597115418, 0, 1),
+	(231, 'ed3512be2529365e6f2827355b2fdf80.jpg', '20200811/ed3512be2529365e6f2827355b2fdf80.jpg', '', '98a78fdd18254ea1d7f7f12218203e1b13ed310d', 1597115444, 0, 1),
+	(232, 'ffd922e417b444b881c9edd64e964f46.jpg', '20200811/ffd922e417b444b881c9edd64e964f46.jpg', '', 'e6f2d451beadca98a6693e78d8e157cdcf0a80bb', 1597115522, 0, 1),
+	(233, '66f23d4c067e74dfc2e0054dc30e8279.jpg', '20200811/66f23d4c067e74dfc2e0054dc30e8279.jpg', '', 'a69da05698421df4db947e38193a339e4e618b57', 1597115757, 0, 1),
+	(234, 'bfa14883b8b238ff74ee59b7a801405e.jpg', '20200811/bfa14883b8b238ff74ee59b7a801405e.jpg', '', '534546d99a16fd39a2e5051c351dbc63d9e76df4', 1597115778, 0, 1),
+	(235, '9a530bd7dbda36182e5fa51e076cb9c0.jpg', '20200811/9a530bd7dbda36182e5fa51e076cb9c0.jpg', '', '13eb652223de09b9efdaa56a4b2f9851d5d90af0', 1597115798, 0, 1),
+	(236, 'ba0881226059681139dd66bd4f25ac17.jpg', '20200811/ba0881226059681139dd66bd4f25ac17.jpg', '', '1cba6b2ab39a8d7c9593772ff3af20a9553d4c4a', 1597115809, 0, 1),
+	(237, '47c3f1eb4f59930b5be8419dc7b83d14.jpg', '20200811/47c3f1eb4f59930b5be8419dc7b83d14.jpg', '', '5fe4e4b1b892e4f5470c43a7ab64a010e48ea9ac', 1597116420, 0, 1),
+	(238, '1da79b2aeac752efc642b76eab5bc83d.jpg', '20200811/1da79b2aeac752efc642b76eab5bc83d.jpg', '', 'a3871b065dd72c04c4a5124164bcb77069c27cf3', 1597116453, 0, 1),
+	(239, '067587f2bfea99b442b93ec11f607d31.jpg', '20200811/067587f2bfea99b442b93ec11f607d31.jpg', '', '44fef132250bbdb597c3611e4c676386844f067c', 1597116464, 0, 1),
+	(240, 'ab3cdafa1325c79da7ca3a698acc40e7.jpg', '20200811/ab3cdafa1325c79da7ca3a698acc40e7.jpg', '', 'a8bdcd7250a5c8458359833a397286c87e8300c5', 1597116495, 0, 1),
+	(241, '1d16ff8c06837922b68c2fcb2b325b21.jpg', '20200811/1d16ff8c06837922b68c2fcb2b325b21.jpg', '', '3d13059892fd5ce24e8cfa358dde2b2e5b2245ba', 1597116825, 0, 1),
+	(242, '596d00e8bd2bc2b22536b8577efd38da.jpg', '20200811/596d00e8bd2bc2b22536b8577efd38da.jpg', '', '55f3f1d925b46c66b48d846e2782e2e2b680fdad', 1597116841, 0, 1),
+	(243, 'c3b0d84358e39ae207df0e84b31aa0f7.jpg', '20200811/c3b0d84358e39ae207df0e84b31aa0f7.jpg', '', '05292561095237c76990844ece139c9e555709b5', 1597116889, 0, 1),
+	(244, '81eb3fa5b9ffc9d608f15d95dec6bdc2.jpg', '20200811/81eb3fa5b9ffc9d608f15d95dec6bdc2.jpg', '', 'a43a34608add6c76dbae9e7a70c47266eae5df9a', 1597116904, 0, 1),
+	(245, '14063108b44d5bdb9b6837a59680ffb0.jpg', '20200811/14063108b44d5bdb9b6837a59680ffb0.jpg', '', '81dd4d050ad25b3b1ac3798cf77f89fe3e6fd49a', 1597117127, 0, 1),
+	(246, 'f5cbee0585f6e80eb2d4e07846ed994b.jpg', '20200811/f5cbee0585f6e80eb2d4e07846ed994b.jpg', '', 'b8eacc9903b5aa6908ff28b2f23f68d5e6926e8d', 1597117866, 0, 1),
+	(247, '1aafa38c5cb53d5abd641ba4128d5b5a.jpg', '20200811/1aafa38c5cb53d5abd641ba4128d5b5a.jpg', '', '4ec7059d35f990ed8bae3cecfa34b58c7cc8b5f7', 1597117893, 0, 1),
+	(248, '0e33242dcb659dc73de341ccd48b7f4b.jpg', '20200811/0e33242dcb659dc73de341ccd48b7f4b.jpg', '', '468e46e196f726a0e8c5edbb99291e85335bc5b4', 1597117909, 0, 1),
+	(249, '9b53bf96cc81b0268296933de0ee6c1e.jpg', '20200811/9b53bf96cc81b0268296933de0ee6c1e.jpg', '', '6ea3136924ba47fa0ce837c11f7525ca23232e88', 1597117925, 0, 1),
+	(250, '67fde86e0fbac025540165a0a2bfe952.jpg', '20200811/67fde86e0fbac025540165a0a2bfe952.jpg', '', 'e1b6f3126f309d2950cc696a5c662ba64081fce6', 1597118344, 0, 1),
+	(251, 'a1f524feccc12dff7a17c925f5db96bd.jpg', '20200811/a1f524feccc12dff7a17c925f5db96bd.jpg', '', '813981c4ae78baf3d253b8e99aa96542d8bd59a3', 1597118363, 0, 1),
+	(252, '8ce99eb3034651ede0cc0efa0b1a8525.jpg', '20200811/8ce99eb3034651ede0cc0efa0b1a8525.jpg', '', '75a3ae11bed2fccc402c545d7c23ccfaeb5fea1b', 1597118390, 0, 1),
+	(253, 'b2082db678ec2dc43153ce2d413f3d83.jpg', '20200811/b2082db678ec2dc43153ce2d413f3d83.jpg', '', 'df0782b7c094a2b474b38e08412cdaa4b196fd89', 1597118411, 0, 1),
+	(254, 'fe1b1ff0ff3ee854fded44029b7f4513.jpg', '20200811/fe1b1ff0ff3ee854fded44029b7f4513.jpg', '', '77136c627af97486ad90d32de402810faeed0ce0', 1597125376, 0, 1),
+	(255, 'fb2ca24cfb70fcd1bc901139aa6c7dba.jpg', '20200811/fb2ca24cfb70fcd1bc901139aa6c7dba.jpg', '', '32a5bd6711447eb0b850e3ad90577a8913833c03', 1597125396, 0, 1),
+	(256, 'ef483545189a08de841d07a3ee325d30.jpg', '20200811/ef483545189a08de841d07a3ee325d30.jpg', '', '5284dd2170e9afe8e006a9672cf97630fd7b629c', 1597125434, 0, 1),
+	(257, '6f4153bbb161e1432b9ca70b31e0e83e.jpg', '20200811/6f4153bbb161e1432b9ca70b31e0e83e.jpg', '', 'bc23ae882425aee0ce276c9046adda9a288329e1', 1597125451, 0, 1),
+	(258, '943e49fe6901d80fe9e8cd6d31f3daed.jpg', '20200811/943e49fe6901d80fe9e8cd6d31f3daed.jpg', '', 'c5ff66ec99cde446f87c278023173baa535df6bb', 1597126350, 0, 1),
+	(259, '8383b7267920de78bd5b66ca85d170e9.jpg', '20200811/8383b7267920de78bd5b66ca85d170e9.jpg', '', 'abe506f35c8520509a59e4b9ce7d73d3dd88d665', 1597126371, 0, 1),
+	(260, '1e9837763c2d3b5c59dde4b501ffe835.jpg', '20200811/1e9837763c2d3b5c59dde4b501ffe835.jpg', '', 'e9dbb1fc8f65c0722afa0e77b95ac27e5119afc8', 1597126394, 0, 1),
+	(261, 'd2313ee047fd52ffc55497021b1b609d.jpg', '20200811/d2313ee047fd52ffc55497021b1b609d.jpg', '', '403c48ab50dfaaecf7a7c59010b4b6e40075305f', 1597127872, 0, 1),
+	(262, '402d6b60e161d48fbf9dc1a635286402.jpg', '20200811/402d6b60e161d48fbf9dc1a635286402.jpg', '', 'a29dd86d0bdb1377a8566d3de1c770542540364a', 1597127923, 0, 1),
+	(263, '05271417fad09de7e17b639b0da9d031.jpg', '20200811/05271417fad09de7e17b639b0da9d031.jpg', '', '3d93b3af20c7ded9686977526de53f2346c61dbc', 1597127941, 0, 1),
+	(264, 'fe945b11bcad57338faa97c42a3957c6.jpg', '20200811/fe945b11bcad57338faa97c42a3957c6.jpg', '', '269433850acdc595d7772828098bc9817c17d1ea', 1597127964, 0, 1),
+	(265, '8d65f3523f429d0015ade2b5f0260838.jpg', '20200811/8d65f3523f429d0015ade2b5f0260838.jpg', '', '88356d92b274abf20e87ffade88ab9086a2e185a', 1597128308, 0, 1),
+	(266, '1bb47fb38def02870e92f0556eac968d.jpg', '20200811/1bb47fb38def02870e92f0556eac968d.jpg', '', '124d572c5768f8c72302c007d6828b1ca93ea4c6', 1597145224, 0, 1),
+	(267, '2b81b12415b03b266e14e4b6955adcfb.jpg', '20200811/2b81b12415b03b266e14e4b6955adcfb.jpg', '', '9d215d19e58b493fefd3a8729042cf2a7b80c4e1', 1597145247, 0, 1),
+	(268, '322f93e46ef23e73481327a1bc5a1c6c.jpg', '20200811/322f93e46ef23e73481327a1bc5a1c6c.jpg', '', '4354c0bb88baa59e86a97e13efb97a2fc0a64096', 1597145265, 0, 1),
+	(269, 'c220bcb6606d151fb2ffe043906b089f.jpg', '20200811/c220bcb6606d151fb2ffe043906b089f.jpg', '', 'deaaf53caaa9d4aaa8fdeee76867ce8ddfe7f694', 1597145292, 0, 1),
+	(270, '7cab998548367dc8c3f1188710ab8874.jpg', '20200811/7cab998548367dc8c3f1188710ab8874.jpg', '', 'eb4e4bbf23e715a148862d259144d4a471fdbae2', 1597146270, 0, 1),
+	(271, 'fc62690eb082140b66f3df98a28431ce.jpg', '20200811/fc62690eb082140b66f3df98a28431ce.jpg', '', '97580d671b8f30a3ef0705c2149b76e8c548431a', 1597146375, 0, 1),
+	(272, 'ff104b72e6cb3d8b1805bba7fdd8f551.jpg', '20200811/ff104b72e6cb3d8b1805bba7fdd8f551.jpg', '', '5ce8976b25d22c6783601b483a73455c9f856557', 1597146514, 0, 1),
+	(273, 'e326d9638033796be6a519f711cd4b1f.jpg', '20200811/e326d9638033796be6a519f711cd4b1f.jpg', '', '7ce046cfdd1803b88dca861548a148077ee18317', 1597147145, 0, 1),
+	(274, '029794a3a379f8a18e8157c4be6f59c7.jpg', '20200811/029794a3a379f8a18e8157c4be6f59c7.jpg', '', '3da1da86973b56187cd71a712d05a8c8b940a864', 1597147163, 0, 1),
+	(275, '832977d9c91e25a2bc4e7448646a7900.png', '20200811/832977d9c91e25a2bc4e7448646a7900.png', '', 'ecde299a7fb2153885b59ea39a2615d378107e12', 1597147265, 0, 1),
+	(276, '86073502405d73adde355f013fa5ade7.jpg', '20200811/86073502405d73adde355f013fa5ade7.jpg', '', '68d34c830e7db286f0aa5f1b6c0b2caea2a2cb95', 1597147423, 0, 1),
+	(277, 'c43933ebe8d266573aad67056ff164d0.jpg', '20200811/c43933ebe8d266573aad67056ff164d0.jpg', '', '91bb9a3182cf0f34e8ea93493f920376fafe4f42', 1597147603, 0, 1),
+	(278, '0c26c8a4e039b46b33ce28d16c612253.jpg', '20200811/0c26c8a4e039b46b33ce28d16c612253.jpg', '', 'f196535264681a1194c8d0f79edfb9ec48b3931b', 1597147781, 0, 1),
+	(279, '32af09a210b06a2617ba45481109c8ca.jpg', '20200811/32af09a210b06a2617ba45481109c8ca.jpg', '', '0d6abc9e01704ac4167f902dbb088714880beba1', 1597150917, 0, 1),
+	(280, '248c1b3a8267b5826180ab8569629e83.jpg', '20200811/248c1b3a8267b5826180ab8569629e83.jpg', '', 'd53e5f3cd7f491b15a4ce7eb91c84c7bf0c93b07', 1597150963, 0, 1),
+	(281, '69ec96e00bf5867c549b34b7d78f9aeb.jpg', '20200811/69ec96e00bf5867c549b34b7d78f9aeb.jpg', '', 'fa8c22330919ac9f031b2c096c269521d32c605f', 1597150992, 0, 1),
+	(282, 'bb5686bf58954f5518da68e632c96200.jpg', '20200811/bb5686bf58954f5518da68e632c96200.jpg', '', '2f1ed8b3b6ed5664e5685ef47a3a91cbfd8b44c7', 1597151018, 0, 1),
+	(283, '647281b5ee7e86c6b270ebbcf89f3277.jpg', '20200811/647281b5ee7e86c6b270ebbcf89f3277.jpg', '', '3a7821f931c59f5b76dce5febbf7afc626582265', 1597152031, 0, 1),
+	(284, 'fda7790c5f4f3fc49c0c68d1f3839353.jpg', '20200811/fda7790c5f4f3fc49c0c68d1f3839353.jpg', '', 'a901c474948dd34fd7ae30ead091ed1aba59c6ec', 1597152048, 0, 1),
+	(285, '077b62f0caa8ff07eb27a16f971ce782.jpg', '20200811/077b62f0caa8ff07eb27a16f971ce782.jpg', '', 'cf08921729c026fe69447de15fbce18aca9a01ad', 1597152077, 0, 1),
+	(286, '54fb73b8ae7eda66b840c611b38b8f78.jpg', '20200811/54fb73b8ae7eda66b840c611b38b8f78.jpg', '', 'd8e3f11aaf8e3172d00b4443def008dd7476e954', 1597152093, 0, 1),
+	(287, '636438af51726e359de044f6389f004a.jpg', '20200811/636438af51726e359de044f6389f004a.jpg', '', '78a4aa192012de4f5b884f66ca89df7d75626ba6', 1597153313, 0, 1),
+	(288, '6e7282221c45b591340a4a31c8cfd9c6.jpg', '20200811/6e7282221c45b591340a4a31c8cfd9c6.jpg', '', '58f0987690ea2f021a6f7735c7c7ae69daafd1ba', 1597153334, 0, 1),
+	(289, '72bf3ef43f0022ee25c64d69bd18addb.jpg', '20200811/72bf3ef43f0022ee25c64d69bd18addb.jpg', '', '70e8da70ceed40f2004a26d1a0f068b8223d19ea', 1597153585, 0, 1),
+	(290, '273c5133084b46854219290bce6b7a18.jpg', '20200813/273c5133084b46854219290bce6b7a18.jpg', '', '2e71816074b791e08ec4b4506cf3551ba11e85ab', 1597304116, 0, 1),
+	(291, 'ef96b82f00407b6869dfb51cec4c987e.jpg', '20200813/ef96b82f00407b6869dfb51cec4c987e.jpg', '', 'a5e9d132f52eb1d33d823d7a6a8a56a4cb087f1f', 1597304798, 0, 1),
+	(292, '26c0f72b21ee8897e9a0e01c607980ab.png', '20200815/26c0f72b21ee8897e9a0e01c607980ab.png', '', 'e21d30e3f5863ee0b37db76d0cf674a3ac0f7e23', 1597455242, 0, 1),
+	(293, 'e243cab30084a8e3c6f7bb39e206a0f4.png', '20200815/e243cab30084a8e3c6f7bb39e206a0f4.png', '', '276f9307c18205aefd6524e399e203ade9851bd8', 1597455410, 0, 1),
+	(294, '78b62c58818f1cb88b74dfdd932fbb26.jpg', '20200815/78b62c58818f1cb88b74dfdd932fbb26.jpg', '', '49f507141f8cec4afeed34e4447c4b4c86bcf45d', 1597455654, 0, 1),
+	(295, '08fd8f8c6b810b322bd80a08975d1122.jpg', '20200815/08fd8f8c6b810b322bd80a08975d1122.jpg', '', 'a9e6391c31ec1cb756f8c53575508c96b08cf720', 1597455680, 0, 1),
+	(296, 'cda688b5dcdea2e6dde7432b18835715.jpg', '20200815/cda688b5dcdea2e6dde7432b18835715.jpg', '', '35d898d16220e7ee1079f8b945803ed60641fa56', 1597455945, 0, 1),
+	(297, '0d3496c58f364cfe02b21207b3bddf40.jpg', '20200815/0d3496c58f364cfe02b21207b3bddf40.jpg', '', 'c63b80447f98fa30baeaddc9fd990f8107efcae7', 1597456192, 0, 1),
+	(298, '91ed23f94ceba4f2b09fad15554a14b4.jpg', '20200815/91ed23f94ceba4f2b09fad15554a14b4.jpg', '', '3eaf1de3851b751a1b20232755b0bdd099116778', 1597456461, 0, 1),
+	(299, '4436a6ea2af047ee5c9bbc168cfae7ff.jpg', '20200815/4436a6ea2af047ee5c9bbc168cfae7ff.jpg', '', 'baecfbd2cf4b0873d1f2501b8e1bf21834dbce43', 1597459237, 0, 1),
+	(300, '4d4ce481d780c2117b13cc71c9a8565b.jpg', '20200916/4d4ce481d780c2117b13cc71c9a8565b.jpg', '', 'cda98aee3797d5cbd9d4f00935a2de13978b19e6', 1600223653, 0, 1),
+	(301, '242ec951d8c241a07685ebea53167725.jpg', '20200916/242ec951d8c241a07685ebea53167725.jpg', '', '231abf48a3a6ae335953d402f9e84ebb4c04fbe6', 1600223661, 0, 1),
+	(302, '1d295ce588c1ad952cd98903eac3f009.jpg', '20200916/1d295ce588c1ad952cd98903eac3f009.jpg', '', 'd797e66bf5c857cd295454edd41215d3eafe98cd', 1600223671, 0, 1),
+	(303, '3b53a79adc9c2bc9d035f53ef330ed2b.jpg', '20200918/3b53a79adc9c2bc9d035f53ef330ed2b.jpg', '', '759cea2696da628ffd4b8ec2a5770df8108ee971', 1600391876, 0, 1),
+	(304, '70ac5e94eede81807cd44f644d9d1079.jpg', '20200918/70ac5e94eede81807cd44f644d9d1079.jpg', '', '9b33b6f2f8226419b6fc2cab38adacfc76496421', 1600391891, 0, 1),
+	(305, 'ed3eebc07bb2b34a613f3677aa8fc873.jpg', '20200918/ed3eebc07bb2b34a613f3677aa8fc873.jpg', '', 'b61f35b2edd7caa223ffebb2c2b5a4e38c4f595d', 1600391901, 0, 1),
+	(306, 'e4f5eadb963fb761da28d92dfc1eea4d.jpg', '20200918/e4f5eadb963fb761da28d92dfc1eea4d.jpg', '', '0ab4f931edf743bba6910b0c77125a859e1d5f27', 1600391922, 0, 1),
+	(307, 'd1f080a033cd5c5a496fcfa0fc9a0d6d.jpg', '20200918/d1f080a033cd5c5a496fcfa0fc9a0d6d.jpg', '', '7439b1d3b705c7ea06a900ef4fc2babfb110ccf1', 1600391937, 0, 1),
+	(308, '4b2a542b0ebd80b6d0a3d6a54abfd819.jpg', '20200918/4b2a542b0ebd80b6d0a3d6a54abfd819.jpg', '', '1574123b12a4e45f8a7b21fe2ec9280c461a4af0', 1600391949, 0, 1),
+	(309, 'a33d381166104f4efcca2a4c693e0e97.jpg', '20200918/a33d381166104f4efcca2a4c693e0e97.jpg', '', '295086412b25dc70736148eac284e868658ee61b', 1600411464, 0, 1),
+	(310, 'c9d92509e93c1834e236bba07b63ba3a.jpg', '20200918/c9d92509e93c1834e236bba07b63ba3a.jpg', '', '5c24af2ad8c7c2ee2e463d33ed60e2cb56be4927', 1600418481, 0, 1),
+	(311, 'f6952b8b192a9f6f1ab3c91130d737b0.jpg', '20200918/f6952b8b192a9f6f1ab3c91130d737b0.jpg', '', 'a9ed45b7ec9c42395ccebfbdaa775cde94152997', 1600423429, 0, 1),
+	(312, '12ec8a6364e8931dc7f412864f56ae12.jpg', '20200918/12ec8a6364e8931dc7f412864f56ae12.jpg', '', '172ce199b02ae0b731b3062d89a3b41dc29945d2', 1600423440, 0, 1),
+	(313, 'fb60ae73ff7ae0d0bc1fad8cc72c2517.jpg', '20200918/fb60ae73ff7ae0d0bc1fad8cc72c2517.jpg', '', '13b734ca86d5452bd4ae5d24a7c599384b073eb3', 1600423450, 0, 1),
+	(314, '4ab72858ec6b3185383c736a003145f1.jpg', '20200918/4ab72858ec6b3185383c736a003145f1.jpg', '', '72b75028be4f1317064ffb4ceacef40065e81924', 1600423461, 0, 1),
+	(315, '4bc67338bbbaf4406dda1b82d8add944.jpg', '20200918/4bc67338bbbaf4406dda1b82d8add944.jpg', '', 'd831a13301b9d3951b7abfe62ddde7863ab6a289', 1600423617, 0, 1),
+	(316, '6f8181287865004528b4d08dd5b9002c.jpg', '20200918/6f8181287865004528b4d08dd5b9002c.jpg', '', 'e7f51adae0a78e139e60ab16a7b02612737db6c2', 1600424381, 0, 1),
+	(317, '25b583bf87afd1fe50f501c7817c46d7.jpg', '20200923/25b583bf87afd1fe50f501c7817c46d7.jpg', '', '90ff02593b4a254d6758bc07c8c9772ee2575c80', 1600844726, 0, 1),
+	(318, '502b872c6f0560f18ec5d33cb5d32b9a.jpg', '20200923/502b872c6f0560f18ec5d33cb5d32b9a.jpg', '', '9a4447c13952331b499f5244d0c51ef8f9476bca', 1600845578, 0, 1),
+	(319, '0c9c56b57ce7834f343af5df68b8b24b.jpg', '20200923/0c9c56b57ce7834f343af5df68b8b24b.jpg', '', '844250632e2e091c076673f7978749dbd4c1c7ab', 1600845824, 0, 1),
+	(320, 'e4916701d0a67cbec66a063585b51b34.jpg', '20200923/e4916701d0a67cbec66a063585b51b34.jpg', '', '8109d867b38e3596e22cd144313770ee7bf9c099', 1600846106, 0, 1),
+	(321, 'de7bbe8416854622ce786a23a6576b0f.jpg', '20200923/de7bbe8416854622ce786a23a6576b0f.jpg', '', '649a001c899ccea3bec8407934d7e4be70d3fe8a', 1600847063, 0, 1),
+	(322, 'a55f8f966cc959cc6d39366af697e043.jpg', '20200923/a55f8f966cc959cc6d39366af697e043.jpg', '', '93d05344377e288c031796a90d47cd8d093fd261', 1600847302, 0, 1),
+	(323, '7acae5ab54756861d5f4d11f0bf6ea57.jpg', '20200923/7acae5ab54756861d5f4d11f0bf6ea57.jpg', '', '2f3da83ef4e96969c1d40e3d92a7d5f4f8866e64', 1600847490, 0, 1),
+	(324, 'afd1aebca44b2087270d3b9453b01d53.jpg', '20200923/afd1aebca44b2087270d3b9453b01d53.jpg', '', 'b6d59844832dee510c39c78f4af2d91675d2007f', 1600855794, 0, 1),
+	(325, '4c990602df0726674e7018e2684b3229.jpg', '20200927/4c990602df0726674e7018e2684b3229.jpg', '', '3ef33a75233ac1bf42fbc2d947db56b1622191eb', 1601189175, 0, 1),
+	(326, 'b2923c12dc8c73eb39448de1bf8de1ac.jpg', '20200927/b2923c12dc8c73eb39448de1bf8de1ac.jpg', '', 'e3bbbfb0b94157700982ed863e1153774325d41d', 1601199831, 0, 1),
+	(327, '377ca4560427e85539d3a31f67ca67bc.jpg', '20201107/377ca4560427e85539d3a31f67ca67bc.jpg', '', '4217ad084be3359369530e8abf9a33572b9243c8', 1604721936, 0, 1),
+	(328, 'b7a6fae43681b2d9f67da311f97886cb.jpg', '20201107/b7a6fae43681b2d9f67da311f97886cb.jpg', '', '0d24c17c3661cb4a84b6ba4f6e7d5f1291dec7ab', 1604721979, 0, 1),
+	(329, '083e7c9f368fd174c0ff2d26f3425148.png', '20201107/083e7c9f368fd174c0ff2d26f3425148.png', '', '4fada4065888390ad1def02c9cf90a812382ca2f', 1604722405, 0, 1),
+	(330, 'debf75d516a9df1be6eff8321105fe1e.jpg', '20201107/debf75d516a9df1be6eff8321105fe1e.jpg', '', 'f9d17472a9fa4c216f5256135eb6429195f8b6e0', 1604723485, 0, 1),
+	(331, 'accfcb411595622c7625150d7a69dbc2.jpg', '20201107/accfcb411595622c7625150d7a69dbc2.jpg', '', '46e0cdcb177afc9e7522ad4a90e5f581b414cc47', 1604723493, 0, 1);
 /*!40000 ALTER TABLE `lqf_picture` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_region
+-- Dumping structure for table zdtop_net.lqf_region
 CREATE TABLE IF NOT EXISTS `lqf_region` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '' COMMENT '地区名称',
@@ -1001,7 +1076,7 @@ CREATE TABLE IF NOT EXISTS `lqf_region` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=910007 DEFAULT CHARSET=utf8 COMMENT='省市县数据表';
 
--- Dumping data for table 20629_renrenhw.lqf_region: 3,548 rows
+-- Dumping data for table zdtop_net.lqf_region: 3,548 rows
 DELETE FROM `lqf_region`;
 /*!40000 ALTER TABLE `lqf_region` DISABLE KEYS */;
 INSERT INTO `lqf_region` (`id`, `name`, `level`, `pid`) VALUES
@@ -4555,7 +4630,7 @@ INSERT INTO `lqf_region` (`id`, `name`, `level`, `pid`) VALUES
 	(910006, '东莞市', 3, 441900);
 /*!40000 ALTER TABLE `lqf_region` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_sequence
+-- Dumping structure for table zdtop_net.lqf_sequence
 CREATE TABLE IF NOT EXISTS `lqf_sequence` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '前缀',
@@ -4568,7 +4643,7 @@ CREATE TABLE IF NOT EXISTS `lqf_sequence` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='唯一序号生成表';
 
--- Dumping data for table 20629_renrenhw.lqf_sequence: 32 rows
+-- Dumping data for table zdtop_net.lqf_sequence: 32 rows
 DELETE FROM `lqf_sequence`;
 /*!40000 ALTER TABLE `lqf_sequence` DISABLE KEYS */;
 INSERT INTO `lqf_sequence` (`id`, `name`, `current_date`, `current_value`, `increment`, `create_time`, `update_time`, `org_id`) VALUES
@@ -4606,7 +4681,49 @@ INSERT INTO `lqf_sequence` (`id`, `name`, `current_date`, `current_value`, `incr
 	(32, 'C', '20200417', 14, 1, 1587109916, 1587114360, 1);
 /*!40000 ALTER TABLE `lqf_sequence` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_sys_auth
+-- Dumping structure for table zdtop_net.lqf_sys_area
+CREATE TABLE IF NOT EXISTS `lqf_sys_area` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT NULL COMMENT '地区名称',
+  `pid` int(11) DEFAULT '0' COMMENT '上级编号',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  `visible` smallint(6) DEFAULT '1' COMMENT '1=显示，0=隐藏',
+  `manager_user_id` varchar(256) DEFAULT NULL COMMENT '管理人员',
+  `manager_user_name` varchar(1024) DEFAULT NULL COMMENT '管理人员名称',
+  `create_time` int(11) DEFAULT NULL,
+  `update_time` int(11) DEFAULT NULL,
+  `org_id` int(11) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='地区表';
+
+-- Dumping data for table zdtop_net.lqf_sys_area: 3 rows
+DELETE FROM `lqf_sys_area`;
+/*!40000 ALTER TABLE `lqf_sys_area` DISABLE KEYS */;
+INSERT INTO `lqf_sys_area` (`id`, `name`, `pid`, `sort`, `visible`, `manager_user_id`, `manager_user_name`, `create_time`, `update_time`, `org_id`) VALUES
+	(1, '成都市', 0, 1, 1, '84,84,1', '匆道,匆道,零起飞', 1597672045, 1597741611, 1),
+	(2, '西安市', 0, 2, 1, NULL, NULL, 1597672085, 1597740200, 1),
+	(3, '广安', 0, 3, 1, NULL, NULL, 1597672099, NULL, 1);
+/*!40000 ALTER TABLE `lqf_sys_area` ENABLE KEYS */;
+
+-- Dumping structure for table zdtop_net.lqf_sys_area_user
+CREATE TABLE IF NOT EXISTS `lqf_sys_area_user` (
+  `sys_user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  `sys_area_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '地区id',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0',
+  `org_id` int(10) unsigned NOT NULL DEFAULT '1'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='地区授权表';
+
+-- Dumping data for table zdtop_net.lqf_sys_area_user: 3 rows
+DELETE FROM `lqf_sys_area_user`;
+/*!40000 ALTER TABLE `lqf_sys_area_user` DISABLE KEYS */;
+INSERT INTO `lqf_sys_area_user` (`sys_user_id`, `sys_area_id`, `update_time`, `create_time`, `org_id`) VALUES
+	(84, 1, 0, 1597713439, 1),
+	(84, 1, 0, 1597713439, 1),
+	(1, 1, 0, 1597713439, 1);
+/*!40000 ALTER TABLE `lqf_sys_area_user` ENABLE KEYS */;
+
+-- Dumping structure for table zdtop_net.lqf_sys_auth
 CREATE TABLE IF NOT EXISTS `lqf_sys_auth` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '用户组id,自增主键',
   `module` varchar(20) NOT NULL DEFAULT '' COMMENT '用户组所属模块',
@@ -4622,14 +4739,14 @@ CREATE TABLE IF NOT EXISTS `lqf_sys_auth` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='权限组表';
 
--- Dumping data for table 20629_renrenhw.lqf_sys_auth: 1 rows
+-- Dumping data for table zdtop_net.lqf_sys_auth: 1 rows
 DELETE FROM `lqf_sys_auth`;
 /*!40000 ALTER TABLE `lqf_sys_auth` DISABLE KEYS */;
 INSERT INTO `lqf_sys_auth` (`id`, `module`, `name`, `intro`, `status`, `rules`, `sys_user_id`, `sort`, `update_time`, `create_time`, `org_id`) VALUES
-	(1, '', '企业超级管理', '本权限为企业帐号注册初次的权限列表', 1, '986,987,988,989,990,991,992,1075,1076,1077,1078,1079,993,994,995,996,997,1090,998,999,1000,1001,1002,1003,1028,1029,1030,1031,1032,1033,1034,1035,1036,1037,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1038,1040,1039,1041,1042,1043,1044,1017,1027,1018,1019,1020,1021,1022,1023,1024,1025,1026,1080,1084,1081,1082,1083,1085,1086,1087,1088,1089,1,333,334,943,942', 1, 0, 1594461127, 1569638911, 1);
+	(1, '', '企业超级管理', '本权限为企业帐号注册初次的权限列表', 1, '986,987,988,989,990,991,992,1075,1076,1077,1078,1079,993,996,997,995,994,1090,1092,1093,998,999,1000,1001,1002,1003,1028,1029,1030,1031,1032,1033,1034,1035,1036,1037,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1038,1040,1039,1041,1042,1043,1044,1017,1027,1018,1019,1020,1021,1022,1023,1024,1025,1026,1080,1084,1081,1082,1083,1085,1086,1087,1088,1089,1,333,334,1094', 1, 0, 1595728222, 1569638911, 1);
 /*!40000 ALTER TABLE `lqf_sys_auth` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_sys_auth_access
+-- Dumping structure for table zdtop_net.lqf_sys_auth_access
 CREATE TABLE IF NOT EXISTS `lqf_sys_auth_access` (
   `sys_user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `sys_auth_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户组id',
@@ -4638,7 +4755,7 @@ CREATE TABLE IF NOT EXISTS `lqf_sys_auth_access` (
   `org_id` int(10) unsigned NOT NULL DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户组授权表';
 
--- Dumping data for table 20629_renrenhw.lqf_sys_auth_access: 18 rows
+-- Dumping data for table zdtop_net.lqf_sys_auth_access: 18 rows
 DELETE FROM `lqf_sys_auth_access`;
 /*!40000 ALTER TABLE `lqf_sys_auth_access` DISABLE KEYS */;
 INSERT INTO `lqf_sys_auth_access` (`sys_user_id`, `sys_auth_id`, `update_time`, `create_time`, `org_id`) VALUES
@@ -4662,7 +4779,7 @@ INSERT INTO `lqf_sys_auth_access` (`sys_user_id`, `sys_auth_id`, `update_time`, 
 	(84, 1, 1587610611, 1587610611, 1);
 /*!40000 ALTER TABLE `lqf_sys_auth_access` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_sys_dept
+-- Dumping structure for table zdtop_net.lqf_sys_dept
 CREATE TABLE IF NOT EXISTS `lqf_sys_dept` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT NULL COMMENT '部门名称',
@@ -4675,7 +4792,7 @@ CREATE TABLE IF NOT EXISTS `lqf_sys_dept` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='部门表';
 
--- Dumping data for table 20629_renrenhw.lqf_sys_dept: 5 rows
+-- Dumping data for table zdtop_net.lqf_sys_dept: 5 rows
 DELETE FROM `lqf_sys_dept`;
 /*!40000 ALTER TABLE `lqf_sys_dept` DISABLE KEYS */;
 INSERT INTO `lqf_sys_dept` (`id`, `name`, `pid`, `sort`, `visible`, `create_time`, `update_time`, `org_id`) VALUES
@@ -4686,7 +4803,7 @@ INSERT INTO `lqf_sys_dept` (`id`, `name`, `pid`, `sort`, `visible`, `create_time
 	(5, '销售部01', 1, 2, 1, 0, 1584771236, 1);
 /*!40000 ALTER TABLE `lqf_sys_dept` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_sys_menu
+-- Dumping structure for table zdtop_net.lqf_sys_menu
 CREATE TABLE IF NOT EXISTS `lqf_sys_menu` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT '菜单名称',
@@ -4703,14 +4820,14 @@ CREATE TABLE IF NOT EXISTS `lqf_sys_menu` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0',
   `org_id` int(11) NOT NULL DEFAULT '1' COMMENT '组织',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1092 DEFAULT CHARSET=utf8 COMMENT='菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=1095 DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
--- Dumping data for table 20629_renrenhw.lqf_sys_menu: 166 rows
+-- Dumping data for table zdtop_net.lqf_sys_menu: 168 rows
 DELETE FROM `lqf_sys_menu`;
 /*!40000 ALTER TABLE `lqf_sys_menu` DISABLE KEYS */;
 INSERT INTO `lqf_sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visible`, `is_shortcut`, `is_menu`, `icon`, `status`, `update_time`, `create_time`, `org_id`) VALUES
 	(1, '系统首页', 0, 10, 'admin', 'index/index', 1, 0, 0, '', 1, 1586425523, 0, 1),
-	(2, '组织结构', 420, 0, 'admin', 'index/main', 1, 0, 1, 'fa-sitemap', 1, 1591946015, 0, 1),
+	(2, '组织结构', 420, 0, 'admin', 'dept', 1, 0, 1, 'fa-sitemap', 1, 1595728166, 0, 1),
 	(4, '系统菜单', 420, 3, 'admin', 'SysMenu/show', 1, 0, 1, 'fa-user', -1, 1581134855, 0, 1),
 	(17, '用户添加', 26, 2, 'admin', 'SysUser/add', 1, 0, 0, 'fa-circle-o', 1, 1592793521, 1570758733, 1),
 	(18, '用户删除', 26, 3, 'admin', 'SysUser/del', 1, 0, 0, 'fa-circle-o', 1, 1592793523, 1570758899, 1),
@@ -4764,12 +4881,12 @@ INSERT INTO `lqf_sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visib
 	(303, '数据备份', 23, 1, 'admin', 'Database/databackup', 1, 0, 1, '', 1, 1581134868, 1573995669, 1),
 	(304, '数据恢复', 23, 2, 'admin', 'Database/dataRestore', 1, 0, 1, '', 1, 1581134872, 1573995695, 1),
 	(305, '用户浏览', 26, 1, 'admin', 'SysUser/show_json', 1, 0, 0, '', 1, 1592793518, 1574148728, 1),
-	(324, '基础数据', 0, 20, 'admin', '#', 0, 0, 1, 'fa-home', 1, 1593416881, 0, 1),
-	(333, '资料修改', 1, 12, 'admin', 'SysUser/editInfo', 1, 0, 0, '', 1, 1592274499, 1574651722, 1),
-	(334, '密码修改', 1, 13, 'admin', 'SysUser/editPwd', 1, 0, 0, '', 1, 1592274505, 1574651738, 1),
+	(1094, '主页面板', 1, 3, 'admin', 'index/main', 1, 0, 0, '', 1, 0, 1595728200, 1),
+	(333, '资料修改', 1, 1, 'admin', 'SysUser/editInfo', 1, 0, 0, '', 1, 1595728207, 1574651722, 1),
+	(334, '密码修改', 1, 2, 'admin', 'SysUser/editPwd', 1, 0, 0, '', 1, 1595728211, 1574651738, 1),
 	(385, '系统设置', 420, 1, 'admin', 'config/setting', 1, 0, 1, '', 1, 1581134842, 1575123431, 1),
 	(689, '框架升级', 20, 10, 'admin', 'Upgrade/show', 1, 0, 1, 'fa-cloud-download', 1, 0, 1591947176, 1),
-	(420, '系统管理', 0, 100, 'admin', 'admin/system/show', 1, 0, 1, 'fa-wrench', 1, 1586425512, 1575805253, 1),
+	(420, '系统管理', 0, 100, 'admin', 'index/index', 1, 0, 1, 'fa-wrench', 1, 1595727471, 1575805253, 1),
 	(421, '行为日志', 420, 4, 'admin', 'Log/show', 1, 0, 1, 'fa-street-view', 1, 1581134860, 1575805707, 1),
 	(422, '企业会员', 2, 1, 'admin', 'SysOrg/show', 1, 0, 1, '', 1, 1581133400, 1575809624, 1),
 	(425, '菜单授权', 26, 7, 'admin', 'SysUser/userRules', 1, 0, 0, '', 1, 1592793638, 1576031324, 1),
@@ -4799,7 +4916,7 @@ INSERT INTO `lqf_sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visib
 	(974, '升级包信息', 689, 3, 'admin', 'Upgrade/info', 1, 0, 0, '', 1, 1592273280, 1592273227, 1),
 	(975, '升级包下载', 689, 4, 'admin', 'Upgrade/down', 1, 0, 0, '', 1, 0, 1592273250, 1),
 	(976, '升级包安装', 689, 4, 'admin', 'Upgrade/execute', 1, 0, 0, '', 1, 0, 1592273270, 1),
-	(986, '内容系统', 0, 0, 'cms', 'Statistics/sk_food', 1, 0, 1, '', 1, 0, 1592273861, 1),
+	(986, '内容系统', 0, 0, 'cms', 'index/index', 1, 0, 1, '', 1, 1595727540, 1592273861, 1),
 	(987, '内容管理', 986, 0, 'cms', 'Archives/show', 1, 0, 1, '', 1, 0, 1592273861, 1),
 	(988, '内容添加', 987, 0, 'cms', 'Archives/add', 1, 0, 0, '', 1, 0, 1592273861, 1),
 	(989, '内容编辑', 987, 0, 'cms', 'Archives/edit', 1, 0, 0, '', 1, 0, 1592273861, 1),
@@ -4807,10 +4924,10 @@ INSERT INTO `lqf_sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visib
 	(991, '内容删除', 987, 0, 'cms', 'Archives/del', 1, 0, 0, '', 1, 0, 1592273861, 1),
 	(992, '封面编辑', 987, 0, 'cms', 'Arctype/edit_content', 1, 0, 0, '', 1, 0, 1592273861, 1),
 	(993, '栏目管理', 986, 1, 'cms', 'Arctype/show', 1, 0, 1, '', 1, 1592274371, 1592273861, 1),
-	(994, '栏目删除', 993, 0, 'cms', 'Arctype/del', 1, 0, 0, '', 1, 0, 1592273861, 1),
-	(995, '栏目修改', 993, 0, 'cms', 'Arctype/edit', 1, 0, 0, '', 1, 0, 1592273861, 1),
+	(994, '栏目删除', 993, 3, 'cms', 'Arctype/del', 1, 0, 0, '', 1, 1595727240, 1592273861, 1),
+	(995, '栏目修改', 993, 2, 'cms', 'Arctype/edit', 1, 0, 0, '', 1, 1595727238, 1592273861, 1),
 	(996, '数据浏览', 993, 0, 'cms', 'Arctype/show_json', 1, 0, 0, '', 1, 0, 1592273861, 1),
-	(997, '栏目添加', 993, 0, 'cms', 'Arctype/add', 1, 0, 0, '', 1, 0, 1592273861, 1),
+	(997, '栏目添加', 993, 1, 'cms', 'Arctype/add', 1, 0, 0, '', 1, 1595727235, 1592273861, 1),
 	(998, '友情链接', 986, 2, 'cms', 'Friendlink/show', 1, 0, 1, '', 1, 1592274379, 1592273861, 1),
 	(999, '启用', 998, 0, 'cms', 'Friendlink/set_visible', 1, 0, 0, '', 1, 0, 1592273861, 1),
 	(1000, '修改', 998, 0, 'cms', 'Friendlink/edit', 1, 0, 0, '', 1, 0, 1592273861, 1),
@@ -4873,11 +4990,13 @@ INSERT INTO `lqf_sys_menu` (`id`, `name`, `pid`, `sort`, `module`, `url`, `visib
 	(1087, '添加', 1085, 2, 'cms', 'arcextField/add', 1, 0, 0, '', 1, 0, 1594460855, 1),
 	(1088, '修改', 1085, 3, 'cms', 'arcextField/edit', 1, 0, 0, '', 1, 0, 1594460874, 1),
 	(1089, '删除', 1085, 5, 'cms', 'arcextField/del', 1, 0, 0, '', 1, 0, 1594460896, 1),
-	(1090, 'tree数据', 993, 1, 'cms', 'Arctype/get_list_tree', 1, 0, 0, '', 1, 0, 1594461109, 1),
-	(1091, '服务列表', 20, 1, 'admin', 'service/servicelist', 1, 0, 1, '', 1, 0, 1594545994, 1);
+	(1090, 'tree数据', 993, 4, 'cms', 'Arctype/get_list_tree', 1, 0, 0, '', 1, 1595727245, 1594461109, 1),
+	(1091, '服务列表', 20, 1, 'admin', 'service/servicelist', 1, 0, 1, '', 1, 0, 1594545994, 1),
+	(1092, '启用', 993, 6, 'cms', 'Arctype/set_visible', 1, 0, 0, '', 1, 1595727173, 1595727138, 1),
+	(1093, '排序', 993, 7, 'cms', 'Arctype/set_sort', 1, 0, 0, '', 1, 0, 1595727221, 1);
 /*!40000 ALTER TABLE `lqf_sys_menu` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_sys_module
+-- Dumping structure for table zdtop_net.lqf_sys_module
 CREATE TABLE IF NOT EXISTS `lqf_sys_module` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `system` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '系统模块',
@@ -4903,9 +5022,9 @@ CREATE TABLE IF NOT EXISTS `lqf_sys_module` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `identifier` (`identifier`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='[系统] 模块';
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='[系统] 模块';
 
--- Dumping data for table 20629_renrenhw.lqf_sys_module: ~4 rows (大约)
+-- Dumping data for table zdtop_net.lqf_sys_module: 4 rows
 DELETE FROM `lqf_sys_module`;
 /*!40000 ALTER TABLE `lqf_sys_module` DISABLE KEYS */;
 INSERT INTO `lqf_sys_module` (`id`, `system`, `name`, `identifier`, `title`, `intro`, `author`, `icon`, `version`, `url`, `sort`, `visible`, `status`, `default`, `config`, `app_id`, `app_keys`, `theme`, `create_time`, `update_time`, `org_id`) VALUES
@@ -4915,7 +5034,7 @@ INSERT INTO `lqf_sys_module` (`id`, `system`, `name`, `identifier`, `title`, `in
 	(8, 0, 'cms', 'module.lingqifei.cms', '内容管理系统', '文章内容发布系统', '07FLY', '/static/lingqifei/lingqifei.png', '1.0.0', 'http://www.07fly.top', 0, 1, 1, 0, '', '0', '', 'default', 1588949457, 1594470708, 0);
 /*!40000 ALTER TABLE `lqf_sys_module` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_sys_org
+-- Dumping structure for table zdtop_net.lqf_sys_org
 CREATE TABLE IF NOT EXISTS `lqf_sys_org` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) DEFAULT NULL COMMENT '用户名',
@@ -4934,14 +5053,14 @@ CREATE TABLE IF NOT EXISTS `lqf_sys_org` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=123 DEFAULT CHARSET=utf8 COMMENT='系统组织表';
 
--- Dumping data for table 20629_renrenhw.lqf_sys_org: 1 rows
+-- Dumping data for table zdtop_net.lqf_sys_org: 1 rows
 DELETE FROM `lqf_sys_org`;
 /*!40000 ALTER TABLE `lqf_sys_org` DISABLE KEYS */;
 INSERT INTO `lqf_sys_org` (`id`, `username`, `password`, `company`, `start_date`, `stop_date`, `sort`, `visible`, `linkman`, `mobile`, `remark`, `create_time`, `update_time`, `org_id`) VALUES
-	(1, 'admin', 'c929dd40244b90f89ea78348bfdfcfb9', '07FLY-CMS', '2020-03-10', '2020-04-10', 0, 1, '李大哥', '18030402705', '零起飞内容管理系统(07FLY-CMS) ，以模板多、易优化、开源而闻名，是国内新锐的PHP开源网站管理系统，也是受广大用户好评的PHP类CMS系统。', 1583806365, 1587991300, 1);
+	(1, 'admin', 'c929dd40244b90f89ea78348bfdfcfb9', '后台管理中心', '2020-03-10', '2020-04-10', 0, 1, '李大哥', '18030402705', '零起飞内容管理系统(07FLY-CMS) ，以模板多、易优化、开源而闻名，是国内新锐的PHP开源网站管理系统，也是受广大用户好评的PHP类CMS系统。', 1583806365, 1595059748, 1);
 /*!40000 ALTER TABLE `lqf_sys_org` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_sys_postion
+-- Dumping structure for table zdtop_net.lqf_sys_postion
 CREATE TABLE IF NOT EXISTS `lqf_sys_postion` (
   `id` int(11) DEFAULT NULL,
   `name` varchar(64) DEFAULT NULL COMMENT '职位名称',
@@ -4953,12 +5072,12 @@ CREATE TABLE IF NOT EXISTS `lqf_sys_postion` (
   `org_id` int(11) DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='系统职位表';
 
--- Dumping data for table 20629_renrenhw.lqf_sys_postion: 0 rows
+-- Dumping data for table zdtop_net.lqf_sys_postion: 0 rows
 DELETE FROM `lqf_sys_postion`;
 /*!40000 ALTER TABLE `lqf_sys_postion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `lqf_sys_postion` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_sys_user
+-- Dumping structure for table zdtop_net.lqf_sys_user
 CREATE TABLE IF NOT EXISTS `lqf_sys_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL COMMENT '用户名',
@@ -4979,57 +5098,16 @@ CREATE TABLE IF NOT EXISTS `lqf_sys_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=85 DEFAULT CHARSET=utf8 COMMENT='系统用户表';
 
--- Dumping data for table 20629_renrenhw.lqf_sys_user: 2 rows
+-- Dumping data for table zdtop_net.lqf_sys_user: 2 rows
 DELETE FROM `lqf_sys_user`;
 /*!40000 ALTER TABLE `lqf_sys_user` DISABLE KEYS */;
 INSERT INTO `lqf_sys_user` (`id`, `username`, `password`, `realname`, `gender`, `dept_id`, `email`, `qicq`, `mobile`, `intro`, `rules`, `create_time`, `update_time`, `sort`, `visible`, `org_id`) VALUES
-	(1, 'admin', '49839e418382721e8227cf674276c5f0', '零起飞', 0, 1, 'web@07fly.com', '1871720801', '18030402705', '', '', 1594258549, 1594471098, 1, 1, 0),
-	(84, 'manage', '26528a91663970cd1d24400ee0d5ed8e', '匆道', 1, 0, '', '', '', '', '', 1587610606, 1594461038, 0, 1, 1);
+	(1, 'admin', 'f8647ff7b6e8c96755b560c78286ddbb', '零起飞', 0, 1, 'web@07fly.com', '1871720801', '18030402705', '', '', 1604728938, 1604728938, 1, 1, 1),
+	(84, 'manage', 'a6ab969931190aa72123b9150ad01d54', '人人海外', 1, 0, '', '', '', '', '', 1587610606, 1600391812, 0, 1, 1);
 /*!40000 ALTER TABLE `lqf_sys_user` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_taglist
-CREATE TABLE IF NOT EXISTS `lqf_taglist` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `tid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'tagid',
-  `aid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '文档ID',
-  `typeid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
-  `tag` varchar(50) DEFAULT '' COMMENT 'tag内容',
-  `arcrank` tinyint(1) DEFAULT '0' COMMENT '阅读权限',
-  `lang` varchar(50) DEFAULT 'cn' COMMENT '语言标识',
-  `add_time` int(11) DEFAULT '0' COMMENT '新增时间',
-  `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`tid`,`aid`,`id`),
-  KEY `aid` (`aid`,`typeid`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章标签表';
-
--- Dumping data for table 20629_renrenhw.lqf_taglist: 20 rows
-DELETE FROM `lqf_taglist`;
-/*!40000 ALTER TABLE `lqf_taglist` DISABLE KEYS */;
-INSERT INTO `lqf_taglist` (`id`, `tid`, `aid`, `typeid`, `tag`, `arcrank`, `lang`, `add_time`, `update_time`) VALUES
-	(1, 30, 13, 12, '五大核心', 0, 'cn', 1547462639, 0),
-	(1, 29, 13, 12, '建设', 0, 'cn', 1547462639, 0),
-	(1, 34, 27, 24, 'NOTE 8', 0, 'cn', 1565662720, 0),
-	(1, 33, 27, 24, 'HUAWEI', 0, 'cn', 1565662720, 0),
-	(1, 32, 27, 24, '华为', 0, 'cn', 1565662720, 0),
-	(1, 44, 30, 5, '推土', 0, 'cn', 1564565462, 0),
-	(1, 43, 30, 5, '机械', 0, 'cn', 1564565462, 0),
-	(1, 42, 30, 5, '工程', 0, 'cn', 1564565462, 0),
-	(1, 28, 13, 12, '网站', 0, 'cn', 1547462639, 0),
-	(1, 31, 13, 12, '要素', 0, 'cn', 1547462639, 0),
-	(1, 38, 40, 12, '社交', 0, 'cn', 1563520599, 0),
-	(1, 39, 40, 12, '媒体', 0, 'cn', 1563520599, 0),
-	(1, 41, 41, 12, '商业', 0, 'cn', 1564545044, 0),
-	(1, 40, 41, 12, '营销', 0, 'cn', 1564545044, 0),
-	(1, 45, 30, 5, '挖掘', 0, 'cn', 1564565462, 0),
-	(1, 46, 30, 5, '网站模板', 0, 'cn', 1564565462, 0),
-	(1, 48, 91, 5, '操作系统', 0, 'cn', 1564623457, 0),
-	(1, 47, 91, 5, 'WindowsXP', 0, 'cn', 1564623457, 0),
-	(1, 50, 42, 64, '推广服务', 0, 'cn', 1565234124, 0),
-	(1, 49, 42, 64, '网络优化', 0, 'cn', 1565234124, 0);
-/*!40000 ALTER TABLE `lqf_taglist` ENABLE KEYS */;
-
--- Dumping structure for table 20629_renrenhw.lqf_tags
-CREATE TABLE IF NOT EXISTS `lqf_tags` (
+-- Dumping structure for table zdtop_net.lqf_tagindex
+CREATE TABLE IF NOT EXISTS `lqf_tagindex` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'tagid',
   `tag` varchar(50) NOT NULL DEFAULT '' COMMENT 'tag内容',
   `typeid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
@@ -5048,10 +5126,10 @@ CREATE TABLE IF NOT EXISTS `lqf_tags` (
   KEY `tag` (`tag`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COMMENT='标签索引表';
 
--- Dumping data for table 20629_renrenhw.lqf_tags: 27 rows
-DELETE FROM `lqf_tags`;
-/*!40000 ALTER TABLE `lqf_tags` DISABLE KEYS */;
-INSERT INTO `lqf_tags` (`id`, `tag`, `typeid`, `count`, `total`, `weekcc`, `monthcc`, `weekup`, `monthup`, `lang`, `create_time`, `update_time`) VALUES
+-- Dumping data for table zdtop_net.lqf_tagindex: 27 rows
+DELETE FROM `lqf_tagindex`;
+/*!40000 ALTER TABLE `lqf_tagindex` DISABLE KEYS */;
+INSERT INTO `lqf_tagindex` (`id`, `tag`, `typeid`, `count`, `total`, `weekcc`, `monthcc`, `weekup`, `monthup`, `lang`, `create_time`, `update_time`) VALUES
 	(24, 'TAG标签', 10, 0, 0, 0, 0, 0, 0, 'cn', 1526544706, 0),
 	(25, '对的', 10, 0, 0, 0, 0, 0, 0, 'cn', 1526544706, 0),
 	(26, '替换稿件', 10, 0, 0, 0, 0, 0, 0, 'cn', 1526544706, 0),
@@ -5079,9 +5157,52 @@ INSERT INTO `lqf_tags` (`id`, `tag`, `typeid`, `count`, `total`, `weekcc`, `mont
 	(48, '操作系统', 5, 0, 0, 0, 0, 0, 0, 'cn', 1564565908, 0),
 	(49, '网络优化', 64, 0, 0, 0, 0, 0, 0, 'cn', 1565161106, 0),
 	(50, '推广服务', 64, 0, 0, 0, 0, 0, 0, 'cn', 1565161106, 0);
-/*!40000 ALTER TABLE `lqf_tags` ENABLE KEYS */;
+/*!40000 ALTER TABLE `lqf_tagindex` ENABLE KEYS */;
 
--- Dumping structure for table 20629_renrenhw.lqf_website
+-- Dumping structure for table zdtop_net.lqf_taglist
+CREATE TABLE IF NOT EXISTS `lqf_taglist` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `tid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'tagid',
+  `aid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '文档ID',
+  `typeid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
+  `tag` varchar(50) DEFAULT '' COMMENT 'tag内容',
+  `arcrank` tinyint(1) DEFAULT '0' COMMENT '阅读权限',
+  `lang` varchar(50) DEFAULT 'cn' COMMENT '语言标识',
+  `add_time` int(11) DEFAULT '0' COMMENT '新增时间',
+  `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`tid`,`aid`,`id`),
+  KEY `aid` (`aid`,`typeid`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章标签表';
+
+-- Dumping data for table zdtop_net.lqf_taglist: 22 rows
+DELETE FROM `lqf_taglist`;
+/*!40000 ALTER TABLE `lqf_taglist` DISABLE KEYS */;
+INSERT INTO `lqf_taglist` (`id`, `tid`, `aid`, `typeid`, `tag`, `arcrank`, `lang`, `add_time`, `update_time`) VALUES
+	(1, 30, 13, 12, '五大核心', 0, 'cn', 1547462639, 0),
+	(1, 29, 13, 12, '建设', 0, 'cn', 1547462639, 0),
+	(1, 34, 27, 24, 'NOTE 8', 0, 'cn', 1565662720, 0),
+	(1, 33, 27, 24, 'HUAWEI', 0, 'cn', 1565662720, 0),
+	(1, 32, 27, 24, '华为', 0, 'cn', 1565662720, 0),
+	(1, 44, 30, 5, '推土', 0, 'cn', 1564565462, 0),
+	(1, 43, 30, 5, '机械', 0, 'cn', 1564565462, 0),
+	(1, 42, 30, 5, '工程', 0, 'cn', 1564565462, 0),
+	(1, 28, 13, 12, '网站', 0, 'cn', 1547462639, 0),
+	(1, 31, 13, 12, '要素', 0, 'cn', 1547462639, 0),
+	(1, 38, 40, 12, '社交', 0, 'cn', 1563520599, 0),
+	(1, 39, 40, 12, '媒体', 0, 'cn', 1563520599, 0),
+	(1, 41, 41, 12, '商业', 0, 'cn', 1564545044, 0),
+	(1, 40, 41, 12, '营销', 0, 'cn', 1564545044, 0),
+	(1, 45, 30, 5, '挖掘', 0, 'cn', 1564565462, 0),
+	(1, 46, 30, 5, '网站模板', 0, 'cn', 1564565462, 0),
+	(1, 48, 91, 5, '操作系统', 0, 'cn', 1564623457, 0),
+	(1, 47, 91, 5, 'WindowsXP', 0, 'cn', 1564623457, 0),
+	(1, 50, 42, 64, '推广服务', 0, 'cn', 1565234124, 0),
+	(1, 49, 42, 64, '网络优化', 0, 'cn', 1565234124, 0),
+	(2, 0, 114, 31, '成都网站建设', 0, 'cn', 0, 1604723564),
+	(1, 0, 114, 31, '网站建设', 0, 'cn', 0, 1604723564);
+/*!40000 ALTER TABLE `lqf_taglist` ENABLE KEYS */;
+
+-- Dumping structure for table zdtop_net.lqf_website
 CREATE TABLE IF NOT EXISTS `lqf_website` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '配置ID',
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT '配置名称',
@@ -5093,30 +5214,26 @@ CREATE TABLE IF NOT EXISTS `lqf_website` (
   `describe` varchar(255) NOT NULL DEFAULT '' COMMENT '配置说明',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `visible` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
   `sort` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_name` (`name`),
   KEY `type` (`type`),
   KEY `group` (`group`)
-) ENGINE=MyISAM AUTO_INCREMENT=79 DEFAULT CHARSET=utf8 COMMENT='网站配置表';
+) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=utf8 COMMENT='网站配置表';
 
--- Dumping data for table 20629_renrenhw.lqf_website: 12 rows
+-- Dumping data for table zdtop_net.lqf_website: 8 rows
 DELETE FROM `lqf_website`;
 /*!40000 ALTER TABLE `lqf_website` DISABLE KEYS */;
-INSERT INTO `lqf_website` (`id`, `name`, `type`, `title`, `value`, `group`, `extra`, `describe`, `create_time`, `update_time`, `visible`, `sort`) VALUES
-	(67, 'web_name', 'varchar', '网站名称', '人人海外移', '1', '', '这是输入是网站的描述', 0, 1594196553, 1, 0),
-	(68, 'web_title', 'varchar', '网站标题', '人人海外移民咨询有限公司', '1', '', '这是输入是网站的描述', 0, 1594196553, 1, 0),
-	(69, 'web_keywords', 'varchar', '网站关键字', '零起飞cms,cms,内容管理系统', '1', '', '这是输入是网站的描述', 0, 1594196519, 1, 0),
-	(70, 'web_content', 'textarea', '网站描述', '人人海外致力于为所有谋求长远发展的各类企业提供品牌创建、品牌更新、品牌管理设计服务。以策略为导向，注重实效，结合对市场、企业、消费者、文化的深刻理解和对时尚潮流的准确把握，协助客户提升产品的销售力和形象力，打造“最具有赢响力”的品牌核心价值。以视觉为沟通语言，以设计为传达媒介，创造整合性、全面性、国际性的视觉传播系统，为客户提供完整而有效的品牌锐变方案', '0', '', '网站的描述信息', 0, 1594196553, 1, 0),
-	(71, 'web_copyright', 'textarea', '网站版权', '成都人人海外顾问有限公司 版权所有 Copyright 2020 renrenhaiwai.com Inc. All rights reserved.<br>\r\n粤ICP备08123121号', '1', '', '这是输入是网站的描述', 0, 1594196553, 1, 0),
-	(1, 'web_visible', 'bool', '网站状态', '1', '1', '', '', 0, 1594196553, 1, 0),
-	(73, 'web_icp', 'varchar', '网站备案号', '蜀ICP备19027100号-1', '1', '', '', 0, 1594196553, 1, 0),
-	(74, 'web_theme', 'varchar', '网站主题', 'renrenhaiwai', '1', '', '', 0, 1594196553, 1, 0),
-	(75, 'web_address', 'varchar', '联系地址', '成都市高朋大道科园三路4号火炬时代B区2号', '1', '', '', 1587699544, 1594196553, 1, 0),
-	(76, 'web_tel', 'varchar', '免费热线', '400-800-8008', '1', '', '', 1587699544, 1594196553, 1, 0),
-	(77, 'web_email', 'varchar', '邮箱地址', '976426551@qq.com', '1', '', '', 1587699544, 1594196553, 1, 0),
-	(78, 'web_phone', 'varchar', '咨询热线', '18080809999', '1', '', '', 1593659478, 1594196553, 1, 0);
+INSERT INTO `lqf_website` (`id`, `name`, `type`, `title`, `value`, `group`, `extra`, `describe`, `create_time`, `update_time`, `status`, `sort`) VALUES
+	(67, 'web_name', 'varchar', '网站名称', '成都零起飞科技有限公司', '1', '', '这是输入是网站的描述', 0, 1587614608, 1, 0),
+	(68, 'web_title', 'varchar', '网站标题', '成都零起飞科技有限公司', '1', '', '这是输入是网站的描述', 0, 1587614608, 1, 0),
+	(69, 'web_keywords', 'varchar', '网站关键字', '成都零起飞科技有限公司', '1', '', '这是输入是网站的描述', 0, 1587614608, 1, 0),
+	(70, 'web_content', 'textarea', '网站描述', '成都零起飞科技有限公司', '1', '', '这是输入是网站的描述', 0, 1587614608, 1, 0),
+	(71, 'web_copyright', 'textarea', '网站版权', '2020 成都零起飞科技有限公司版权所有', '1', '', '这是输入是网站的描述', 0, 1587614608, 1, 0),
+	(1, 'web_visible', 'bool', '网站状态', '1', '1', '', '', 0, 1587614608, 1, 0),
+	(73, 'web_icp', 'varchar', '网站备案号', '800000000', '1', '', '', 0, 1587614608, 1, 0),
+	(74, 'web_theme', 'varchar', '网站主题', '07fly', '1', '', '', 0, 1587614608, 1, 0);
 /*!40000 ALTER TABLE `lqf_website` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
