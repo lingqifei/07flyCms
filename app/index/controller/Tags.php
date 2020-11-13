@@ -41,7 +41,7 @@ class Tags extends IndexBase{
     public function lists()
     {
         $param = $this->param;
-
+        $tagindexInfo=array();
         $tagid = isset($param['tagid']) ? $param['tagid'] : '';
         $tag = isset($param['tag']) ? trim($param['tag']) : '';
         if (!empty($tag)) {
@@ -59,12 +59,15 @@ class Tags extends IndexBase{
             $this->logicTag->getTagindexUpdate($tagindexInfo);
         }
 
+        is_object($tagindexInfo) && $tagindexInfo=$tagindexInfo->toArray();
+
         $field_data = array(
             'tag'   => $tag,
             'tagid'   => $tagid,
         );
+
         $rtnArray = array(
-            'field'  => $field_data,
+            'field'  => array_merge($field_data,$tagindexInfo),
         );
 
         $this->assign('fly', $rtnArray);

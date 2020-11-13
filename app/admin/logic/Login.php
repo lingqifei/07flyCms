@@ -33,7 +33,7 @@ class Login extends AdminBase
         }
         
         $user = $this->logicSysUser->getSysUserInfo(['username' => $username]);
-
+//echo data_md5_key($password) ;exit;
         if (!empty($user['password']) && data_md5_key($password) == $user['password']) {
 
             $org=$this->logicSysOrg->getSysOrgInfo(['id' => $user['org_id']]);

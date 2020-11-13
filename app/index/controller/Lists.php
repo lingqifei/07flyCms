@@ -53,6 +53,19 @@ class Lists extends IndexBase{
         }
 
         //start  动态添加搜索关键字变量 start *******************************************************
+
+//        if(!empty($this->param['filterform'])){
+//            $filterform=$this->param['filterform'];
+//            $filterField=str2arr($filterform);
+//            foreach ($filterField as $ffd){
+//                if(!empty($this->param[$ffd])){//面积
+//                    $this->assign($ffd, $this->param[$ffd]);
+//                }else{
+//                    $this->assign($ffd, '');
+//                }
+//            }
+//        }
+
         if(!empty($this->param['mj'])){//面积
             $this->assign('mj', $this->param['mj']);
         }else{
@@ -78,6 +91,23 @@ class Lists extends IndexBase{
         }else{
             $this->assign('scfg', '');
         }
+
+        if(!empty($this->param['orderby'])){//排序
+            $this->assign('orderby', $this->param['orderby']);
+        }else{
+            $this->assign('orderby', '');
+        }
+
+        if(!empty($this->param['orderway'])){//升降
+            if($this->param['orderway']=='desc'){
+                $this->assign('orderway', 'asc');
+            }else{
+                $this->assign('orderway', 'desc');
+            }
+        }else{
+            $this->assign('orderway', 'desc');
+        }
+
         //end 动态添加搜索关键字变量 end *******************************************************
 
         $viewfile = !empty($tpfile)?strtolower($tpfile):$tpfile;
