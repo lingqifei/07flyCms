@@ -176,7 +176,6 @@ class TagList extends Base
 
         //判断是否查询指定频道扩展关联表
         if (!empty($param['channelexttable'])) {
-
             $fg = input('param.fg/s', '');
             $fx = input('param.fx/s', '');
             $mj = input('param.mj/s', '');

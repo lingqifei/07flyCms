@@ -104,7 +104,7 @@ function get_city(){
     //根据IP地址定位所在城市
     $res = file_get_contents($api_url);
     $res = json_decode($res,true);
-    if(!empty($res)){
+    if(!empty($res['city'])){
         return $res['city'];
     }else{
         return '';

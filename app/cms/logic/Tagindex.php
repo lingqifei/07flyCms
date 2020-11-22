@@ -95,7 +95,7 @@ class Tagindex extends CmsBase
         $keywords=preg_replace("/(\n)|(\s)|(\t)|(\')|(')|(，)/" ,',' ,$keywords);
         $key_array=str2arr($keywords);
         foreach ($key_array as $onetag){
-            if(in_array($onetag,$key_array)){
+            if(in_array($onetag,$tagindex_list)){
                 $tagid=array_search($onetag,$tagindex_list);
             }else{
                 $tagid=$this->modelTagindex->setInfo(['tag'=>$onetag,'typeid'=>$typeid]);

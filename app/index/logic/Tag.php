@@ -98,6 +98,7 @@ class Tag extends IndexBase
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/11/3 0003
      */
     public  function  getTaglistAid($tag=null, $tagid=null){
+        $aidArr='';
         if (!empty($tag)) {
             $map['tag']=['like', "%{$tag}%"];
             $tagidArr = $this->modelTagindex->getColumn($map, "id");
