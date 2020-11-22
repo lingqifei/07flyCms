@@ -92,6 +92,12 @@ class Lists extends IndexBase{
             $this->assign('scfg', '');
         }
 
+        if(!empty($this->param['age'])){//风格
+            $this->assign('age', $this->param['age']);
+        }else{
+            $this->assign('age', '');
+        }
+
         if(!empty($this->param['orderby'])){//排序
             $this->assign('orderby', $this->param['orderby']);
         }else{
