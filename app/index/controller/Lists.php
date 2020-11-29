@@ -92,7 +92,7 @@ class Lists extends IndexBase{
             $this->assign('scfg', '');
         }
 
-        if(!empty($this->param['age'])){//风格
+        if(!empty($this->param['age'])){//从业年限
             $this->assign('age', $this->param['age']);
         }else{
             $this->assign('age', '');

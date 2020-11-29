@@ -181,6 +181,7 @@ class TagList extends Base
             $mj = input('param.mj/s', '');
             $level = input('param.level/s', '');
             $scfg = input('param.scfg/s', '');
+            $age = input('param.age/s', '');
 
             if(!empty($mj)){
                 $where['e.house_area'] = ['=', $mj];
@@ -196,6 +197,12 @@ class TagList extends Base
             }
             if(!empty($scfg)){
                $where['e.dg_scfg']=['like','%'.$scfg.'%'];
+            }
+            if(!empty($age)){
+                $where['e.dg_sjjy']=['between',$age];
+                $ageArr=str2arr($age);
+//               $where['e.dg_sjjy']=['>',$ageArr[0]];
+//               $where['e.dg_sjjy']=['<',$ageArr[1]];
             }
             $result = $logicArchives->getArchivesExtablePageList($where, 'a.*,e.*', $orderby, $pagesize,$param['channelexttable']);
         }else{
