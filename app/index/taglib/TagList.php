@@ -155,7 +155,7 @@ class TagList extends Base
         if (strtolower(request()->controller()) == 'search') {
             $keywords = input('param.keywords/s', '');
             $typeid = input('param.typeid/s', '');
-            $where['a.title|t.typename'] = ['like', "%{$keywords}%"];
+            $where['a.title|a.description|t.typename'] = ['like', "%{$keywords}%"];
             if($typeid){
                 $where['a.type_id'] = ['in', $typeid];
             }
@@ -181,10 +181,30 @@ class TagList extends Base
             $mj = input('param.mj/s', '');
             $level = input('param.level/s', '');
             $scfg = input('param.scfg/s', '');
-            $age = input('param.age/s', '');
-
+            $sjjy = input('param.sjjy/s', '');
+            $orderby = input('param.orderby/s', '');
+            $orderway = input('param.orderway/s', '');
+            $sfk = input('param.sfk/s', '');
+            if ($orderby) {
+                switch ($orderby) {
+                    case "hot":
+                        $by = "a.click $orderway";
+                        break;
+                    case "time":
+                        $by = "a.create_time $orderway";
+                        break;
+                    case "sjjy":
+                        $by = "e.dg_sjjy $orderway";
+                        break;
+                    default :
+                        $by = '';
+                        break;
+                }
+                $orderby = $by;
+            }
+            //案例搜索
             if(!empty($mj)){
-                $where['e.house_area'] = ['=', $mj];
+                $where['e.house_area']=['between',$mj];
             }
             if(!empty($fg)){
                 $where['e.house_style'] = ['=', $fg];
@@ -192,17 +212,18 @@ class TagList extends Base
             if(!empty($fx)){
                 $where['e.house_type'] = ['=', $fx];
             }
+            if(!empty($sfk)){
+                $where['a.title'] = ['like', '%'.$sfk.'%'];
+            }
+            // 设计师
             if(!empty($level)){
                 $where['e.dg_level'] = ['=', $level];
             }
             if(!empty($scfg)){
                $where['e.dg_scfg']=['like','%'.$scfg.'%'];
             }
-            if(!empty($age)){
-                $where['e.dg_sjjy']=['between',$age];
-                $ageArr=str2arr($age);
-//               $where['e.dg_sjjy']=['>',$ageArr[0]];
-//               $where['e.dg_sjjy']=['<',$ageArr[1]];
+            if(!empty($sjjy)){
+                $where['e.dg_sjjy']=['between',$sjjy];
             }
             $result = $logicArchives->getArchivesExtablePageList($where, 'a.*,e.*', $orderby, $pagesize,$param['channelexttable']);
         }else{

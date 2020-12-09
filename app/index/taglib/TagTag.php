@@ -67,13 +67,16 @@ class TagTag extends IndexBase
 
             switch ($sort) {
                 case 'rand':
-                    $orderby = 'rand() ';
+                    $rand_ids=$this->modelTagindex->getColumn('','id');
+                    $radn_id=array_rand_value($rand_ids,$row);
+                    $where['id'] = array('in', $radn_id);
+                    $orderby = 'create_time DESC';
                     break;
                 case 'week':
-                    $orderby = 'week desc ';
+                    $orderby = 'weekcc desc ';
                     break;
                 case 'month':
-                    $orderby = 'month desc ';
+                    $orderby = 'monthcc desc ';
                     break;
                 case 'hot':
                     $orderby = 'count desc ';
@@ -87,7 +90,6 @@ class TagTag extends IndexBase
             }
             $list = $this->modelTagindex->getList($where, "*, id AS tagid", $orderby, $row);
         }
-
         is_object($list) && $list=$list->toArray();
         if(!empty($list['data'])) $result=$list['data'];
         foreach ($result as $key => $val) {
@@ -144,4 +146,7 @@ class TagTag extends IndexBase
 
         return $typeids;
     }
+
+
+
 }

@@ -34,7 +34,7 @@ class Fly extends TagLib
         'arcsubcount' => ['attr' => 'channelid,typeid,linkfield,linkreg,linkvalue', 'close' => 0],//统计下级文章个数
 
         // 相关文档
-        'likearticle'    => ['attr' => 'channelid,limit,row,titlelen,infolen,typeid,empty,mod,name,id,key,thumb'],
+        'likearticle'    => ['attr' => 'channelid,limit,row,titlelen,infolen,typeid,orderby,orderway,empty,mod,name,id,key,thumb'],
         'prenext'    => ['attr' => 'get,titlelen,id,empty'],
 
         //文档列表
@@ -708,6 +708,14 @@ class Fly extends TagLib
         if (empty($limit) && !empty($row)) {
             $limit = "0,{$row}";
         }
+        $orderby = isset($tag['orderby']) ? $tag['orderby'] : '';
+        if (isset($tag['orderway'])) {
+            $orderway = $tag['orderway'];
+        } else {
+            $orderway = isset($tag['orderway']) ? $tag['orderway'] : 'desc';
+        }
+
+
 
         $parseStr = '<?php ';
         if ($name) { // 从模板中传入数据集
@@ -730,7 +738,7 @@ class Fly extends TagLib
 
         } else { // 查询数据库获取的数据集
             $parseStr .= ' $tagLikearticle = new \app\index\taglib\TagLikearticle;';
-            $parseStr .= ' $_result = $tagLikearticle->getLikearticle('.$channelid.','.$mytypeid.', "'.$limit.'");';
+            $parseStr .= ' $_result = $tagLikearticle->getLikearticle('.$channelid.','.$mytypeid.', "'.$limit.'", "'.$orderby.'", "'.$orderway.'");';
             $parseStr .= 'if(is_array($_result) || $_result instanceof \think\Collection || $_result instanceof \think\Paginator): $' . $key . ' = 0; $e = 1;';
             // 设置了输出数组长度
             $parseStr .= ' $__LIST__ = $_result;';
