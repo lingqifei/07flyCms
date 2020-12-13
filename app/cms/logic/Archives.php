@@ -84,7 +84,7 @@ class Archives extends CmsBase
             'channel_id'=>$arctype['channel_id'],
             'type_id'=>$data['type_id'],
             'type_id2'=>$data['type_id2'],
-            'sys_area_id'=>$data['sys_area_id'],
+           'sys_area_id'=>empty($data['sys_area_id'])?'0':$data['sys_area_id'],
             'title'=>$data['title'],
             'shorttitle'=>$data['shorttitle'],
             'flag'=>(!empty($data['flag']))?implode(",",$data['flag']):'',
@@ -96,12 +96,12 @@ class Archives extends CmsBase
             'source'=>$data['source'],
             'pubdate'=>$data['pubdate'],
             'is_jump'=>empty($data['is_jump'])?'0':'1',
-            'jump_url'=>$data['jump_url'],
+            'jump_url'=>empty($data['jump_url'])?'0':$data['jump_url'],
         ];
         $aid = $this->modelArchives->setInfo($main_data);
 
         //调用ag标签接口
-        $this->logicTagindex->tagindexAddArchives($keywords,$data['id'],$data['type_id']);
+        $this->logicTagindex->tagindexAddArchives($keywords,$aid,$data['type_id']);
         //3、添加附加表
         $ext_field=$this->logicChannelField->getExtTableFieldList($arctype['maintable'],$arctype['addtable']);
         $ext_data=array(
@@ -158,7 +158,7 @@ class Archives extends CmsBase
             'channel_id'=>$arctype['channel_id'],
             'type_id'=>$data['type_id'],
             'type_id2'=>$data['type_id2'],
-            'sys_area_id'=>$data['sys_area_id'],
+           'sys_area_id'=>empty($data['sys_area_id'])?'0':$data['sys_area_id'],
             'title'=>$data['title'],
             'shorttitle'=>$data['shorttitle'],
             'flag'=>(!empty($data['flag']))?implode(",",$data['flag']):'',
@@ -169,7 +169,7 @@ class Archives extends CmsBase
             'writer'=>$data['writer'],
             'pubdate'=>$data['pubdate'],
             'is_jump'=>empty($data['is_jump'])?'0':'1',
-            'jump_url'=>$data['jump_url'],
+            'jump_url'=>empty($data['jump_url'])?'0':$data['jump_url'],
         ];
         $this->modelArchives->setInfo($main_data);
 

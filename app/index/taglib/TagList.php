@@ -186,6 +186,7 @@ class TagList extends Base
             $orderway = input('param.orderway/s', '');
             $sfk = input('param.sfk/s', '');
             if ($orderby) {
+                empty($orderway) && $orderway='desc';
                 switch ($orderby) {
                     case "hot":
                         $by = "a.click $orderway";
