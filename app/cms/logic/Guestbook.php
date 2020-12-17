@@ -186,6 +186,20 @@ ENGINE=MyISAM;"	;
 
         //扩展数据处理
         $where['gid']=['=',$data['gid']];
+
+        if (!empty($data['bdate'])) {
+            $where['create_time'] = ['>=', strtotime($data['bdate'])];
+        }
+
+        if (!empty($data['edate'])) {
+            $where['create_time'] = ['<', strtotime($data['edate'])];
+        }
+
+        if (!empty($data['bdate']) && !empty($data['edate'])) {
+            $date_range=[strtotime($data['bdate']),strtotime($data['edate'])];
+            $where['create_time'] = ['between', $date_range];
+        }
+//print_r($where);
         $list=Db::table(SYS_DB_PREFIX.$table['addtable'])
             ->where($where)
             ->order('create_time desc')
