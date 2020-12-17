@@ -131,24 +131,42 @@ class TagArclist extends Base
         $where = [];
         if(!empty($param['channelid'])){
             $where['a.channelid']=['in',$param['channelid']];
+            $randMap['channelid']=['in',$param['channelid']];
+
         }
 
         if(!empty($param['cityid'])){
             $where['a.sys_area_id']=['in',$param['cityid']];
+            $randMap['sys_area_id']=['in',$param['cityid']];
         }
 
         if(!empty($param['typeid'])){
             $where['a.type_id']=['in',$param['typeid']];
+            $randMap['type_id']=['in',$param['typeid']];
         }
 
         if(!empty($param['flag'])){
             $reg_txt=str_replace(",","|",$param['flag']);
             $where['a.flag']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
+            $randMap['flag']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
         }
 
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
-        $orderby =$logicArchives->getOrderBy($orderby,$orderway);
+        //排序
+        switch ($orderby) {
+            case 'rand':
+                $rand_ids=$logicArchives->getArchivesColumn($randMap,'id');
+                $rand_cnt=count($rand_ids);
+                $number=(count($rand_ids)>15)?'15':$rand_cnt;
+                $rand_id=array_rand_value($rand_ids,$number);
+                $where['a.id'] = array('in', $rand_id);
+                $orderby = 'create_time DESC';
+                break;
+            default:
+                $orderby =$logicArchives->getOrderBy($orderby,$orderway);
+                break;
+        }
         $result = $logicArchives->getArchivesList($where, true, $orderby,$pagesize);
 
         //获取文档栏目信息

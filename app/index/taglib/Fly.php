@@ -296,7 +296,7 @@ class Fly extends TagLib
         $mod = !empty($tag['mod']) && is_numeric($tag['mod']) ? $tag['mod'] : '2';
         $orderby = isset($tag['orderby']) ? $tag['orderby'] : '';
         if (isset($tag['orderWay'])) {
-            $orderway = $tag['orderWay'];
+            $orderway = $tag['orderway'];
         } else {
             $orderway = isset($tag['orderway']) ? $tag['orderway'] : 'desc';
         }
