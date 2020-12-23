@@ -119,7 +119,7 @@ class Archives extends CmsBase
     public function del()
     {
         $where = empty($this->param['id']) ? ['id' => 0] : ['id' => $this->param['id']];
-        $this->jump($this->logicArchives->archivesDel($where));
+        $this->jump($this->logicArchives->archivesDel($this->param));
     }
 
     /**

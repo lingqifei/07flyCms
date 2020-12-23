@@ -212,16 +212,22 @@ class Archives extends CmsBase
     /**
      * 文档删除
      */
-    public function archivesDel($where = [])
+    public function archivesDel($data = [])
     {
+
+        if(empty($data['id'])){
+            return [RESULT_ERROR, '选择操作数据'];
+            exit;
+        }
+        $where["id"]=['in',$data['id']];
         $arclist=$this->modelArchives->getList($where,true,true,false);
         foreach ($arclist as $row){
             $arctype=$this->logicArctype->getArctypeInfoDetail($row['type_id']);
             if(!empty($arctype)){
                 Db::table(SYS_DB_PREFIX.$arctype['addtable'])->delete($row['id'],true);
             }
-            $result = $this->modelArchives->deleteInfo($where,true);
         }
+        $result = $this->modelArchives->deleteInfo($where,true);
         $result && action_log('删除', '删除文档，where：' . http_build_query($where));
         return $result ? [RESULT_SUCCESS, '删除成功'] : [RESULT_ERROR, $this->modelArchives->getError()];
     }

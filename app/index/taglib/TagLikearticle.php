@@ -110,7 +110,7 @@ class TagLikearticle extends Base
         }
 
         $where['a.keywords']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
-        //$randMap['keywords']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
+        //$randMap['keywords']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];·
 
 
         //排序

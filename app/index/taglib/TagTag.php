@@ -68,7 +68,9 @@ class TagTag extends IndexBase
             switch ($sort) {
                 case 'rand':
                     $rand_ids=$this->modelTagindex->getColumn('','id');
-                    $radn_id=array_rand_value($rand_ids,$row);
+                    $rand_cnt=count($rand_ids);
+                    $number=(count($rand_ids)>15)?'15':$rand_cnt;
+                    $radn_id=array_rand_value($rand_ids,$number);
                     $where['id'] = array('in', $radn_id);
                     $orderby = 'create_time DESC';
                     break;

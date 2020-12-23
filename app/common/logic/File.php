@@ -38,25 +38,21 @@ class File extends LogicBase
         if (!empty($picture_info)) { return $picture_info; }
         
         $object = $object_info->move(PATH_PICTURE);
-        
+
         $save_name = $object->getSaveName();
-        
         $save_path = PATH_PICTURE . $save_name;
-        
+
         $picture_dir_name = substr($save_name, 0, strrpos($save_name, DS));
-        
         $filename = $object->getFilename();
-        
+
+        //缩略图生成
         $thumb_dir_path = PATH_PICTURE . $picture_dir_name . DS . 'thumb';
-        
         !file_exists($thumb_dir_path) && @mkdir($thumb_dir_path, 0777, true);
-        
         Image::open($save_path)->thumb($thumb_config['small']   , $thumb_config['small'])->save($thumb_dir_path  . DS . 'small_'  . $filename);
         Image::open($save_path)->thumb($thumb_config['medium']  , $thumb_config['medium'])->save($thumb_dir_path . DS . 'medium_' . $filename);
         Image::open($save_path)->thumb($thumb_config['big']     , $thumb_config['big'])->save($thumb_dir_path    . DS . 'big_'    . $filename);
-        
+
         $data = ['name' => $filename, 'path' => $picture_dir_name. SYS_DS_PROS . $filename, 'sha1' => $sha1];
-        
         $result = $this->modelPicture->setInfo($data);
 
         unset($object);
@@ -67,7 +63,46 @@ class File extends LogicBase
         
         return  false;
     }
-    
+
+
+    /**
+     * 图片上传
+     * small,medium,big
+     */
+    public function pictureUploadEditor($name = 'file', $thumb_config = ['small' => 100, 'medium' => 500, 'big' => 1000])
+    {
+
+        $object_info = request()->file($name);
+
+        $sha1  = $object_info->hash();
+
+        $picture_info = $this->modelPicture->getInfo(['sha1' => $sha1], 'id,name,path,sha1');
+
+        if (!empty($picture_info)) { return $picture_info; }
+
+        $object = $object_info->move(PATH_PICTURE);
+
+        $save_name = $object->getSaveName();
+        $save_path = PATH_PICTURE . $save_name;
+
+        $picture_dir_name = substr($save_name, 0, strrpos($save_name, DS));
+        $filename = $object->getFilename();
+
+        //生成水印
+        $water_img=PATH_UPLOAD.'water'.DS.'logo.png';
+        Image::open($save_path)->water($water_img,\think\Image::WATER_CENTER)->save($save_path);
+
+        //保存数据库
+        $data = ['name' => $filename, 'path' => $picture_dir_name. SYS_DS_PROS . $filename, 'sha1' => $sha1];
+        $result = $this->modelPicture->setInfo($data);
+        unset($object);
+
+        $url = $this->checkStorage($result);
+        if ($result) { $data['id'] = $result; $url && $data['url'] = $url; return $data; }
+
+        return  false;
+    }
+
     /**
      * 文件上传
      */
@@ -151,7 +186,6 @@ class File extends LogicBase
         $root_url = get_file_root_path();
 
         if (!empty($info['path'])) {
-
             return $root_url . 'upload/picture/'.$info['path'];
         }
 
