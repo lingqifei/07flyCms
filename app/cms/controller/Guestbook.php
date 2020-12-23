@@ -98,6 +98,14 @@ class Guestbook extends CmsBase
     }
 
     /**
+     * 扩展表单详细列表
+     */
+    public function ext_list_down()
+    {
+        $this->logicGuestbook->getGuestbookExtListDown($this->param);
+    }
+
+    /**
      * 编辑
      */
     public function ext_reply()

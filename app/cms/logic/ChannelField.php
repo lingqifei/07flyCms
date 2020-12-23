@@ -276,7 +276,7 @@ class ChannelField extends CmsBase
                     $pic_div = '';
                     if ($field_value) {
                         $pic_url = get_picture_url($field_value);
-                        $pic_div .= '<div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this)" ><img src="' . PATH_PUBLIC . '/addon/file/uploadify-cancel.png" /></div>';
+                        $pic_div .= '<div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this)" ><img src="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/file/uploadify-cancel.png" /></div>';
                         $pic_div  .= ' <a target="_blank" href="' . $pic_url . '"><img  style="max-width:150px;" src="' . $pic_url . '"/></a>';
                     }
                     $htmltxt .= '
@@ -284,8 +284,8 @@ class ChannelField extends CmsBase
                                             <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
                                             <div class="col-sm-10">';
                     $htmltxt .= '
-                                        <link rel="stylesheet" href="' . PATH_PUBLIC . 'static/addon/file/Huploadify.css">
-                                        <script src="' . PATH_PUBLIC . '/static/addon/file/jquery.Huploadify.js"></script>
+                                        <link rel="stylesheet" href="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/file/Huploadify.css">
+                                        <script src="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/file/jquery.Huploadify.js"></script>
                                         <div id="upload_picture_' . $row["field_name"] . '"></div>
                                         <input type="hidden" name="' . $row["field_name"] . '" id="' . $row["field_name"] . '" value="0">
                                         <div class="upload-img-box' . $row["field_name"] . '"> ' . $pic_div . '</div>
@@ -306,12 +306,13 @@ class ChannelField extends CmsBase
                                             {
                                                 var data = $.parseJSON(data);
                                                 $("#' . $row["field_name"] . '").val(data.id);
-                                                var src =\'/public/static/upload/picture/\' + data.path;
+                                                var src =\'__STATIC__/upload/picture/\' + data.path;
                                                 var src =src.replace(/\/static/g, \'\');
                                                 $(".upload-img-box' . $row["field_name"] . '").html(\'<div class="upload-pre-item"> <a target="_blank" href="\' + src + \'"> <img style="max-width: \' + maxwidth + \';" src="\' + src + \'"/></a></div>\');
                                             }
                                         </script>                
                                         ';
+                    $htmltxt .= '<span class="help-block m-b-none">' . $row['desc'] . '</span> ';
                     $htmltxt .= '</div></div>';
                     break;
                 case "imgs":
@@ -323,7 +324,7 @@ class ChannelField extends CmsBase
                             $pic_div .= '
                                         <div class="upload-pre-item" style="float:left; margin: 10px;">
                                             <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this, ' . $value . ')" >
-                                                <img src="' . PATH_PUBLIC . '/addon/file/uploadify-cancel.png" />
+                                                <img src="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/file/uploadify-cancel.png" />
                                             </div>
                                             <a target="_blank" href="' . $pic_url . '"> <img style="width:150px;" src="' . $pic_url . '"/></a>
                                         </div>
@@ -335,8 +336,8 @@ class ChannelField extends CmsBase
                                             <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
                                             <div class="col-sm-10">';
                     $htmltxt .= '
-<link rel="stylesheet" href="' . PATH_PUBLIC . 'addon/file/Huploadify.css" />
-<script src="' . PATH_PUBLIC . 'addon/file/jquery.Huploadify.js"></script>
+<link rel="stylesheet" href="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/file/Huploadify.css" />
+<script src="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/file/jquery.Huploadify.js"></script>
 
 <div id="upload_pictures_' . $row["field_name"] . '"></div>
 <input type="hidden" name="' . $row["field_name"] . '" id="' . $row["field_name"] . '" value="' . $field_value . '"/>
@@ -368,7 +369,7 @@ class ChannelField extends CmsBase
         //var src = \'/upload/picture/\' + data.path;
         var src =\'__STATIC__/upload/picture/\' + data.path;
         var src =src.replace(/\/static/g, \'\');
-        $(".upload-img-box" + addons_name).append(\'<div class="upload-pre-item" style="float:left; margin: 10px;"> <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this,\'+data.id+\')" ><img src="' . PATH_PUBLIC . '/addon/file/uploadify-cancel.png" /></div> <a target="_blank" href="\' + src + \'"> <img style="max-width: \' + maxwidth + \';" src="\' + src + \'"/></a></div>\');
+        $(".upload-img-box" + addons_name).append(\'<div class="upload-pre-item" style="float:left; margin: 10px;"> <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this,\'+data.id+\')" ><img src="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/file/uploadify-cancel.png" /></div> <a target="_blank" href="\' + src + \'"> <img style="max-width: \' + maxwidth + \';" src="\' + src + \'"/></a></div>\');
     }
 
     function picDel' . $row["field_name"] . '(obj, pic_id)
@@ -386,6 +387,8 @@ class ChannelField extends CmsBase
     }
 </script>
                                             ';
+
+                    $htmltxt .= '<span class="help-block m-b-none">' . $row['desc'] . '</span> ';
                     $htmltxt .= '</div></div>';
                     break;
                 default:

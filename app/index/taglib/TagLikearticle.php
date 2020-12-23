@@ -54,7 +54,7 @@ class TagLikearticle extends Base
      * @param     string  $thumb  是否开启缩略图
      * @return    array
      */
-    public function getLikearticle($channelid = '', $typeid = '', $limit = 12)
+    public function getLikearticle($channelid = '', $typeid = '', $limit = 12, $orderby = '', $orderway = '')
     {
         $result = false;
         $where = [];
@@ -88,10 +88,12 @@ class TagLikearticle extends Base
         
         if($typeid){
             $where['a.type_id']=['in',$typeid];
+            $randMap['type_id']=['in',$typeid];
         }
 
         if($this->aid){
             $where['a.id']=['notin',$this->aid];
+            $randMap['id']=['notin',$this->aid];
         }
 //        $reg_txt=str_replace(",","|",$param['flag']);
 //        $where['a.flag']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
@@ -108,8 +110,34 @@ class TagLikearticle extends Base
         }
 
         $where['a.keywords']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
+        //$randMap['keywords']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];·
 
-        $result = $logicArchives->getArchiveslikeList($where, true, '',false,$limit);
+
+        //排序
+        switch ($orderby) {
+            case 'rand':
+                $rand_ids=$logicArchives->getArchivesColumn($randMap,'id');
+                $rand_cnt=count($rand_ids);
+                $number=(count($rand_ids)>15)?'15':$rand_cnt;
+                $rand_id=array_rand_value($rand_ids,$number);
+                $where['a.id'] = array('in', $rand_id);
+                $orderby = 'create_time DESC';
+                break;
+            case 'click':
+                $orderby = "a.click {$orderway}";
+                break;
+            case 'sort':
+                $orderby = "a.sort {$orderway}";
+                break;
+            case 'pubdate':
+                $orderby ="a.pubdate {$orderway}";
+                break;
+            default:
+                $orderby = 'create_time DESC ';
+                break;
+        }
+
+        $result = $logicArchives->getArchiveslikeList($where, true, $orderby,false,$limit);
 
 
         //获取文档栏目信息

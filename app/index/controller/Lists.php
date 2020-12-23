@@ -66,6 +66,12 @@ class Lists extends IndexBase{
 //            }
 //        }
 
+        if(!empty($this->param['sfk'])){//搜索关键字
+            $this->assign('sfk', $this->param['sfk']);
+        }else{
+            $this->assign('sfk', '');
+        }
+
         if(!empty($this->param['mj'])){//面积
             $this->assign('mj', $this->param['mj']);
         }else{
@@ -92,10 +98,10 @@ class Lists extends IndexBase{
             $this->assign('scfg', '');
         }
 
-        if(!empty($this->param['age'])){//风格
-            $this->assign('age', $this->param['age']);
+        if(!empty($this->param['sjjy'])){//从业年限
+            $this->assign('sjjy', $this->param['sjjy']);
         }else{
-            $this->assign('age', '');
+            $this->assign('sjjy', '');
         }
 
         if(!empty($this->param['orderby'])){//排序
@@ -105,11 +111,12 @@ class Lists extends IndexBase{
         }
 
         if(!empty($this->param['orderway'])){//升降
-            if($this->param['orderway']=='desc'){
-                $this->assign('orderway', 'asc');
-            }else{
-                $this->assign('orderway', 'desc');
-            }
+//            if($this->param['orderway']=='desc'){
+//                $this->assign('orderway', 'asc');
+//            }else{
+//                $this->assign('orderway', 'desc');
+//            }
+            $this->assign('orderway', 'desc');
         }else{
             $this->assign('orderway', 'desc');
         }

@@ -227,6 +227,22 @@ class Archives extends IndexBase
         return $info;
     }
 
+
+    /**
+     * 获取文章信息=》列数
+     * @param array $where
+     * @param string $field
+     * @param string $key
+     * @return array();
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/9 0009
+     */
+    public function getArchivesColumn($where = [], $field = '', $key='')
+    {
+        $this->modelArchives->alias('a');
+        $info = $this->modelArchives->getColumn($where, $field,$key);
+        return $info;
+    }
+
     /**设置文章点击
      * @param array $data
      * @return mixed|string

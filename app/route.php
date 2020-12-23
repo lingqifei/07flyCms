@@ -14,7 +14,9 @@ return [
         'name' => '\w+',
     ],
 
-    'list/:tid' => 'index/lists/index',
+   'list/:tid' => 'index/lists/index',
+//   'tags' => 'index/tags/index',
+   'tags/:tagid' => 'index/tags/lists',
     //'show/:aid' => 'index/view/index',
     'show/[:aid]' => ['index/view/index',['method'=>'get','ext'=>'html']],
 ];

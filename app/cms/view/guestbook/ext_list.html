@@ -9,11 +9,15 @@
                             <input type="hidden" name="gid" value="{$gid}">
                             <div class="col-sm-3 m-b-xs">
                                 <a class="btn btn-default btn-history" ><i class="fa fa-history"></i> 返回</a>
-                                <lqf_link><a class="btn btn-info ajax-open"  data-url="{:url('Guestbook/add')}" data-title="添加" ><i class="fa fa-plus"></i>添加</a></lqf_link>
+                                <lqf_link><a  class="btn btn-default btn-outline ajax-goto export"  target-form="form-inline" data-url="{:url('Guestbook/ext_list_down')}"><i class="fa fa-download"></i>导出</a></lqf_link>
                             </div>
                             <div class="col-sm-9 m-b-xs text-right">
+                                <div class="input-group">留言时间</div>
                                 <div class="input-group">
-                                    <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
+                                    <input type="text" name="bdate" class="form-control w50 datepicker" placeholder="选择开始时间">
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" name="edate" class="form-control w50 datepicker" placeholder="选择结束时间">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-btn"> <button type="button" class="btn btn-primary ajaxSearchForm"><i class="fa fa-search"></i> 搜索</button></span>

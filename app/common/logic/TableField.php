@@ -33,7 +33,7 @@ class TableField extends LogicBase
             }elseif($type=='htmltext'){
                 $sql="ALTER TABLE `$table` ADD COLUMN `$fied` text COMMENT '$desc'";
             }elseif($type=='int'){
-                $sql="ALTER TABLE `$table` ADD COLUMN `$fied` int(8) default 0.00 COMMENT '$desc'";
+                $sql="ALTER TABLE `$table` ADD COLUMN `$fied` int(11) default 0.00 COMMENT '$desc'";
             }elseif($type=='float'){
                 $sql="ALTER TABLE `$table` ADD COLUMN `$fied` decimal(10,2) default 0.00 COMMENT '$desc'";
             }elseif($type=='datetime'){
@@ -63,7 +63,7 @@ class TableField extends LogicBase
             }elseif($type=='htmltext'){
                 $sql="ALTER TABLE `$table` MODIFY `$fied` text COMMENT '$desc'";
             }elseif($type=='int'){
-                $sql="ALTER TABLE `$table` MODIFY `$fied` int(`$maxlength`) default 0.00 COMMENT '$desc'";
+                $sql="ALTER TABLE `$table` MODIFY `$fied` int($maxlength) default 0 COMMENT '$desc'";
             }elseif($type=='float'){
                 $sql="ALTER TABLE `$table` MODIFY `$fied` decimal(10,2) default 0.00 COMMENT '$desc'";
             }elseif($type=='datetime'){

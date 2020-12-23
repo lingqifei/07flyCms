@@ -57,7 +57,7 @@ class TagArcview extends Base
             echo '标签arcview报错：该文档ID('.$aid.')不存在。';
             return false;
         }
-        $result['litpic'] = get_picture_url($result['litpic']); // 默认封面图
+        //$result['litpic'] = get_picture_url($result['litpic']); // 默认封面图
 
         /*栏目信息*/
         $logicArctype = new \app\index\logic\Arctype();
