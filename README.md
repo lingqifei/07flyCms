@@ -23,8 +23,13 @@
 
 ### 效果演示
 
-1、在线演示：http://www.07fly.top
+1、在线演示：http://www.07fly.xyz
 
-2、程序下载：http://www.07fly.top/
+2、程序下载：http://www.07fly.xyz/
 
 3、源码托管：https://gitee.com/07fly/cms-php
+
+
+### 临时地址
+
+在线演示：http://soft.s5.07fly.com/

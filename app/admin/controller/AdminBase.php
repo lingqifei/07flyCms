@@ -107,7 +107,7 @@ class AdminBase extends ControllerBase
 
         // 菜单自动选择
        //$this->menuView = $this->logicSysMenu->selectMenu($this->menuView);
-
+        
         // 获取面包屑
         $this->crumbsView = $this->logicSysMenu->getCrumbsView();
 

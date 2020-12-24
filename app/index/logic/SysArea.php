@@ -39,6 +39,7 @@ class SysArea extends IndexBase
 
     /**
      * 根据IP地区，判断使用地区，默认为成都，1
+     *
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/8/18 0018
      */
     public function  getSysAreaDefaultInfo(){
@@ -48,9 +49,32 @@ class SysArea extends IndexBase
         if($info){
             Session::set('sys_city_name',$info['name']);
             Session::set('sys_city_id',$info['id']);
+            Session::set('sys_city',$info);
         }else{
             Session::set('sys_city_name','成都市');
             Session::set('sys_city_id','1');
+        }
+    }
+
+    /**
+     * 根据域名，判断使用地区，默认为成都，1
+     *
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/8/18 0018
+     */
+    public function  getDomainSysAreaInfo(){
+        $where['domain']=['like','%'.DOMAIN.'%'];
+        $info=$this->modelSysArea->getInfo($where, true);
+        if($info){
+            is_object($info) && $info=$info->toArray();
+            Session::set('sys_city_name',$info['name']);
+            Session::set('sys_city_id',$info['id']);
+            Session::set('sys_city',$info);
+        }else{
+            $map['name']=['like','%成都%'];
+            $info=$this->modelSysArea->getInfo($map, true);
+            Session::set('sys_city_name','成都');
+            Session::set('sys_city_id','1');
+            Session::set('sys_city',$info);
         }
     }
 
@@ -64,6 +88,13 @@ class SysArea extends IndexBase
         if($info){
             Session::set('sys_city_name',$info['name']);
             Session::set('sys_city_id',$info['id']);
+            Session::set('sys_city',$info);
+            if(!empty($info['domain'])){
+                $url=$info['domain'];
+                Header("HTTP/1.1 303 See Other");
+                Header("Location: $url");
+                exit;
+            }
         }else{
             Session::set('sys_city_name','成都市');
             Session::set('sys_city_id','1');

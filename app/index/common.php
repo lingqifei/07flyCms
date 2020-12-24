@@ -112,7 +112,13 @@ if (!function_exists('get_city')) {
         $ip = get_ip();
         $api_url = "https://restapi.amap.com/v3/ip?ip=$ip&key=d775fd6b51c31589776004b109d43ff7";
         //根据IP地址定位所在城市
-        $res = file_get_contents($api_url);
+        $arrContextOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+            ]
+        ];
+        $res = file_get_contents($api_url,false, stream_context_create($arrContextOptions));
         $res = json_decode($res, true);
         if (!empty($res['city'])) {
             return $res['city'];

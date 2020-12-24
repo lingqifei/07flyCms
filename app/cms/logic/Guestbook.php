@@ -228,10 +228,11 @@ ENGINE=MyISAM;";
     /**
      *  留言扩展列表
      */
-    public function getGuestbookExtListDown($data = []){
-        $list=$this->getGuestbookExtList($data,100000000);
+    public function getGuestbookExtListDown($data = [])
+    {
+        $list = $this->getGuestbookExtList($data, 100000000);
         $titles = "手机号,内容,时间,回复";
-        $keys   = "mobile,dwtcontent,create_time,rereply";
+        $keys = "mobile,dwtcontent,create_time,rereply";
         action_log('下载', '表单列表');
         export_excel($titles, $keys, $list['data'], '表单列表');
     }
@@ -241,16 +242,12 @@ ENGINE=MyISAM;";
      */
     public function guestbookExtReply($data = [])
     {
-
-        $table=$this->getGuesbookExtTableInfo($data['gid']);
-
-        $where['gid']=['=',$data['gid']];
-        $where['id']=['=',$data['id']];
-        $result=Db::table(SYS_DB_PREFIX.$table['addtable'])->where($where)->update($data);
-
+        $table = $this->getGuesbookExtTableInfo($data['gid']);
+        $where['gid'] = ['=', $data['gid']];
+        $where['id'] = ['=', $data['id']];
+        $result = Db::table(SYS_DB_PREFIX . $table['addtable'])->where($where)->update($data);
         $url = url('ext_list');
         $result && action_log('留言回复', '留言回复：' . $data['reply']);
-
         return $result ? [RESULT_SUCCESS, ' 操作成功', $url] : [RESULT_ERROR, $this->modelGuestbook->getError()];
     }
 
@@ -260,11 +257,11 @@ ENGINE=MyISAM;";
     public function guestbookExtDel($data = [])
     {
 
-        $table=$this->getGuesbookExtTableInfo($data['gid']);
+        $table = $this->getGuesbookExtTableInfo($data['gid']);
 
-        $where['gid']=['=',$data['gid']];
-        $where['id']=['=',$data['id']];
-        $result=Db::table(SYS_DB_PREFIX.$table['addtable'])->where($where)->delete();
+        $where['gid'] = ['=', $data['gid']];
+        $where['id'] = ['=', $data['id']];
+        $result = Db::table(SYS_DB_PREFIX . $table['addtable'])->where($where)->delete();
 
         $result && action_log('删除', '删除 留言表单，where：' . http_build_query($data));
         return $result ? [RESULT_SUCCESS, ' 删除成功'] : [RESULT_ERROR, $this->modelGuestbook->getError()];
@@ -273,31 +270,30 @@ ENGINE=MyISAM;";
     /**
      *  留言表单管理处信息
      */
-    public function getGuestbookExtInfo($data=[])
+    public function getGuestbookExtInfo($data = [])
     {
-        if(empty($data['gid'])){
-            return [RESULT_ERROR,'选择表单'];
+        if (empty($data['gid'])) {
+            return [RESULT_ERROR, '选择表单'];
         }
 
-        $table=$this->getGuesbookExtTableInfo($data['gid']);
+        $table = $this->getGuesbookExtTableInfo($data['gid']);
 
-        $where['gid']=['=',$data['gid']];
-        $where['id']=['=',$data['id']];
-        $info=Db::table(SYS_DB_PREFIX.$table['addtable'])
+        $where['gid'] = ['=', $data['gid']];
+        $where['id'] = ['=', $data['id']];
+        $info = Db::table(SYS_DB_PREFIX . $table['addtable'])
             ->where($where)
             ->find();
         return $info;
     }
-
 
     /**获取表单数据表信息
      * @param int $gid
      * @return mixed
      * Author: lingqifei created by at 2020/3/2 0002
      */
-    public function getGuesbookExtTableInfo($gid=0)
+    public function getGuesbookExtTableInfo($gid = 0)
     {
-        $info=$this->modelGuestbook->getInfo(['id'=>$gid],'addtable,maintable');
+        $info = $this->modelGuestbook->getInfo(['id' => $gid], 'addtable,maintable');
         return $info;
     }
 

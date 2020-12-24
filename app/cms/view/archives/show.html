@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-2">
             <div class="ibox">
-                <div class="ibox-title">栏目分类</div>
+                <div class="ibox-title">内容栏目分类</div>
                 <div class="ibox-content">
                     <div id="left-tree" data-url="{:url('Archives/show',array('data_type'=>'get_arctype_tree'))}"></div>
                 </div>
@@ -27,14 +27,14 @@
                                 </div>
                             </div>
                             <div class="col-sm-8 m-b-xs text-right">
-                                <div class="input-group text-left">
-                                    <select data-placeholder="地区..." name="sys_area_id" class="chosen-select">
-                                        <option value="">请选择地区</option>
-                                        {volist name='sys_area_list' id='vo'}
-                                        <option value="{$vo['id']}">{$vo['name']}</option>
-                                        {/volist}
-                                    </select>
-                                </div>
+<!--                                <div class="input-group text-left">-->
+<!--                                    <select data-placeholder="选择地区..." name="sys_area_id" class="chosen-select">-->
+<!--                                        <option value="">请选择地区</option>-->
+<!--                                        {volist name='sys_area_list' id='vo'}-->
+<!--                                        <option value="{$vo['id']}">{$vo['name']}</option>-->
+<!--                                        {/volist}-->
+<!--                                    </select>-->
+<!--                                </div>-->
                                 <div class="input-group">
                                     <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
                                 </div>
@@ -92,7 +92,7 @@
             <p>
                 <lqf_link><a class="ajax-open" data-url="{:url('Archives/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改">修改</a></lqf_link>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('Archives/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
-                <lqf_link><a class="ajax-open" data-url="{:url('Arcext/show_item')}" data-ids="{'archives_id':'<%=data[i]['id']%>','channel_id':'<%=data[i]['channel_id']%>'}">扩展</a></lqf_link>
+                <lqf_link><a class="ajax-open" data-url="{:url('ArcextInfo/show')}" data-ids="{'archives_id':'<%=data[i]['id']%>','channel_id':'<%=data[i]['channel_id']%>'}">扩展</a></lqf_link>
             </p>
         </td>
     </tr>
@@ -107,6 +107,7 @@
         turnPage(1);//页面加载时初始化分页
     });
 
+    //加载栏目分类到左边数据
     function ajax_type_list() {
        // var getArcypeUrl = "{:url('Archives/show',array('typelist'=>'all'))}";
         var target = $('#left-tree').attr('data-url');

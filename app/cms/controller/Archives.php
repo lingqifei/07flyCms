@@ -101,7 +101,7 @@ class Archives extends CmsBase
     }
 
     /**
-     * 编辑
+     * 移动栏目
      */
     public function move()
     {

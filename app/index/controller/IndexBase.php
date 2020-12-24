@@ -38,12 +38,7 @@ class IndexBase extends ControllerBase
 
         $this->initBaseInfo();
 
-        //默认初始化地区信息,i不存在表示为第一次进入
-        if(!Session::has('sys_city_name') || !Session::has('sys_city_id')){
-           $this->logicSysArea->getSysAreaDefaultInfo();
-        }
-        $this->assign('sys_city_id', Session::get('sys_city_id'));
-        $this->assign('sys_city_name', Session::get('sys_city_name'));
+        $this->initCityInfo();
 
         //echo Session::get('sys_city_name');
 
@@ -69,32 +64,41 @@ class IndexBase extends ControllerBase
         }else{
             $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/');
         }
-
     }
+
+    /**
+     * 初始化站点=>地区信息
+     *
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/23 0023
+     */
+    final private function initCityInfo(){
+        //默认初始化地区信息,i不存在表示为第一次进入，调用默认信息
+        if(!Session::has('sys_city_name') || !Session::has('sys_city_id')){
+            $this->logicSysArea->getSysAreaDefaultInfo();
+        }
+        $this->assign('sys_city_id', Session::get('sys_city_id'));
+        $this->assign('sys_city_name', Session::get('sys_city_name'));
+    }
+
 
     /**
      * 重写fetch方法
      */
     final protected function fetch($template = '', $vars = [], $replace = [], $config = [])
     {
-
         $web_wap = $this->logicWebsite->getWebsiteConfig('web_wap');
-
         if(is_mobile()  && $web_wap){
             $template=THEME_NAME.DS.'wap'.DS.$template;
         }else{
             $template=THEME_NAME.DS.$template;
         }
-
         //$template=THEME_NAME.DS.$template;
         $tpfilepath=PATH_PUBLIC.'theme'.DS.$template;
         if (!file_exists($tpfilepath)) {
             echo "$tpfilepath 模板文件不存在~~";
             exit;
         }
-
         $replace=['{sys_city_name}'=>Session::get('sys_city_name')];
-
         $template=str_replace('.html' , '', strtolower($template));
         $template=str_replace('.htm' , '', strtolower($template));
         return parent::fetch($template, $vars, $replace, $config);
