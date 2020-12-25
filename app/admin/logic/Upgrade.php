@@ -3,7 +3,7 @@
  * 零起飞-(07FLY-CRM)
  * ==============================================
  * 版权所有 2015-2028   成都零起飞网络，并保留所有权利。
- * 网站地址: http://www.07fly.top
+ * 网站地址: http://www.07fly.xyz
  * ----------------------------------------------------------------------------
  * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
  * ==============================================
@@ -119,20 +119,21 @@ class Upgrade extends AdminBase
     {
         //得到版本列表
         $info = $this->modelUpgrade->getVersionList($this->version);
-        if (is_array($info['data'])) {
-            $listdata = $info['data'];
-            foreach ($listdata as &$row) {
-                $status = $this->check_version_down($row['upgradefile']);
-                if (!$status) {
-                    $row['status'] = '<font color="red">文件没有下载</font>';
-                    $row['operate'] = '<a href="javascript:void(0);" class="down" data-url="'.url('upgrade/down',array('version'=>$row['version'])).'">点击下载更新包文件HTTP</a>';
-                } else {
-                    $row['status'] = '<font color="green">文件已下载[文件完整]</font>';
-                    $row['operate'] = '<a href="javascript:void(0);" class="execute" data-url="'.url('upgrade/execute',array('version'=>$row['version'])).'">点击升级更新包</a>';
+        $listdata = array();
+        if($info['code']==1){
+            if(!empty($info['data'])){
+                $listdata = $info['data'];
+                foreach ($listdata as &$row) {
+                    $status = $this->check_version_down($row['upgradefile']);
+                    if (!$status) {
+                        $row['status'] = '<font color="red">文件没有下载</font>';
+                        $row['operate'] = '<a href="javascript:void(0);" class="down" data-url="'.url('upgrade/down',array('version'=>$row['version'])).'">点击下载更新包文件HTTP</a>';
+                    } else {
+                        $row['status'] = '<font color="green">文件已下载[文件完整]</font>';
+                        $row['operate'] = '<a href="javascript:void(0);" class="execute" data-url="'.url('upgrade/execute',array('version'=>$row['version'])).'">点击升级更新包</a>';
+                    }
                 }
             }
-        } else {
-            $listdata = array();
         }
         return $listdata;
     }
@@ -269,7 +270,8 @@ class Upgrade extends AdminBase
     {
         $domain = $_SERVER['HTTP_HOST'];
         $syskey = $this->getSysKey();
-        return $this->modelUpgrade->getAuthorizeInfo($domain,$syskey);
+        $info= $this->modelUpgrade->getAuthorizeInfo($domain,$syskey);
+        return $info;
     }
 
     /**验证平台信息
@@ -309,9 +311,9 @@ class Upgrade extends AdminBase
             $res = $this->upgrade_auth_check();
             if ($res['code'] == '1') {
                 return [RESULT_SUCCESS, '授权码注册成功'];
-                $rtn = array('code' => 1, 'message' => '授权码注册成功');
+                $rtn = array('code' => 1, 'msg' => '授权码注册成功');
             } else {
-                return [RESULT_ERROR, $res['message']];
+                return [RESULT_ERROR, $res['msg']];
             }
         }
         return $rtn;

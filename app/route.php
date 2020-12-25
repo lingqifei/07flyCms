@@ -19,4 +19,5 @@ return [
    'tags/:tagid' => 'index/tags/lists',
     //'show/:aid' => 'index/view/index',
     'show/[:aid]' => ['index/view/index',['method'=>'get','ext'=>'html']],
+    'authorize/:version/:controller/:function'=>'authorize/:version.:controller/:function'// 有方法名时
 ];

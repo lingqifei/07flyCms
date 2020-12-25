@@ -3,7 +3,7 @@
  * 零起飞-(07FLY-CRM)
  * ==============================================
  * 版权所有 2015-2028   成都零起飞网络，并保留所有权利。
- * 网站地址: http://www.07fly.top
+ * 网站地址: http://www.07fly.xyz
  * ----------------------------------------------------------------------------
  * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
  * ==============================================
@@ -414,5 +414,59 @@ if (!function_exists('get_arr_column')) {
             $arr2[] = $val[$key_name];
         }
         return $arr2;
+    }
+}
+
+
+if (!function_exists('httpcode')) {
+    /**
+     *检测网址是否能正常打开
+     *
+     * @param $url
+     * @return mixed
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/25 0025
+     */
+    function httpcode($url)
+    {
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_exec($ch); // $resp = curl_exec($ch);
+        $curl_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        return $curl_code;
+//        if ($curl_code == 200 || $curl_code == 302) {
+//            echo '连接成功，状态码：' . $curl_code;
+//        } else {
+//            echo '连接失败，状态码：' . $curl_code;
+//        }
+    }
+}
+if (!function_exists('curl_post')) {
+
+    /**使用curl。post获取数据
+     * @param $url
+     * @param $arr_data
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/25 0025
+     */
+    function curl_post($url, $post_data){
+        //$post_data = http_build_query($post_data);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); //设置header
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+        curl_setopt($ch, CURLOPT_TIMEOUT,30);
+        $response  = curl_exec($ch);
+        $errno = curl_errno( $ch );
+        $info  = curl_getinfo( $ch );
+        $error = curl_error($ch);
+//		var_dump($response);
+//		var_dump($error);
+        curl_close($ch);//关闭
+        return $response;
     }
 }
