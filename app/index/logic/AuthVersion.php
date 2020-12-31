@@ -11,7 +11,7 @@
  * Date: 2019-10-3
  */
 
-namespace app\authorize\logic;
+namespace app\index\logic;
 use \think\Db;
 /**
  * 授权域名管理=》逻辑层
