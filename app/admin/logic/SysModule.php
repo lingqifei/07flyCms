@@ -459,7 +459,7 @@ use app\common\\{$action_lo}\\{$action_uc}Base;
  * 模块基类
  */
 class {$name_uc}Base extends {$action_uc}Base
-
+{
 }
 ?>
 INFO;

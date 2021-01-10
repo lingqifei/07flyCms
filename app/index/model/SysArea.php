@@ -15,7 +15,7 @@ namespace app\index\model;
 /**
  * 地区管理=》模型
  */
-class SysArea extends indexBase
+class SysArea extends IndexBase
 {
 
 

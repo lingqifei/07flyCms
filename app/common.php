@@ -196,11 +196,16 @@ function hook($tag = '', $params = [])
  */
 function addons_url($url, $param = array())
 {
-
     $parse_url = parse_url($url);
     $addons = $parse_url['scheme'];
     $controller = $parse_url['host'];
     $action = $parse_url['path'];
+
+    if(empty($param['addons_model'])){
+        $model='admin';
+    }else{
+        $model=$param['addons_model'];
+    }
 
     /* 基础参数 */
     $params_array = array(
@@ -212,7 +217,7 @@ function addons_url($url, $param = array())
     $params = array_merge($params_array, $param); //添加额外参数
 
     //默认指向admin模块
-    return url('admin/addon/execute', $params);
+    return url($model.'/addon/execute', $params);
 }
 
 /**

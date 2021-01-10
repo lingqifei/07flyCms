@@ -86,21 +86,25 @@ class IndexBase extends ControllerBase
      */
     final protected function fetch($template = '', $vars = [], $replace = [], $config = [])
     {
+
         $web_wap = $this->logicWebsite->getWebsiteConfig('web_wap');
         if(is_mobile()  && $web_wap){
-            $template=THEME_NAME.DS.'wap'.DS.$template;
+            $template=PATH_PUBLIC.'theme'.DS.THEME_NAME.DS.'wap'.DS.$template;
         }else{
-            $template=THEME_NAME.DS.$template;
+            $template=PATH_PUBLIC.'theme'.DS.THEME_NAME.DS.$template;
         }
+
         //$template=THEME_NAME.DS.$template;
-        $tpfilepath=PATH_PUBLIC.'theme'.DS.$template;
-        if (!file_exists($tpfilepath)) {
-            echo "$tpfilepath 模板文件不存在~~";
-            exit;
-        }
+        //$tpfilepath=PATH_PUBLIC.'theme'.DS.$template;
+        //echo $tpfilepath;exit;
+//        if (!file_exists($tpfilepath)) {
+//            echo "$tpfilepath 模板文件不存在~~";
+//            exit;
+//        }
+
         $replace=['{sys_city_name}'=>Session::get('sys_city_name')];
-        $template=str_replace('.html' , '', strtolower($template));
-        $template=str_replace('.htm' , '', strtolower($template));
+//        $template=str_replace('.html' , '', strtolower($template));
+//        $template=str_replace('.htm' , '', strtolower($template));
         return parent::fetch($template, $vars, $replace, $config);
     }
 
