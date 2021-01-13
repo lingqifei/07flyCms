@@ -606,12 +606,24 @@ function get_file_root_path()
 /**
  * 获取图片url
  */
-function get_picture_url($id = 0)
+function get_picture_url($id = 0,$member='picture')
 {
 
     $fileLogic = get_sington_object('fileLogic', LogicFile::class);
 
-    return $fileLogic->getPictureUrl($id);
+    return $fileLogic->getPictureUrl($id,$member);
+}
+
+
+/**
+ * 获取图片url=>路径地址
+ */
+function get_picture_url2($path='')
+{
+
+    $fileLogic = get_sington_object('fileLogic', LogicFile::class);
+
+    return $fileLogic->getPictureWebUrl($path);
 }
 
 /**

@@ -173,13 +173,19 @@ class File extends LogicBase
     /**
      * 获取图片URL路径
      */
-    public function getPictureUrl($id = 0)
+    public function getPictureUrl($id = 0,$model='picture')
     {
-        
-        $info = $this->modelPicture->getInfo(['id' => $id], 'path,url');
-        
-        if (!empty($info['url'])) {
 
+        switch ($model)
+        {
+            case "portalmember":
+                $info = $this->modelMemberPicture->getInfo(['id' => $id], 'path,url');
+                break;
+            default :
+                $info = $this->modelPicture->getInfo(['id' => $id], 'path,url');
+        }
+
+        if (!empty($info['url'])) {
             return config('static_domain') . SYS_DS_PROS . $info['url'];
         }
 
@@ -187,11 +193,24 @@ class File extends LogicBase
 
         if (!empty($info['path'])) {
             return $root_url . 'upload/picture/'.$info['path'];
+
         }
 
         return $root_url . 'static/module/admin/img/onimg.png';
     }
-    
+
+    /**
+     * 获取图片URL路径
+     */
+    public function getPictureWebUrl($path = '')
+    {
+        $root_url = get_file_root_path();
+        if (!empty($path)) {
+            return $root_url . 'upload/picture/'.$path;
+        }
+        return $root_url . 'static/module/admin/img/onimg.png';
+    }
+
     /**
      * 获取文件URL路径
      */

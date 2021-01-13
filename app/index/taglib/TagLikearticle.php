@@ -98,20 +98,27 @@ class TagLikearticle extends Base
 //        $reg_txt=str_replace(",","|",$param['flag']);
 //        $where['a.flag']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
 
+
+
+        /*获取相关标签编号*/
+        $tagList = new \app\index\logic\Taglist();
+        $tids=$tagList->getTaglistColumn(['aid'=>$this->aid],'tid');
+        $aids=$tagList->getTaglistColumn(['tid'=>['in',$tids]],'aid');
+        $aids=array_merge(array_diff($aids, array($this->aid)));//排除自身
+        $where['a.id']=['in',$aids];
+//        $info = $logicArchives->getArchivesInfo(['id'=>$this->aid]);
+//        if(empty($info['keywords'])){//通过插件分析关键字
+//            $keywords=getKeywords($info['title'],$info['body']);
+//            $reg_txt=implode('|',$keywords);
+//        }else{
+//            $reg_txt=preg_replace("/(\n)|(\s)|(\t)|(\')|(')|(，)/" ,',' ,$info['keywords']);
+//            $reg_txt=str_replace(',','|',$reg_txt);
+//        }
+////echo $reg_txt;
+//       $where['a.keywords']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
+
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
-        $info = $logicArchives->getArchivesInfo(['id'=>$this->aid]);
-        if(empty($info['keywords'])){//通过插件分析关键字
-            $keywords=getKeywords($info['title'],$info['body']);
-            $reg_txt=implode('|',$keywords);
-        }else{
-            $reg_txt=preg_replace("/(\n)|(\s)|(\t)|(\')|(')|(，)/" ,',' ,$info['keywords']);
-            $reg_txt=str_replace(',','|',$reg_txt);
-        }
-
-        $where['a.keywords']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
-        //$randMap['keywords']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];·
-
 
         //排序
         switch ($orderby) {
@@ -138,7 +145,6 @@ class TagLikearticle extends Base
         }
 
         $result = $logicArchives->getArchiveslikeList($where, true, $orderby,false,$limit);
-
 
         //获取文档栏目信息
         $logicArctype = new \app\index\logic\Arctype();

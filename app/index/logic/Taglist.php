@@ -65,4 +65,17 @@ class Taglist extends IndexBase
         return $list;
     }
 
+    /**
+     * 查询列数
+     * @param array $where
+     * @param bool $field
+     * @return mixed
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2021/1/13 0013
+     */
+    public function getTaglistColumn($where = [], $field = true)
+    {
+        $list=$this->modelTaglist->getColumn($where,$field);
+        return $list;
+    }
+
 }
