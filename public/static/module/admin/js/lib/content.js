@@ -374,7 +374,7 @@ $("body").on("click", ".ajax-open", function () {
                 if(fun!=null){
                     eval(fun);
                 }else{
-                    turnPage(1);
+                    turnPage(pageNum);
                 }
             }
         });
@@ -427,7 +427,7 @@ $("body").on("click", ".ajax-open-more", function () {
                 if(fun!=null){
                     eval(fun);
                 }else{
-                    turnPage(1);
+                    turnPage(pageNum);
                 }
             }
         });
@@ -471,7 +471,7 @@ $("body").on("click", ".ajax-del", function () {
                         log(fun);
                         eval(fun);
                     }else{
-                        turnPage(1);
+                        turnPage(pageNum);
                     }
                 } else {
                     layer.msg(data.msg, {icon: 5});
@@ -509,7 +509,7 @@ $("body").on("click", ".ajax-get", function () {
                 if(fun!=null){
                     eval(fun);
                 }else{
-                    turnPage(1);
+                    turnPage(pageNum);
                 }
             } else {
                 layer.msg(data.msg, {icon: 5});
@@ -558,7 +558,7 @@ $("body").on("click", ".ajax-get-more", function () {
                     if (fun != null) {
                         eval(fun);
                     } else {
-                        turnPage(1);
+                        turnPage(pageNum);
                     }
                 } else {
                     layer.msg(data.msg, {icon: 5});
@@ -668,7 +668,17 @@ $("body").on("click", ".ajax-post", function () {
 $("body").on("change", ".ajax-input", function () {
     var target;
     var val = $(this).val();
+
     if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
+
+        //是否设置了字段
+        var ids =$(this).attr('data-ids');
+        //是否设置了参数字段
+        if( typeof(ids)!="undefined" && ids!=0 ){
+            var ids=($.param(eval('('+ids+')'),true));
+            var target=target+"?"+ids;
+        }
+
         $.post(target, {id: $(this).attr('data-id'), value: val}, function (data) {
             if (data.code) {
                 layer.msg(data.msg, {icon: 1});
@@ -691,7 +701,6 @@ $("body").on("click", ".ajax-checkbox", function () {
     var id=$(this).attr('data-id');
 
     if(chk){ val=1; }
-
     if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
         $.post(target, {id: id, value: val}, function (data) {
             if (data.code) {

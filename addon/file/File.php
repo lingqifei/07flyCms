@@ -26,7 +26,11 @@ class File extends AddonBase implements AddonInterface
      */
     public function File($param = [])
     {
-
+        if(empty($param['addons_model'])){
+            $param['addons_model']='admin';
+        }else{
+            $param['addons_model']=$param['addons_model'];
+        }
         $this->assign('addons_data', $param);
 
         $this->assign('addons_config', $this->addonConfig($param));
@@ -68,6 +72,7 @@ class File extends AddonBase implements AddonInterface
     {
 
         $addons_config['maxwidth'] = '150px';
+        $addons_config['height'] = '85px';
 
         $addons_config['allow_postfix'] = $param['type'] == 'img' ? '*.jpg; *.png; *.gif;' : '*.jpg; *.png; *.gif; *.zip; *.rar; *.tar; *.gz; *.7z; *.doc; *.docx; *.txt; *.xml; *.xlsx; *.xls;*.mp4;';
 

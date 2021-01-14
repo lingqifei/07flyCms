@@ -20,15 +20,14 @@ class View extends IndexBase{
      * @return mixed
      * created by Administrator at 2020/2/24 0024 15:15
      */
-    public function index($data=[]){
+    public function index($aid = ''){
 
-        if(empty($data)){
-            if(!empty($this->param['aid'])){
-                $this->aid=$this->param['aid'];
-            }
-        }else{
-            $this->aid=$data['aid'];
+        $this->aid = input("param.aid", '0');
+
+        if (!is_numeric($this->aid) || strval(intval($this->aid)) !== strval($this->aid)) {
+            abort(404,'页面不存在');
         }
+        $this->aid = intval($this->aid);
         if(empty($this->aid)){
             echo "aid不能为空~";
             exit;
@@ -48,10 +47,8 @@ class View extends IndexBase{
                 'type' => $type,
                 'field' => $archives,
             );
-
             //更新点击
             $this->logicArchives->setArchivesClick(['id'=>$this->aid]);
-
         }
 
         /*模板文件*/

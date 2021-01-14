@@ -3,7 +3,7 @@
  * 零起飞-(07FLY-CRM)
  * ==============================================
  * 版权所有 2015-2028   成都零起飞网络，并保留所有权利。
- * 网站地址: http://www.07fly.xyz
+ * 网站地址: http://www.07fly.top
  * ----------------------------------------------------------------------------
  * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
  * ==============================================
@@ -53,7 +53,6 @@ class Index
         if (!empty($cache_list)) : return $cache_list; endif;
         
         $list = Db::name('region')->where($where)->field(true)->select();
-        
         !empty($list) && cache($cache_key, $list);
         
         return $list;

@@ -72,6 +72,7 @@ class SysArea extends IndexBase
         }else{
             $map['name']=['like','%成都%'];
             $info=$this->modelSysArea->getInfo($map, true);
+            is_object($info) && $info=$info->toArray();
             Session::set('sys_city_name','成都');
             Session::set('sys_city_id','1');
             Session::set('sys_city',$info);

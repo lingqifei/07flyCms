@@ -24,12 +24,9 @@ class IndexBase extends LogicBase
      */
     public function getListTree($list = [])
     {
-
         if (is_object($list)) {
-
             $list = $list->toArray();
         }
-
         return list_to_tree(array_values($list), 'id', 'pid', 'child');
     }
 
