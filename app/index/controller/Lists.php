@@ -28,7 +28,7 @@ class Lists extends IndexBase
 
         /*获取当前栏目ID以及模型ID*/
         $page_tmp = input('param.page/s', 0);
-        
+
         if (empty($tid) || !is_numeric($page_tmp)) {
             abort(404, '页面不存在');
         }

@@ -42,6 +42,10 @@ class Fly extends TagLib
         'pagelist' => ['attr' => 'listitem,listsize', 'close' => 0],
 
 
+        //分类信息
+        'infolist' => ['attr' => 'typeid,notypeid,cityid,row,offset,titlelen,limit,orderby,orderway,noflag,flag,infolen,empty,mod,name,id,key,addfields,tagid,pagesize,thumb,joinaid'],
+        'infotype' => ['attr' => 'typeid,notypeid,reid,type,row,currentstyle,id,name,key,empty,mod,titlelen,offset,limit'],
+
         //查询地址
         'searchurl'  => ['attr' => '', 'close' => 0],
         'searchform' => ['attr' => 'channel,channelid,typeid,notypeid,flag,noflag,type,empty,id,mod,key', 'close'=>1],
@@ -172,7 +176,6 @@ class Fly extends TagLib
             return $parseStr;
         }
         return;
-
     }
 
     /**

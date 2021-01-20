@@ -60,7 +60,7 @@ class Base
             $typeid = M('Arctype')->where([
                     'dirname'   => $typeid,
                     'lang'  => $this->home_lang,
-                ])->cache(true,EYOUCMS_CACHE_TIME,"arctype")
+                ])->cache(true,CACHE_TIME,"arctype")
                 ->getField('id');
         }
         /*--end*/

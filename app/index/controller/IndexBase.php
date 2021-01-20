@@ -28,6 +28,9 @@ use think\Session;
 class IndexBase extends ControllerBase
 {
 
+    //当前地区
+    public $sys_city_name = '';
+
     /**
      * 构造方法
      */
@@ -40,10 +43,64 @@ class IndexBase extends ControllerBase
 
         $this->initCityInfo();
 
-        //echo Session::get('sys_city_name');
+        $this->initCommonInfo();
 
+        $this->initSysCityName();
+
+        //echo Session::get('sys_city_name');
     }
 
+
+    /**
+     * 系统关键替换函数，
+     *
+     * 城市，系统关键字
+     *
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2021/1/18 0018
+     */
+    final  private  function initSysCityName(){
+
+        $param=$this->param;
+        if(!empty($param['province'])) {
+            $map['pinyin'] = $param['province'];
+            $map['level'] = 1;
+            $info = $this->logicRegion->getRegionInfo($map);
+            if ($info) {
+                $this->sys_city_name = $info['shortname'];
+            }
+            $paramUrl= array('province'=>$param['province']);
+        }
+        if(!empty($param['city'])){
+            $map2['citycode']=$param['city'];
+            $map2['level']=2;
+            $info=$this->logicRegion->getRegionInfo($map2);
+            if($info){
+                $this->sys_city_name=$info['shortname'];
+            }
+            $paramUrl= array_merge($paramUrl,array('city'=>$param['city']));
+        }
+        if(!empty($param['county'])) {
+            $map3['pinyin'] = $param['county'];
+            $map3['citycode']=$param['city'];
+            $map3['level'] = 3;
+            $info = $this->logicRegion->getRegionInfo($map3);
+            if ($info) {
+                $this->sys_city_name = $this->sys_city_name.$info['shortname'];
+            }
+            $paramUrl= array_merge($paramUrl,array('city'=>$param['city']));
+        }
+
+        if(!empty($this->sys_city_name)){
+            $url=url("index/City/index",$paramUrl);
+            $this->assign('sys_city_web_url', $url);
+            $this->assign('sys_city_web_title', $this->sys_city_name.'培训');
+        }else{
+            $url=get_file_root_path();
+            $this->assign('sys_city_web_url', $url);
+            $this->assign('sys_city_web_title', '培训达人首页');
+        }
+
+    }
 
     /**
      * 初始化基础数据
@@ -65,6 +122,23 @@ class IndexBase extends ControllerBase
             $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/');
         }
     }
+
+
+    /**
+     * 初始化共参数
+     * @return mixed
+     * created by Administrator at 2020/2/24 0024 15:15
+     */
+    final private function initCommonInfo(){
+        $province=$this->logicRegion->getRegionProvinceChannel();
+        $citylist=$this->logicRegion->getRegionCityTypeChannel($this->param);
+        $typelist=$this->logicInfoType->getInfoTypeChannel($this->param);
+        $this->assign('province', $province);
+        $this->assign('citylist', $citylist);
+        $this->assign('typelist', $typelist);
+
+    }
+
 
     /**
      * 初始化站点=>地区信息
@@ -102,7 +176,10 @@ class IndexBase extends ControllerBase
 //            exit;
 //        }
 
-        $replace=['{sys_city_name}'=>Session::get('sys_city_name')];
+        $replace=[
+            '{sys_city_name}'=>$this->sys_city_name,
+            '{sys_keywords_name}'=>'培训'
+        ];
 //        $template=str_replace('.html' , '', strtolower($template));
 //        $template=str_replace('.htm' , '', strtolower($template));
         return parent::fetch($template, $vars, $replace, $config);

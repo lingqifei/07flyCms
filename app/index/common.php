@@ -148,3 +148,52 @@ if (!function_exists('array_rand_value')){
     }
 
 }
+
+
+function getTagData($str, $start, $end)
+{
+    if ($start == '' || $end == '') {
+        return;
+    }
+    $str = explode($start, $str);
+    $str = explode($end, $str[1]);
+    return $str[0];
+}
+
+/*
+ * 远程抓取数据函数
+ *
+ * $url           远程URL地址 必选
+ * $way         1为file_get_contents抓取  2为CURL抓取  默认为1 可留空
+ * $$coding  编码  1为UTF-8转GBK  1为GBK转UTF-8  留空为不转换
+ *
+ * 作者: 小曾  QQ839024615 欢迎加我一起交流!
+ *
+ */
+function GetFile($url, $way = 1, $coding='1')
+{
+    if ($way == 1) {
+        $str = file_get_contents($url);
+    } else if ($way == 2) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5000);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4'));
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        $contents = curl_exec($ch);
+        curl_close($ch);//关闭一打开的会话
+    }
+    if ($coding == "1") {
+        $html = mb_convert_encoding($contents, 'UTF-8', 'UTF-8,GBK,GB2312,BIG5');
+    } elseif ($coding == "2") {
+        $html = mb_convert_encoding($contents, 'GBK', 'UTF-8,GBK,GB2312,BIG5');
+    }
+    return $html;
+}
+
+function getAllURL($code){
+    preg_match_all('/<a\s+href=["|\']?([^>"\' ]+)["|\']?\s*[^>]*>([^>]+)<\/a>/i',$code,$arr);
+    return array('name'=>$arr[2],'url'=>$arr[1]);
+}
