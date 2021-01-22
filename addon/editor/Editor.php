@@ -27,12 +27,26 @@ class Editor extends AddonBase implements AddonInterface
      */
     public function ArticleEditor($param = [])
     {
-        
+
+        //指定模块
+        if(empty($param['addons_model'])){
+            $param['addons_model']='admin';
+        }else{
+            $param['addons_model']=$param['addons_model'];
+        }
+
+        //指定编辑类型
+        if(empty($param['type'])){
+            $param['type']='index';
+        }else{
+            $param['type']=$param['type'];
+        }
+
         $this->assign('addons_data', $param);
         
         $this->assign('addons_config', $this->addonConfig($param));
-        
-        $this->fetch('index/index');
+
+        $this->fetch('index/' . $param['type']);
     }
     
     /**
@@ -59,7 +73,7 @@ class Editor extends AddonBase implements AddonInterface
     public function addonInfo()
     {
         
-        return ['name' => 'Editor', 'title' => '文本编辑器', 'describe' => '富文本编辑器', 'author' => 'Bigotry', 'version' => '1.0'];
+        return ['name' => 'Editor', 'title' => '文本编辑器', 'describe' => '富文本编辑器', 'author' => 'lingqifei', 'version' => '1.0'];
     }
     
     /**
