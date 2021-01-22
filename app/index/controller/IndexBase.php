@@ -109,14 +109,15 @@ class IndexBase extends ControllerBase
     {
 
         $web_theme = $this->logicWebsite->getWebsiteConfig('web_theme');
-        $web_wap = $this->logicWebsite->getWebsiteConfig('web_wap');
-
         define('THEME_NAME', $web_theme );
         define('THEME_PATH', PATH_PUBLIC.$web_theme );
 
         $root_url = get_file_root_path();
         $this->assign('root_url', $root_url);
-        if(is_mobile() && $web_wap){
+
+        $webconfig = $this->logicWebsite->getWebsiteConfigColumn();
+
+        if(is_mobile()  && !empty($webconfig['web_wap'])){
             $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/wap/');
         }else{
             $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/');
@@ -161,8 +162,9 @@ class IndexBase extends ControllerBase
     final protected function fetch($template = '', $vars = [], $replace = [], $config = [])
     {
 
-        $web_wap = $this->logicWebsite->getWebsiteConfig('web_wap');
-        if(is_mobile()  && $web_wap){
+        $webconfig = $this->logicWebsite->getWebsiteConfigColumn();
+
+        if(is_mobile()  && !empty($webconfig['web_wap'])){
             $template=PATH_PUBLIC.'theme'.DS.THEME_NAME.DS.'wap'.DS.$template;
         }else{
             $template=PATH_PUBLIC.'theme'.DS.THEME_NAME.DS.$template;

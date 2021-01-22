@@ -175,7 +175,6 @@ class File extends LogicBase
      */
     public function getPictureUrl($id = 0,$model='picture')
     {
-
         switch ($model)
         {
             case "portalmember":

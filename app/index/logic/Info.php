@@ -27,51 +27,28 @@ class Info extends IndexBase
      * @return mixed
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getInfoList($where = [], $field = 'a.id,a.title,a.description,a.content,a.pubdate_time,a.litpic,a.city_id', $order = '', $paginate = DB_LIST_ROWS)
+    public function getInfoList($where = [], $field = '', $order = '', $paginate = DB_LIST_ROWS, $limit=DB_LIST_ROWS)
     {
+
+        if(empty($field)){
+            $field = 'a.id,a.title,a.description,a.content,a.pubdate_time,a.litpic,a.city_id';
+        }
+
         $this->modelInfo->alias('a');
         $join = [
             [SYS_DB_PREFIX . 'info_type t', 't.id = a.type_id2','LEFT'],
         ];
         $this->modelInfo->join = $join;
+        if($paginate===false)  $this->modelInfo->limit =$limit;
         $list= $this->modelInfo->getList($where, $field, $order, $paginate);
         $city=$this->logicRegion->getRegionListName();
         foreach ($list as &$row){
-            $row['litpic'] =get_picture_url($row['litpic']);
+            $row['litpic'] =get_picture_url2($row['litpic']);
             $row['infourl'] =$this->getInfoUrl($row);
             $row['city_name'] =$city[$row['city_id']];
-            //$row['target'] = ($row['target'] == 1) ? 'target="_blank"' : 'target="_self"';
         }
         return $list;
     }
-
-    /**文章列表查询
-     * @param array $where
-     * @param bool $field
-     * @param string $order
-     * @param int $paginate
-     * @return mixed
-     * Author: lingqifei created by at 2020/2/27 0027
-     */
-    public function getInfoListHot($where = [], $field = 'a.id,a.title,a.description,a.content,a.pubdate_time,a.litpic,a.city_id', $order = '', $row = '10')
-    {
-        $this->modelInfo->alias('a');
-        $join = [
-            [SYS_DB_PREFIX . 'info_type t', 't.id = a.type_id2','LEFT'],
-        ];
-        $this->modelInfo->join = $join;
-        $this->modelInfo->limit ="0,$row";
-        $list= $this->modelInfo->getList($where, $field, $order, false);
-        $city=$this->logicRegion->getRegionListName();
-        foreach ($list as &$row){
-            $row['litpic'] =get_picture_url($row['litpic']);
-            $row['infourl'] =$this->getInfoUrl($row['id']);
-            $row['city_name'] =$city[$row['city_id']];
-            //$row['target'] = ($row['target'] == 1) ? 'target="_blank"' : 'target="_self"';
-        }
-        return $list;
-    }
-
 
     /**转换一条文章的实际地址
      * @param array $data

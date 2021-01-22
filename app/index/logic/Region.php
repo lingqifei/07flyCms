@@ -360,7 +360,7 @@ class Region extends IndexBase
                     $row['url'] = url('index/City/index', $param);
                 }else{
                     $param = array_merge($param, array('tid' => $data['tid']));
-                    $row['url'] = url('index/InfoType/index', $param);
+                    $row['url'] = url('index/Info/lists', $param);
                 }
 
             }

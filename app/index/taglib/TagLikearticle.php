@@ -62,7 +62,6 @@ class TagLikearticle extends Base
             $where['a.channelid']=['in',$channelid];
         }
 
-
         if (!empty($typeid)) {
             if (!preg_match('/^\d+([\d\,]*)$/i', $typeid)) {
                 echo '标签arclist报错：typeid属性值语法错误，请正确填写栏目ID。';
@@ -95,10 +94,6 @@ class TagLikearticle extends Base
             $where['a.id']=['notin',$this->aid];
             $randMap['id']=['notin',$this->aid];
         }
-//        $reg_txt=str_replace(",","|",$param['flag']);
-//        $where['a.flag']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
-
-
 
         /*获取相关标签编号*/
         $tagList = new \app\index\logic\Taglist();
@@ -106,20 +101,9 @@ class TagLikearticle extends Base
         $aids=$tagList->getTaglistColumn(['tid'=>['in',$tids]],'aid');
         $aids=array_merge(array_diff($aids, array($this->aid)));//排除自身
         $where['a.id']=['in',$aids];
-//        $info = $logicArchives->getArchivesInfo(['id'=>$this->aid]);
-//        if(empty($info['keywords'])){//通过插件分析关键字
-//            $keywords=getKeywords($info['title'],$info['body']);
-//            $reg_txt=implode('|',$keywords);
-//        }else{
-//            $reg_txt=preg_replace("/(\n)|(\s)|(\t)|(\')|(')|(，)/" ,',' ,$info['keywords']);
-//            $reg_txt=str_replace(',','|',$reg_txt);
-//        }
-////echo $reg_txt;
-//       $where['a.keywords']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
 
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
-
         //排序
         switch ($orderby) {
             case 'rand':
@@ -143,12 +127,9 @@ class TagLikearticle extends Base
                 $orderby = 'create_time DESC ';
                 break;
         }
-
         $result = $logicArchives->getArchiveslikeList($where, true, $orderby,false,$limit);
-
         //获取文档栏目信息
         $logicArctype = new \app\index\logic\Arctype();
-
         foreach ($result['data'] as &$row){
             $typeinfo=$logicArctype->getArctypeInfo(['id'=>$row['type_id']]);
             if($typeinfo){
@@ -156,7 +137,6 @@ class TagLikearticle extends Base
                 $row['typeurl']=$typeinfo['typeurl'];
             }
         }
-
         return $result['data'];
     }
 

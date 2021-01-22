@@ -60,4 +60,19 @@ class Website extends IndexBase
         }
     }
 
+
+    /**
+     * 获取配置列表
+     * @param array $where
+     * @param string $field
+     * @param string $key
+     * @return mixed
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2021/1/21 0021
+     */
+    public function getWebsiteConfigColumn($where = [], $field = 'value', $key='name')
+    {
+        $info = $this->modelWebsite->getColumn($where, $field,$key);
+        return $info;
+    }
+
 }

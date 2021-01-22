@@ -309,7 +309,7 @@ class InfoType extends IndexBase
         if(!empty($data['tid'])){
             $param= array_merge($param,array('tid'=>$data['tid']));
         }
-        $typeurl=url('index/InfoType/index',$param);
+        $typeurl=url('index/Info/lists',$param);
         return $typeurl;
     }
 
