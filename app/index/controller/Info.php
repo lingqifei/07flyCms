@@ -1,11 +1,15 @@
 <?php
-/*
-ThinkPHP5.0+整合百度编辑器Ueditor1.4.3.3+
-作者：符工@邦明
-日期：西元二零一七年元月五日
-网址：http://bbs.df81.com/
-不要怀念哥，哥只是个搬运工
-*/
+/**
+ * 零起飞07FLY-CMS
+ * ============================================================================
+ * 版权所有 2018-2028 成都零起飞科技有限公司，并保留所有权利。
+ * 网站地址: http://www.07fly.com
+ * ----------------------------------------------------------------------------
+ * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
+ * ============================================================================
+ * Author: 开发人生 <goodkfrs@qq.com>
+ * Date: 2021-01-01-3
+ */
 
 namespace app\index\controller;
 
@@ -15,6 +19,34 @@ class Info extends IndexBase{
 
     public $iid = '';
     public $type = '';
+
+
+    /**
+     * @return mixed
+     * created by Administrator at 2020/2/24 0024 15:15
+     */
+    public function index()
+    {
+        $where=[];
+        //右边显示
+        $list_info=$this->logicInfo->getInfoList($where,'a.id,a.title,a.pubdate_time,a.litpic,a.city_id','a.update_time desc',100);
+        $list_company=$this->logicMemberCompany->getMemberCompanyListHot($where,'','',10);
+        $type_list_right=$this->logicInfoType->getInfoTypeSelfSonChannel($this->param);
+        $rtnArray = array(
+            'list_info' => $list_info,
+            'list_company' => $list_company,
+            'type_list_right' => $type_list_right,
+        );
+        /*模板文件*/
+        if(empty($tpfile)){
+            $tpfile = 'index.html';
+        }
+        $viewfile = !empty($tpfile) ? strtolower($tpfile) : $tpfile;
+        $this->typeinfo = $rtnArray;
+        $this->assign('fly', $this->typeinfo);
+        return $this->fetch($viewfile);
+    }
+
 
     /**
      * @return mixed

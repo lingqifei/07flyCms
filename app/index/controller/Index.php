@@ -1,11 +1,15 @@
 <?php
-/*
-ThinkPHP5.0+整合百度编辑器Ueditor1.4.3.3+
-作者：符工@邦明
-日期：西元二零一七年元月五日
-网址：http://bbs.df81.com/
-不要怀念哥，哥只是个搬运工
-*/
+/**
+ * 零起飞07FLY-CMS
+ * ============================================================================
+ * 版权所有 2018-2028 成都零起飞科技有限公司，并保留所有权利。
+ * 网站地址: http://www.07fly.com
+ * ----------------------------------------------------------------------------
+ * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
+ * ============================================================================
+ * Author: 开发人生 <goodkfrs@qq.com>
+ * Date: 2021-01-01-3
+ */
 
 namespace app\index\controller;
 
@@ -22,8 +26,8 @@ class Index extends IndexBase
     {
         $where=[];
         //右边显示
-        $list_info=$this->logicInfo->getInfoListHot($where,'a.*','a.update_time desc',100);
-        $list_company=$this->logicMemberCompany->getMemberCompanyListHot($where,'','',10);
+        $list_info=$this->logicInfo->getInfoList($where,'a.*','a.update_time desc',100);
+        $list_company=$this->logicMemberCompany->getMemberCompanyList($where,'a.name,a.litpic,a.intro,a.id,a.city_id','',false,10);
         $type_list_right=$this->logicInfoType->getInfoTypeSelfSonChannel($this->param);
         $rtnArray = array(
             'list_info' => $list_info,
