@@ -27,19 +27,55 @@ class AdsList extends IndexBase
      * @return mixed
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getAdsListList($where = [], $field = true, $order = 'sort asc', $paginate = 15)
+    public function getAdsListList($where = [], $field = true, $order = 'sort asc', $paginate = DB_LIST_ROWS,$limit=DB_LIST_ROWS)
     {
-
         $this->modelAdsList->alias('a');
         $list= $this->modelAdsList->getList($where, $field, $order, $paginate)->toArray();
-
         $paginate===false && $list['data']=$list;
-
         foreach ($list['data'] as &$row){
             $row['litpic'] =get_picture_url($row['litpic']);
             $row['target'] = ($row['target'] == 1) ? 'target="_blank"' : 'target="_self"';
         }
         return $list;
+    }
+
+    /**信息
+     * @param array $where
+     * @param bool $field
+     * @return
+     */
+    public function getAdsListInfo($where = [], $field = true)
+    {
+        $info = $this->modelAdsList->getInfo($where, $field);
+        $info['target'] = ($info['target'] == 1) ? 'target="_blank"' : 'target="_self"';
+        return $info;
+    }
+
+    /**设置文章点击
+     * @param array $data
+     * @return mixed|string
+     * Author: lingqifei created by at 2020/2/27 0027
+     */
+    public function updateAdsListView($where = [])
+    {
+        $view = $this->modelAdsList->getValue($where, 'view');
+        $view=(int)$view+1;
+        $this->modelAdsList->setFieldValue($where, 'view',$view);
+
+    }
+
+    /**设置文章点击
+     * @param array $data
+     * @return mixed|string
+     * Author: lingqifei created by at 2020/2/27 0027
+     */
+    public function updateAdsListClick($where = [], $field = true)
+    {
+        $click = $this->modelAdsList->getValue($where, 'click');
+        if($click){
+            $click=(int)$click+1;
+            $this->modelInfo->setFieldValue($where, 'click',$click);
+        }
     }
 
 }

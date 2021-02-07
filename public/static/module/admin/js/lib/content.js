@@ -100,7 +100,7 @@ $("body").on("click", ".ajax-list-table .sort-filed", function () {
         } else {
             $(this).removeClass('desc');
             orderDirection = 'asc';
-            turnPage(1);
+            turnPage(pageNum);
             return 'asc';
         }
     })
@@ -108,6 +108,13 @@ $("body").on("click", ".ajax-list-table .sort-filed", function () {
 
 //查询数据，刷新
 $('.ajaxSearchForm').click(function () {
+    $(this).children("input").prop("checked", true);
+    ajaxSearchFormData = $("form").serialize();
+    turnPage(1);
+});
+
+//查询数据，下拉执行选择
+$("body").on("change", ".searchForm select", function () {
     $(this).children("input").prop("checked", true);
     ajaxSearchFormData = $("form").serialize();
     turnPage(1);

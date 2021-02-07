@@ -10,7 +10,7 @@ use think\template\TagLib;
  * @category   Think
  * @package  Think
  * @subpackage  Driver.Taglib
- * @author    小虎哥 <1105415366@qq.com>
+ * @author    开发人生 <574249366@qq.com>
  */
 class Fly extends TagLib
 {
@@ -771,9 +771,9 @@ class Fly extends TagLib
      * prenext 标签解析
      * 在模板中获取内容页的上下篇
      * 格式：
-     * {eyou:prenext get='pre'}
+     * {fly:prenext get='pre'}
      *  <a href="{$field:arcurl}">{$field:title}</a>
-     * {/eyou:prenext}
+     * {/fly:prenext}
      * @access public
      * @param array $tag 标签属性
      * @return string
@@ -1160,7 +1160,7 @@ class Fly extends TagLib
      *       getall:获取类型 0 为当前内容页TAG标记，1为获取全部TAG标记
      * {fly:flink row='1' titlelen='20'}
      *  <li><a href='{$field:url}'>{$field:title}</a> </li>
-     * {/eyou:fly}
+     * {/fly:fly}
      * @access public
      * @param array $tag 标签属性
      * @param string $content 标签内容

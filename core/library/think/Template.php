@@ -474,7 +474,7 @@ class Template
     }
 
     /**
-     * 解析模板中的eyou:include标签 by 小虎哥
+     * 解析模板中的eyou:include标签 by 开发人生
      * @access private
      * @param  string $content 要解析的模板内容
      * @return void

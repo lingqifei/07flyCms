@@ -92,7 +92,7 @@ class Wxpay extends Pay implements Driver
      */
     public function getPayCode($order)
     {
-        
+
         require_once('wxpay/WxPayPubHelper.php');
 
         //使用统一支付接口
@@ -113,6 +113,9 @@ class Wxpay extends Pay implements Driver
 
         //获取统一支付接口结果
         $unifiedOrderResult = $unifiedOrder->getResult();
+
+
+
         //商户根据实际情况设置相应的处理流程
         if ($unifiedOrderResult["return_code"] == "FAIL") {
                 //商户自行增加处理流程
@@ -130,13 +133,13 @@ class Wxpay extends Pay implements Driver
         /**/
 
         //模版输出
-        lqf_start();
+        ob_start();
         
         require_once('wxpay/tmp.php');
         
-        $info = lqf_get_contents();
+        $info = ob_get_contents();
         
-        lqf_clean();
+        ob_clean();
 
         return $info;
     }

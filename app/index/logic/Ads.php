@@ -42,4 +42,14 @@ class Ads extends IndexBase
         return $list;
     }
 
+    /**信息
+     * @param array $where
+     * @param bool $field
+     * @return
+     */
+    public function getAdsInfo($where = [], $field = true)
+    {
+        return $this->modelAds->getInfo($where, $field);
+    }
+
 }

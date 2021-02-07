@@ -140,7 +140,7 @@ if (!function_exists('array_rand_value')){
      */
     function array_rand_value($array, $num) {
         $radn_value = [];
-        $rand_key = array_rand($array, $num);
+        $rand_key = (array)array_rand($array, $num);
         foreach ($rand_key as $k) {
             $radn_value[] = $array[$k];
         }

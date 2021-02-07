@@ -46,7 +46,7 @@ class MemberCompany extends IndexBase
         foreach ($list as &$row){
             $row['litpic'] =get_picture_url2($row['litpic']);
             $row['comurl'] =$this->getMemberCompanyUrl($row);
-            $row['city_name'] =$city[$row['city_id']];
+            $row['city_name'] =empty($city[$row['city_id']])?'':$city[$row['city_id']];
             //$row['target'] = ($row['target'] == 1) ? 'target="_blank"' : 'target="_self"';
         }
         return $list;
