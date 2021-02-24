@@ -49,6 +49,8 @@ class Info extends IndexBase{
 
 
     /**
+     * 信息显示
+     *
      * @return mixed
      * created by Administrator at 2020/2/24 0024 15:15
      */
@@ -99,7 +101,6 @@ class Info extends IndexBase{
         $this->assign('fly', $this->typeinfo);
         return $this->fetch($tpfile);
     }
-
 
     /**
      * 分类课时显示

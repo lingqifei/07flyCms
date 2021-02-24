@@ -54,6 +54,35 @@ class CmsBase extends LogicBase
     }
 
     /**
+     * 数据排序设置
+     */
+    public function setModelField($model = null, $param = null)
+    {
+
+        if(empty($param['name'])){
+            return [RESULT_ERROR, '请传递完整的参数~name~'];
+            eixt;
+        }
+        if(empty($param['id'])){
+            return [RESULT_ERROR, '请传递完整的参数~id~'];
+            eixt;
+        }
+        if(empty($param['value'])){
+            return [RESULT_ERROR, '请传递完整的参数~value~'];
+            eixt;
+        }
+        $model_str = LAYER_MODEL_NAME . $model;
+
+        $obj = $this->$model_str;
+        $result = $obj->setFieldValue(['id' => (int)$param['id']], $param['name'], (int)$param['value']);
+
+        $result && action_log('数据更新', '数据更新调整' . '，model：' . $model . '，id：' . $param['id'] . '，name：' . $param['name']. '，value：' . $param['value']);
+
+        return $result ? [RESULT_SUCCESS, '操作成功'] : [RESULT_ERROR, $obj->getError()];
+    }
+
+
+    /**
      * 获取列表树结构
      */
     public function getListTree($list = [])

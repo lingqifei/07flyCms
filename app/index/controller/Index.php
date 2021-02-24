@@ -27,7 +27,7 @@ class Index extends IndexBase
         $where=[];
         //右边显示
         $list_info=$this->logicInfo->getInfoList($where,'a.*','a.update_time desc',100);
-        $list_company=$this->logicMemberCompany->getMemberCompanyList($where,'a.name,a.litpic,a.intro,a.id,a.city_id','',false,10);
+        $list_company=$this->logicMemberCompany->getMemberCompanyList($where,'a.name,a.litpic,a.intro,a.id,a.city_id','',false,12);
         $type_list_right=$this->logicInfoType->getInfoTypeSelfSonChannel($this->param);
         $rtnArray = array(
             'list_info' => $list_info,

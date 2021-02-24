@@ -39,7 +39,7 @@ class MemberCompany extends IndexBase
         ];
         $this->modelMemberCompany->join = $join;
 
-        if($paginate===false)  $this->modelInfo->limit =$limit;
+        if($paginate===false)  $this->modelMemberCompany->limit =$limit;
 
         $list= $this->modelMemberCompany->getList($where, $field, $order, $paginate);
         $city=$this->logicRegion->getRegionListName();

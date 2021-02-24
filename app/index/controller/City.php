@@ -58,7 +58,7 @@ class City extends IndexBase
         }
         //右边显示
         $list_info=$this->logicInfo->getInfoList($where,'a.id,a.title,a.description,a.content,a.pubdate_time,a.litpic,a.city_id','a.update_time desc',false,100);
-        $list_company=$this->logicMemberCompany->getMemberCompanyList($where,false,'',false,10);
+        $list_company=$this->logicMemberCompany->getMemberCompanyList($where,false,'',false,12);
         $type_list_right=$this->logicInfoType->getInfoTypeSelfSonChannel($this->param);
 
         $rtnArray = array(
