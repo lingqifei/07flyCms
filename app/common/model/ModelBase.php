@@ -218,8 +218,7 @@ class ModelBase extends Model
 
         } else {
             $pagesize= request()->param("pageSize");
-            $pagesize && $paginate=$pagesize;
-            $list = $query_temp->paginate(input('list_rows', empty($paginate) ? DB_LIST_ROWS : $paginate), false, ['query' => request()->param()]);
+            $list = $query_temp->paginate(input('list_rows', empty($pagesize) ? DB_LIST_ROWS : $pagesize), false, ['query' => request()->param()]);
         }
 
         $this->join = [];

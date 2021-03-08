@@ -145,6 +145,7 @@ class Region extends IndexBase
     {
         $cache_key = 'cache_getRegionColumn_' . md5(serialize($where));
         $cache_list = cache($cache_key);
+        $cache_list ='';
         if (!empty($cache_list)){
             $list=$cache_list;
         }else{
@@ -163,6 +164,7 @@ class Region extends IndexBase
     public function getRegionAllPid($typeid=0, $data=[])
     {
         $where['id']=['=',$typeid];
+        $where['visible']='1';
         $upid= $this->modelRegion->getValue($where,'upid');
         if(!empty($upid)){
             $data[]=$upid;
@@ -178,6 +180,7 @@ class Region extends IndexBase
     public function getRegionAllSon($typeid=0, $data=[])
     {
         $where['upid']=['=',$typeid];
+        $where['visible']='1';
         $sons = $this->modelRegion->getColumn($where,'id');
         foreach ($sons as $v) {
             $data[] = $v;
@@ -199,6 +202,7 @@ class Region extends IndexBase
     public function getRegionSon($typeid=0, $data=[])
     {
         $where['upid']=['=',$typeid];
+        $where['visible']='1';
         $sons = $this->modelRegion->getColumn($where,'id');
         return $sons;
     }
@@ -235,6 +239,7 @@ class Region extends IndexBase
     {
         $pid=0;
         $where['id']=['=',$typeid];
+        $where['visible']='1';
         $typepid = $this->modelRegion->getValue($where,'upid');
         if($typepid>0){
             $pid=$typepid;
@@ -254,6 +259,7 @@ class Region extends IndexBase
 
         $cache_key = 'cache_region_pid_self_son_' . md5(serialize($typeid));
         $cache_list = cache($cache_key);
+        $cache_list ='';
         if (!empty($cache_list)){
             $list=$cache_list;
         }else{
@@ -282,8 +288,10 @@ class Region extends IndexBase
     public function getRegionProvinceChannel($data=[])
     {
         $where['upid']='100000';
+        $where['visible']='1';
         $cache_key = 'cache_getRegionProvinceChannel_' . md5(serialize($where));
         $cache_list = cache($cache_key);
+        $cache_list ='';
         if (!empty($cache_list)){
             $list=$cache_list;
         }else {
@@ -323,6 +331,7 @@ class Region extends IndexBase
 
         $cache_key = 'cache_getRegionCityTypeChannel_' . md5(serialize($data));
         $cache_list = cache($cache_key);
+        $cache_list ='';
         if (!empty($cache_list)){
             $list=$cache_list;
         }else {
@@ -364,7 +373,6 @@ class Region extends IndexBase
                 }
 
             }
-
             !empty($list) && cache($cache_key, $list);
         }
         return $list;
@@ -385,6 +393,7 @@ class Region extends IndexBase
     {
         $cache_key = 'cache_region_province_city_channel_' . md5(serialize($data));
         $cache_list = cache($cache_key);
+        $cache_list ='';
         if (!empty($cache_list)){
             $list=$cache_list;
         }else{
@@ -429,10 +438,11 @@ class Region extends IndexBase
         }
         $cache_key = 'cache_getRegionCityId_' . md5(serialize($map2));
         $cache_list = cache($cache_key);
+        $cache_list ='';
         if (!empty($cache_list)){
             $list=$cache_list;
         }else{
-            $list = $this->logicRegion->getValue($map2);
+            $list = $this->logicRegion->getValue($map2,'id');
             if (empty($list)) {
                 echo "获得 region-id错误~";
                 abort(404, '页面不存在');

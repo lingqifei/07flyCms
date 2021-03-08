@@ -120,6 +120,9 @@ if (!function_exists('get_city')) {
         ];
         $res = file_get_contents($api_url,false, stream_context_create($arrContextOptions));
         $res = json_decode($res, true);
+
+        print_r($res);exit;
+
         if (!empty($res['city'])) {
             return $res['city'];
         } else {

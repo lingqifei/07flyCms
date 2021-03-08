@@ -150,4 +150,73 @@ class Ads extends IndexBase
 
     }
 
+    /**
+     * 会员广告位调用
+     *
+     * @return mixed
+     * created by Administrator at 2020/2/24 0024 15:15
+     */
+    public function madv($aid = '')
+    {
+        $this->aid = input("param.aid", '0');
+        if (!is_numeric($this->aid) || strval(intval($this->aid)) !== strval($this->aid)) {
+            abort(404, 'mem ads aid 不存在');
+        }
+        $this->aid = intval($this->aid);
+        if (empty($this->aid)) {
+            abort(404, 'mem ads aid 不存在');
+            exit;
+        } else {
+            /**广告位处理**/
+            $adv = $this->logicMemberAdv->getMemberAdvInfo(['id' => $this->aid]);
+
+            if (empty($adv)) {
+                abort(404, 'mem adv  页面不存在');
+                exit;
+            }
+            //会员广告列表
+            $ads = $this->logicMemberAdv->getMemberAdvDis(['adv_id' => $this->aid]);
+
+            if (!empty($ads)) {
+                //更新浏览
+                $this->logicMemberAdvDis->updateMemberAdvDisView(['id' => $ads['id']]);
+
+            // d($ads->toArray());exit;
+
+                $text = '';
+                switch ($adv['ad_type']) {
+                    case '0':
+                        $text = '<a href="' . $ads['links'] . '" ><img src="' . get_picture_url2($ads['litpic']) . '" width="' . $adv['width'] . '" height="' . $adv['height'] . '"></a>';
+                        break;
+                    case '1':
+                        $text = '<a href="' . $ads['links'] . '" ' . $ads['target'] . '>' . $ads['body'] . '</a>';
+                        break;
+                    case '2':
+                        $text = $ads['body'];
+                        break;
+                }
+                $ntime = format_time(time(), 'Y-m-d');
+                if ($ntime < $ads['start_date'] || $ntime > $ads['stop_date']) {
+                    $adbody = $adv['body'];
+                } else {
+                    $adbody = $text;
+                }
+
+                $adbody = str_replace('"', '\"', $adbody);
+                $adbody = str_replace("\r", "\\r", $adbody);
+                $adbody = str_replace("\n", "\\n", $adbody);
+                $adbody = "<!--\r\ndocument.write(\"{$adbody}\");\r\n-->\r\n";
+            }else{
+                $adbody = '<a href="' . $adv['links'] . '" ><img src="' . get_picture_url2($adv['litpic']) . '" width="' . $adv['width'] . '" height="' . $adv['height'] . '"></a>';
+                $adbody = str_replace('"', '\"', $adbody);
+                $adbody = str_replace("\r", "\\r", $adbody);
+                $adbody = str_replace("\n", "\\n", $adbody);
+                $adbody = "<!--\r\ndocument.write(\"{$adbody}\");\r\n-->\r\n";
+            }
+
+            echo $adbody;
+
+        }
+    }
+
 }

@@ -55,7 +55,6 @@ class Info extends IndexBase{
      * created by Administrator at 2020/2/24 0024 15:15
      */
     public function view($iid = ''){
-
         $this->iid = input("param.iid", '0');
 
         if (!is_numeric($this->iid) || strval(intval($this->iid)) !== strval($this->iid)) {
@@ -114,9 +113,10 @@ class Info extends IndexBase{
         $province = input("param.province", '');
         $city = input("param.city", '');
         $county = input("param.county", '');
-
         /*获取当前栏目ID以及模型ID*/
         $page_tmp = input('param.page/s', 0);
+
+//        print_r($this->param);
 
         if (empty($tid) || !is_numeric($page_tmp)) {
             abort(404, '页面不存在');
@@ -164,6 +164,7 @@ class Info extends IndexBase{
         $list=$this->logicInfo->getInfoList($where);
 
         $pages=$list->render('pre,next,pageno',DB_LIST_ROWS);
+
         $rtnArray = array(
             'type' => $type,
             'list' => $list,
@@ -192,12 +193,15 @@ class Info extends IndexBase{
     }
 
     /**
-     * 后台调用方法，可以配合路由配置
+     * 信息报名
      * @return mixed
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/11/2 0002
      */
-    public function adminindex(){
-       return  $this->index($this->param);
+    public function askfor(){
+
+        $this->jump($this->logicInfoAskfor->infoAskforAdd($this->param));
+
     }
+
 
 }

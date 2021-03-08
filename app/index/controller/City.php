@@ -38,7 +38,6 @@ class City extends IndexBase
      */
     public function index($data = [])
     {
-
         $province = input("param.province", '');
         $city = input("param.city", '');
         $county = input("param.county", '');
@@ -56,10 +55,11 @@ class City extends IndexBase
             $county_id=$this->logicRegion->getRegionCityId($county,3,$city);
             $where['county_id']=['in',$county_id];
         }
+
         //右边显示
-        $list_info=$this->logicInfo->getInfoList($where,'a.id,a.title,a.description,a.content,a.pubdate_time,a.litpic,a.city_id','a.update_time desc',false,100);
-        $list_company=$this->logicMemberCompany->getMemberCompanyList($where,false,'',false,12);
-        $type_list_right=$this->logicInfoType->getInfoTypeSelfSonChannel($this->param);
+        $list_info=$this->logicInfo->getInfoList($where,'a.id,a.title,a.description,a.content,a.pubdate_time,a.litpic,a.city_id','a.update_time desc',false,100);//分类信息
+        $list_company=$this->logicMemberCompany->getMemberCompanyList($where,false,'',false,12);//公司信息
+        $type_list_right=$this->logicInfoType->getInfoTypeSelfSonChannel($this->param);//当前分类下一分类
 
         $rtnArray = array(
             'list_info' => $list_info,

@@ -15,23 +15,23 @@
 /**
  * 时间计算函数
  * @param int $time
- * @param int $caclVal  增加、减少的值
- * @param int $type  计算时间类型
+ * @param int $caclVal 增加、减少的值
+ * @param int $type 计算时间类型
  * @return string 完整的时间显示
  */
-function date_calc($time = null, $caclVal="0", $type="day", $format = 'Y-m-d')
+function date_calc($time = null, $caclVal = "0", $type = "day", $format = 'Y-m-d')
 {
     if (null === $time) {
         $time = TIME_NOW;
     }
-    return date($format,strtotime (" $caclVal $type", strtotime($time)));
+    return date($format, strtotime(" $caclVal $type", strtotime($time)));
 
 }
 
 /**
  * 获取两个日期之间所有日期
  * @param int $startDate 开始时间
- * @param int $endDate  结束时间
+ * @param int $endDate 结束时间
  * @return string 完整的时间显示
  */
 function getDatesBetweenTwoDays($startDate, $endDate)
@@ -59,23 +59,54 @@ function getDatesBetweenTwoDays($startDate, $endDate)
 /**
  * 时间计算函数
  * @param int $time
- * @param int $caclVal  增加、减少的值
- * @param int $type  计算时间类型
+ * @param int $caclVal 增加、减少的值
+ * @param int $type 计算时间类型
  * @return string 完整的时间显示
  */
 function date_to_day($dates = [])
 {
-    $days=[];
-    foreach ($dates as $date){
-        $days[]=date("d",strtotime($date));
+    $days = [];
+    foreach ($dates as $date) {
+        $days[] = date("d", strtotime($date));
     }
 
     return $days;
 }
 
 
-if (!function_exists('msubstr'))
+/**
+ * [time_friend 时间美化函数v2.0]
+ */
+function time_friend($time)
 {
+    $todayLast = strtotime(date('Y-m-d') . ' 23:59:59');
+    $agoTimeTrue = time() - $time;
+    $agoTime = $todayLast - $time;
+    $agoDay = floor($agoTime / 86400);
+    $res = '';
+    if ($agoTimeTrue < 60) {
+        $res = '刚刚';
+    } elseif ($agoTimeTrue < 3600) {
+        $res = (ceil($agoTimeTrue / 60)) . '分钟前';
+    } elseif ($agoTimeTrue < (3600 * 12)) {
+        $res = (ceil($agoTimeTrue / 3600)) . '小时前';
+    } elseif ($agoDay == 0) {
+        $res = '今天 ' . date('H:i', $time);
+    } elseif ($agoDay == 1) {
+        $res = '昨天 ' . date('H:i', $time);
+    } elseif ($agoDay == 2) {
+        $res = '前天 ' . date('H:i', $time);
+    } elseif (($agoDay > 2) && ($agoDay < 16)) {
+        $res = $agoDay . '天前' . date('H:i', $time);
+    } else {
+        $res = date('Y-m-d H:i:s', $time);
+    }
+
+    return $res;
+}
+
+
+if (!function_exists('msubstr')) {
     /**
      * 字符串截取，支持中文和其他编码
      *
@@ -86,34 +117,34 @@ if (!function_exists('msubstr'))
      * @param string $charset 编码格式
      * @return string
      */
-    function msubstr($str='', $start=0, $length=NULL, $suffix=false, $charset="utf-8") {
-        if(function_exists("mb_substr"))
+    function msubstr($str = '', $start = 0, $length = NULL, $suffix = false, $charset = "utf-8")
+    {
+        if (function_exists("mb_substr"))
             $slice = mb_substr($str, $start, $length, $charset);
-        elseif(function_exists('iconv_substr')) {
-            $slice = iconv_substr($str,$start,$length,$charset);
-            if(false === $slice) {
+        elseif (function_exists('iconv_substr')) {
+            $slice = iconv_substr($str, $start, $length, $charset);
+            if (false === $slice) {
                 $slice = '';
             }
-        }else{
-            $re['utf-8']   = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
+        } else {
+            $re['utf-8'] = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
             $re['gb2312'] = "/[\x01-\x7f]|[\xb0-\xf7][\xa0-\xfe]/";
-            $re['gbk']    = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
-            $re['big5']   = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
+            $re['gbk'] = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
+            $re['big5'] = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
             preg_match_all($re[$charset], $str, $match);
-            $slice = join("",array_slice($match[0], $start, $length));
+            $slice = join("", array_slice($match[0], $start, $length));
         }
 
         $str_len = strlen($str); // 原字符串长度
         $slice_len = strlen($slice); // 截取字符串的长度
         if ($slice_len < $str_len) {
-            $slice = $suffix ? $slice.'...' : $slice;
+            $slice = $suffix ? $slice . '...' : $slice;
         }
         return $slice;
     }
 }
 
-if (!function_exists('html_msubstr'))
-{
+if (!function_exists('html_msubstr')) {
     /**
      * 截取内容清除html之后的字符串长度，支持中文和其他编码
      *
@@ -124,15 +155,15 @@ if (!function_exists('html_msubstr'))
      * @param string $charset 编码格式
      * @return string
      */
-    function html_msubstr($str='', $start=0, $length=NULL, $suffix=false, $charset="utf-8") {
+    function html_msubstr($str = '', $start = 0, $length = NULL, $suffix = false, $charset = "utf-8")
+    {
         $str = htmlspecialchars_decode($str);
         $str = checkStrHtml($str);
         return msubstr($str, $start, $length, $suffix, $charset);
     }
 }
 
-if (!function_exists('text_msubstr'))
-{
+if (!function_exists('text_msubstr')) {
     /**
      * 针对多语言截取，其他语言的截取是中文语言的2倍长度
      *
@@ -143,13 +174,13 @@ if (!function_exists('text_msubstr'))
      * @param string $charset 编码格式
      * @return string
      */
-    function text_msubstr($str='', $start=0, $length=NULL, $suffix=false, $charset="utf-8") {
+    function text_msubstr($str = '', $start = 0, $length = NULL, $suffix = false, $charset = "utf-8")
+    {
         return msubstr($str, $start, $length, $suffix, $charset);
     }
 }
 
-if (!function_exists('htmlspecialchars_decode'))
-{
+if (!function_exists('htmlspecialchars_decode')) {
     /**
      * 自定义只针对htmlspecialchars编码过的字符串进行解码
      *
@@ -160,7 +191,8 @@ if (!function_exists('htmlspecialchars_decode'))
      * @param string $charset 编码格式
      * @return string
      */
-    function htmlspecialchars_decode($str='') {
+    function htmlspecialchars_decode($str = '')
+    {
         if (is_string($str) && stripos($str, '&lt;') !== false && stripos($str, '&gt;') !== false) {
             $str = htmlspecialchars_decode($str);
         }
@@ -168,74 +200,74 @@ if (!function_exists('htmlspecialchars_decode'))
     }
 }
 
-if (!function_exists('checkStrHtml'))
-{
+if (!function_exists('checkStrHtml')) {
     /**
      * 过滤Html标签
      *
-     * @param     string  $string  内容
+     * @param string $string 内容
      * @return    string
      */
-    function checkStrHtml($string){
+    function checkStrHtml($string)
+    {
         $string = trim_space($string);
 
-        if(is_numeric($string)) return $string;
-        if(!isset($string) or empty($string)) return '';
+        if (is_numeric($string)) return $string;
+        if (!isset($string) or empty($string)) return '';
 
-        $string = preg_replace('/[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F]/','',$string);
-        $string  = ($string);
+        $string = preg_replace('/[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F]/', '', $string);
+        $string = ($string);
 
-        $string = strip_tags($string,""); //清除HTML如<br />等代码
+        $string = strip_tags($string, ""); //清除HTML如<br />等代码
         // $string = str_replace("\n", "", str_replace(" ", "", $string));//去掉空格和换行
         $string = str_replace("\n", "", $string);//去掉空格和换行
-        $string = str_replace("\t","",$string); //去掉制表符号
-        $string = str_replace(PHP_EOL,"",$string); //去掉回车换行符号
-        $string = str_replace("\r","",$string); //去掉回车
-        $string = str_replace("'","‘",$string); //替换单引号
-        $string = str_replace("&amp;","&",$string);
-        $string = str_replace("=★","",$string);
-        $string = str_replace("★=","",$string);
-        $string = str_replace("★","",$string);
-        $string = str_replace("☆","",$string);
-        $string = str_replace("√","",$string);
-        $string = str_replace("±","",$string);
-        $string = str_replace("‖","",$string);
-        $string = str_replace("×","",$string);
-        $string = str_replace("∏","",$string);
-        $string = str_replace("∷","",$string);
-        $string = str_replace("⊥","",$string);
-        $string = str_replace("∠","",$string);
-        $string = str_replace("⊙","",$string);
-        $string = str_replace("≈","",$string);
-        $string = str_replace("≤","",$string);
-        $string = str_replace("≥","",$string);
-        $string = str_replace("∞","",$string);
-        $string = str_replace("∵","",$string);
-        $string = str_replace("♂","",$string);
-        $string = str_replace("♀","",$string);
-        $string = str_replace("°","",$string);
-        $string = str_replace("¤","",$string);
-        $string = str_replace("◎","",$string);
-        $string = str_replace("◇","",$string);
-        $string = str_replace("◆","",$string);
-        $string = str_replace("→","",$string);
-        $string = str_replace("←","",$string);
-        $string = str_replace("↑","",$string);
-        $string = str_replace("↓","",$string);
-        $string = str_replace("▲","",$string);
-        $string = str_replace("▼","",$string);
+        $string = str_replace("\t", "", $string); //去掉制表符号
+        $string = str_replace(PHP_EOL, "", $string); //去掉回车换行符号
+        $string = str_replace("\r", "", $string); //去掉回车
+        $string = str_replace("'", "‘", $string); //替换单引号
+        $string = str_replace("&amp;", "&", $string);
+        $string = str_replace("=★", "", $string);
+        $string = str_replace("★=", "", $string);
+        $string = str_replace("★", "", $string);
+        $string = str_replace("☆", "", $string);
+        $string = str_replace("√", "", $string);
+        $string = str_replace("±", "", $string);
+        $string = str_replace("‖", "", $string);
+        $string = str_replace("×", "", $string);
+        $string = str_replace("∏", "", $string);
+        $string = str_replace("∷", "", $string);
+        $string = str_replace("⊥", "", $string);
+        $string = str_replace("∠", "", $string);
+        $string = str_replace("⊙", "", $string);
+        $string = str_replace("≈", "", $string);
+        $string = str_replace("≤", "", $string);
+        $string = str_replace("≥", "", $string);
+        $string = str_replace("∞", "", $string);
+        $string = str_replace("∵", "", $string);
+        $string = str_replace("♂", "", $string);
+        $string = str_replace("♀", "", $string);
+        $string = str_replace("°", "", $string);
+        $string = str_replace("¤", "", $string);
+        $string = str_replace("◎", "", $string);
+        $string = str_replace("◇", "", $string);
+        $string = str_replace("◆", "", $string);
+        $string = str_replace("→", "", $string);
+        $string = str_replace("←", "", $string);
+        $string = str_replace("↑", "", $string);
+        $string = str_replace("↓", "", $string);
+        $string = str_replace("▲", "", $string);
+        $string = str_replace("▼", "", $string);
 
         // --过滤微信表情
-        $string = preg_replace_callback('/[\xf0-\xf7].{3}/', function($r) { return '';}, $string);
+        $string = preg_replace_callback('/[\xf0-\xf7].{3}/', function ($r) {
+            return '';
+        }, $string);
 
         return $string;
     }
 }
 
 
-
-if (!function_exists('trim_space'))
-{
+if (!function_exists('trim_space')) {
     /**
      * 过滤前后空格等多种字符
      *
@@ -249,15 +281,14 @@ if (!function_exists('trim_space'))
             $arr = array(' ', '　');
         }
         foreach ($arr as $key => $val) {
-            $str = preg_replace('/(^'.$val.')|('.$val.'$)/', '', $str);
+            $str = preg_replace('/(^' . $val . ')|(' . $val . '$)/', '', $str);
         }
 
         return $str;
     }
 }
 
-if (!function_exists('func_preg_replace'))
-{
+if (!function_exists('func_preg_replace')) {
     /**
      * 替换指定的符号
      *
@@ -272,7 +303,7 @@ if (!function_exists('func_preg_replace'))
             $arr = array('，');
         }
         foreach ($arr as $key => $val) {
-            $str = preg_replace('/('.$val.')/', $replacement, $str);
+            $str = preg_replace('/(' . $val . ')/', $replacement, $str);
         }
 
         return $str;
@@ -280,12 +311,11 @@ if (!function_exists('func_preg_replace'))
 }
 
 
-if (!function_exists('is_http_url'))
-{
+if (!function_exists('is_http_url')) {
     /**
      * 判断url是否完整的链接
      *
-     * @param  string $url 网址
+     * @param string $url 网址
      * @return boolean
      */
     function is_http_url($url)
@@ -301,16 +331,15 @@ if (!function_exists('is_http_url'))
 }
 
 
-if (!function_exists('cut_str'))
-{
+if (!function_exists('cut_str')) {
 
     /**字符串按符号截取
      * $str='123/456/789/abc';
-    示例：
-    echo cut_str($str,'/',0); //输出 123
-    echo cut_str($str,'/',2); //输出 789
-    echo cut_str($str,'/',-1);//输出 abc
-    echo cut_str($str,'/',-3);//输出 456
+     * 示例：
+     * echo cut_str($str,'/',0); //输出 123
+     * echo cut_str($str,'/',2); //输出 789
+     * echo cut_str($str,'/',-1);//输出 abc
+     * echo cut_str($str,'/',-3);//输出 456
      * @param $str
      * @param $sign
      * @param $number
@@ -318,21 +347,22 @@ if (!function_exists('cut_str'))
      *
      * Author: lingqifei created by at 2020/2/29 0029
      */
-    function cut_str($str, $sign, $number){
-        $array=explode($sign, $str);
-        $length=count($array);
-        if($number<0){
-            $new_array=array_reverse($array);
-            $abs_number=abs($number);
-            if($abs_number>$length){
+    function cut_str($str, $sign, $number)
+    {
+        $array = explode($sign, $str);
+        $length = count($array);
+        if ($number < 0) {
+            $new_array = array_reverse($array);
+            $abs_number = abs($number);
+            if ($abs_number > $length) {
                 return 'error';
-            }else{
-                return $new_array[$abs_number-1];
+            } else {
+                return $new_array[$abs_number - 1];
             }
-        }else{
-            if($number>=$length){
+        } else {
+            if ($number >= $length) {
                 return 'error';
-            }else{
+            } else {
                 return $array[$number];
             }
         }
@@ -345,7 +375,7 @@ if (!function_exists('download')) {
      * 文件下载函数
      * Author: lingqifei created by at 2020/6/4 0004
      */
-    function download($filepath,$filename='downfile.zip')
+    function download($filepath, $filename = 'downfile.zip')
     {
         // 检查文件是否存在
         if (!file_exists($filepath)) {
@@ -382,13 +412,13 @@ if (!function_exists("list2select")) {
      * @return array|string
      * Author: lingqifei created by at 2020/4/1 0001
      */
-    function list2select($list, $pId = 0, $level = 0, $pk = 'id', $pidk = 'pid', $name = 'name',$data=[])
+    function list2select($list, $pId = 0, $level = 0, $pk = 'id', $pidk = 'pid', $name = 'name', $data = [])
     {
         foreach ($list as $k => $v) {
             $v['treename'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $level) . '|--' . $v[$name];
             if ($v[$pidk] == $pId) { //父亲找到儿子
-                $data[] =$v;
-                $data   = list2select($list, $v[$pk], $level + 1, $pk, $pidk, $name,$data);
+                $data[] = $v;
+                $data = list2select($list, $v[$pk], $level + 1, $pk, $pidk, $name, $data);
             }
         }
         return $data;
@@ -451,7 +481,8 @@ if (!function_exists('curl_post')) {
      * @param $arr_data
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/25 0025
      */
-    function curl_post($url, $post_data){
+    function curl_post($url, $post_data)
+    {
         //$post_data = http_build_query($post_data);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POST, true);
@@ -459,14 +490,57 @@ if (!function_exists('curl_post')) {
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); //设置header
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-        curl_setopt($ch, CURLOPT_TIMEOUT,30);
-        $response  = curl_exec($ch);
-        $errno = curl_errno( $ch );
-        $info  = curl_getinfo( $ch );
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        $response = curl_exec($ch);
+        $errno = curl_errno($ch);
+        $info = curl_getinfo($ch);
         $error = curl_error($ch);
 //		var_dump($response);
 //		var_dump($error);
         curl_close($ch);//关闭
         return $response;
+    }
+}
+
+if (!function_exists('hiddle_name')) {
+
+    /**使用curl。post获取数据
+     * @param $url
+     * @param $arr_data
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/25 0025
+     */
+    /**
+     * 只保留字符串首尾字符，隐藏中间用*代替（两个字符时只显示第一个）
+     * @param string $user_name 姓名
+     * @return string 格式化后的姓名
+     */
+    function hiddle_name($user_name)
+    {
+        $strlen = mb_strlen($user_name, 'utf-8');
+        $firstStr = mb_substr($user_name, 0, 1, 'utf-8');
+        $lastStr = mb_substr($user_name, -1, 1, 'utf-8');
+
+        if($strlen > 2){
+            return $firstStr . str_repeat("*", $strlen - 2) . $lastStr;
+        }else if($strlen == 2){
+            return  $firstStr . str_repeat('*', mb_strlen($user_name, 'utf-8') - 1) ;
+        }else{
+            return  $user_name;
+        }
+    }
+}
+
+if (!function_exists('hiddle_mobile')) {
+
+    /**
+     * 定义函数手机号隐藏中间四位
+     * @param string $str 手机号
+     * @return string 格式化后手机号
+     */
+    function hiddle_mobile($str)
+    {
+        $str = $str;
+        $resstr = substr_replace($str, '****', 3, 4);
+        return $resstr;
     }
 }

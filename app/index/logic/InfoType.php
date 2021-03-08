@@ -77,6 +77,7 @@ class InfoType extends IndexBase
     {
         $cache_key = 'cache_info_type_' . md5(serialize($where)). md5(serialize($field));
         $cache_list = cache($cache_key);
+        $cache_list ='';
         if (!empty($cache_list)){
             $list=$cache_list;
         }else{
@@ -165,6 +166,7 @@ class InfoType extends IndexBase
 
         $cache_key = 'cache_info_type_pid_self_son_' . md5(serialize($typeid));
         $cache_list = cache($cache_key);
+        $cache_list ='';
         if (!empty($cache_list)){
             $list=$cache_list;
         }else{
@@ -193,6 +195,7 @@ class InfoType extends IndexBase
     {
         $cache_key = 'cache_info_type_channel_' . md5(serialize($data));
         $cache_list = cache($cache_key);
+        $cache_list ='';
         if (!empty($cache_list)){
             $list=$cache_list;
         }else{
@@ -224,6 +227,7 @@ class InfoType extends IndexBase
     {
         $cache_key = 'cache_getInfoTypeSelfSonChannel_' . md5(serialize($data));
         $cache_list = cache($cache_key);
+        $cache_list ='';
         if (!empty($cache_list)){
             $list=$cache_list;
         }else{
@@ -258,6 +262,7 @@ class InfoType extends IndexBase
     {
         $cache_key = 'cache_getInfoTypeSitemapChannel_' . md5(serialize($data));
         $cache_list = cache($cache_key);
+        $cache_list ='';
         if (!empty($cache_list)){
             $list=$cache_list;
         }else{
@@ -309,6 +314,16 @@ class InfoType extends IndexBase
         if(!empty($data['tid'])){
             $param= array_merge($param,array('tid'=>$data['tid']));
         }
+
+        /*列表分页URL问号的查询部分*/
+//        $get_arr = input('get.');
+//        foreach ($get_arr as $key => $val) {
+//            if (empty($val) || stristr($key, '/')) {
+//                unset($get_arr[$key]);
+//            }
+//        }
+//        $param= array_merge($param,$get_arr);
+
         $typeurl=url('index/Info/lists',$param);
         return $typeurl;
     }
