@@ -40,13 +40,34 @@ class IndexBase extends ControllerBase
 
         $this->initCityInfo();
 
-        $this->initCommonInfo();
+        //$this->initCommonInfo();
 
-        $this->initSysCityName();
+        //$this->initSysCityName();
 
         //echo Session::get('sys_city_name');
     }
 
+    /**
+     * 初始化基础数据
+     */
+    final private function initBaseInfo()
+    {
+
+        $web_theme = $this->logicWebsite->getWebsiteConfig('web_theme');
+        define('THEME_NAME', $web_theme );
+        define('THEME_PATH', PATH_PUBLIC.$web_theme );
+
+        $root_url = get_file_root_path();
+        $this->assign('root_url', $root_url);
+
+        $webconfig = $this->logicWebsite->getWebsiteConfigColumn();
+
+        if(is_mobile()  && !empty($webconfig['web_wap'])){
+            $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/wap/');
+        }else{
+            $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/');
+        }
+    }
 
     /**
      * 系统关键替换函数，
@@ -97,28 +118,6 @@ class IndexBase extends ControllerBase
             $this->assign('sys_city_web_title', '培训达人首页');
         }
 
-    }
-
-    /**
-     * 初始化基础数据
-     */
-    final private function initBaseInfo()
-    {
-
-        $web_theme = $this->logicWebsite->getWebsiteConfig('web_theme');
-        define('THEME_NAME', $web_theme );
-        define('THEME_PATH', PATH_PUBLIC.$web_theme );
-
-        $root_url = get_file_root_path();
-        $this->assign('root_url', $root_url);
-
-        $webconfig = $this->logicWebsite->getWebsiteConfigColumn();
-
-        if(is_mobile()  && !empty($webconfig['web_wap'])){
-            $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/wap/');
-        }else{
-            $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/');
-        }
     }
 
 

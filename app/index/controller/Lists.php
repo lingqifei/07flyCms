@@ -44,6 +44,7 @@ class Lists extends IndexBase
         }
 
         $type = $this->logicArctype->getArctypeInfo($map);
+
         if (empty($type)) {
             echo "tid错误~";
             //$this->redirect('/404.html');
@@ -51,11 +52,6 @@ class Lists extends IndexBase
             exit;
         }
 
-        $type = $this->logicArctype->getArctypeInfo(['id' => $this->tid]);
-        if (empty($type)) {
-            echo "tid错误~";
-            exit;
-        }
         $rtnArray = array(
             'field' => $type,
         );

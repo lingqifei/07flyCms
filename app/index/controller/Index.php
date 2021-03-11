@@ -24,24 +24,8 @@ class Index extends IndexBase
      */
     public function index()
     {
-        $where=[];
-        //右边显示
-        $list_info=$this->logicInfo->getInfoList($where,'a.*','a.update_time desc',100);
-        $list_company=$this->logicMemberCompany->getMemberCompanyList($where,'a.name,a.litpic,a.intro,a.id,a.city_id','',false,12);
-        $type_list_right=$this->logicInfoType->getInfoTypeSelfSonChannel($this->param);
-        $rtnArray = array(
-            'list_info' => $list_info,
-            'list_company' => $list_company,
-            'type_list_right' => $type_list_right,
-        );
-        /*模板文件*/
-        if(empty($tpfile)){
-            $tpfile = 'index.html';
-        }
-        $viewfile = !empty($tpfile) ? strtolower($tpfile) : $tpfile;
-        $this->typeinfo = $rtnArray;
-        $this->assign('fly', $this->typeinfo);
-        return $this->fetch($viewfile);
+
+        return $this->fetch('index.html');
     }
 
 

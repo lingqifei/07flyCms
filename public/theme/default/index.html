@@ -1,8 +1,13 @@
 
+全局变量：
+
 {fly:global name='web_name' /}
 {fly:global name='web_beian' /}
 
 
+
+<hr>
+留言表单：
 {fly:guestbookform type='default' tid='25' addfield='content,realname,email'}
 <form method="post" action="{$field.action}">
     <input type="text" name="content">
