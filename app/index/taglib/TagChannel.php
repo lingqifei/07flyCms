@@ -111,16 +111,13 @@ class TagChannel extends Base
                 $typeid  = !empty($typeid) ? $typeid : $this->tid;
                 $result = $this->getSelf($typeid);
                 break;
-
             case 'top': // 顶级栏目
                 $result = $this->getTop($typeid,$notypeid);
                 break;
-
             case 'sonself': // 下级、同级栏目
                 $typeid  = !empty($typeid) ? $typeid : $this->tid;
                 $result = $this->getSon($typeid, true);
                 break;
-
             case 'first': // 第一级栏目
                 $typeid  = !empty($typeid) ? $typeid : $this->tid;
                 $result = $this->getFirst($typeid);
@@ -144,12 +141,9 @@ class TagChannel extends Base
         }
         /*获取所有栏目*/
         $logicArctype = new \app\index\logic\Arctype();
-
         $typeidSon=$logicArctype->getArctypeAllSon($typeid);//所有下级id
-
         $map['visible']=['=','1'];//显示
         $map['id']=['in',$typeidSon];//查询下级栏目
-
         $list = $logicArctype->getArctypeList($map, true, 'sort asc',false);
         /*--end*/
 
@@ -167,8 +161,6 @@ class TagChannel extends Base
             }
         }
         $result= list2tree($result,$typeid,0,'id','parent_id','typename');//把所以树形展示
-
-
 
         /*--end*/
         /*没有子栏目时，获取同级栏目*/

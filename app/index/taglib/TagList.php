@@ -59,7 +59,7 @@ class TagList extends Base
      * @return    array
      * @author lingqifei by 2020-2-20
      */
-    public function getList($param = array(), $pagesize = 10, $orderby = '', $addfields = '', $orderway = '', $thumb = '')
+    public function getList($param = array(), $pagesize = '10', $orderby = '', $addfields = '', $orderway = '', $thumb = '')
     {
         $result = false;
         $param['channelid'] = ("" != $param['channelid'] && is_numeric($param['channelid'])) ? intval($param['channelid']) : '';
@@ -245,7 +245,7 @@ class TagList extends Base
             $row['arcurl'] = $logicArchives->getArchivesUrl($row);
         }
 
-//        print_r($result);exit;
+        //d($result);exit;
         $data = [
             "list" => $list['data'],
             "pages" => $result,

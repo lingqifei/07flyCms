@@ -279,6 +279,9 @@ class Fly extends TagLib
         $notypeid = !empty($tag['notypeid']) ? $tag['notypeid'] : '';
         $notypeid = $this->varOrvalue($notypeid);
 
+        $typeid2 = !empty($tag['typeid2']) ? $tag['typeid2'] : '';
+        $typeid2 = $this->varOrvalue($typeid2);
+
         $cityid = !empty($tag['cityid']) ? $tag['cityid'] : '';
         $cityid = $this->varOrvalue($cityid);
 
@@ -348,6 +351,7 @@ class Fly extends TagLib
         } else { // 查询数据库获取的数据集
             $parseStr .= ' $param = array(';
             $parseStr .= '      "typeid"=> $typeid,';
+            $parseStr .= '      "typeid2"=> ' . $typeid2 . ',';
             $parseStr .= '      "notypeid"=> ' . $notypeid . ',';
             $parseStr .= '      "cityid"=> ' . $cityid . ',';
             $parseStr .= '      "flag"=> "' . $flag . '",';

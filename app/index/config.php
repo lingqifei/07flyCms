@@ -17,6 +17,13 @@ return [
     // 视图输出字符串内容替换
     'view_replace_str' => $static,
 
+    //分页配置
+    'paginate'               => [
+        'type'      => 'bootstrap',
+        'var_page'  => 'p',
+        'list_rows' => 15,
+    ],
+
     /* 模板布局配置 */
     'template'  =>  [
         // 模板引擎类型 支持 php think 支持扩展

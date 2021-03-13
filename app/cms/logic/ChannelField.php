@@ -150,80 +150,123 @@ class ChannelField extends CmsBase
     {
         $where['visible'] = ['=', '1'];
         $where['ext_table'] = ['=', $ext_table];
-        $list = $this->modelChannelField->getList($where, "", 'sort asc', false)->toArray();
+        $list = $this->modelChannelField->getList($where, "", 'sort asc', false);
+
         $htmltxt = "";
         foreach ($list as $key => $row) {
             $field_value = array_key_exists($row["field_name"], $field_val_arr) ? $field_val_arr[$row["field_name"]] : "";//是否存在字段值
+
             switch ($row['field_type']) {
                 case "varchar":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
-									<div class="col-sm-10">
-										<input name="' . $row["field_name"] . '" class="form-control" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
-									</div>
-								</div>';
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+                                            <div class="col-sm-10">
+                                                <input name="' . $row["field_name"] . '" class="form-control" type="text" value="' . $field_value . '"/>
+                                                <span class="help-block m-b-none">' . $row['desc'] . '</span> 
+                                            </div>
+								        </div>';
                     break;
                 case "textarea":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
-									<div class="col-sm-10">
-										<textarea name="' . $row["field_name"] . '" class="form-control" >' . $field_value . '</textarea>
-										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+                                            <div class="col-sm-10">
+                                                <textarea name="' . $row["field_name"] . '" class="form-control" >' . $field_value . '</textarea>
+                                                <span class="help-block m-b-none">' . $row['desc'] . '</span> 
+                                            </div>
+                                    </div>';
+                    break;
+                case "htmltext":
+                    $htmltxt .= '<div class="form-group">
+									        <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+									        <div class="col-sm-10">
+									
+<textarea name="' . $row["field_name"] . '" class="form-control" >' . $field_value . '</textarea>
+<span class="help-block m-b-none">' . $row['desc'] . '</span> 
+<link rel="stylesheet" href="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/editor/kindeditor/themes/default/default.css" />
+<script src="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/editor/kindeditor/kindeditor-all-min.js"></script>
+<script src="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/editor/kindeditor/lang/zh-CN.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var editor_' . $row["field_name"] . ';
+        editor_' . $row["field_name"] . ' = KindEditor.create(\'textarea[name="'.$row["field_name"].'"]\', {
+                themesPath: KindEditor.basePath+\'/themes/\',//主题路径
+                width: \'100%\',
+                height: \'100px\',
+                resizeType: 1,
+                pasteType : 2,
+                urlType : \'absolute\',
+                fileManagerJson : \'\',
+                uploadJson : \'{:addons_url("editor://Upload/pictureUpload")}\',
+                items : [
+                \'source\', \'undo\', \'redo\', \'cut\', \'copy\',\'paste\', \'plainpaste\', \'wordpaste\',\'selectall\',
+                \'justifyleft\',\'justifycenter\',\'justifyright\',\'justifyfull\',\'insertorderedlist\',\'insertunorderedlist\',\'indent\',
+                \'outdent\',\'subscript\',\'superscript\',\'fontname\',\'fontsize\',\'forecolor\',\'hilitecolor\',\'bold\',
+                \'italic\',\'underline\',\'strikethrough\',\'removeformat\',\'image\',\'multiimage\',\'table\',
+                \'link\',\'unlink\',\'fullscreen\'
+                ],
+                extraFileUploadParams: { session_id : \'{:session_id()}\'}
+            });
+
+        //ajax提交之前同步
+        $(\'button[type="submit"],#submit,.ajax-post,#autoSave\').click(function(){
+                editor_' . $row["field_name"] . '.sync();
+        });
+    });
+</script>
 									</div>
 								</div>';
                     break;
                 case "int":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
-									<div class="col-sm-10">
-										<input name="' . $row["field_name"] . '" class="form-control" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
-									</div>
-								</div>';
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+                                            <div class="col-sm-10">
+                                                <input name="' . $row["field_name"] . '" class="form-control" type="text" value="' . $field_value . '"/>
+                                                <span class="help-block m-b-none">' . $row['desc'] . '</span> 
+                                            </div>
+                                        </div>';
                     break;
                 case "float":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
-									<div class="col-sm-10">
-										<input name="' . $row["field_name"] . '" class="form-control" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
-									</div>
-								</div>';
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+                                            <div class="col-sm-10">
+                                                <input name="' . $row["field_name"] . '" class="form-control" type="text" value="' . $field_value . '"/>
+                                                <span class="help-block m-b-none">' . $row['desc'] . '</span> 
+                                            </div>
+                                        </div>';
                     break;
                 case "datetime":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
-									<div class="col-sm-10">
-										<input name="' . $row["field_name"] . '" class="form-control datetimepicker" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
-									</div>
-								</div>';
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+                                            <div class="col-sm-10">
+                                                <input name="' . $row["field_name"] . '" class="form-control datetimepicker" type="text" value="' . $field_value . '"/>
+                                                <span class="help-block m-b-none">' . $row['desc'] . '</span> 
+                                            </div>
+                                        </div>';
                     break;
                 case "date":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
-									<div class="col-sm-10">
-										<input name="' . $row["field_name"] . '" class="form-control datepicker" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
-									</div>
-								</div>';
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+                                            <div class="col-sm-10">
+                                                <input name="' . $row["field_name"] . '" class="form-control datepicker" type="text" value="' . $field_value . '"/>
+                                                <span class="help-block m-b-none">' . $row['desc'] . '</span> 
+                                            </div>
+                                        </div>';
                     break;
                 case "option":
                     $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
-									<div class="col-sm-10">
-									  <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" style="width: 200px;" tabindex="2">
-								';
-                    $option_arr = explode(',', $row['default_value']);
-                    foreach ($option_arr as $va) {
-                        $option_chk = ($va == $field_value) ? "selected" : "";
-                        $htmltxt .= '<option value="' . $va . '" hassubinfo="true" '.$option_chk.'>' . $va . '</option>';
-                    }
-                    $htmltxt .= '
-									  </select>
-									</div>
-								</div>';
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+                                            <div class="col-sm-10">
+                                              <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" style="width: 200px;" tabindex="2">
+                                        ';
+                                            $option_arr = explode(',', $row['default_value']);
+                                            foreach ($option_arr as $va) {
+                                                $option_chk = ($va == $field_value) ? "selected" : "";
+                                                $htmltxt .= '<option value="' . $va . '" hassubinfo="true" '.$option_chk.'>' . $va . '</option>';
+                                            }
+                            $htmltxt .= '
+                                              </select>
+                                            </div>
+                                        </div>';
                     break;
                 case "linkage":
                     $htmltxt .= '
@@ -232,10 +275,10 @@ class ChannelField extends CmsBase
 									<div class="col-sm-10">
 									  <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" >
 								';
-                    $option_arr = $this->channelExtFieldLinkage($row['default_value']);
-                    foreach ($option_arr as $row) {
-                        $htmltxt .= '<option value="' . $row['id'] . '" hassubinfo="true">' . $row['name'] . '</option>';
-                    }
+                                        $option_arr = $this->channelExtFieldLinkage($row['default_value']);
+                                        foreach ($option_arr as $row) {
+                                            $htmltxt .= '<option value="' . $row['id'] . '" hassubinfo="true">' . $row['name'] . '</option>';
+                                        }
                     $htmltxt .= '
 									  </select>
 									</div>
@@ -243,19 +286,19 @@ class ChannelField extends CmsBase
                     break;
                 case "radio":
                     $htmltxt .= '<div class="form-group text-left">
-									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
-									<div class="col-sm-10">
-										<div class="radio i-checks">
-								';
-                    $option_arr = explode(',', $row['default_value']);
-                    foreach ($option_arr as $va) {
-                        $checked = ($va == $field_value) ? "checked" : "";
-                        $htmltxt .= '<input type="radio" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . ' /> ' . $va . ' ';
-                    }
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+                                            <div class="col-sm-10">
+                                                <div class="radio i-checks">
+                                        ';
+                                                $option_arr = explode(',', $row['default_value']);
+                                                foreach ($option_arr as $va) {
+                                                    $checked = ($va == $field_value) ? "checked" : "";
+                                                    $htmltxt .= '<input type="radio" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . ' /> ' . $va . ' ';
+                                                }
                     $htmltxt .= '
-									  </div>
-									</div>
-								</div>';
+                                              </div>
+                                            </div>
+                                        </div>';
                     break;
                 case "checkbox":
                     $htmltxt .= '<div class="form-group text-left">
@@ -263,10 +306,10 @@ class ChannelField extends CmsBase
 									<div class="col-sm-10">
 										<div class="checkbox i-checks">
 								';
-                    $option_arr = explode(',', $row['default_value']);
-                    foreach ($option_arr as $va) {
-                        $htmltxt .= '<input type="checkbox" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . '/> ' . $va . ' ';
-                    }
+                                        $option_arr = explode(',', $row['default_value']);
+                                        foreach ($option_arr as $va) {
+                                            $htmltxt .= '<input type="checkbox" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . '/> ' . $va . ' ';
+                                        }
                     $htmltxt .= '
 									  </div>
 									</div>
@@ -336,13 +379,12 @@ class ChannelField extends CmsBase
                                             <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
                                             <div class="col-sm-10">';
                     $htmltxt .= '
+                    
 <link rel="stylesheet" href="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/file/Huploadify.css" />
 <script src="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/file/jquery.Huploadify.js"></script>
-
 <div id="upload_pictures_' . $row["field_name"] . '"></div>
 <input type="hidden" name="' . $row["field_name"] . '" id="' . $row["field_name"] . '" value="' . $field_value . '"/>
 <div class="upload-img-box' . $row["field_name"] . '">' . $pic_div . '</div>
-
 <script type="text/javascript">
     var maxwidth = "150px";
     $("#upload_pictures_' . $row["field_name"] . '").Huploadify({

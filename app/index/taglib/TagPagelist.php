@@ -42,7 +42,6 @@ class TagPagelist extends Base
             echo '标签pagelist报错：只适用在标签list之后。';
             return false;
         }
-//        print_r($pages);
         $listitem = !empty($listitem) ? $listitem : 'info,index,end,pre,next,pageno';
         $listsize = !empty($listsize) ? $listsize : '3';
         $value = $pages->render($listitem, $listsize);

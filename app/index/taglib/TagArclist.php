@@ -66,12 +66,22 @@ class TagArclist extends Base
     public function getArclist($param = array(),  $row = 15, $orderby = '', $addfields = '', $orderway = '', $tagid = '', $tag = '', $pagesize = 0, $thumb = '')
     {
         $result = false;
+
         $param['channelid'] = ("" != $param['channelid'] && is_numeric($param['channelid'])) ? intval($param['channelid']) : '';
+
         $param['typeid'] = !empty($param['typeid']) ? $param['typeid'] : $this->tid;
 
         empty($orderway) && $orderway = 'desc';
+
         $pagesize = empty($pagesize) ? intval($row) : intval($pagesize);
 
+
+        if(!empty($param['typeid2'])){
+            $param['typeid']='';//启用了副栏目，主栏目失效果
+            $param['typeid2']= $this->tid;
+        }
+
+        //频道显示
         if (!empty($param['channelid'])) {
             if (!preg_match('/^\d+([\d\,]*)$/i', $param['channelid'])) {
                 echo '标签arclist报错：channelid属性值语法错误，请正确填写栏目ID。';
@@ -103,6 +113,7 @@ class TagArclist extends Base
             // end
         }
 
+        //文章类别
         if (!empty($param['typeid'])) {
             if (!preg_match('/^\d+([\d\,]*)$/i', $param['typeid'])) {
                 echo '标签arclist报错：typeid属性值语法错误，请正确填写栏目ID。';
@@ -132,7 +143,6 @@ class TagArclist extends Base
         if(!empty($param['channelid'])){
             $where['a.channelid']=['in',$param['channelid']];
             $randMap['channelid']=['in',$param['channelid']];
-
         }
 
         if(!empty($param['cityid'])){
@@ -145,6 +155,11 @@ class TagArclist extends Base
             $randMap['type_id']=['in',$param['typeid']];
         }
 
+        if(!empty($param['typeid2'])){
+            $where['a.type_id2']=['in',$param['typeid2']];
+            $randMap['type_id2']=['in',$param['typeid2']];
+        }
+
         if(!empty($param['flag'])){
             $reg_txt=str_replace(",","|",$param['flag']);
             $where['a.flag']=['exp',Db::raw("REGEXP '(^|,)($reg_txt)(,|$)'")];
@@ -153,6 +168,7 @@ class TagArclist extends Base
 
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
+
         //排序
         switch ($orderby) {
             case 'rand':
