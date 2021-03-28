@@ -12,8 +12,10 @@
  */
 
 namespace app\index\logic;
+
 use \think\Db;
 use \think\Session;
+
 /**
  * 频道栏目管理=》逻辑层
  */
@@ -25,15 +27,17 @@ class SysArea extends IndexBase
     {
 
         $this->modelSysArea->alias('a');
-        $list= $this->modelSysArea->getList($where, $field, $order, $paginate)->toArray();
+        $list = $this->modelSysArea->getList($where, $field, $order, $paginate)->toArray();
         return $list;
     }
 
-    public function  getSysAreaInfo($where=[],$field=true){
+    public function getSysAreaInfo($where = [], $field = true)
+    {
         return $this->modelSysArea->getInfo($where, $field);
     }
 
-    public function  getSysAreaFieldValue($where=[],$field=true){
+    public function getSysAreaFieldValue($where = [], $field = true)
+    {
         return $this->modelSysArea->getValue($where, $field);
     }
 
@@ -42,17 +46,18 @@ class SysArea extends IndexBase
      *
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/8/18 0018
      */
-    public function  getSysAreaDefaultInfo(){
-        $city=get_city();
-        $where['name']=['like','%'.$city.'%'];
-        $info=$this->modelSysArea->getInfo($where, true);
-        if($info){
-            Session::set('sys_city_name',$info['name']);
-            Session::set('sys_city_id',$info['id']);
-            Session::set('sys_city',$info);
-        }else{
-            Session::set('sys_city_name','成都市');
-            Session::set('sys_city_id','1');
+    public function getSysAreaDefaultInfo()
+    {
+        $city = get_city();
+        $where['name'] = ['like', '%' . $city . '%'];
+        $info = $this->modelSysArea->getInfo($where, true);
+        if ($info) {
+            Session::set('sys_city_name', $info['name']);
+            Session::set('sys_city_id', $info['id']);
+            Session::set('sys_city', $info);
+        } else {
+            Session::set('sys_city_name', '成都市');
+            Session::set('sys_city_id', '1');
         }
     }
 
@@ -61,21 +66,22 @@ class SysArea extends IndexBase
      *
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/8/18 0018
      */
-    public function  getDomainSysAreaInfo(){
-        $where['domain']=['like','%'.DOMAIN.'%'];
-        $info=$this->modelSysArea->getInfo($where, true);
-        if($info){
-            is_object($info) && $info=$info->toArray();
-            Session::set('sys_city_name',$info['name']);
-            Session::set('sys_city_id',$info['id']);
-            Session::set('sys_city',$info);
-        }else{
-            $map['name']=['like','%成都%'];
-            $info=$this->modelSysArea->getInfo($map, true);
-            is_object($info) && $info=$info->toArray();
-            Session::set('sys_city_name','成都');
-            Session::set('sys_city_id','1');
-            Session::set('sys_city',$info);
+    public function getDomainSysAreaInfo()
+    {
+        $where['domain'] = ['like', '%' . DOMAIN . '%'];
+        $info = $this->modelSysArea->getInfo($where, true);
+        if ($info) {
+            is_object($info) && $info = $info->toArray();
+            Session::set('sys_city_name', $info['name']);
+            Session::set('sys_city_id', $info['id']);
+            Session::set('sys_city', $info);
+        } else {
+            $map['name'] = ['like', '%成都%'];
+            $info = $this->modelSysArea->getInfo($map, true);
+            is_object($info) && $info = $info->toArray();
+            Session::set('sys_city_name', '成都');
+            Session::set('sys_city_id', '1');
+            Session::set('sys_city', $info);
         }
     }
 
@@ -83,22 +89,23 @@ class SysArea extends IndexBase
      * 根据IP地区，判断使用地区，默认为成都，1
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/8/18 0018
      */
-    public function  setSysAreaInfo($data=[]){
-        $where['id']=['=',$data['id']];
-        $info=$this->modelSysArea->getInfo($where, true);
-        if($info){
-            Session::set('sys_city_name',$info['name']);
-            Session::set('sys_city_id',$info['id']);
-            Session::set('sys_city',$info);
-            if(!empty($info['domain'])){
-                $url=$info['domain'];
+    public function setSysAreaInfo($data = [])
+    {
+        $where['id'] = ['=', $data['id']];
+        $info = $this->modelSysArea->getInfo($where, true);
+        if ($info) {
+            Session::set('sys_city_name', $info['name']);
+            Session::set('sys_city_id', $info['id']);
+            Session::set('sys_city', $info);
+            if (!empty($info['domain'])) {
+                $url = $info['domain'];
                 Header("HTTP/1.1 303 See Other");
                 Header("Location: $url");
                 exit;
             }
-        }else{
-            Session::set('sys_city_name','成都市');
-            Session::set('sys_city_id','1');
+        } else {
+            Session::set('sys_city_name', '成都市');
+            Session::set('sys_city_id', '1');
         }
     }
 
