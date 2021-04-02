@@ -91,12 +91,13 @@ class ControllerBase extends Controller
         
         $u = 'url';
         $m = 'message';
-        
+        $d = 'data';
+
         !empty($data[$u]) && $data[$u] = DOMAIN . $data[$u];
         switch ($data['jump_type'])
         {
             case $success  :
-                $this->$success($data[$m], $data[$u]);
+                $this->$success($data[$m], $data[$u], $data[$d]);
                 break;
             case $error    :
                 $this->$error($data[$m], $data[$u]);
@@ -116,8 +117,9 @@ class ControllerBase extends Controller
     {
         
         !isset($jump_array[2]) && $jump_array[2] = null;
-       
-        return ['jump_type' => $jump_array[0], 'message' => $jump_array[1], 'url' => $jump_array[2]];
+        !isset($jump_array[3]) && $jump_array[3] = null;
+
+        return ['jump_type' => $jump_array[0], 'message' => $jump_array[1], 'url' => $jump_array[2], 'data' => $jump_array[3]];
     }
     
     /**
