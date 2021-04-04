@@ -10,3 +10,7 @@
 /app/authorize
 /app/member
 /app/portalmember
+upgrade
+/public/.htaccess
+/public/nginx.htaccess
+/public/web.config
