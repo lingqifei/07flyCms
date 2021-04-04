@@ -33,4 +33,18 @@ class Upload extends AddonBase
         
         return throw_response_exception($result);
     }
+
+    /**
+     * 图片上传=.editormd
+     */
+    public function pictureUploadEditormd()
+    {
+
+        $UploadLogic = new LogicUpload();
+
+        $result = $UploadLogic->pictureUploadEditormd();
+
+        return throw_response_exception($result);
+    }
+
 }

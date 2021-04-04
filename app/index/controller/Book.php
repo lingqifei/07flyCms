@@ -50,6 +50,9 @@ class Book extends IndexBase
             // 文章列表
             $chap_list = $this->logicBook->getBookChapList(['book_id' => $this->bookid]);
 
+            //
+            $chapmenu=$this->chap_list_tree_html($bookid);
+
             $map_chap=[];
             $this->chapid = intval($this->chapid);
             if(!empty($this->chapid)){
@@ -57,7 +60,14 @@ class Book extends IndexBase
             }
             $chapinfo=$this->logicBook->getBookChapInfo($map_chap);
 
+            $pajx = input("param.pajx", '0');
+            if(!empty($pajx)){
+                return $chapinfo;
+                exit;
+            }
+
             $rtnArray = array(
+                'chapmenu' => $chapmenu,
                 'chap_list' => $chap_list,
                 'bookinfo' => $bookinfo,
                 'chapinfo' => $chapinfo,
@@ -75,11 +85,40 @@ class Book extends IndexBase
         }
     }
 
-    public function chap_list_tree(){
-        $bookid = input("param.bookid", '0');
+    public function chap_list_tree_html($bookid){
         // 文章列表
-        $chap_list = $this->logicBook->getBookChapList(['book_id' => $bookid],'id,pid,title');
-        return list2tree($chap_list,0,0,'id','pid','title');
+        $chap_list = $this->logicBook->getBookChapList(['book_id' => $bookid],'id,book_id,pid,title');
+        $tree_list  = list2tree($chap_list,0,0,'id','pid','title');
+
+        $html ="<ul>";
+        $html .=$this->chap_list_tree_to($tree_list);
+        $html .="</ul>";
+        return $html;
+    }
+
+    public function chap_list_tree_to($list){
+        $html ='';
+        foreach ($list as $key=>$row){
+            $url=url('index/book/read',array('bookid'=>$row['book_id'],'chapid'=>$row['id']));
+
+            if(empty($row['nodes'])){
+                $html .="<li>";
+                $html .='<span><i></i></span><a href="'.$url.'">'.$row['title'].'</a>';
+                $html .="</li>";
+            }else{
+                $html .='<li class="parent_li">';
+                $html .='<span><i class="icon-plus-sign"></i></span><a href="'.$url.'">'.$row['title'].'</a>';
+
+                $html .="<ul style='display: none;'>";
+                $html .=$this->chap_list_tree_to($row['nodes']);
+                $html .="</ul>";
+
+                $html .="</li>";
+            }
+
+        }
+
+        return $html;
     }
 
 

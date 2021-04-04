@@ -48,7 +48,19 @@ class Editor extends AddonBase implements AddonInterface
 
         $this->fetch('index/' . $param['type']);
     }
-    
+
+    /**
+     * 实现钩子
+     */
+    public function MarkdownEditor($param = [])
+    {
+        $this->assign('addons_data', $param);
+
+        $this->assign('addons_config', $this->addonConfig($param));
+
+        $this->fetch('index/markdown');
+    }
+
     /**
      * 插件安装
      */
