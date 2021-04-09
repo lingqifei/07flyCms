@@ -18,7 +18,7 @@
         height: 30,
         fileObjName: "file",
         buttonText: "上传文件",
-        uploader: "{:url('File/fileUpload',array('session_id'=>session_id()))}",
+        uploader: "{:url($addons_data.addons_model.'/File/fileUpload',array('session_id'=>session_id()))}",
         width: 120,
         removeTimeout: 1,
         fileSizeLimit:"{$addons_config['max_size']}",

@@ -139,6 +139,9 @@ class SysModule extends AdminBase
         $this->createModuleDir($data['name']);
         unset($data['comm_file']);
         unset($data['module_dir']);
+
+        $data['url']=$data['author_url'];
+        $data['identifier']=$data['name'].'.'.$data['author'];
         $result = $this->modelSysModule->setInfo($data);
         $url = url('show');
         $result && action_log('新增', '新增模块：name' . $data['name']);

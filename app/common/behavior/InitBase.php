@@ -143,6 +143,7 @@ class InitBase
     {
 
         define('PATH_ADDON', ROOT_PATH . SYS_ADDON_DIR_NAME . DS);
+		define('PATH_DATA', ROOT_PATH . 'data' . DS);
         define('PATH_PUBLIC', ROOT_PATH . 'public' . DS);
         define('PATH_UPLOAD', PATH_PUBLIC . 'upload' . DS);
         define('PATH_PICTURE', PATH_UPLOAD . 'picture' . DS);
