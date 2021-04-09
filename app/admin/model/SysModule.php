@@ -59,7 +59,7 @@ class SysModule extends AdminBase
                     ),
                     '1' => array(
                         'url' => url('backup'),
-                        'class' => 'ajax-open',
+                        'class' => 'ajax-get',
                         'color' => '#1c84c6',
                         'name' => '备份'
                     ),

@@ -107,7 +107,7 @@ class AdminBase extends ControllerBase
 
         // 菜单自动选择
        //$this->menuView = $this->logicSysMenu->selectMenu($this->menuView);
-        
+
         // 获取面包屑
         $this->crumbsView = $this->logicSysMenu->getCrumbsView();
 
@@ -120,9 +120,6 @@ class AdminBase extends ControllerBase
         // 设置组织机组
         $this->assign('sys_org', $this->org);
 
-        // 设置组织机组
-        $this->assign('page_org', $this->org);
-
         // 设置页面标题
         $this->assign('page_title', $this->title);
 
@@ -134,6 +131,7 @@ class AdminBase extends ControllerBase
 
         // 授权菜单列表
         $this->assign('auth_menu_list', $this->authMenuList);
+
         // 登录会员信息
         $this->assign('sys_user_info', session('sys_user_info'));
     }

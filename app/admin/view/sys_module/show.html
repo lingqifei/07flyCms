@@ -13,12 +13,6 @@
                             <form id="pagerForm" method="post" class="form-inline searchForm">
                                 <div class="col-sm-12 m-b-xs text-right">
                                     <div class="input-group">
-                                        <input type="text" name="link_rangedate" class="form-control w50 daterange-btn" placeholder="选择最近联系时间">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" name="next_rangedate" class="form-control w50 daterange-btn" placeholder="选择下次跟进时间">
-                                    </div>
-                                    <div class="input-group">
                                         <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
                                     </div>
                                     <div class="input-group">
@@ -64,7 +58,7 @@
                             </tbody>
                             <tfoot class="ibox-content">
                             <tr>
-                                <td colspan="11" align="center"></td>
+                                <td colspan="9" align="center"></td>
                             </tr>
                             </tfoot>
                         </table>
@@ -91,6 +85,7 @@
             <input name="visible" class="ajax-checkbox" type="checkbox"   data-url="{:url('SysModule/set_visible',array('name'=>'visible'))}"  data-id="<%=data[i]['id']%>" <%=visible%> >
         </td>
         <td>
+            <lqf_link><a  class="ajax-open" data-url="{:url('SysModule/edit',array('name'=>'visible'))}"  data-ids="{'id':'<%=data[i]['id']%>'}" >修改</a> </lqf_link>
             <% for(var j=0;j<data[i]['status_arr']['action'].length;j++) { %>
             <lqf_link>
                 <a class="<%=data[i]['status_arr']['action'][j]['class']%>" data-ids="{'id':'<%=data[i]['id']%>'}" href="<%=data[i]['status_arr']['action'][j]['url']%>">

@@ -47,6 +47,13 @@ class SysUser extends AdminBase
             $this->assign('input_text', 'input_text');
         }
 
+        //input ids name
+        if (!empty($this->param['achieve'])) {
+            $this->assign('achieve', $this->param['achieve']);
+
+            return $this->fetch('lookup_achieve');
+        }
+
         return $this->fetch('lookup');
     }
 
@@ -54,10 +61,7 @@ class SysUser extends AdminBase
     public function show_json()
     {
         $where =$this->logicSysUser->getWhere($this->param);
-        $list = $this->logicSysUser->getSysUserList($where)->toArray();
-        foreach ($list['data'] as &$row) {
-            $row['sys_auth_name'] = arr2str(array_column($this->logicSysAuthAccess->getUserAuthListName($row['id']), 'name'), ',');
-        }
+        $list = $this->logicSysUser->getSysUserList($where);
         return $list;
     }
 
@@ -203,6 +207,11 @@ class SysUser extends AdminBase
         //获取菜单Select结构数据
         $dept_select=$this->logicSysDept->getSysDeptTreeSelect();
         $this->assign('dept_select', $dept_select);
+
+        //获取菜单Select结构数据
+        $position_listt=$this->logicSysPosition->getSysPositionTreeSelect();
+        $this->assign('sys_position_list', $position_listt);
+
     }
 
 }

@@ -18,21 +18,28 @@ namespace app\admin\logic;
  */
 class SysUser extends AdminBase
 {
-    
+
     // 面包屑
-    public static $crumbs       = [];
-    
+    public static $crumbs = [];
+
     // 菜单Select结构
-    public static $menuSelect   = [];
+    public static $menuSelect = [];
 
     /**
      * 获取列表
      */
     public function getSysUserList($where = [], $field = true, $order = 'id desc', $paginate = DB_LIST_ROWS)
     {
-        return $this->modelSysUser->getList($where, $field, $order, $paginate);
+        $list = $this->modelSysUser->getList($where, $field, $order, $paginate)->toArray();
+        if ($paginate === false) $list['data'] = $list;
+        foreach ($list['data'] as &$row) {
+            $row['dept_name'] = $this->modelSysDept->getValue(['id' => $row['dept_id']], 'name');
+            $row['position_name'] = $this->modelSysPosition->getValue(['id' => $row['position_id']], 'name');
+            $row['sys_auth_name'] = arr2str(array_column($this->logicSysAuthAccess->getUserAuthListName($row['id']), 'name'), ',');
+        }
+        return $list;
     }
-    
+
     /**
      * 获取单个信息
      */
@@ -40,7 +47,7 @@ class SysUser extends AdminBase
     {
         return $this->modelSysUser->getInfo($where, $field);
     }
-    
+
     /**
      * 添加
      */
@@ -53,17 +60,18 @@ class SysUser extends AdminBase
             return [RESULT_ERROR, $this->validateSysUser->getError()];
         }
 
-        $data['password']  = data_md5_key($data['password']);
+        $data['password'] = data_md5_key($data['password']);
+        $data['org_id'] = SYS_ORG_ID;
 
         $result = $this->modelSysUser->setInfo($data);
-        
+
         $result && action_log('新增', '新增系统用户，name：' . $data['username']);
-        
+
         $url = url('show');
-        
+
         return $result ? [RESULT_SUCCESS, '系统用户添加成功', $url] : [RESULT_ERROR, $this->modelSysUser->getError()];
     }
-    
+
     /**
      * 编辑
      */
@@ -71,24 +79,24 @@ class SysUser extends AdminBase
     {
 
         $validate_result = $this->validateSysUser->scene('edit')->check($data);
-        
+
         if (!$validate_result) {
             return [RESULT_ERROR, $this->validateSysUser->getError()];
         }
 
         $url = url('show');
-        
+
         $result = $this->modelSysUser->setInfo($data);
 
         $result && action_log('编辑', '编辑用户，name：' . $data['username']);
 
         return $result ? [RESULT_SUCCESS, '编辑用户成功', $url] : [RESULT_ERROR, $this->modelSysUser->getError()];
     }
-    
+
     /**
      * 删除
      */
-    public function sysUserDel($where = [],$data=[])
+    public function sysUserDel($where = [], $data = [])
     {
 
         if (SYS_ADMINISTRATOR_ID == $data['id']) {
@@ -98,10 +106,10 @@ class SysUser extends AdminBase
             return [RESULT_ERROR, '企业超级管理不能删除哦~'];
         }
 
-        $result = $this->modelSysUser->deleteInfo($where,true);
-        
+        $result = $this->modelSysUser->deleteInfo($where, true);
+
         $result && action_log('删除', '删除用户，where：' . http_build_query($where));
-        
+
         return $result ? [RESULT_SUCCESS, '用户删除成功'] : [RESULT_ERROR, $this->modelSysUser->getError()];
     }
 
@@ -188,7 +196,7 @@ class SysUser extends AdminBase
         }
 
         $data['id'] = SYS_USER_ID;
-        $data['password']  = data_md5_key($data['password']);
+        $data['password'] = data_md5_key($data['password']);
         $url = url('index/index');
 
         $result = $this->modelSysUser->setInfo($data);
@@ -212,7 +220,7 @@ class SysUser extends AdminBase
         }
         $user = $this->getSysUserInfo(['id' => $data['id']]);
 
-        $data['password']  = data_md5_key($data['password']);
+        $data['password'] = data_md5_key($data['password']);
 
         $url = url('index/index');
 
@@ -235,11 +243,11 @@ class SysUser extends AdminBase
 
     /**
      * 查询条件
-     * 
+     *
      * @return array|mixed
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/7/19 0019
      */
-    public function getWhere($data=[])
+    public function getWhere($data = [])
     {
         $where = [];
         if (!empty($data['keywords'])) {

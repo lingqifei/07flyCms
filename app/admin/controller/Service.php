@@ -69,4 +69,12 @@ class Service extends AdminBase
         $this->jump($this->logicService->driverUninstall($this->param));
     }
 
+    /**
+     * 短信发磅测试
+     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/7/12 0012
+     */
+    public function  testsms(){
+        //$this->jump($this->logicService->testSms());
+    }
+
 }

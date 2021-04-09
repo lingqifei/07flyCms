@@ -322,7 +322,7 @@ class SysMenu extends AdminBase
 
 
     /**
-     * 批量导入菜单
+     * 批量导出菜单
      * @param array $data 菜单数据
      * @param string $mod 模型名称或插件名称
      * @param string $type [module,plugins]

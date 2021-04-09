@@ -33,7 +33,7 @@ class Login extends AdminBase
         }
         
         $user = $this->logicSysUser->getSysUserInfo(['username' => $username]);
-//echo data_md5_key($password) ;exit;
+
         if (!empty($user['password']) && data_md5_key($password) == $user['password']) {
 
             $org=$this->logicSysOrg->getSysOrgInfo(['id' => $user['org_id']]);
@@ -47,13 +47,12 @@ class Login extends AdminBase
             session('sys_user_auth', $auth);
             session('sys_user_auth_sign', data_auth_sign($auth));
 
-            //定义组织
+            //定义企业组织ID
             define('SYS_ORG_ID',  $user['org_id']);
-
+            //企业超级管理员ID
             define('SYS_ORG_USER_ID',($user['username']==$org['username'])?$user['id']:DATA_DISABLE );
 
             action_log('登录', '登录操作，username：'. $username);
-
             return [RESULT_SUCCESS, '登录成功', url('index/index')];
             
         } else {

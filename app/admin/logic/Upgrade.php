@@ -270,8 +270,7 @@ class Upgrade extends AdminBase
     {
         $domain = $_SERVER['HTTP_HOST'];
         $syskey = $this->getSysKey();
-        $info= $this->modelUpgrade->getAuthorizeInfo($domain,$syskey);
-        return $info;
+        return $this->modelUpgrade->getAuthorizeInfo($domain,$syskey);
     }
 
     /**验证平台信息
@@ -311,9 +310,9 @@ class Upgrade extends AdminBase
             $res = $this->upgrade_auth_check();
             if ($res['code'] == '1') {
                 return [RESULT_SUCCESS, '授权码注册成功'];
-                $rtn = array('code' => 1, 'msg' => '授权码注册成功');
+                $rtn = array('code' => 1, 'message' => '授权码注册成功');
             } else {
-                return [RESULT_ERROR, $res['msg']];
+                return [RESULT_ERROR, $res['message']];
             }
         }
         return $rtn;

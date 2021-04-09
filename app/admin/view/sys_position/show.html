@@ -6,7 +6,7 @@
                     <div class="ibox-tools"><a class="refresh-tree">刷新</a></div>
                 </div>
                 <div class="ibox-content right_centent" style="">
-                    <div id="left-tree" data-url="{:url('SysDept/get_list_tree')}"> </div>
+                    <div id="left-tree" data-url="{:url('SysPosition/get_list_tree')}"> </div>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
                             <input type="hidden" name="pid" value="">
                             <div class="col-sm-3 m-b-xs">
                                 <a class="btn btn-default refresh-tree"> <i class="fa fa-refresh"> </i>刷新</a>
-                                <lqf_link> <a class="btn btn-info ajax-open add-btn" data-url="{:url('SysDept/add')}" data-title="用户"><i class="fa fa-plus"></i>添加</a> </lqf_link>
+                                <lqf_link> <a class="btn btn-info ajax-open add-btn" data-url="{:url('SysPosition/add')}" data-title="用户"><i class="fa fa-plus"></i>添加</a> </lqf_link>
                             </div>
                             <div class="col-sm-9 m-b-xs text-right">
                                 <div class="input-group">
@@ -33,12 +33,12 @@
                             </div>
                         </form>
                     </div>
-                    <table class="table table-hover sorttable ajax-list-table" data-url="{:url('SysDept/show_json')}">
+                    <table class="table table-hover sorttable ajax-list-table" data-url="{:url('SysPosition/show_json')}">
                         <thead>
                         <tr>
                             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
-                            <th width="100">部门名称</th>
-                            <th width="200">部门描述</th>
+                            <th width="100">职位名称</th>
+                            <th width="200">职位描述</th>
                             <th width="60">排序</th>
                             <th width="60">启用</th>
                             <th width="80">操作</th>
@@ -70,14 +70,14 @@
         <td><input name="user_id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
         <td><%=data[i]['name']%></td>
         <td><%=data[i]['desc']%></td>
-        <td><input type="text" name="sort" value="<%=data[i]['sort']%>" class="form-control w50 ajax-sort" data-url="{:url('SysDept/set_sort',array('name'=>'sort'))}" data-id="<%=data[i]['id']%>" size="5"></td>
+        <td><input type="text" name="sort" value="<%=data[i]['sort']%>" class="form-control w50 ajax-sort" data-url="{:url('SysPosition/set_sort',array('name'=>'sort'))}" data-id="<%=data[i]['id']%>" size="5"></td>
         <td>
-            <input name="visible" class="ajax-checkbox" type="checkbox"   data-url="{:url('SysDept/set_visible',array('name'=>'visible'))}"  data-id="<%=data[i]['id']%>" <%=visible%> >
+            <input name="visible" class="ajax-checkbox" type="checkbox"   data-url="{:url('SysPosition/set_visible',array('name'=>'visible'))}"  data-id="<%=data[i]['id']%>" <%=visible%> >
         </td>
         <td>
             <p>
-                <lqf_link><a class="ajax-open" data-url="{:url('SysDept/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}">修改</a></lqf_link>
-                <lqf_link><a class="ajax-del confirm" data-url="{:url('SysDept/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
+                <lqf_link><a class="ajax-open" data-url="{:url('SysPosition/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}">修改</a></lqf_link>
+                <lqf_link><a class="ajax-del confirm" data-url="{:url('SysPosition/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
             </p>
         </td>
     </tr>

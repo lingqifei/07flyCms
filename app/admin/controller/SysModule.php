@@ -31,7 +31,7 @@ class SysModule extends AdminBase
     {
         $where = [];
         if(!empty($this->param['keywords'])){
-           $where['name|title']=['like','%'.$this->param['keywords'].'%'];
+           $where['name|title|intro|author']=['like','%'.$this->param['keywords'].'%'];
         }
        $list=$this->logicSysModule->getSysModuleList($where);
         return $list;
@@ -81,6 +81,14 @@ class SysModule extends AdminBase
     }
 
     /**
+     * 模块下载
+     */
+    public function download()
+    {
+        $this->jump($this->logicSysModule->sysModuleDown($this->param));
+    }
+
+    /**
      * 模块上传
      */
     public function upload()
@@ -98,7 +106,7 @@ class SysModule extends AdminBase
     }
 
     /**
-     * 模块编辑
+     * 模块卸载
      */
     public function uninstall()
     {

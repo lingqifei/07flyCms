@@ -48,7 +48,7 @@ class Upgrade extends AdminBase
      */
     public function getVersionList($version)
     {
-        $url = $this->server_url . "/authorize/api.AuthVersion/get_version?ver=$version&sys=cmsphp";
+        $url = $this->server_url . "/authorize/api.AuthVersion/get_version?ver=$version&sys=s1";
         $result = $this->getRemoteCotent($url);
         return $result;
     }
@@ -60,7 +60,7 @@ class Upgrade extends AdminBase
      */
     public function getVersionInfo($version)
     {
-        $url = $this->server_url . "/authorize/api.AuthVersion/get_version_info/?ver=$version&sys=cmsphp";
+        $url = $this->server_url . "/authorize/api.AuthVersion/get_version_info/?ver=$version&sys=s1";
         $result = $this->getRemoteCotent($url);
         return $result;
     }

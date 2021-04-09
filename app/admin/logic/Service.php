@@ -138,4 +138,20 @@ class Service extends AdminBase
         return self::$instance;
     }
 
+
+    public function  testSms(){
+        // 短信发送
+        $parameter['nationCode']='86';
+        $parameter['mobile']='18030402705';
+        $parameter['template_id']='659759';
+        $parameter['params_array']=['3040','10'];
+        $parameter['sign']='人人海外';
+        $res= $this->serviceSms->driverTencent->sendSms($parameter);
+        if($res){
+            return [RESULT_SUCCESS,'发送成功'];
+        }else{
+            return [RESULT_ERROR,'发送失败'];
+        }
+    }
+
 }

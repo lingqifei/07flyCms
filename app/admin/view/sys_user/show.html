@@ -45,15 +45,17 @@
                             <th width="80">手机</th>
                             <th width="80">QQ</th>
                             <th width="80">邮箱</th>
+                            <th width="80">部门</th>
+                            <th width="80">职位</th>
                             <th width="150">权限组</th>
-                            <th width="200">操作</th>
+                            <th width="150">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         </tbody>
                         <tfoot class="ibox-content">
                         <tr>
-                            <td colspan="11" align="center"></td>
+                            <td colspan="9" align="center"></td>
                         </tr>
                         </tfoot>
                     </table>
@@ -73,6 +75,8 @@
         <td><%=data[i]['mobile']%></td>
         <td><%=data[i]['qicq']%></td>
         <td><%=data[i]['email']%></td>
+        <td><%=data[i]['dept_name']%></td>
+        <td><%=data[i]['position_name']%></td>
         <td><%=data[i]['sys_auth_name']%></td>
         <td>
             <p>
@@ -94,6 +98,7 @@
 <link href="__STATIC__/module/admin/js/plugins/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet">
 <script src="__STATIC__/module/admin/js/plugins/bootstrap-treeview/bootstrap-treeview.js"></script>
 <script src="__STATIC__/module/admin/js/lib/treeview.js"></script>
+<script src="__STATIC__/module/admin/js/content.js?v=1.0.0"></script>
 <script src="__STATIC__/module/admin/js/lib/treeview.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {

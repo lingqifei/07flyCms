@@ -87,7 +87,7 @@ class Book extends IndexBase
 
     public function chap_list_tree_html($bookid){
         // 文章列表
-        $chap_list = $this->logicBook->getBookChapList(['book_id' => $bookid],'id,book_id,pid,title');
+        $chap_list = $this->logicBook->getBookChapList(['book_id' => $bookid],'id,book_id,pid,title','sort asc');
         $tree_list  = list2tree($chap_list,0,0,'id','pid','title');
 
         $html ="<ul>";
@@ -106,7 +106,7 @@ class Book extends IndexBase
                 $html .='<span><i></i></span><a href="'.$url.'">'.$row['title'].'</a>';
                 $html .="</li>";
             }else{
-                $html .='<li class="parent_li">';
+                $html .='<li class="has_child">';
                 $html .='<span><i class="icon-plus-sign"></i></span><a href="'.$url.'">'.$row['title'].'</a>';
 
                 $html .="<ul style='display: none;'>";
