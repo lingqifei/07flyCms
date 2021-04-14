@@ -10,7 +10,13 @@
  * Author: kfrs <goodkfrs@QQ.com> 574249366
  * Date: 2019-10-3
  */
-empty(STATIC_DOMAIN) ? $static = [] :  $static['__STATIC__'] = STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME;
+if(empty(STATIC_DOMAIN)){
+	$static = [];
+} else{
+	$static['__STATIC__'] = STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME;
+}
+
+
 //配置文件
 return [
     

@@ -502,7 +502,7 @@ if (!function_exists('curl_post')) {
     }
 }
 
-if (!function_exists('hiddle_name')) {
+if (!function_exists('hide_name')) {
 
     /**使用curl。post获取数据
      * @param $url
@@ -530,7 +530,7 @@ if (!function_exists('hiddle_name')) {
     }
 }
 
-if (!function_exists('hiddle_mobile')) {
+if (!function_exists('hide_mobile')) {
 
     /**
      * 定义函数手机号隐藏中间四位
@@ -543,4 +543,120 @@ if (!function_exists('hiddle_mobile')) {
         $resstr = substr_replace($str, '****', 3, 4);
         return $resstr;
     }
+}
+
+if (!function_exists('downFileOutput')) {
+
+	/**
+	 * 服务器文件下载输出，支持断点输出
+	 * @param string $file  文件路径为本地绝对路径
+	 *
+	 * @return 文件
+	 */
+	function downFileOutput($file) {
+		str_replace(['/','\\'], DIRECTORY_SEPARATOR, $file);
+		//检查文件是否存在
+		if (empty($file) or !is_file($file)) {
+			die('文件不存在');
+		}
+		$fileName = basename($file);
+		//以只读和二进制模式打开文件
+		$fp = @fopen($file, 'rb');
+		if ($fp) {
+			// 获取文件大小
+			$file_size = filesize($file);
+			//告诉浏览器这是一个文件流格式的文件
+			header('content-type:application/octet-stream');
+			header('Content-Disposition: attachment; filename=' . $fileName);
+			// 断点续传
+			$range = null;
+			if (!empty($_SERVER['HTTP_RANGE'])) {
+				$range = $_SERVER['HTTP_RANGE'];
+				$range = preg_replace('/[\s|,].*/', '', $range);
+				$range = explode('-', substr($range, 6));
+				if (count($range) < 2) {
+					$range[1] = $file_size;
+				}
+				$range = array_combine(array('start', 'end'), $range);
+				if (empty($range['start'])) {
+					$range['start'] = 0;
+				}
+				if (empty($range['end'])) {
+					$range['end'] = $file_size;
+				}
+			}
+			// 使用续传
+			if ($range != null) {
+				header('HTTP/1.1 206 Partial Content');
+				header('Accept-Ranges:bytes');
+				// 计算剩余长度
+				header(sprintf('content-length:%u', $range['end'] - $range['start']));
+				header(sprintf('content-range:bytes %s-%s/%s', $range['start'], $range['end'], $file_size));
+				// fp指针跳到断点位置
+				fseek($fp, sprintf('%u', $range['start']));
+			} else {
+				header('HTTP/1.1 200 OK');
+				header('Accept-Ranges:bytes');
+				header('content-length:' . $file_size);
+			}
+			while (!feof($fp)) {
+				echo fread($fp, 4096);
+				ob_flush();
+			}
+			fclose($fp);
+		} else {
+			die('File loading failed');
+		}
+	}
+}
+
+/**
+ *  生成一个随机字符
+ *
+ * @access    public
+ * @param     string $ddnum
+ * @return    string
+ */
+if (!function_exists('dd2char')) {
+	function dd2char($ddnum)
+	{
+		$ddnum = strval($ddnum);
+		$slen  = strlen($ddnum);
+		$okdd  = '';
+		$nn    = '';
+		for ($i = 0; $i < $slen; $i++) {
+			if (isset($ddnum[$i + 1])) {
+				$n = $ddnum[$i] . $ddnum[$i + 1];
+				if (($n > 96 && $n < 123) || ($n > 64 && $n < 91)) {
+					$okdd .= chr($n);
+					$i++;
+				} else {
+					$okdd .= $ddnum[$i];
+				}
+			} else {
+				$okdd .= $ddnum[$i];
+			}
+		}
+		return $okdd;
+	}
+}
+/**
+ *  PHP stdClass Object转array
+ *
+ * @access    public
+ * @param     string $ddnum
+ * @return    string
+ */
+if (!function_exists('obj2arr')) {
+
+	function obj2arr($array) {
+		if(is_object($array)) {
+			$array = (array)$array;
+		} if(is_array($array)) {
+			foreach($array as $key=>$value) {
+				$array[$key] = obj2arr($value);
+			}
+		}
+		return $array;
+	}
 }
