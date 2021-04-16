@@ -23,14 +23,14 @@ class SysModule extends AdminBase
     protected $rule =   [
 
         'name'      => 'require|unique:sys_module',
-        'identifier'      => 'require|unique:sys_module',
+        'identifier'=> 'require|unique:sys_module',
     ];
 
     // 验证提示
     protected $message  =   [
 
-        'name.require'      => '模块名不能为空',
-        'name.unique'       => '模块名已存在',
+        'name.require'      => '本地模块名不能为空',
+        'name.unique'       => '本地模块名已存在',
     ];
 
     // 应用场景

@@ -365,13 +365,25 @@ $("body").on("click", ".ajax-open", function () {
         }
 
         log('打开地址：'+target);
+
+        var obj_width=$(this).attr('width');
+        var obj_height=$(this).attr('height');
+
+        if( typeof(obj_width)=="undefined"){
+            obj_width='90%'
+        }
+
+        if( typeof(obj_height)=="undefined"){
+            obj_height='90%'
+        }
+
         layer.open({
             type: 2,
             title: false,
             shadeClose: false,
             //btn: ['关闭'],
             fixed: true, //不固定
-            area: ['90%', '90%'],
+            area: [obj_width, obj_height],
             content: target,
             success: function(layero, index) {
                 layer.iframeAuto(index);
@@ -512,12 +524,14 @@ $("body").on("click", ".ajax-get", function () {
 
         $.get(target).success(function (data) {
             if (data.code) {
-                layer.msg(data.msg, {icon: 1});
-                if(fun!=null){
-                    eval(fun);
-                }else{
-                    turnPage(pageNum);
-                }
+                layer.msg(data.msg, {icon: 1, time: 2000, shade: [0.5, '#000', true]}, function () {
+                    if(fun!=null){
+                        eval(fun);
+                    }else{
+                        turnPage(pageNum);
+                    }
+                });
+
             } else {
                 layer.msg(data.msg, {icon: 5});
             }

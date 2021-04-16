@@ -128,7 +128,8 @@ class Store extends AdminBase
 				foreach ($listdata['data'] as &$row) {
 					switch ($row['classify_id']){
 						case '1'://模块
-
+							$map['name']=['=',$row['name']];
+							$map['status']=['=','1'];
 							$local=$this->modelSysModule->getInfo(['name'=>$row['name']],'id,version');
 							if($local){
 								$row['isinstall']=1;
@@ -198,23 +199,30 @@ class Store extends AdminBase
 	 */
 	public function getCloudAppDownInstall($data=[])
 	{
+
+		if (!isset($data['app_id']) || $data['app_id'] ==0 ) {
+			return [RESULT_ERROR, 'app参数不正确'];
+		}
+
 		$result = $this->modelStore->getCloudAppDownFile($data);
 		if (!isset($result['code']) || $result['code'] != 1) {
 			return [RESULT_ERROR, $result['code']];
 		}
-		$filepath = $result['filepath'];
-		$filename = $result['filename'];
-		$dirpath = $result['dirpath'];
+		$filepath = $result['filepath'];//远程下载件全路经
+		$filename = $result['filename'];//远程下载文件名
+		$dirpath = $result['dirpath'];//远程下载目录
 
 		$tmppath=$dirpath.rtrim($filename,'.zip').DS;
+
 		if (file_exists($filepath)) {
+
+			//1、解压应用插件包
 			$zip=new \lqf\Zip();
 			$res=$zip->unzip($filepath, $tmppath);
 			if($res!=true){
 				return [RESULT_ERROR, '模块包解压失败'];
 			}
-
-			//1、解压应用插件包
+			//获取里面的文件包名
 			$fp=new \lqf\Dir();
 			$dirlist=$fp->listFile($tmppath);
 			$app_path = !empty($dirlist) ? $dirlist[0]['pathname'] : '';
@@ -224,36 +232,43 @@ class Store extends AdminBase
 			}
 
 			//2、增加到本地模块
-			$module_info_file=$app_path.'/data/info.php';
+			$app_info_file=$app_path.'/data/info.php';
+			$app_sql_install_file=$app_path.'/data/install.sql';
 
-			if (file_exists($module_info_file)) {
+			if (file_exists($app_info_file)) {
 
-				$moduel_info=include($module_info_file);
+				$moduel_info=include($app_info_file);
 
-//				$validate_result = $this->validateSysModule->scene('add')->check($moduel_info);
-//				if (!$validate_result) {
-//					return [RESULT_ERROR, $this->validateSysModule->getError()];
-//				}
-//				$res = $this->modelSysModule->setInfo($moduel_info);
+				$validate_result = $this->validateSysModule->scene('add')->check($moduel_info);
+				if (!$validate_result) {
+					return [RESULT_ERROR, $this->validateSysModule->getError()];
+				}
+				$sys_mid = $this->modelSysModule->setInfo($moduel_info);
 
+				//2.0移动包到应用目录
+				$module_dir=PATH_APP.$app_name.DS;
 				$file = new \lqf\File();
-				$result = $file->handle_dir($app_path, APP_PATH.$app_name, 'copy', true);
+				$result = $file->handle_dir($app_path, $module_dir, 'copy', true);
 				if ($result == false) {
 					return [RESULT_ERROR, '复制模块文件目录失败'];
 					exit;
 				}
 
-
 				// 2.1导入菜单栏目
-				$res = $this->logicSysModule->importModuleMenu($app_name);
+				$res = $this->logicSysModule->importModuleMenu($app_name,$module_dir);
 				if ($res[0] == RESULT_ERROR) return $res;
 
-				//导入数据SQL脚本
-				$res = $this->logicSysModule->importModuleTableRestore(array('time' => time(), 'module' => $app_name));
-				if ($res[0] == RESULT_ERROR) return $res;
+				//2、判断是否有安装SQL脚本，执行安装脚本
+				if(file_exists($app_sql_install_file)){
+					$res = $this->logicSysModule->importModuleSqlExec(array('time' => time(), 'module_dir' => $module_dir, 'sqlfile' => 'install.sql'));
+					if ($res[0] == RESULT_ERROR) return $res;
+				}
 
+				//3、更新模块包,
+				$updata=['status'=>1,'visible'=>1];
+				$result=$this->modelSysModule->updateInfo(['id' => $sys_mid], $updata);
 
-				return $result ? [RESULT_SUCCESS, '模块下载本地解压部署成功'] : [RESULT_ERROR, $this->modelSysModule->getError()];
+				return $result ? [RESULT_SUCCESS, '应用插件安装部署成功'] : [RESULT_ERROR, $this->modelSysModule->getError()];
 				exit;
 			}else{
 				return [RESULT_ERROR, '模块目录中模块信息文件info.php不存在'];

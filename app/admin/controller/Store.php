@@ -89,9 +89,6 @@ class Store extends AdminBase
 			exit;
 		}else{
 			$orderinfo=$this->logicStore->getCloudAppOrderInfo($this->param);
-			if($orderinfo['ispayment']==1){
-				$this->down_install($this->param);exit;
-			}
 			$this->assign('userinfo', $userinfo);
 			$this->assign('orderinfo', $orderinfo);
 			return $this->fetch('install');
@@ -101,12 +98,9 @@ class Store extends AdminBase
 	/**
 	 * 下载安装
 	 */
-	public function down_install($data)
+	public function down_install()
 	{
-		$res=$this->logicStore->getCloudAppDownInstall($this->param);
-
-		print_r($res);
-
+		$this->jump($this->logicStore->getCloudAppDownInstall($this->param));
 	}
 
 	/**

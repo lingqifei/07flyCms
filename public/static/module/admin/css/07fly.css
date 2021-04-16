@@ -131,6 +131,7 @@ form-control.daterange-btn{min-width: 180px;}/*双日历*/
 
 .navbar-right{text-align: right;}
 
+/*导航条切换*/
 .ibox-tab{float: left;padding-left:10px;}
 .ibox-tab a{margin-right: 25px;cursor: pointer;}
 .ibox-tab a{color: #666;}
@@ -141,3 +142,6 @@ form-control.daterange-btn{min-width: 180px;}/*双日历*/
 
 .ibox-content .nav-tabs{margin-bottom: 20px;}
 .ibox-content .nav-tabs h3{font-weight: 600;font-size:14px;  padding: 5px 30px 0px 5px;}
+
+/*应用插件*/
+.qrcode-scan-icon{background: url('../img/scan.png') no-repeat center;width: 60px;height: 60px;background-size: 100%;display: inline-block}

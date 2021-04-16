@@ -115,9 +115,13 @@ class Store extends ApiBase
 		if($order){
 			if($order['payment_status']==1){//支付成功
 				$rtnData=[
-					'app_keys'=>data_md5_key($order['id'].$order['store_id']),
+					'order_id'=>$order['id'],
+					'order_code'=>$order['order_code'],
+					'order_amount'=>$order['order_amount'],
+					'order_name'=>$order['name'],
 					'app_id'=>$order['store_id'],
 					'app_name'=>$appinfo['name'],
+					'app_title'=>$appinfo['title'],
 					'ispayment'=>'1',
 				];
 			}else{//未支付
