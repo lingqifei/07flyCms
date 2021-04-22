@@ -59,8 +59,8 @@ class Store extends ApiBase
 	/**
 	 * 应用插件接口=订单=>检查
 	 */
-	public function app_order_check(){
-		return $this->apiReturn($this->logicStore->getStoreAppOrderPay($this->param));
+	public function app_order_pay_check(){
+		return $this->apiReturn($this->logicStore->getStoreAppOrderPayCheck($this->param));
 	}
 
 }

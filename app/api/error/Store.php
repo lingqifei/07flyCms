@@ -17,13 +17,14 @@ class Store
 {
     
     public static $appNotExist           	= [API_CODE_NAME => 1020001, API_MSG_NAME => '请求APP应用市场不存在'];
+    public static $appFileNotExist          = [API_CODE_NAME => 1020002, API_MSG_NAME => '请求APP安装文件不存在'];
+
+    public static $notOrderInfo  			= [API_CODE_NAME => 1020003, API_MSG_NAME => '请求订单号不存在'];
     
-    public static $appNotOrderPay  			= [API_CODE_NAME => 1020002, API_MSG_NAME => '请求的APP未授权'];
+    public static $appNotOrderPay           = [API_CODE_NAME => 1020004, API_MSG_NAME => '请求的APP未授权'];
     
-    public static $registerFail             = [API_CODE_NAME => 1020003, API_MSG_NAME => '注册失败'];
+    public static $notOrderId         		= [API_CODE_NAME => 1020005, API_MSG_NAME => '请求订单id号不存'];
     
-    public static $oldOrNewPassword         = [API_CODE_NAME => 1020004, API_MSG_NAME => '旧密码或新密码不能为空'];
-    
-    public static $changePasswordFail       = [API_CODE_NAME => 1020005, API_MSG_NAME => '密码修改失败'];
+    public static $notOrderCode       		= [API_CODE_NAME => 1020006, API_MSG_NAME => '请求订单编号不存'];
     
 }

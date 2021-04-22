@@ -21,6 +21,20 @@ class Book extends IndexBase
     public $bookid = '';
     public $chapid = '';
 
+	/**
+	 * 构造方法
+	 */
+	public function __construct()
+	{
+		// 执行父类构造方法
+		parent::__construct();
+
+		$booklist=$this->logicBook->getBookList();
+		$this->assign('booklist', $booklist);
+
+
+	}
+
     /**
      * 广告位调用
      *
@@ -31,27 +45,31 @@ class Book extends IndexBase
     {
         $this->bookid = input("param.bookid", '0');
         $this->chapid = input("param.chapid", '0');
-        if (!is_numeric($this->bookid) || strval(intval($this->bookid)) !== strval($this->bookid)) {
-            abort(404, 'bookid 不存在');
-        }
-        $this->bookid = intval($this->bookid);
+//        if (!is_numeric($this->bookid) || strval(intval($this->bookid)) !== strval($this->bookid)) {
+//            abort(404, 'bookid 不存在');
+//        }
 
+		if (!is_numeric($this->bookid) || strval(intval($this->bookid)) !== strval($this->bookid)) {
+			$map_book = array('pinyin' => $this->bookid);
+		} else {
+			$map_book = array('id' => $this->bookid);
+		}
 
         if (empty($this->bookid)) {
             abort(404, 'aid 页面不存在');
             exit;
         } else {
             /**文档处理**/
-            $bookinfo = $this->logicBook->getBookInfo(['id' => $this->bookid]);
+            $bookinfo = $this->logicBook->getBookInfo($map_book);
             if (empty($bookinfo)) {
                 abort(404, 'bookid 页面不存在');
                 exit;
             }
             // 文章列表
-            $chap_list = $this->logicBook->getBookChapList(['book_id' => $this->bookid]);
+            $chap_list = $this->logicBook->getBookChapList(['book_id' => $bookinfo['id']]);
 
-            //
-            $chapmenu=$this->chap_list_tree_html($bookid);
+            //得到文档树
+            $chapmenu=$this->chap_list_tree_html($bookinfo['id'],$bookinfo['pinyin']);
 
             $map_chap=[];
             $this->chapid = intval($this->chapid);
@@ -85,9 +103,13 @@ class Book extends IndexBase
         }
     }
 
-    public function chap_list_tree_html($bookid){
+    //左边栏目输出
+    public function chap_list_tree_html($bookid,$bookpinyin=''){
         // 文章列表
         $chap_list = $this->logicBook->getBookChapList(['book_id' => $bookid],'id,book_id,pid,title','sort asc');
+        foreach ($chap_list as &$row){
+        	$row['bookid']=empty($bookpinyin)?$row['id']:$bookpinyin;
+		}
         $tree_list  = list2tree($chap_list,0,0,'id','pid','title');
 
         $html ="<ul>";
@@ -99,7 +121,7 @@ class Book extends IndexBase
     public function chap_list_tree_to($list){
         $html ='';
         foreach ($list as $key=>$row){
-            $url=url('index/book/read',array('bookid'=>$row['book_id'],'chapid'=>$row['id']));
+            $url=url('index/book/read',array('bookid'=>$row['bookid'],'chapid'=>$row['id']));
 
             if(empty($row['nodes'])){
                 $html .="<li>";
@@ -108,11 +130,9 @@ class Book extends IndexBase
             }else{
                 $html .='<li class="has_child">';
                 $html .='<span><i class="icon-plus-sign"></i></span><a href="'.$url.'">'.$row['title'].'</a>';
-
                 $html .="<ul style='display: none;'>";
                 $html .=$this->chap_list_tree_to($row['nodes']);
                 $html .="</ul>";
-
                 $html .="</li>";
             }
 
@@ -121,5 +141,15 @@ class Book extends IndexBase
         return $html;
     }
 
+
+	/**
+	 * 后台调用方法，可以配合路由配置
+	 * @return mixed
+	 * Author: kfrs <goodkfrs@QQ.com> created by at 2020/11/2 0002
+	 */
+	public function adminread()
+	{
+		return $this->read($this->param);
+	}
 
 }

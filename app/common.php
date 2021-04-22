@@ -604,7 +604,7 @@ function get_file_root_path()
 }
 
 /**
- * 获取图片url
+ * 获取图片url=》根据picture id
  */
 function get_picture_url($id = 0,$member='picture')
 {
@@ -616,7 +616,7 @@ function get_picture_url($id = 0,$member='picture')
 
 
 /**
- * 获取图片url=>路径地址
+ * 获取图片url=>根据地址
  */
 function get_picture_url2($path='')
 {
@@ -627,7 +627,7 @@ function get_picture_url2($path='')
 }
 
 /**
- * 获取文件url
+ * 获取文件url=>根据 file id
  */
 function get_file_url($id = 0)
 {
@@ -635,6 +635,17 @@ function get_file_url($id = 0)
     $fileLogic = get_sington_object('fileLogic', LogicFile::class);
 
     return $fileLogic->getFileUrl($id);
+}
+
+/**
+ * 获取文件url=>根据 file url
+ */
+function get_file_url2($path='')
+{
+
+	$fileLogic = get_sington_object('fileLogic', LogicFile::class);
+
+	return $fileLogic->getFileWebUrl($path);
 }
 
 

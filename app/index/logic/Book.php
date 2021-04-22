@@ -27,16 +27,14 @@ class Book extends IndexBase
      * @return mixed
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getBookList($where = [], $field = true, $order = '', $paginate = 15)
+    public function getBookList($where = [], $field = '', $order = '', $paginate = 15)
     {
         $this->modelBook->alias('a');
-        $list= $this->modelBook->getList($where, $field, $order, $paginate)->toArray();
-
-        $paginate===false && $list['data']=$list;
-
-        foreach ($list['data'] as &$row){
+        $list= $this->modelBook->getList($where, $field, $order, $paginate);
+        foreach ($list as &$row){
             $row['litpic'] =get_picture_url($row['litpic']);
-            $row['target'] = ($row['target'] == 1) ? 'target="_blank"' : 'target="_self"';
+			$row['bookid']=empty($row['pinyin'])?$row['id']:$row['pinyin'];
+            $row['bookurl'] = url('index/book/read',array('bookid'=>$row['bookid']));
         }
 
         return $list;
@@ -65,7 +63,7 @@ class Book extends IndexBase
         $list=Db::name('book_chap')
             ->where($where)
             ->field($field)
-            ->order('id asc')
+            ->order('sort asc')
             ->select();
         return $list;
     }

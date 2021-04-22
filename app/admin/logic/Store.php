@@ -76,14 +76,14 @@ class Store extends AdminBase
 	public function cloudUserLogin($data=[])
 	{
 		$info = $this->modelStore->getCloudUserLogin($data);
-		if($info['code']==0){
+		if($info['code']==0 && !empty($info)){
 			$user=$info['data'];
 			Cookie::set('stroe_user',$user,360000,'/');
 			Cookie::set('username',$user['username'],360000,'/');
 			Cookie::set('user_token',$user['user_token'],360000,'/');
 			return [RESULT_SUCCESS, '登录成功'];
 		}else{
-			return [RESULT_ERROR, $info['msg']];
+			return [RESULT_ERROR, '登录失败'];
 		}
 	}
 
@@ -126,6 +126,13 @@ class Store extends AdminBase
 			if(!empty($info['data'])){
 				$listdata = $info['data'];
 				foreach ($listdata['data'] as &$row) {
+
+					$row['sale_price_text']=($row['sale_price']>0)?'<span>￥':0;//判断最新版
+					if($row['sale_price']>0){
+						$row['sale_price_text']="<span class='text-danger'>￥".$row['sale_price'].'</span>';
+					}else{
+						$row['sale_price_text']="免费";
+					}
 					switch ($row['classify_id']){
 						case '1'://模块
 							$map['name']=['=',$row['name']];

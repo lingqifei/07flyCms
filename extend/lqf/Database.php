@@ -93,6 +93,12 @@ class Database{
      * @return boolean     true - 写入成功，false - 写入失败！
      */
     private function write($sql){
+
+    	//数据前缀替换为模块前缀
+    	$prefix=$this->config['prefix'];
+    	$prefix_tpl=$this->config['prefix_tpl'];
+		$sql = str_replace(" `{$prefix}", " `{$prefix_tpl}", $sql);
+
         $size = strlen($sql);
         
         //由于压缩原因，无法计算出压缩后的长度，这里假设压缩率为50%，
@@ -110,8 +116,21 @@ class Database{
      * @return array|bool|int  false - 备份失败
      */
     public function backup($table = '', $start = 0){
+
+    	//判断备份数据库表，前缀信息，如表名前缀，系统又开启前缀自动添加
+		$prefix=$this->config['prefix'];
+		if(!empty($prefix)){
+			if(strstr($table,$prefix)==false){
+				$table=$prefix.$table;
+			}
+		}
+
         // 备份表结构
         if(0 == $start){
+
+        	$checktable=Db::query("SHOW TABLES LIKE '{$table}'");
+        	if(empty($checktable)) return false;
+
             $result = Db::query("SHOW CREATE TABLE `{$table}`");
             $result = array_map('array_change_key_case', $result);
 
@@ -181,6 +200,13 @@ class Database{
 
         for($i = 0; $i < 1000; $i++){
             $sql .= $this->config['compress'] ? gzgets($gz) : fgets($gz);
+
+			//数据表模块添加前缀
+			$prefix=$this->config['prefix'];
+			$prefix_tpl=$this->config['prefix_tpl'];
+
+			$sql = str_replace(" `{$prefix_tpl}", " `{$prefix}", $sql);
+
             if(preg_match('/.*;$/', trim($sql))){
                 if(false !== Db::execute($sql)){
                     $start += strlen($sql);

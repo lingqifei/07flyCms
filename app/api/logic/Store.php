@@ -52,7 +52,7 @@ class Store extends ApiBase
 
 
 	/**
-	 * store列表
+	 * store 下载
 	 * @param array $where
 	 * @param bool $field
 	 * @param string $order
@@ -81,6 +81,9 @@ class Store extends ApiBase
 		}else{
 			if($order['payment_status']==1) {//支付成功
 				$file=$path = PATH_DATA.'app/download/book.zip';
+
+				return StoreError::$appFileNotExist;
+
 				return downFileOutput($file);
 			}else{
 				return StoreError::$appNotOrderPay;
@@ -91,7 +94,7 @@ class Store extends ApiBase
 
 
 	/**
-	 * store列表
+	 * 插件购买订单
 	 * @param array $where
 	 * @param bool $field
 	 * @param string $order
@@ -103,15 +106,19 @@ class Store extends ApiBase
 		$info=obj2arr($this->logicApiBase->checkUserTockeParam($data));
 		$user=$info['data'];
 
+		//1、检查应用插件是否在
 		$appinfo=$this->modelStore->getInfo(['id'=>$data['app_id']]);
 		if(empty($appinfo)){
 			return StoreError::$appNotExist;
 		}
 
+		//2、根据token获得会员信息及购买插件订单
 		$where['store_id']	=['=',$data['app_id']];
 		$where['member_id']	=['=',$user['member_id']];
 		$order=$this->modelStoreOrder->getInfo($where);
+
 		//当订单已经购买了就直接返回app_id  不然就创建订单
+		//存在订单返回订单信息，不存在则创建订单
 		if($order){
 			if($order['payment_status']==1){//支付成功
 				$rtnData=[
@@ -178,5 +185,43 @@ class Store extends ApiBase
 
 	}
 
+
+	/**支付订单检查
+	 * @param array $data
+	 * @return array
+	 */
+	public function getStoreAppOrderPayCheck($data=[]){
+		if(empty($data['order_id'])){
+			return StoreError::$notOrderId;
+		}
+		if(empty($data['order_code'])){
+			return StoreError::$notOrderCode;
+		}
+		$where['id']	=['=',$data['order_id']];
+		$where['order_code']	=['=',$data['order_code']];
+		$order=$this->modelStoreOrder->getInfo($where);
+		if(empty($order)){
+			return StoreError::$notOrderInfo;
+		}else{
+			if($order['payment_status']==1){//支付成功
+				$rtnData=[
+					'order_id'=>$order['id'],
+					'order_code'=>$order['order_code'],
+					'ispayment_text'=>'已支付',
+					'ispayment'=>'1',
+					'pay_url'=>'',
+				];
+			}else{//未支付
+				$rtnData=[
+					'order_id'=>$order['id'],
+					'order_code'=>$order['order_code'],
+					'ispayment_text'=>'未支付',
+					'ispayment'=>'0',
+					'pay_url'=>DOMAIN.url('api/store/app_order_pay',array('order_code'=>$order['order_code'])),
+				];
+			}
+		}
+		return $rtnData;
+	}
 
 }

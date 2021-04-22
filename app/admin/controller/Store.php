@@ -14,7 +14,7 @@
 namespace app\admin\controller;
 
 /**
- * 升级控制器
+ * 应用市市场控制器
  */
 class Store extends AdminBase
 {

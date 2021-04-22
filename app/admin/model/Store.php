@@ -35,7 +35,7 @@ class Store extends AdminBase
     function  initServerUrl(){
         $hostinfo=[
             "http://127.0.0.1:8002/index.php",
-            "http://soft.s5.07fly.com",
+            "http://soft.s5.07fly.com/index.php",
         ];
         foreach ($hostinfo as $oneurl){
             if(httpcode($oneurl)=='200'){
@@ -184,12 +184,16 @@ class Store extends AdminBase
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/25 0025
      */
     public function  getRemoteCotent($url, $postdata=[]){
-        if (httpcode($url)==200) {
-            $result=curl_post($url,$postdata);
-            $result = json_decode($result, true);
-        }else{
-            $result =['code' => 0, 'msg' => '网络通信异常'];
-        }
+
+		$result=curl_post($url,$postdata);
+		$result = json_decode($result, true);
+
+//        if (httpcode($url)==200) {
+//            $result=curl_post($url,$postdata);
+//            $result = json_decode($result, true);
+//        }else{
+//            $result =['code' => 0, 'msg' => '网络通信异常'];
+//        }
         return $result;
     }
 
