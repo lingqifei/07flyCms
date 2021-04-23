@@ -84,6 +84,8 @@ class Database extends AdminBase
             'part' => config('data_backup_part_size'),
             'compress' => config('data_backup_compress'),
             'level' => config('data_backup_compress_level'),
+			'prefix' => SYS_DB_PREFIX,
+			'prefix_tpl' => '#@__',
         ];
 //        $config = [
 //            'path'     => realpath($path) . SYS_DS_PROS,

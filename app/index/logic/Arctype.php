@@ -157,19 +157,29 @@ class Arctype extends IndexBase
             $data['typeurl'] = $data['typedir'];
             if (!is_http_url($data['typeurl'])) {
                 $typeurl = '//'.request()->host();
-//                if (!preg_match('#^'.DOMAIN.'(.*)$#i', $data['typeurl'])) {
-//                    $typeurl .= DOMAIN;
-//
-//                }
                 $typeurl .= '/'.trim($data['typeurl'], '/');
-                //echo  $typeurl;exit;
             }
         } else {
-            $typeurl = url('index/lists/index', array('tid'=>$data['id']));
+        	if($data['typedir']){
+				$typeurl = url('index/lists/index', array('tid'=>$data['typedir']));
+			}else{
+				$typeurl = url('index/lists/index', array('tid'=>$data['id']));
+			}
+
         }
         return $typeurl;
     }
 
+
+	/**
+	 * 在typeid传值为目录名称的情况下，获取栏目ID
+	 */
+	public function getTrueTypedir($typeid = '')
+	{
+		$typedir = $this->modelArctype->getValue(['id'=>$typeid], 'typedir');
+		if(empty($typedir))  return $typeid;
+		return $typedir;
+	}
 
 
 }

@@ -466,7 +466,7 @@ $("body").on("click", ".ajax-del", function () {
         }
     }
 
-    if ((target = $(this).attr('data-url'))) {
+    if ((target = $(this).attr('href')) || (target = $(this).attr('url') ) || (target = $(this).attr('data-url') )){
 
         var ids =$(this).attr('data-ids');
         var fun =$(this).attr('data-calback');

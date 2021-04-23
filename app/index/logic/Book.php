@@ -27,7 +27,7 @@ class Book extends IndexBase
      * @return mixed
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getBookList($where = [], $field = '', $order = '', $paginate = 15)
+    public function getBookList($where = [], $field = '', $order = '', $paginate = false,$limit='')
     {
         $this->modelBook->alias('a');
         $list= $this->modelBook->getList($where, $field, $order, $paginate);

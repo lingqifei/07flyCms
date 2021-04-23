@@ -88,8 +88,11 @@
             <lqf_link><a  class="ajax-open" data-url="{:url('SysModule/edit',array('name'=>'visible'))}"  data-ids="{'id':'<%=data[i]['id']%>'}" >修改</a> </lqf_link>
             <% for(var j=0;j<data[i]['status_arr']['action'].length;j++) { %>
             <lqf_link>
-                <a class="<%=data[i]['status_arr']['action'][j]['class']%>" data-ids="{'id':'<%=data[i]['id']%>'}" href="<%=data[i]['status_arr']['action'][j]['url']%>">
-                    <font color="<%=data[i]['status_arr']['action'][j]['color']%>"><%=data[i]['status_arr']['action'][j]['name']%></font></a>
+                <a class="<%=data[i]['status_arr']['action'][j]['class']%>"
+                   data-ids="{'id':'<%=data[i]['id']%>'}"
+                   href="<%=data[i]['status_arr']['action'][j]['url']%>">
+                    <font color="<%=data[i]['status_arr']['action'][j]['color']%>"><%=data[i]['status_arr']['action'][j]['name']%></font>
+                </a>
             </lqf_link>
             <% } %>
         </td>

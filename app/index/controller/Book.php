@@ -36,7 +36,7 @@ class Book extends IndexBase
 	}
 
     /**
-     * 广告位调用
+     * 文档展示
      *
      * @return mixed
      * created by Administrator at 2020/2/24 0024 15:15
@@ -93,7 +93,7 @@ class Book extends IndexBase
 
             /*模板文件*/
             if(empty($tpfile)){
-                $tpfile = 'book.html';
+                $tpfile = 'book_read.html';
             }
             $viewfile = !empty($tpfile) ? strtolower($tpfile) : $tpfile;
             $this->typeinfo = $rtnArray;
@@ -102,6 +102,36 @@ class Book extends IndexBase
 
         }
     }
+
+
+	/**
+	 * 文档展示
+	 *
+	 * @return mixed
+	 * created by Administrator at 2020/2/24 0024 15:15
+	 */
+	public function readChap($bookid = '')
+	{
+		$this->bookid = input("param.bookid", '0');
+		$this->chapid = input("param.chapid", '0');
+		if (empty($this->bookid)) {
+			abort(404, 'aid 页面不存在');
+			exit;
+		} else {
+
+			$map_chap=[];
+			$this->chapid = intval($this->chapid);
+			if(!empty($this->chapid)){
+				$map_chap['id']=['=',$this->chapid];
+			}
+			$chapinfo=$this->logicBook->getBookChapInfo($map_chap);
+			$pajx = input("param.pajx", '0');
+			if(!empty($pajx)){
+				return $chapinfo;
+				exit;
+			}
+		}
+	}
 
     //左边栏目输出
     public function chap_list_tree_html($bookid,$bookpinyin=''){
@@ -122,7 +152,6 @@ class Book extends IndexBase
         $html ='';
         foreach ($list as $key=>$row){
             $url=url('index/book/read',array('bookid'=>$row['bookid'],'chapid'=>$row['id']));
-
             if(empty($row['nodes'])){
                 $html .="<li>";
                 $html .='<span><i></i></span><a href="'.$url.'">'.$row['title'].'</a>';

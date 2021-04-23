@@ -15,6 +15,7 @@ namespace app\index\taglib;
 
 use think\Config;
 use think\Cookie;
+use think\Db;
 
 /**
  * 基类
@@ -57,11 +58,10 @@ class Base
     {
         /*tid为目录名称的情况下*/
         if (!empty($typeid) && strval($typeid) != strval(intval($typeid))) {
-            $typeid = M('Arctype')->where([
-                    'dirname'   => $typeid,
-                    'lang'  => $this->home_lang,
-                ])->cache(true,CACHE_TIME,"arctype")
-                ->getField('id');
+            $typeid = Db::name('arctype')
+				->where(['typedir'   => $typeid])
+				->cache(true,CACHE_TIME,"arctype")
+                ->value('id');
         }
         /*--end*/
 

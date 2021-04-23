@@ -567,8 +567,11 @@ class SysModule extends AdminBase
 			}
 		}
 		$module_table_path = $param['module_dir'];
-		//@unlink($module_table_path . 'table-1.sql');
-		//file_put_contents($module_table_path . $param['sqlfilename'].'.sql', '');
+		!is_dir($module_table_path) && mkdir($module_table_path, 0755, true);
+
+//		@unlink($module_table_path . $param['sqlfilename']);
+//		file_put_contents($module_table_path . $param['sqlfilename'].'.sql', '');
+
 		$config = [
 			'path' => $module_table_path,
 			'part' => '524288000',

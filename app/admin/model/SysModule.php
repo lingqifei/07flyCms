@@ -41,7 +41,7 @@ class SysModule extends AdminBase
                     ),
                     '1' => array(
                         'url' => url('del'),
-                        'class' => 'ajax-del',
+                        'class' => 'ajax-del confirm',
                         'color' => '#F05050',
                         'name' => '删除'
                     ),

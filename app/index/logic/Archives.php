@@ -140,7 +140,8 @@ class Archives extends IndexBase
         if ($data['is_jump'] == 1 && $data['jump_url']) {
             $arcurl = $data['jump_url'];
         } else {
-            $arcurl = url('index/view/index', array('aid' => $data['id']));
+        	$typeid=$this->logicArctype->getTrueTypedir($data['type_id']);
+            $arcurl = url('index/view/index', array('typeid' => $typeid,'aid' => $data['id']));
         }
         return $arcurl;
     }
