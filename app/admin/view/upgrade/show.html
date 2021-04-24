@@ -19,11 +19,13 @@
                     <p>授权认证：<span>{$authorize.data.syskey}</span></p>
                     <p>授权域名：<span>{$authorize.data.domain}</span></p>
                     {else}
-                    <p><span class="help-block m-b-none">(注册码需要联系软件开发商获取,访问<a href="http://www.07fly.xyz" target="_blank">开发商网站</a>) </span></p>
+                    <p><span class="help-block m-b-none">(注册码需要联系软件开发商获取,访问<a href="http://www.07fly.xyz"
+                                                                              target="_blank">开发商网站</a>) </span></p>
                     <p>
                     <div class="input-group m-b">
                         <input name="syskey" id="syskey" class="form-control" type="text" placeholder="密钥KEY"/>
-                        <span class="input-group-btn"><button type="button" class="btn btn-primary syskey-reg" data-url="{:url('upgrade/reg')}">提交注册码</button></span>
+                        <span class="input-group-btn"><button type="button" class="btn btn-primary syskey-reg"
+                                                              data-url="{:url('upgrade/reg')}">提交注册码</button></span>
                     </div>
                     </p>
                     {/if}
@@ -34,11 +36,10 @@
     </div>
 </div>
 <script type="text/javascript">
-
     //点击注册
     $("body").on("click", ".syskey-reg", function () {
         var syskey = $("#syskey").val();
-        var url =$(this).attr('data-url');
+        var url = $(this).attr('data-url');
         $.ajax({
             type: "POST",
             url: url,

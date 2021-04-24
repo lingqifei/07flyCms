@@ -24,10 +24,14 @@ class Upgrade extends AdminBase
      */
     public function show()
     {
-        $signal=$this->logicUpgrade->upgrade_signal_check();
-        $this->assign('authorize', $this->logicUpgrade->upgrade_auth_check());
-        $this->assign('ver', $this->logicUpgrade->getVersionInfo());
+        $signal=$this->logicUpgrade->upgrade_signal_check();//检查通信
+
+        $this->assign('authorize', $this->logicUpgrade->upgrade_auth_check());//检查是否授权
+
+        $this->assign('ver', $this->logicUpgrade->getVersionInfo());//检查版本
+
         $this->assign('signal', $signal);
+
         return $this->fetch('show');
     }
 
@@ -54,7 +58,10 @@ class Upgrade extends AdminBase
      */
     public function info()
     {
-        $this->assign('info', $this->logicUpgrade->getUpgradeInfo($this->param['version']));
+
+    	$info =$this->logicUpgrade->getUpgradeVersionInfo($this->param['version']);
+
+        $this->assign('info',$info );
         return $this->fetch('info');
     }
 
@@ -71,7 +78,6 @@ class Upgrade extends AdminBase
      */
     public function execute()
     {
-
         if(empty($this->param['version']) || empty($this->param['step'])){
             $rtn=['code'=>0,'msg'=>'选择需要升级的参数'];
         }else{
@@ -122,7 +128,7 @@ class Upgrade extends AdminBase
                     break;
 
             }
-            $rtn['url']=url('upgrade/execute',array('version'=>$this->param['version']));
+            $rtn['url']=url('upgrade/execute');
             $rtn['version']=$this->param['version'];
         }
         return $rtn;

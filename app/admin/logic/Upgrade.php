@@ -19,7 +19,7 @@ namespace app\admin\logic;
 class Upgrade extends AdminBase
 {
 
-    private $version = '20200808';//当前版本
+    private $version = '1.0.1';//当前版本
     private $syskey_path = '';//注册码目录
     private $upgrade_path_back = '';//升级备份目录
     private $upgrade_path_down = '';//升级下载目录
@@ -45,22 +45,22 @@ class Upgrade extends AdminBase
     public function initUpgradeDir()
     {
         //授权码目录
-        $path = ROOT_PATH . 'data/';
+        $path = PATH_DATA;
         !is_dir($path) && mkdir($path, 0755, true);
         $this->syskey_path = $path;
 
         //升级目录
-        $path = PATH_UPLOAD . 'upgrade/' ;
+        $path = PATH_DATA . 'upgrade/' ;
         !is_dir($path) && mkdir($path, 0755, true);
         $this->upgrade_path = $path;
 
         //升级备份目录
-        $path = PATH_UPLOAD . 'upgrade/back/';
+        $path = PATH_DATA . 'upgrade/back/';
         !is_dir($path) && mkdir($path, 0755, true);
         $this->upgrade_path_back = $path;
 
         //升级包下载目录
-        $path = PATH_UPLOAD . 'upgrade/down/';
+        $path = PATH_DATA . 'upgrade/down/';
         !is_dir($path) && mkdir($path, 0755, true);
         $this->upgrade_path_down = $path;
     }
@@ -119,18 +119,19 @@ class Upgrade extends AdminBase
     {
         //得到版本列表
         $info = $this->modelUpgrade->getVersionList($this->version);
+        //d($info);
         $listdata = array();
-        if($info['code']==1){
+        if($info['code']==0){
             if(!empty($info['data'])){
                 $listdata = $info['data'];
                 foreach ($listdata as &$row) {
-                    $status = $this->check_version_down($row['upgradefile']);
+                    $status = $this->check_version_down($row['version']);
                     if (!$status) {
                         $row['status'] = '<font color="red">文件没有下载</font>';
-                        $row['operate'] = '<a href="javascript:void(0);" class="down" data-url="'.url('upgrade/down',array('version'=>$row['version'])).'">点击下载更新包文件HTTP</a>';
+                        $row['operate'] = '<a href="javascript:void(0);" class="down" data-ver="'.$row['version'].'" data-url="'.url('upgrade/down').'">点击下载更新包文件HTTP</a>';
                     } else {
                         $row['status'] = '<font color="green">文件已下载[文件完整]</font>';
-                        $row['operate'] = '<a href="javascript:void(0);" class="execute" data-url="'.url('upgrade/execute',array('version'=>$row['version'])).'">点击升级更新包</a>';
+                        $row['operate'] = '<a href="javascript:void(0);" class="execute" data-ver="'.$row['version'].'" data-url="'.url('upgrade/execute').'">点击升级更新包</a>';
                     }
                 }
             }
@@ -143,9 +144,10 @@ class Upgrade extends AdminBase
      * @return bool
      * Author: lingqifei created by at 2020/4/1 0001
      */
-    public function getUpgradeInfo($version)
+    public function getUpgradeVersionInfo($version=null)
     {
-        return  $this->modelUpgrade->getVersionInfo($this->version);
+        $info =  $this->modelUpgrade->getVersionInfo($version);
+		return $info;
     }
 
 
@@ -156,18 +158,12 @@ class Upgrade extends AdminBase
      */
     public function getUpgradePack($version = null)
     {
-        $packinfo=$this->modelUpgrade->getVersionInfo($version);
-        $pakurl=!empty($packinfo)?$packinfo['filename']:'';
-        $result = check_file_exists($pakurl);
-        if ($result) {
-            $finfo = $this->file->get_file_type("$pakurl");
-            $res = $this->file->down_remote_file($pakurl, $this->upgrade_path_down, $finfo['basename'], $type = 1);
-            if($res['error']==0){
-                return [RESULT_SUCCESS, $res['save_path']];
-            }
-        } else {
-            return [RESULT_ERROR, '下载升级文件不存在'];
-        }
+        $packinfo=$this->modelUpgrade->getVersionUpgradeFile($version);
+        if($packinfo['code']==1){
+			return [RESULT_SUCCESS, $packinfo['filepath']];
+		}else{
+			return [RESULT_ERROR, '下载升级文件不存在'];
+		}
     }
 
 
@@ -261,17 +257,7 @@ class Upgrade extends AdminBase
         }
     }
 
-    /**验证授权信息
-     * @param null $version
-     * @return bool
-     * Author: lingqifei created by at 2020/4/1 0001
-     */
-    public function upgrade_auth_check()
-    {
-        $domain = $_SERVER['HTTP_HOST'];
-        $syskey = $this->getSysKey();
-        return $this->modelUpgrade->getAuthorizeInfo($domain,$syskey);
-    }
+
 
     /**验证平台信息
      * @param null $version
@@ -292,7 +278,7 @@ class Upgrade extends AdminBase
      */
     public function check_version_down($version)
     {
-        $downfile = $this->upgrade_path_down . $version;
+        $downfile = $this->upgrade_path_down . $version. '.zip';
         return check_file_exists($downfile);
     }
 
@@ -310,12 +296,24 @@ class Upgrade extends AdminBase
             $res = $this->upgrade_auth_check();
             if ($res['code'] == '1') {
                 return [RESULT_SUCCESS, '授权码注册成功'];
-                $rtn = array('code' => 1, 'message' => '授权码注册成功');
+                $rtn = array('code' => 1, 'msg' => '授权码注册成功');
             } else {
-                return [RESULT_ERROR, $res['message']];
+                return [RESULT_ERROR, $res['msg']];
             }
         }
         return $rtn;
     }
+
+	/**验证授权信息
+	 * @param null $version
+	 * @return bool
+	 * Author: lingqifei created by at 2020/4/1 0001
+	 */
+	public function upgrade_auth_check()
+	{
+		$domain = $_SERVER['HTTP_HOST'];
+		$syskey = $this->getSysKey();
+		return $this->modelUpgrade->getAuthorizeInfo($domain,$syskey);
+	}
 
 }

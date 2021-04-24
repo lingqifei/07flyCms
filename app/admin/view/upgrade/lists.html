@@ -14,7 +14,7 @@
                             <td>更新包文件:{$vo.version}</td>
                             <td>状态:{$vo.status}</td>
                             <td>{$vo.operate}</td>
-                            <td><a class="ajax-open" data-url="{:url('upgrade/info',array('version'=>$vo['version']))}" data-calback="javascript:void(0);">本次更新内容</a></td>
+                            <td><a class="ajax-open" data-url="{:url('upgrade/info')}" data-ids="{'version':'{$vo.version}'}" data-calback="javascript:void(0);">本次更新内容</a></td>
                         </tr>
                         {/volist}
                         </tbody>
@@ -61,9 +61,11 @@
     //点击下载
     $("body").on("click", ".down", function () {
         var target =$(this).attr('data-url');
+        var ver =$(this).attr('data-ver');
         $.ajax({
             type: "POST",
             url: target,
+            data:{'version':ver},
             dataType: "json",
             async: false,
             beforeSend: function () {
@@ -90,17 +92,18 @@
     $("body").on("click", ".execute", function () {
         var step = 1;
         var target =$(this).attr('data-url');
+        var version =$(this).attr('data-ver');
         var title='数据升级，正在备份程序，请不要关闭浏览器...';
         $('.upgrade-text').append('<div class="ibox-title">升级日志：</div>');
-        upgrade(target,step,title);
+        upgrade(target,step,title,version);
     });
 
     //升级函数
-    function upgrade(url,step,title) {
+    function upgrade(url,step,title,version) {
         $.ajax({
             type: "POST",
             url: url,
-            data: {'step': step},
+            data: {'step': step,'version': version},
             dataType: "json",
             async: false,
             beforeSend: function () {
@@ -117,7 +120,7 @@
                     layer.msg(data.msg, {icon: 1});
                     $('.upgrade-text').append('<p style="padding-left: 15px;">' + data.msg + '</p>');
                     if(data.step!='-1'){
-                        upgrade(data.url, data.step,data.title);
+                        upgrade(data.url, data.step,data.title,data.version);
                     }
                 }else{
                     $('.upgrade-text').append('<p style="padding-left: 15px;">' + data.msg + '</p>');

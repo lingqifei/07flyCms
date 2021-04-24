@@ -163,12 +163,12 @@ class Http {
      */
     private static function send($url, $params = '', $method = 'GET', $header = [], $timeout = 30, $options = [])
     {
-        $cookieFile = Env::get('runtime_path') . 'temp/' . md5(config('authkey')) . '.txt';
+        //$cookieFile = Env::get('runtime_path') . 'temp/' . md5(config('authkey')) . '.txt';
         $userAgent = self::$userAgent[array_rand(self::$userAgent, 1)];
         $ch = curl_init();
         $opt                            = [];
-        $opt[CURLOPT_COOKIEJAR]         = $cookieFile;
-        $opt[CURLOPT_COOKIEFILE]        = $cookieFile;
+        //$opt[CURLOPT_COOKIEJAR]         = $cookieFile;
+        //$opt[CURLOPT_COOKIEFILE]        = $cookieFile;
         $opt[CURLOPT_USERAGENT]         = $userAgent;
         $opt[CURLOPT_CONNECTTIMEOUT]    = $timeout;
         $opt[CURLOPT_TIMEOUT]           = $timeout;

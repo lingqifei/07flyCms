@@ -399,54 +399,24 @@ if (!function_exists('download')) {
     }
 }
 
-
-if (!function_exists("list2select")) {
-
-    /**r把列表数据转为树形下拉
-     * @param $list
-     * @param int $pId
-     * @param int $level
-     * @param string $pk
-     * @param string $pidk
-     * @param string $name
-     * @return array|string
-     * Author: lingqifei created by at 2020/4/1 0001
-     */
-    function list2select($list, $pId = 0, $level = 0, $pk = 'id', $pidk = 'pid', $name = 'name', $data = [])
-    {
-        foreach ($list as $k => $v) {
-            $v['treename'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $level) . '|--' . $v[$name];
-            if ($v[$pidk] == $pId) { //父亲找到儿子
-                $data[] = $v;
-                $data = list2select($list, $v[$pk], $level + 1, $pk, $pidk, $name, $data);
-            }
-        }
-        return $data;
-    }
+if (!function_exists('check_file_exists')) {
+	/**
+	 * 判断文件是否存在，支持本地及远程文件
+	 * @param String $file 文件路径
+	 * @return Boolean
+	 */
+	function check_file_exists($file)
+	{
+		// 远程文件
+		if (strtolower(substr($file, 0, 4)) == 'http') {
+			$header = get_headers($file, true);
+			return isset($header[0]) && (strpos($header[0], '200') || strpos($header[0], '304'));
+			// 本地文件
+		} else {
+			return file_exists($file);
+		}
+	}
 }
-
-if (!function_exists('get_arr_column')) {
-    /**
-     * 获取数组中的某一列
-     *
-     * @param array $arr 数组
-     * @param string $key_name 列名
-     * @return array  返回那一列的数组
-     */
-    function get_arr_column($arr, $key_name)
-    {
-        if (function_exists('array_column')) {
-            return array_column($arr, $key_name);
-        }
-
-        $arr2 = array();
-        foreach ($arr as $key => $val) {
-            $arr2[] = $val[$key_name];
-        }
-        return $arr2;
-    }
-}
-
 
 if (!function_exists('httpcode')) {
     /**
@@ -554,6 +524,7 @@ if (!function_exists('downFileOutput')) {
 	 * @return 文件
 	 */
 	function downFileOutput($file) {
+
 		str_replace(['/','\\'], DIRECTORY_SEPARATOR, $file);
 		//检查文件是否存在
 		if (empty($file) or !is_file($file)) {
