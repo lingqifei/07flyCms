@@ -42,6 +42,14 @@ class SysDept extends LogicBase
         return $tree;
     }
 
+	//得到tree的数据
+	public function getSysDeptTreeSelect($where = [], $field = "id,name,pid", $order = 'sort asc', $paginate = false)
+	{
+		$list = $this->getSysDeptList($where, $field, $order, $paginate)->toArray();
+		$data = list2select($list);
+		return $data;
+	}
+
     //得到tree的数据
     public function getSysDeptSelectData($where = [], $field = "id,name,pid", $order = 'sort asc', $paginate = false){
 

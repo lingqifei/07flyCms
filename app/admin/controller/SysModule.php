@@ -137,4 +137,12 @@ class SysModule extends AdminBase
         $this->assign('modulename', MODULE_NAME);
     }
 
+	/**
+	 * 模块卸载
+	 */
+	public function createsys()
+	{
+		return $this->jump($this->logicSysModule->sysModuleCreateSys($this->param));
+	}
+
 }

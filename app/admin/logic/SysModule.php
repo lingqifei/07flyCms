@@ -44,12 +44,12 @@ class SysModule extends AdminBase
 		$this->app_path = $path;
 
 		//模块上传目录
-		$path = PATH_DATA . 'app'.DS.'upload'.DS;
+		$path = PATH_DATA . 'app' . DS . 'upload' . DS;
 		!is_dir($path) && mkdir($path, 0755, true);
 		$this->app_upload_path = $path;
 
 		//模块上传目录解压目录
-		$path = PATH_DATA . 'app'.DS.'unzippack'.DS;
+		$path = PATH_DATA . 'app' . DS . 'unzippack' . DS;
 		!is_dir($path) && mkdir($path, 0755, true);
 		$this->app_unpack_path = $path;
 
@@ -59,12 +59,12 @@ class SysModule extends AdminBase
 		$this->app_pack_path = $path;
 
 		//模块下载目录
-		$path = PATH_DATA . 'app'.DS.'download'.DS;
+		$path = PATH_DATA . 'app' . DS . 'download' . DS;
 		!is_dir($path) && mkdir($path, 0755, true);
 		$this->app_download_path = $path;
 
 		//模块临时解压目录
-		$path = PATH_DATA . 'app'.DS.'tmppack'.DS;
+		$path = PATH_DATA . 'app' . DS . 'tmppack' . DS;
 		!is_dir($path) && mkdir($path, 0755, true);
 		$this->app_tmp_path = $path;
 
@@ -212,18 +212,18 @@ class SysModule extends AdminBase
 		$this->initModuleDir();
 		$info = $this->modelSysModule->getInfo(['id' => $data['id']], true);
 		$module_name = $info['name'];
-		$module_dir = $this->app_path . $module_name.DS;//模块目录
+		$module_dir = $this->app_path . $module_name . DS;//模块目录
 		if (!is_dir($module_dir)) {//判断系统是否有存在相同模块
 			return [RESULT_ERROR, '安装的模块名称:' . $module_name . '不存在'];
 			exit;
 		}
 
 		// 2.1导入菜单栏目
-		$res = $this->importModuleMenu($module_name,$module_dir);
+		$res = $this->importModuleMenu($module_name, $module_dir);
 		if ($res[0] == RESULT_ERROR) return $res;
 
 		//导入数据SQL脚本
-		$res = $this->importModuleSqlExec(array('time' => time(), 'module_dir' => $module_dir.'data'.DS, 'sqlfile' => 'install.sql'));
+		$res = $this->importModuleSqlExec(array('time' => time(), 'module_dir' => $module_dir . 'data' . DS, 'sqlfile' => 'install.sql'));
 		if ($res[0] == RESULT_ERROR) return $res;
 		//更新状态
 		$result = $this->modelSysModule->setFieldValue(['id' => $data['id']], 'status', '1');
@@ -247,8 +247,8 @@ class SysModule extends AdminBase
 		$this->delModuleMenu($info['name']);
 
 		//2.备份模块数据表 table-1.sql 文件
-		$module_dir = $this->app_path . $info['name'].DS;
-		$res = $this->exportModuleTable(array('module_dir'=>$module_dir.'data'.DS,'tables'=>$info['tables'],'sqlfilename'=>'backup'));
+		$module_dir = $this->app_path . $info['name'] . DS;
+		$res = $this->exportModuleTable(array('module_dir' => $module_dir . 'data' . DS, 'tables' => $info['tables'], 'sqlfilename' => 'backup'));
 		if ($res[0] == RESULT_ERROR) return $res;
 
 		//2、更改模块列表状态
@@ -304,17 +304,17 @@ class SysModule extends AdminBase
 	 * @param array $data
 	 * Author: lingqifei created by at 2020/6/4 0004
 	 */
-	public function sysModuleCreatePack($data=[])
+	public function sysModuleCreatePack($data = [])
 	{
 		//查询模块信息
-		$info = $this->modelSysModule->getInfo(['id' =>  $data['id']], true);
+		$info = $this->modelSysModule->getInfo(['id' => $data['id']], true);
 
-		if(empty($info)){
+		if (empty($info)) {
 			return [RESULT_ERROR, '本模块数据不存在'];
 			exit;
 		}
 
-		$module_name=$info['name'];
+		$module_name = $info['name'];
 
 		$this->initModuleDir();
 
@@ -324,7 +324,7 @@ class SysModule extends AdminBase
 			return [RESULT_ERROR, '模块文件目录不存在'];
 			exit;
 		}
-		$pack_dir = $this->app_pack_path . $module_name.DS;
+		$pack_dir = $this->app_pack_path . $module_name . DS;
 		$file = new \lqf\File();
 		$result = $file->handle_dir($module_dir, $pack_dir, 'copy', true);
 		if ($result == false) {
@@ -333,13 +333,13 @@ class SysModule extends AdminBase
 		}
 
 		// 2.1导出左侧菜单信息到配置文件 mneu.php
-		$this->exportModuleMenu($module_name,$pack_dir);
+		$this->exportModuleMenu($module_name, $pack_dir);
 
 		//2.2生成模块信息到 info.php
-		$this->mkModuleInfo($info,$pack_dir);
+		$this->mkModuleInfo($info, $pack_dir);
 
 		//2.3导出模块数据表 table-1.sql 文件
-		$res = $this->exportModuleTable(array('module_dir'=>$pack_dir.'data'.DS,'tables'=>$info['tables'],'sqlfilename'=>'backup'));
+		$res = $this->exportModuleTable(array('module_dir' => $pack_dir . 'data' . DS, 'tables' => $info['tables'], 'sqlfilename' => 'backup'));
 		if ($res[0] == RESULT_ERROR) return $res;
 
 		//3、压缩包zip文件
@@ -362,22 +362,22 @@ class SysModule extends AdminBase
 	{
 
 		$object_info = request()->file('filename');
-		$save_name  =data_md5_key(time());//保存文件名称
+		$save_name = data_md5_key(time());//保存文件名称
 		$object = $object_info->move($this->app_upload_path, $save_name);//保留原文件名 savename=‘’设置为空
 		$save_file_path = $object->getpathName();//保存文件全路径
 
 		//直接在上传目录中解压，文件名以时间为准
-		$module_tmp_dir = $this->app_upload_path . DS . $save_name.DS;//以斜杠结束
+		$module_tmp_dir = $this->app_upload_path . DS . $save_name . DS;//以斜杠结束
 		if (file_exists($save_file_path)) {
-			$zip=new \lqf\Zip();
-			$res=$zip->unzip($save_file_path, $module_tmp_dir);
-			if($res!=true){
+			$zip = new \lqf\Zip();
+			$res = $zip->unzip($save_file_path, $module_tmp_dir);
+			if ($res != true) {
 				return [RESULT_ERROR, '模块包解压失败'];
 			}
 
 			//获取里面的文件包名
-			$fp=new \lqf\Dir();
-			$dirlist=$fp->listFile($module_tmp_dir);//查看目录列表文件，必须是以斜杠结束
+			$fp = new \lqf\Dir();
+			$dirlist = $fp->listFile($module_tmp_dir);//查看目录列表文件，必须是以斜杠结束
 			$app_path = !empty($dirlist) ? $dirlist[0]['pathname'] : '';
 			$app_name = !empty($dirlist) ? $dirlist[0]['filename'] : '';
 			if (empty($app_path)) {
@@ -385,10 +385,10 @@ class SysModule extends AdminBase
 			}
 
 			//2、增加到本地模块
-			$app_info_file=$app_path.'/data/info.php';
-			$app_sql_install_file=$app_path.'/data/install.sql';
+			$app_info_file = $app_path . '/data/info.php';
+			$app_sql_install_file = $app_path . '/data/install.sql';
 			if (file_exists($app_info_file)) {
-				$moduel_info=include($app_info_file);
+				$moduel_info = include($app_info_file);
 				$validate_result = $this->validateSysModule->scene('add')->check($moduel_info);
 				if (!$validate_result) {
 					return [RESULT_ERROR, $this->validateSysModule->getError()];
@@ -396,7 +396,7 @@ class SysModule extends AdminBase
 				$sys_mid = $this->modelSysModule->setInfo($moduel_info);
 
 				//2.0移动包到应用目录
-				$module_dir=PATH_APP.$app_name.DS;
+				$module_dir = PATH_APP . $app_name . DS;
 				$file = new \lqf\File();
 				$result = $file->handle_dir($app_path, $module_dir, 'copy', true);
 				if ($result == false) {
@@ -405,20 +405,20 @@ class SysModule extends AdminBase
 				}
 
 				// 2.1导入菜单栏目
-				$res = $this->logicSysModule->importModuleMenu($app_name,$module_dir);
+				$res = $this->logicSysModule->importModuleMenu($app_name, $module_dir);
 				if ($res[0] == RESULT_ERROR) return $res;
 
 				//2、判断是否有安装SQL脚本，执行安装脚本
-				if(file_exists($app_sql_install_file)){
-					$res = $this->logicSysModule->importModuleSqlExec(array('time' => time(), 'module_dir' => $module_dir.'data'.DS, 'sqlfile' => 'install.sql'));
+				if (file_exists($app_sql_install_file)) {
+					$res = $this->logicSysModule->importModuleSqlExec(array('time' => time(), 'module_dir' => $module_dir . 'data' . DS, 'sqlfile' => 'install.sql'));
 					if ($res[0] == RESULT_ERROR) return $res;
 				}
 
 				//3、更新模块包,
-				$updata=['status'=>1,'visible'=>1];
-				$result=$this->modelSysModule->updateInfo(['id' => $sys_mid], $updata);
+				$updata = ['status' => 1, 'visible' => 1];
+				$result = $this->modelSysModule->updateInfo(['id' => $sys_mid], $updata);
 				return $result ? [RESULT_SUCCESS, '应用插件安装部署成功'] : [RESULT_ERROR, $this->modelSysModule->getError()];
-			}else{
+			} else {
 				return [RESULT_ERROR, '模块目录中模块信息文件info.php不存在'];
 				exit;
 			}
@@ -433,10 +433,10 @@ class SysModule extends AdminBase
 	 * @param $modulename
 	 * Author: lingqifei created by at 2020/6/4 0004
 	 */
-	public function exportModuleMenu($modulename,$module_dir)
+	public function exportModuleMenu($modulename, $module_dir)
 	{
 
-		$module_dir = $module_dir  . 'data' . DS;
+		$module_dir = $module_dir . 'data' . DS;
 
 		!is_dir($module_dir) && mkdir($module_dir, 0755, true);
 
@@ -453,7 +453,7 @@ class SysModule extends AdminBase
 	 * @param $modulename
 	 * Author: lingqifei created by at 2020/6/4 0004
 	 */
-	public function importModuleMenu($modulename,$module_dir)
+	public function importModuleMenu($modulename, $module_dir)
 	{
 		$module_menu = $module_dir . '/data/menu.php';
 		if (file_exists($module_menu)) {
@@ -482,9 +482,9 @@ class SysModule extends AdminBase
 
 		if (!isset($param['part']) && !isset($param['start'])) {
 
-			$module_table_file = $param['module_dir'].DS.$param['sqlfile'] ;
+			$module_table_file = $param['module_dir'] . DS . $param['sqlfile'];
 			if (!file_exists($module_table_file)) {
-				return [RESULT_SUCCESS, $module_table_file.'文件不存在,跳过数据导入步骤！'];
+				return [RESULT_SUCCESS, $module_table_file . '文件不存在,跳过数据导入步骤！'];
 				exit;
 			}
 			//参数1为序号，2，文件，3 ，是否压缩
@@ -561,7 +561,7 @@ class SysModule extends AdminBase
 		} else {
 			$param['tables'] = str_replace("\r\n", "", $param['tables']);
 			$tableArr = str2arr($param['tables'], ',');
-			foreach ($tableArr as $key=>$onetable) {
+			foreach ($tableArr as $key => $onetable) {
 				if (empty($onetable)) continue;
 				$tables[] = str_replace(array("\r\n", "\r", "\n"), "", $onetable);
 			}
@@ -652,7 +652,7 @@ class SysModule extends AdminBase
 	 * 生成模块信息文件
 	 * @author lingqifei <574249366@qq.com>
 	 */
-	private function mkModuleInfo($data = [],$module_dir)
+	private function mkModuleInfo($data = [], $module_dir)
 	{
 		// 配置内容
 		$config = <<<INFO
@@ -696,7 +696,7 @@ return [
 ];
 INFO;
 
-		return file_put_contents($module_dir.'data'.DS. 'info.php', $config);
+		return file_put_contents($module_dir . 'data' . DS . 'info.php', $config);
 	}
 
 
@@ -749,5 +749,64 @@ INFO;
 		return file_put_contents($filename, $config);
 
 	}
+
+
+	/**
+	 * 模块打包=>创建框架升级文件
+	 * @param array $data
+	 * Author: lingqifei created by at 2020/6/4 0004
+	 */
+	public function sysModuleCreateSys($data = [])
+	{
+		if (empty($data['version'])) {
+			return [RESULT_ERROR, '需要打包的版本号不存在'];
+			exit;
+		}
+		$version = $data['version'];
+		$this->initModuleDir();
+		//1、把app目录复制到打包目录下
+		$version_dir = $this->app_pack_path . $version . DS;
+		!is_dir($version_dir) && mkdir($version_dir, 0755, true);
+		//2、移动需要打包的文件
+		$handle_list = [
+			'addon',
+			'core',
+			'extend',
+			'vendor',
+			'app/admin',
+			'app/common',
+			'app/command.php',
+			'app/common.php',
+			'app/extend.php',
+			'app/function.php',
+			'app/tags.php',
+		];
+		$file = new \lqf\File();
+		foreach ($handle_list as $filepath) {
+			$source = ROOT_PATH . $filepath;
+			$topath = $version_dir . $filepath;
+			echo '<hr>' . ROOT_PATH . $filepath . '=>' . $version_dir . $filepath;
+			if(!file_exists($source)){
+				echo "不存在";
+			}
+			if(!is_dir($source)){
+				$file->handle_file($source, $topath, 'copy', true);
+			}else{
+				$file->handle_dir($source, $topath, 'copy', true);
+			}
+
+		}
+		//3、压缩包zip文件
+		$pack_zip = $this->app_pack_path . $version . '.zip';
+		$zip = new \lqf\Zip();
+		$result = $zip->zip($pack_zip, $version_dir);
+		if ($result == false) {
+			return [RESULT_ERROR, '打包模块失败'];
+			exit;
+		}
+		echo '<hr>'.$pack_zip;exit;
+		return $result ? [RESULT_SUCCESS, $pack_zip] : [RESULT_ERROR, $this->modelSysModule->getError()];
+	}
+
 
 }
