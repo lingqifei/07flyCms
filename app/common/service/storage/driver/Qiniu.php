@@ -30,7 +30,7 @@ class Qiniu extends Storage implements Driver
     public function driverInfo()
     {
         
-        return ['driver_name' => '七牛云驱动', 'driver_class' => 'Qiniu', 'driver_describe' => '七牛云存储', 'author' => 'lingqifei', 'version' => '1.0'];
+        return ['driver_name' => '七牛云驱动', 'driver_class' => 'Qiniu', 'driver_describe' => '七牛云存储', 'author' => 'lingqifei', 'version' => '1.0.1'];
     }
     
     /**

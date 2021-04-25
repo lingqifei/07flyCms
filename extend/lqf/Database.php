@@ -199,16 +199,18 @@ class Database{
         }
 
         for($i = 0; $i < 1000; $i++){
+
             $sql .= $this->config['compress'] ? gzgets($gz) : fgets($gz);
 
-			//数据表模块添加前缀
-			$prefix=$this->config['prefix'];
-			$prefix_tpl=$this->config['prefix_tpl'];
-
-			$sql = str_replace(" `{$prefix_tpl}", " `{$prefix}", $sql);
-
             if(preg_match('/.*;$/', trim($sql))){
-                if(false !== Db::execute($sql)){
+
+				//2012-04-25 数据表模块添加前缀=>
+				$prefix=$this->config['prefix'];
+				$prefix_tpl=$this->config['prefix_tpl'];
+				$prefix_sql = str_replace(" `{$prefix_tpl}", " `{$prefix}", $sql);//临时改变SQL，修改前缀文件
+				//增加数据库前缀后，定位
+
+                if(false !== Db::execute($prefix_sql)){//执行修改过后的前缀SQL文件，不作为计算位置
                     $start += strlen($sql);
                 } else {
                     return false;

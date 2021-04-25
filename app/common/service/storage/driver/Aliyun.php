@@ -31,7 +31,7 @@ class Aliyun extends Storage implements Driver
     public function driverInfo()
     {
         
-        return ['driver_name' => '阿里云OSS驱动', 'driver_class' => 'Aliyun', 'driver_describe' => '阿里云存储', 'author' => 'lingqifei', 'version' => '1.0'];
+        return ['driver_name' => '阿里云OSS驱动', 'driver_class' => 'Aliyun', 'driver_describe' => '阿里云存储', 'author' => 'lingqifei', 'version' => '1.0.1'];
     }
     
     /**

@@ -30,7 +30,7 @@ class Alivod extends Vod implements Driver
     public function driverInfo()
     {
         
-        return ['driver_name' => '阿里云VOD驱动', 'driver_class' => 'Alivod', 'driver_describe' => '阿里云视频点播', 'author' => 'lingqifei', 'version' => '1.0'];
+        return ['driver_name' => '阿里云VOD驱动', 'driver_class' => 'Alivod', 'driver_describe' => '阿里云视频点播', 'author' => 'lingqifei', 'version' => '1.0.1'];
     }
     
     /**

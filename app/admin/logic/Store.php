@@ -50,21 +50,6 @@ class Store extends AdminBase
         $path = PATH_DATA;
         !is_dir($path) && mkdir($path, 0755, true);
         $this->syskey_path = $path;
-
-        //升级目录
-        $path = PATH_DATA . 'store/' ;
-        !is_dir($path) && mkdir($path, 0755, true);
-        $this->upgrade_path = $path;
-
-        //升级备份目录
-        $path = PATH_DATA . 'store/back/';
-        !is_dir($path) && mkdir($path, 0755, true);
-        $this->upgrade_path_back = $path;
-
-        //升级包下载目录
-        $path = PATH_DATA . 'store/down/';
-        !is_dir($path) && mkdir($path, 0755, true);
-        $this->upgrade_path_down = $path;
     }
 
 

@@ -32,7 +32,8 @@ class Upgrade extends AdminBase
 	{
 		$this->file = new \lqf\File();
 		$this->zip = new \lqf\Zip();
-		$this->initUpgradeDir();
+		$this->initUpgradeDir();//初始目录
+		$this->initVersion();//初始版本
 	}
 
 
@@ -66,6 +67,21 @@ class Upgrade extends AdminBase
 	}
 
 	/**
+	 * 返回当前版本号
+	 * @return string
+	 * Author: lingqifei created by at 2020/5/16 0016
+	 */
+	public function initVersion()
+	{
+
+		$version_file = APP_PATH.'admin'.DS. 'data'.DS.'version';
+		$version = $this->file->read_file($version_file);
+		if ($version) {
+			$this->version=$version;
+		}
+	}
+
+	/**
 	 * 返回当前授权码
 	 * @return string
 	 * Author: lingqifei created by at 2020/5/16 0016
@@ -81,15 +97,7 @@ class Upgrade extends AdminBase
 		}
 	}
 
-	/**
-	 * 返回当前版本号
-	 * @return string
-	 * Author: lingqifei created by at 2020/5/16 0016
-	 */
-	public function getVersion()
-	{
-		return $this->version;
-	}
+
 
 	/**
 	 * 返回当前版本号
@@ -208,9 +216,14 @@ class Upgrade extends AdminBase
 	{
 		$pack_zip = $this->upgrade_path_down . $data['version'] . '.zip';
 		if (check_file_exists($pack_zip)) {
-			$res = $this->zip->unzip($pack_zip, ROOT_PATH);
+			$res = $this->zip->unzip($pack_zip, $this->upgrade_path_down);
 			if ($res) {
-				return [RESULT_SUCCESS, '解压升级包成功'];
+				$result = $this->file->handle_dir($this->upgrade_path_down . $data['version'], ROOT_PATH, 'copy', true);
+				if ($result == false) {
+					return [RESULT_ERROR, '解压后复制文件目录失败'];
+					exit;
+				}
+				return [RESULT_SUCCESS, '解压升级包成功，并且成功复制文件'];
 				exit;
 			} else {
 				return [RESULT_ERROR, '解压升级包失败'];
@@ -230,6 +243,11 @@ class Upgrade extends AdminBase
 	 */
 	public function getUpgradeExecuteSql($data = [])
 	{
+
+		$admin_dir=PATH_APP.'admin'.DS.'data'.DS;
+
+		$this->logicSysModule->importModuleSqlExec(array('time' => time(), 'module_dir' => $admin_dir, 'sqlfile' => 'upgrade.sql'));
+
 		return [RESULT_SUCCESS, '数据库升级成功了哟'];
 	}
 

@@ -48,11 +48,6 @@ class SysModule extends AdminBase
 		!is_dir($path) && mkdir($path, 0755, true);
 		$this->app_upload_path = $path;
 
-		//模块上传目录解压目录
-		$path = PATH_DATA . 'app' . DS . 'unzippack' . DS;
-		!is_dir($path) && mkdir($path, 0755, true);
-		$this->app_unpack_path = $path;
-
 		//模块打包目录
 		$path = PATH_DATA . 'app/zippack/';
 		!is_dir($path) && mkdir($path, 0755, true);
@@ -63,10 +58,6 @@ class SysModule extends AdminBase
 		!is_dir($path) && mkdir($path, 0755, true);
 		$this->app_download_path = $path;
 
-		//模块临时解压目录
-		$path = PATH_DATA . 'app' . DS . 'tmppack' . DS;
-		!is_dir($path) && mkdir($path, 0755, true);
-		$this->app_tmp_path = $path;
 
 	}
 
@@ -81,10 +72,10 @@ class SysModule extends AdminBase
 		//模块目录
 		$module_dir = $this->app_path . $module_name;
 
-//        if (is_dir($module_dir)) {
-//            return [RESULT_ERROR, '模块存在'];
-//            exit;
-//        }
+        if (is_dir($module_dir)) {
+            return [RESULT_ERROR, '模块存在'];
+            exit;
+        }
 		//创建模块目录=>默认直接
 		!is_dir($module_dir) && mkdir($module_dir, 0755, true);
 
@@ -522,7 +513,7 @@ class SysModule extends AdminBase
 				exit;
 			} elseif (0 === $start) { //下一卷
 				if (isset($list[++$part])) {
-					$res = array('msg' => "正在还原...#{$part}", 'module' => $param['module_dir'], 'part' => $part, 'start' => 0, 'status' => DATA_NORMAL);
+					$res = array('msg' => "正在还原...#{$part}", 'module_dir' => $param['module_dir'], 'part' => $part, 'start' => 0, 'status' => DATA_NORMAL);
 					$this->importModuleSqlExec($res);
 				} else {
 					session('backup_list', null);
@@ -533,11 +524,11 @@ class SysModule extends AdminBase
 				$data = array('part' => $part, 'start' => $start[0]);
 				if ($start[1]) {
 					$rate = floor(100 * ($start[0] / $start[1]));
-					$res = array('msg' => "正在还原...#{$part} ({$rate}%)", 'module' => $param['module_dir'], 'part' => $part, 'start' => $start[0], 'status' => DATA_NORMAL);
+					$res = array('msg' => "正在还原...#{$part} ({$rate}%)", 'module_dir' => $param['module_dir'], 'part' => $part, 'start' => $start[0], 'status' => DATA_NORMAL);
 					$this->importModuleSqlExec($res);
 				} else {
 					$data['gz'] = 1;
-					$res = array('msg' => "正在还原...#{$part}", 'module' => $param['module_dir'], 'part' => $part, 'start' => $start[0], 'gz' => 1, 'status' => DATA_NORMAL);
+					$res = array('msg' => "正在还原...#{$part}", 'module_dir' => $param['module_dir'], 'part' => $part, 'start' => $start[0], 'gz' => 1, 'status' => DATA_NORMAL);
 					$this->importModuleSqlExec($res);
 				}
 			}
@@ -569,9 +560,6 @@ class SysModule extends AdminBase
 		$module_table_path = $param['module_dir'];
 		!is_dir($module_table_path) && mkdir($module_table_path, 0755, true);
 
-//		@unlink($module_table_path . $param['sqlfilename']);
-//		file_put_contents($module_table_path . $param['sqlfilename'].'.sql', '');
-
 		$config = [
 			'path' => $module_table_path,
 			'part' => '524288000',
@@ -581,8 +569,13 @@ class SysModule extends AdminBase
 			'prefix_tpl' => '#@__',
 		];
 		session('backup_config', $config);
+
 		// 生成备份文件信息
 		$file = ['name' => $param['sqlfilename'], 'part' => DATA_NORMAL];//备份文件名称 Table-1.sql
+
+		file_put_contents($module_table_path . $param['sqlfilename'].'-'.DATA_NORMAL.'.sql', '');//重新备份文件
+
+
 		session('backup_file', $file);
 		session('backup_tables', $tables);
 		$database = new \lqf\Database($file, $config);
@@ -764,9 +757,17 @@ INFO;
 		}
 		$version = $data['version'];
 		$this->initModuleDir();
-		//1、把app目录复制到打包目录下
+
+		//导出栏目菜单
+		$this->exportModuleMenu('admin',$this->app_path.'admin'.DS);
+
+		//写入版本号
+		file_put_contents($this->app_path.'admin'.DS .'data'.DS. 'version', $data['version']);
+
+		//把需要打包目录复制到打包目录下
 		$version_dir = $this->app_pack_path . $version . DS;
 		!is_dir($version_dir) && mkdir($version_dir, 0755, true);
+
 		//2、移动需要打包的文件
 		$handle_list = [
 			'addon',
@@ -804,8 +805,12 @@ INFO;
 			return [RESULT_ERROR, '打包模块失败'];
 			exit;
 		}
-		echo '<hr>'.$pack_zip;exit;
-		return $result ? [RESULT_SUCCESS, $pack_zip] : [RESULT_ERROR, $this->modelSysModule->getError()];
+		echo '<hr>打包生成文件：'.$pack_zip;
+		$upgrade_zip=PATH_PUBLIC.'upgrade'.DS.'s1'.DS. $version . '.zip';
+		echo '<hr>复制包文件到：'.$upgrade_zip;
+		$file->handle_file($pack_zip, $upgrade_zip, 'copy', true);
+		exit;
+		//return $result ? [RESULT_SUCCESS, $pack_zip] : [RESULT_ERROR, $this->modelSysModule->getError()];
 	}
 
 
