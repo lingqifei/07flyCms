@@ -252,7 +252,7 @@ class Store extends AdminBase
 
 				//2、判断是否有安装SQL脚本，执行安装脚本
 				if(file_exists($app_sql_install_file)){
-					$res = $this->logicSysModule->importModuleSqlExec(array('time' => time(), 'module_dir' => $module_dir, 'sqlfile' => 'install.sql'));
+					$res = $this->logicSysModule->importModuleSqlExec(array('time' => time(), 'module_dir' => $module_dir.'data', 'sqlfile' => 'install.sql'));
 					if ($res[0] == RESULT_ERROR) return $res;
 				}
 

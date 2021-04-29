@@ -33,16 +33,27 @@ class Store extends AdminBase
     }
 
     function  initServerUrl(){
-        $hostinfo=[
-            "http://127.0.0.1:8002/index.php",
-            "http://soft.s5.07fly.com/index.php",
-        ];
-        foreach ($hostinfo as $oneurl){
-            if(httpcode($oneurl)=='200'){
-                $this->server_url=$oneurl;
-                break;
-            }
-        }
+
+		if($_SERVER['HTTP_HOST']=='127.0.0.1:8002'){//生产
+
+			$server=['http://127.0.0.1:8002'];
+
+		} else if($_SERVER['HTTP_HOST']=='test.07fly.xyz'){//测试
+
+			$server=['http://erp.07fly.xyz'];
+
+		}else{ //运营
+			$server=[
+				"http://www.07fly.xyz",
+				"http://soft.s5.07fly.com",
+			];
+		}
+		foreach ($server as $oneurl){
+			if(httpcode($oneurl)=='200'){
+				$this->server_url=$oneurl;
+				break;
+			}
+		}
     }
 
 

@@ -108,16 +108,10 @@ class Mysql extends Builder
                 $table = $options['alias'][$table];
             }
         }
-/*	使用中文当别名，报错:不支持的数据表达式*/
+
         if ($strict && !preg_match('/^[\w\.\*]+$/', $key)) {
             throw new Exception('not support data:' . $key);
         }
-
-		//修改为：
-		//if ($strict && !preg_match('/^[\w\.\*\x7f-\xff]+$/', $key)) {
-		//	throw new Exception('not support data:' . $key);
-		//}
-/* */
         if ('*' != $key && ($strict || !preg_match('/[,\'\"\*\(\)`.\s]/', $key))) {
             $key = '`' . $key . '`';
         }
