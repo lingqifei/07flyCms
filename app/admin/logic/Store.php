@@ -181,6 +181,26 @@ class Store extends AdminBase
 		}
 	}
 
+	/**
+	 * 获取应用插件的订单支付情况
+	 * @return string
+	 * Author: lingqifei created by at 2020/5/16 0016
+	 */
+	public function getCloudAppOrderCheck($data=[])
+	{
+		if(empty($data['order_id']) || empty($data['order_code'])){
+			return [RESULT_ERROR, '订单检查参数不全，order_id,order_code'];
+		}
+
+		$info = $this->modelStore->getCloudAppOrderCheck($data);
+
+		if($info['code']===0){
+			return $info['data'];
+		}else{
+			return [RESULT_ERROR, $info['msg']];
+		}
+	}
+
 
 	/**
 	 * 获取应用插件的安装信息
@@ -270,6 +290,8 @@ class Store extends AdminBase
 		}
 
 	}
+
+
 
 
 

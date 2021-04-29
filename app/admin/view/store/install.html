@@ -38,12 +38,12 @@
 </div>
 {if condition="$orderinfo.ispayment eq 0"}
 <div class="ibox-title">扫一扫付款：</div>
-<div class="ibox-content">
+<div class="ibox-content app_order_payinfo"  data-url="{:url('Store/app_order_check')}">
     <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
             <div class="-qrcode">
-                <img src="__STATIC__/img/logo.png" width="300">
+                <img src="{$orderinfo.pay_url_img}" width="300">
             </div>
             <div class="title">
                 <div class=" btn btn-success btn-block">
@@ -89,27 +89,69 @@
     $(document).ready(function () {
 
         var ispay="{$orderinfo.ispayment}";
+        var order_id="{$orderinfo.order_id}";
+        var order_code="{$orderinfo.order_code}";
+
+
+        if(ispay==0){
+            time1 = window.setInterval("checkOrderPay()",5000);
+        }
 
         $("body").on("click", ".down-install", function () {
-            var target = $(this).attr('data-url');
-            $.ajax({
-                type: "POST",
-                url: target,
-                data: '',
-                dataType: "json",
-                success: function (result) {
-                    if (result.code == '1') {
-                        layer.msg(result.msg, {icon: 1, time: 1000, shade: [0.5, '#000', true]}, function () {
-                            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-                            parent.layer.close(index);
-                        });
-                    } else {
-                        layer.msg(result.msg, {icon: 5});
-                    }
-                }
-            });//end ajax post
+            appDownInstall();
         });
+
+        $("body").on("click", ".app_order_payinfo", function () {
+            checkOrderPay();
+        });
+
+
     });
+
+
+
+    //下载安装
+    function appDownInstall() {
+        var target = $('.down-install').attr('data-url');
+        $.ajax({
+            type: "POST",
+            url: target,
+            data: '',
+            dataType: "json",
+            success: function (result) {
+                if (result.code == '1') {
+                    layer.msg(result.msg, {icon: 1, time: 1000, shade: [0.5, '#000', true]}, function () {
+                        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index);
+                    });
+                } else {
+                    layer.msg(result.msg, {icon: 5});
+                }
+            }
+        });//end ajax post
+    }
+
+    //检查订单是否支付
+    function checkOrderPay() {
+        var order_id="{$orderinfo.order_id}";
+        var order_code="{$orderinfo.order_code}";
+        var target = $('.app_order_payinfo').attr('data-url');
+        $.ajax({
+            type: "POST",
+            url: target,
+            data: {'order_code':order_code,'order_id':order_id},
+            dataType: "json",
+            success: function (result) {
+                if(result.ispayment==1){
+                    layer.msg('支付成功', {icon: 1});
+                    location.reload();
+                }else{
+                    //layer.msg(result.ispayment_text, {icon: 5});
+                }
+            }
+        });//end ajax post
+    }
+
 </script>
 
 

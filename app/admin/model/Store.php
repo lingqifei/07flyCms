@@ -33,7 +33,6 @@ class Store extends AdminBase
     }
 
     function  initServerUrl(){
-
 		if($_SERVER['HTTP_HOST']=='127.0.0.1:8002'){//生产
 
 			$server=['http://127.0.0.1:8002'];
@@ -54,6 +53,8 @@ class Store extends AdminBase
 				break;
 			}
 		}
+
+		//echo $this->server_url;exit;
     }
 
 
@@ -104,6 +105,18 @@ class Store extends AdminBase
 	{
 		$postdata['user_token']=Cookie::get('user_token');
 		$url = $this->server_url . "/api/store/app_order";
+		$result = $this->getRemoteCotent($url,$postdata);
+		return $result;
+	}
+
+	/**
+	 * 获取云应用=>AppOrderPaid
+	 * Author: lingqifei created by at 2021/6/12 0012
+	 */
+	public function getCloudAppOrderCheck($postdata=[])
+	{
+		$postdata['user_token']=Cookie::get('user_token');
+		$url = $this->server_url . "/api/store/app_order_pay_check";
 		$result = $this->getRemoteCotent($url,$postdata);
 		return $result;
 	}
