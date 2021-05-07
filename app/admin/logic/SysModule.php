@@ -128,10 +128,10 @@ class SysModule extends AdminBase
 
 		//创建目录结构
 		$this->createModuleDir($data['name']);
+
 		unset($data['comm_file']);
 		unset($data['module_dir']);
 
-		$data['url'] = $data['author_url'];
 		$data['identifier'] = $data['name'] . '.' . $data['author'];
 		$result = $this->modelSysModule->setInfo($data);
 		$url = url('show');
@@ -601,6 +601,7 @@ class SysModule extends AdminBase
 		$start = $param['start'];
 		$tables = session('backup_tables');
 		$database = new \lqf\Database(session('backup_file'), session('backup_config'));
+
 		$start = $database->backup($tables[$id], $start);
 
 		header('Content-Type:application/json; charset=utf-8');
@@ -781,6 +782,9 @@ INFO;
 			'app/extend.php',
 			'app/function.php',
 			'app/tags.php',
+			'public/static/module/admin/css/07fly.css',
+			'public/static/module/admin/css/style.css',
+			'public/static/module/admin/js/lib',
 		];
 		$file = new \lqf\File();
 		foreach ($handle_list as $filepath) {

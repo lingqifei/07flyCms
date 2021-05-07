@@ -41,8 +41,8 @@ class SysMenu extends AdminBase
     // 应用场景
     protected $scene = [
         
-        'add'  =>  ['name', 'sort', 'url'],
-        'edit' =>  ['name', 'sort', 'url'=>'require'],
+        'add'  =>  ['name', 'sort' ],
+        'edit' =>  ['name', 'sort'],
     ];
     
 }

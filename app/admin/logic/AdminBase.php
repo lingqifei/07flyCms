@@ -227,11 +227,12 @@ class AdminBase extends LogicBase
      */
     public function setField($model = null, $param = null)
     {
+
         $model_str = LAYER_MODEL_NAME . $model;
 
         $obj = $this->$model_str;
 
-        $result = $obj->setFieldValue(['id' => (int)$param['id']], $param['name'], (int)$param['value']);
+        $result = $obj->setFieldValue(['id' => $param['id']], $param['name'], $param['value']);
 
         $result && action_log('数据更新', '数据更新调整' . '，model：' . $model . '，id：' . $param['id'] . '，name：' . $param['name']. '，value：' . $param['value']);
 

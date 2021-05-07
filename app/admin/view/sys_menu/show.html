@@ -73,16 +73,16 @@
         <td><%=data[i]['id']%></td>
         <td><%=data[i]['name']%></td>
         <td><%=data[i]['url']%></td>
-        <td><%=data[i]['module']%></td>
+        <td>
+            <input type="text" name="module" value="<%=data[i]['module']%>" class="form-control w100 ajax-field" data-url="{:url('SysMenu/set_field',array('name'=>'module'))}" data-id="<%=data[i]['id']%>" size="10">
+        </td>
         <td><input type="text" name="sort" value="<%=data[i]['sort']%>" class="form-control w50 ajax-sort" data-url="{:url('SysMenu/set_sort',array('name'=>'sort'))}" data-id="<%=data[i]['id']%>" size="5"></td>
         <td>
             <input name="visible" class="ajax-checkbox" type="checkbox"   data-url="{:url('SysMenu/set_visible',array('name'=>'visible'))}"  data-id="<%=data[i]['id']%>" <%=visible%> >
         </td>
         <td>
-            <p>
-                <lqf_link><a class="ajax-open" data-url="{:url('SysMenu/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}">修改</a></lqf_link>
-                <lqf_link><a class="ajax-del confirm" data-url="{:url('SysMenu/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
-            </p>
+            <lqf_link><a class="ajax-open" data-url="{:url('SysMenu/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}">修改</a></lqf_link>
+            <lqf_link><a class="ajax-del confirm" data-url="{:url('SysMenu/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
         </td>
     </tr>
     <% } %>

@@ -19,108 +19,107 @@ namespace app\admin\logic;
  */
 class SysAuthAccess extends AdminBase
 {
-    
-    /**
-     * 获得权限菜单列表
-     */
-    public function getAuthMenuList($sys_user_id = 0)
-    {
-        
-        $sort = 'sort';
-        if (IS_ROOT) {
-            return $this->logicSysMenu->getSysMenuList([], true, $sort);
-        }
 
-        // 获取用户组列表
-        $group_list = $this->getUserAuthInfo($sys_user_id);
+	/**
+	 * 获得权限菜单列表
+	 */
+	public function getAuthMenuList($sys_user_id = 0,$model='')
+	{
 
-        $menu_ids = [];
-        
-        foreach ($group_list as $group_info) {
-            
-            // 合并多个分组的权限节点并去重
-            !empty($group_info['rules']) && $menu_ids = array_unique(array_merge($menu_ids, explode(',', trim($group_info['rules'], ','))));
-        }
-        //2019-12-11 新增加加用户单独权限设置
-        $userinfo=session('sys_user_info');
+		$sort = 'sort';
+		if (IS_ROOT) {
+			$map=[];
+			if(!empty($model)) $map['module']=['=',$model];
+			return $this->logicSysMenu->getSysMenuList($map, true, $sort);
+		}
 
-        $menu_ids = array_unique(array_merge($menu_ids, explode(',', trim($userinfo['rules'], ','))));
+		// 获取用户组列表
+		$group_list = $this->getUserAuthInfo($sys_user_id);
 
-        //print_r($menu_ids);
-        // 户单独权限设置************end
+		$menu_ids = [];
 
-        // 若没有权限节点则返回空数组
-        if (empty($menu_ids)) {
+		foreach ($group_list as $group_info) {
 
-            return $menu_ids;
+			// 合并多个分组的权限节点并去重
+			!empty($group_info['rules']) && $menu_ids = array_unique(array_merge($menu_ids, explode(',', trim($group_info['rules'], ','))));
+		}
 
-        }
+		//2019-12-11 新增加加用户单独权限设置
+		$userinfo = session('sys_user_info');
+		$menu_ids = array_unique(array_merge($menu_ids, explode(',', trim($userinfo['rules'], ','))));
 
-        // 查询条件
-        $where = ['id' => ['in', $menu_ids]];
+		//print_r($menu_ids);
 
-        return $this->logicSysMenu->getSysMenuList($where, true, $sort)->toArray();
-    }
+		// 户单独权限设置************end
 
-    /**
-     * 获得权限菜单URL列表
-     */
-    public function getAuthMenuUrlList($auth_menu_list = [])
-    {
+		if (empty($menu_ids))  return $menu_ids;// 若没有权限节点则返回空数组
 
-        $auth_list = [];
+		// 查询条件=>区别按模块
+		$where['id'] = ['in', $menu_ids];
+		if(!empty($model)) $where['module'] = ['=', $model];
 
-        foreach ($auth_menu_list as $info) {
-            $auth_list[] = $info['url'];
-        }
+		return $this->logicSysMenu->getSysMenuList($where, true, $sort)->toArray();
+	}
 
-        return $auth_list;
-    }
-    
-    /**
-     * 获取会员所属权限组信息
-     */
-    public function getUserAuthInfo($sys_user_id = 0)
-    {
-        
-        $this->modelSysAuthAccess->alias('a');
-        
-        is_array($sys_user_id) ? $where['a.sys_user_id'] = ['in', $sys_user_id] : $where['a.sys_user_id'] = $sys_user_id;
+	/**
+	 * 获得权限菜单URL列表
+	 */
+	public function getAuthMenuUrlList($auth_menu_list = [])
+	{
 
-        $where['a.'.DATA_ORG_NAME] =  ['>', 0];//是得到所有权限列表
+		$auth_list = [];
 
-        $field = 'a.sys_user_id, a.sys_auth_id, g.name, g.intro, g.rules';
-        
-        $join = [
-                    [SYS_DB_PREFIX . 'sys_auth g', 'a.sys_auth_id = g.id'],
-                ];
+		foreach ($auth_menu_list as $info) {
+			$auth_list[] = $info['url'];
+		}
 
+		return $auth_list;
+	}
 
-        $this->modelSysAuthAccess->join = $join;
+	/**
+	 * 获取会员所属权限组信息
+	 */
+	public function getUserAuthInfo($sys_user_id = 0)
+	{
 
-        return $this->modelSysAuthAccess->getList($where, $field, '', false);
-    }
+		$this->modelSysAuthAccess->alias('a');
 
-    /**
-     * 获取会员所属权限组名称
-     */
-    public function getUserAuthListName($sys_user_id = 0)
-    {
+		is_array($sys_user_id) ? $where['a.sys_user_id'] = ['in', $sys_user_id] : $where['a.sys_user_id'] = $sys_user_id;
 
-        $auth_list=$this->getUserAuthInfo($sys_user_id)->toArray();
+		$where['a.' . DATA_ORG_NAME] = ['>', 0];//是得到所有权限列表
 
-        return $auth_list;
+		$field = 'a.sys_user_id, a.sys_auth_id, g.name, g.intro, g.rules';
 
-    }
+		$join = [
+			[SYS_DB_PREFIX . 'sys_auth g', 'a.sys_auth_id = g.id'],
+		];
 
 
-    /**
-     * 获取授权列表
-     */
-    public function getSysAuthAccessList($where = [], $field = 'sys_user_id,sys_user_id', $order = 'sys_user_id', $paginate = false)
-    {
-        
-        return $this->modelSysAuthAccess->getList($where, $field, $order, $paginate);
-    }
+		$this->modelSysAuthAccess->join = $join;
+
+		return $this->modelSysAuthAccess->getList($where, $field, '', false);
+	}
+
+	/**
+	 * 获取会员所属权限组名称
+	 */
+	public function getUserAuthListName($sys_user_id = 0)
+	{
+
+		$auth_list = $this->getUserAuthInfo($sys_user_id)->toArray();
+
+		return $auth_list;
+
+	}
+
+
+	/**
+	 * 获取授权列表
+	 */
+	public function getSysAuthAccessList($where = [], $field = 'sys_user_id,sys_user_id', $order = 'sys_user_id', $paginate = false)
+	{
+
+		return $this->modelSysAuthAccess->getList($where, $field, $order, $paginate);
+	}
 
 }

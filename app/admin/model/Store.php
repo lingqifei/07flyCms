@@ -87,6 +87,7 @@ class Store extends AdminBase
 	public function getCloudAppInfo($postdata=[])
 	{
 		$postdata['user_token']=Cookie::get('user_token');
+		$postdata['http_host']=$_SERVER['HTTP_HOST'];
 		$url = $this->server_url . "/api/store/app_info";
 		$result=curl_post($url,$postdata);
 		$result = json_decode($result, true);
@@ -104,6 +105,7 @@ class Store extends AdminBase
 	public function getCloudAppOrderInfo($postdata=[])
 	{
 		$postdata['user_token']=Cookie::get('user_token');
+		$postdata['http_host']=$_SERVER['HTTP_HOST'];
 		$url = $this->server_url . "/api/store/app_order";
 		$result = $this->getRemoteCotent($url,$postdata);
 		return $result;
@@ -116,6 +118,7 @@ class Store extends AdminBase
 	public function getCloudAppOrderCheck($postdata=[])
 	{
 		$postdata['user_token']=Cookie::get('user_token');
+		$postdata['http_host']=$_SERVER['HTTP_HOST'];
 		$url = $this->server_url . "/api/store/app_order_pay_check";
 		$result = $this->getRemoteCotent($url,$postdata);
 		return $result;
@@ -133,6 +136,7 @@ class Store extends AdminBase
 		!is_dir($path) && mkdir($path, 0755, true);
 
 		$postdata['user_token']=Cookie::get('user_token');
+		$postdata['http_host']=$_SERVER['HTTP_HOST'];
 
 		$url = $this->server_url . "/api/store/store_down";
 
@@ -145,8 +149,6 @@ class Store extends AdminBase
 		return array('code'=>1,'filename'=>$fileName,'filepath'=>$result,'dirpath'=>$path);
 
 	}
-
-
 
     /**
      * 获取可以升级的列表

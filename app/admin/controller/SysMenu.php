@@ -123,4 +123,12 @@ class SysMenu extends AdminBase
     {
         $this->jump($this->logicAdminBase->setSort('SysMenu', $this->param));
     }
+
+	/**
+	 * 字段修改
+	 */
+	public function set_field()
+	{
+		$this->jump($this->logicAdminBase->setField('SysMenu', $this->param));
+	}
 }
