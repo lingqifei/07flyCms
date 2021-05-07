@@ -445,6 +445,21 @@ CREATE TABLE `#@__sys_org` (
 
 
 -- -----------------------------
+-- Table structure for `#@__sys_postion`
+-- -----------------------------
+DROP TABLE IF EXISTS `#@__sys_position`;
+CREATE TABLE `#@__sys_position` (
+  `id` int(11) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL COMMENT '职位名称',
+  `pid` int(11) DEFAULT NULL COMMENT '上线编号',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  `visible` smallint(6) DEFAULT '1' COMMENT '1=显示，0=隐藏',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `org_id` int(11) DEFAULT '1'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='[系统]系统职位表';
+
+-- -----------------------------
 -- Table structure for `#@__sys_user`
 -- -----------------------------
 DROP TABLE IF EXISTS `#@__sys_user`;

@@ -20,3 +20,4 @@ store
 /app/api
 /nginx.htaccess
 /public/storepack
+/app/admin/data
