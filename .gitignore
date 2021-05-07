@@ -21,3 +21,4 @@ store
 /nginx.htaccess
 /public/storepack
 /app/admin/data
+/app/cms/data
