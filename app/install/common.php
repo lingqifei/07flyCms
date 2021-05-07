@@ -136,15 +136,15 @@ function create_tables($db_object, $prefix = '')
 
     $result = true;
 
-    //读取SQL文件
-    $sql = file_get_contents('../app/install/data/install.sql');
-    $sql = str_replace("\r", "\n", $sql);
-    $sql = explode(";\n", $sql);
+	//读取SQL文件
+	$sql = file_get_contents('../app/install/data/install.sql');
+	$sql = str_replace("\r", "\n", $sql);
+	$sql = explode(";\n", $sql);
 
-    //替换表前缀
-    $orginal = '#@__';//模板前缘
+	//替换表前缀
+	$orginal = '#@__';//模板前缘
 
-    $sql = str_replace(" `{$orginal}", " `{$prefix}", $sql);
+	$sql = str_replace(" `{$orginal}", " `{$prefix}", $sql);
 
     //开始安装
     foreach ($sql as $value) {
@@ -181,23 +181,23 @@ function register_administrator($db_object, $prefix, $admin, $auth)
 {
 
     //执行删除
-    $sql = "DELETE FROM  `[PREFIX]sys_user`  WHERE  id='1'";
-    $sql = str_replace(array('[PREFIX]'), array($prefix), $sql);
+    $sql="DELETE FROM  `[PREFIX]sys_user`   WHERE  id='1'";
+    $sql = str_replace(array('[PREFIX]'),array($prefix),$sql);
     $db_object->execute($sql);
-	//超级管理员帐号
     $sql = "INSERT INTO `[PREFIX]sys_user` (`id`, `username`, `password`, `realname`,  `dept_id`, `email`, `qicq`, `mobile`,  `create_time`, `update_time`, `sort`, `visible`, `org_id`) 
  VALUES " . "(1, '[USERNAME]', '[PASSWORD]', '零起飞','1', '[EMAIL]', '1871720801','18030402705', '[UPDATETIME]', '[CREATETIME]', 1, 1, 1)";
     $password = data_md5_key($admin['password'], $auth);
     $time = time();
     $sql = str_replace(
-        array('[PREFIX]', '[USERNAME]', '[PASSWORD]', '[EMAIL]', '[UPDATETIME]', '[CREATETIME]'),
+        array('[PREFIX]', '[USERNAME]', '[PASSWORD]',  '[EMAIL]', '[UPDATETIME]', '[CREATETIME]'),
         array($prefix, $admin['username'], $password, $admin['email'], $time, $time),
         $sql);
     //执行sql
     $db_object->execute($sql);
 
-    //超级管理关联组织号
+	//超级管理关联组织号
 	$sql = "DELETE FROM  `[PREFIX]sys_org`  WHERE id='1'";
+
 	$sql = str_replace(array('[PREFIX]'), array($prefix), $sql);
 	$db_object->execute($sql);
 
