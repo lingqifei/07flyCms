@@ -28,7 +28,7 @@ class Website extends CmsBase
      * @param int|mixed $paginate
      * @return
      */
-    public function getWebsiteList($where = [], $field = true, $order = '', $paginate = DB_LIST_ROWS)
+    public function getWebsiteList($where = [], $field = true, $order = 'sort asc', $paginate = DB_LIST_ROWS)
     {
         return $this->modelWebsite->getList($where, $field, $order, $paginate)->toArray();
     }

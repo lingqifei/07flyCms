@@ -13,5 +13,9 @@
 
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/../app/');
+
+// 检测是否安装
+file_exists(APP_PATH . 'database.php') ? define('BIND_MODULE', null) : define('BIND_MODULE', 'install');
+
 // 加载框架引导文件
 require __DIR__ . '/../core/start.php';

@@ -4,7 +4,7 @@
             <div class="ibox ">
                 <div class="ibox-title">
                     栏目管理
-                    <div class="ibox-tools"><a class="refresh-tree">重新加载</a></div>
+                    <div class="ibox-tools"><a class="refresh-tree">顶级分类</a></div>
                 </div>
                 <div class="ibox-content" style="">
                     <div id="left-tree" data-url="{:url('Arctype/get_list_tree')}"></div>
@@ -19,19 +19,22 @@
                         <form id="pagerForm" method="post" class="form-inline searchForm">
                             <input type="hidden" name="pid" value="">
                             <div class="col-sm-3 m-b-xs">
-                                <a class="btn btn-default refresh-tree"> <i class="fa fa-refresh"> </i>刷新</a>
-                                <lqf_link><a class="btn btn-info ajax-open add-btn" data-url="{:url('Arctype/add')}"
-                                             data-title="用户"><i class="fa fa-plus"></i>添加</a></lqf_link>
+                                <a class="btn btn-default refresh-tree"><i class="fa fa-refresh"> </i>刷新</a>
+                                <lqf_link>
+                                    <a class="btn btn-info ajax-open add-btn" data-url="{:url('Arctype/add')}" data-title="添加分类">
+                                        <i class="fa fa-plus"></i>添加
+                                    </a>
+                                </lqf_link>
                             </div>
                             <div class="col-sm-9 m-b-xs text-right">
                                 <div class="input-group">
                                     <input type="text" name="keywords" placeholder="输入主题关键字搜索" class="form-control">
                                 </div>
                                 <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-primary ajaxSearchForm"><i
-                                                            class="fa fa-search"></i> 搜索</button>
-                                                    </span>
+                                    <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary ajaxSearchForm"><i
+                                            class="fa fa-search"></i> 搜索</button>
+                                    </span>
                                 </div>
                             </div>
                         </form>
@@ -67,14 +70,16 @@
 <script src="__STATIC__/module/admin/js/plugins/bootstrap-treeview/bootstrap-treeview.js"></script>
 
 <script id="tableListTpl" type="text/html">
-    <% for(var i=0;i<data.length;i++) {
-    visible='';
-    if(data[i]['visible']=='1') visible='checked';
+    <%
+        for(var i=0;i<data.length;i++) {
+        visible='';
+        if(data[i]['visible']=='1') visible='checked';
     %>
     <tr>
         <td><input name="id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
         <td><%=data[i]['id']%></td>
-        <td><a class="ajax-goto" href="{:url('index/lists/adminindex')}" data-ids="{'tid':'<%=data[i]['id']%>'}" target="_blank"><%=data[i]['typename']%></a></td>
+        <td><a class="ajax-goto" href="{:url('index/lists/adminindex')}" data-ids="{'tid':'<%=data[i]['id']%>'}"
+               target="_blank"><%=data[i]['typename']%></a></td>
         <td><%=data[i]['ispart_text']%></td>
         <td><%=data[i]['channel_text']%></td>
         <td><input type="text" name="sort" value="<%=data[i]['sort']%>" class="form-control w50 ajax-sort"
@@ -87,8 +92,10 @@
         </td>
         <td>
             <p>
-                <lqf_link><a class="ajax-open" data-url="{:url('Arctype/add')}" data-ids="{'pid':'<%=data[i]['id']%>'}">添加下级</a></lqf_link>
-                <lqf_link><a class="ajax-open" data-url="{:url('Arctype/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}">修改</a></lqf_link>
+                <lqf_link><a class="ajax-open" data-url="{:url('Arctype/add')}" data-ids="{'id':'<%=data[i]['id']%>'}">添加下级</a>
+                </lqf_link>
+                <lqf_link><a class="ajax-open" data-url="{:url('Arctype/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}">修改</a>
+                </lqf_link>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('Arctype/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
             </p>
         </td>
@@ -98,6 +105,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         window.onload = onLoad();
+
         //页面加载
         function onLoad() {
             $('.searchForm').find("input[name='pid']").val('');
@@ -146,29 +154,4 @@
     });
 
 
-</script>
-<link href="https://cdn.bootcdn.net/ajax/libs/jquery-contextmenu/2.4.5/jquery.contextMenu.css" rel="stylesheet">
-<!-- Script -->
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery-contextmenu/2.4.5/jquery.contextMenu.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery-contextmenu/2.4.5/jquery.ui.position.min.js"></script>
-<script>
-    $(function(){
-        //注册右键菜单的项与动作
-        $('#left-tree').contextMenu({
-            selector: 'li', // 选择器，为某一类元素绑定右键菜单
-            callback: function(key, options) {
-                var m = "clicked: " + key + " on " + $(this).text()+$(this).attr('id');
-                window.console && console.log(m) || alert(m);
-            },
-            items: {
-                "edit": {name: "Edit", icon: "edit"},
-                "cut": {name: "Cut", icon: "cut"},
-                "copy": {name: "Copy", icon: "copy"},
-                "paste": {name: "Paste", icon: "paste"},
-                "delete": {name: "Delete", icon: "delete"},
-                "sep1": "---------",
-                "quit": {name: "Quit", icon: function($element, key, item){ return 'context-menu-icon context-menu-icon-quit'; }}
-            }
-        });
-    });
 </script>

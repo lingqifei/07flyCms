@@ -39,10 +39,10 @@ CREATE TABLE `#@__addon` (
 -- -----------------------------
 -- Records of `addon`
 -- -----------------------------
-INSERT INTO `#@__addon` VALUES ('5', 'Editor', '文本编辑器', '富文本编辑器', '', 'lingqifei', '1.0.1', '1', '0', '0', '1');
-INSERT INTO `#@__addon` VALUES ('4', 'Icon', '图标选择', '图标选择插件', '', 'lingqifei', '1.0.1', '1', '0', '0', '1');
-INSERT INTO `#@__addon` VALUES ('3', 'File', '文件上传', '文件上传插件', '', 'lingqifei', '1.0.1', '1', '0', '0', '1');
-INSERT INTO `#@__addon` VALUES ('6', 'Region', '区域选择', '区域选择插件', '', 'lingqifei', '1.0.1', '1', '0', '0', '1');
+INSERT INTO `#@__addon` VALUES ('5', 'Editor', '文本编辑器', '富文本编辑器', '', 'Bigotry', '1.0', '1', '0', '0', '1');
+INSERT INTO `#@__addon` VALUES ('4', 'Icon', '图标选择', '图标选择插件', '', 'Bigotry', '1.0', '1', '0', '0', '1');
+INSERT INTO `#@__addon` VALUES ('3', 'File', '文件上传', '文件上传插件', '', 'Jack', '1.0', '1', '0', '0', '1');
+INSERT INTO `#@__addon` VALUES ('8', 'Region', '区域选择', '区域选择插件', '', 'Bigotry', '1.0', '1', '0', '0', '1');
 
 -- -----------------------------
 -- Table structure for `#@__config`
@@ -58,8 +58,8 @@ CREATE TABLE `#@__config` (
   `describe` varchar(255) NOT NULL DEFAULT '' COMMENT '配置说明',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `visible` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否启用',
-  `value` text NOT NULL COMMENT '配置值',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+  `value` text COMMENT '配置值',
   `sort` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_name` (`name`),
@@ -73,6 +73,7 @@ CREATE TABLE `#@__config` (
 INSERT INTO `#@__config` VALUES ('1', 'title', '1', '系统标题', '1', '', '网站标题前台显示标题，优先级低于SEO模块', '1378898976', '1608711855', '1', '零起飞网络', '1');
 INSERT INTO `#@__config` VALUES ('2', 'description', '2', '系统描述', '1', '', '网站搜索引擎描述，优先级低于SEO模块', '1378898976', '1608711818', '1', '07fly', '4');
 INSERT INTO `#@__config` VALUES ('3', 'keywords', '2', '系统关键字', '1', '', '网站搜索引擎关键字，优先级低于SEO模块', '1378898976', '1608711855', '1', '07fly', '3');
+
 INSERT INTO `#@__config` VALUES ('9', 'config_type_list', '3', '配置类型列表', '3', '', '主要用于数据解析和页面表单的生成', '1378898976', '1581073821', '1', '0:数字\r\n1:字符\r\n2:文本\r\n3:数组\r\n4:枚举\r\n5:图片\r\n6:文件\r\n7:富文本\r\n8:单选\r\n9:多选\r\n10:日期\r\n11:时间\r\n12:颜色', '100');
 INSERT INTO `#@__config` VALUES ('20', 'config_group_list', '3', '配置分组', '3', '', '配置分组', '1379228036', '1581073821', '1', '1:基础\r\n2:数据\r\n3:系统\r\n4:API', '100');
 INSERT INTO `#@__config` VALUES ('25', 'list_rows', '0', '每页数据记录数', '2', '', '数据每页显示记录数', '1379503896', '1611307743', '1', '10', '10');
@@ -142,8 +143,7 @@ CREATE TABLE `#@__hook` (
 INSERT INTO `#@__hook` VALUES ('36', 'File', '文件上传钩子', 'File', '1', '0', '0', '1');
 INSERT INTO `#@__hook` VALUES ('37', 'Icon', '图标选择钩子', 'Icon', '1', '0', '0', '1');
 INSERT INTO `#@__hook` VALUES ('38', 'ArticleEditor', '富文本编辑器', 'Editor', '1', '0', '0', '1');
-INSERT INTO `#@__hook` VALUES ('39', 'RegionSelect', '区域选择', 'Region', '1', '0', '0', '1');
-INSERT INTO `#@__hook` VALUES ('41', 'MarkdownEditor', 'Markdown编辑器', 'Editor', '1', '0', '0', '1');
+INSERT INTO `#@__hook` VALUES ('41', 'RegionSelect', '区域选择', 'Region', '1', '0', '0', '1');
 
 -- -----------------------------
 -- Table structure for `#@__picture`
@@ -193,10 +193,10 @@ CREATE TABLE `#@__sequence` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '前缀',
   `current_date` varchar(255) NOT NULL DEFAULT '' COMMENT '当前日期',
-  `current_value` int(11) DEFAULT '0' COMMENT '当前值',
+  `current_value` int(11) DEFAULT NULL COMMENT '当前值',
   `increment` int(11) DEFAULT '1' COMMENT '增加值',
-  `create_time` int(11) DEFAULT '0',
-  `update_time` int(11) DEFAULT '0',
+  `create_time` int(11) DEFAULT NULL,
+  `update_time` int(11) DEFAULT NULL,
   `org_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='唯一序号生成表';
@@ -211,7 +211,7 @@ CREATE TABLE `#@__sys_auth` (
   `name` char(30) NOT NULL DEFAULT '' COMMENT '用户组名称',
   `intro` varchar(80) NOT NULL DEFAULT '' COMMENT '描述信息',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '用户组状态：为1正常，为0禁用,-1为删除',
-  `rules` text NOT NULL COMMENT '用户组拥有的规则id，多个规则 , 隔开',
+  `rules` text COMMENT '用户组拥有的规则id，多个规则 , 隔开',
   `sys_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `sort` int(10) unsigned NOT NULL DEFAULT '100',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0',

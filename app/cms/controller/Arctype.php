@@ -76,8 +76,10 @@ class Arctype extends CmsBase
     {
         IS_POST && $this->jump($this->logicArctype->arctypeAdd($this->param));
         $this->comm();
-        if (!empty($this->param['pid'])) {
-            $this->assign('pid', $this->param['pid']);
+
+        //判断是否有上级菜单
+        if (!empty($this->param['id'])) {
+            $this->assign('pid', $this->param['id']);
         } else {
             $this->assign('pid', 0);
         }

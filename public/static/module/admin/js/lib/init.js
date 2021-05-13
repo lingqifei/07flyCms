@@ -387,6 +387,8 @@ function url2json(url){
     res=JSON.stringify(res);//转化为JSON字符串
     return res; //{"a": "1", "b": "2", "c": "test", "d": ""}
 }
+
+
 //增加必填选项
 //$('input[required]').before('<span style="color:red">*</span>');
 //$('input[required]').parents("div.form-group").addClass('has-error');
@@ -395,16 +397,28 @@ $("input[type='text']").attr('autocomplete','off');
 
 
 
+//ajax-open 时判断窗口高度
+var height = $(window).height();
+var centerHight = height - 100;
+$(".auto-height-box").height(centerHight).css("overflow", "auto");
+
+
+
+
+
 // /*-----页面pannel内容区高度自适应 start-----*/
-// $(window).resize(function () {
-//     setCenterHeight();
-// });
-// setCenterHeight();
-// function setCenterHeight() {
-//     var height = $(window).height();
-//     var centerHight = height - 70;
-//     $(".float-e-margins").height(centerHight).css("overflow", "auto");
-// }
+$(window).resize(function () {
+    setCenterHeight();
+});
+
+function setCenterHeight() {
+    var height = $(window).height();
+    var centerHight = height - 100;
+    $(".auto-height-box").height(centerHight).css("overflow", "auto");
+}
+
+
+
 /*-----页面pannel内容区高度自适应 end-----*/
 
 
