@@ -67,6 +67,7 @@ class CmsBase extends ControllerBase
         defined('SYS_ORG_USER_ID')    or  define('SYS_ORG_USER_ID',     is_org_id());
 
         $logicSysMenu=new SysMenu();
+
         $SysAuthAccess=new SysAuthAccess();
 
         // 获取授权菜单列表
@@ -123,7 +124,6 @@ class CmsBase extends ControllerBase
     {
 
         $content = parent::fetch($template, $vars, $replace, $config);
-
         //过滤界面没有权限的链接
         return $this->adminBase->filter($content, $this->authMenuUrlList);
 
