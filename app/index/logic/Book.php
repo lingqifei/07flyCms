@@ -47,8 +47,25 @@ class Book extends IndexBase
      */
     public function getBookInfo($where = [], $field = true)
     {
-        return $this->modelBook->getInfo($where, $field);
+        $info=$this->modelBook->getInfo($where, $field);
+		$info['bookurl']=$this->getBookUrl($info);
+		return $info;
     }
+
+
+	/**返回文档链接地址
+	 * @param array $data
+	 * @return string
+	 * Author: 开发人生 goodkfrs@qq.com
+	 * Date: 2021/5/7 0007 14:59
+	 */
+	public function getBookUrl($data=[]){
+    	$url='';
+		$data['bookid']=empty($data['pinyin'])?$data['id']:$data['pinyin'];
+		$url=url('index/book/read',array('bookid'=>$data['bookid']));
+		return $url;
+	}
+
 
     /**文章列表查询
      * @param array $where
