@@ -55,6 +55,7 @@ class IndexBase extends ControllerBase
         define('THEME_PATH', PATH_PUBLIC.$web_theme );
 
         $root_url = get_file_root_path();
+
         $this->assign('root_url', $root_url);
 
         $webconfig = $this->logicWebsite->getWebsiteConfigColumn();
@@ -95,12 +96,19 @@ class IndexBase extends ControllerBase
      */
     final protected function fetch($template = '', $vars = [], $replace = [], $config = [])
     {
+
         $webconfig = $this->logicWebsite->getWebsiteConfigColumn();
+
         if(is_mobile()  && !empty($webconfig['web_wap'])){
             $template=PATH_PUBLIC.'theme'.DS.THEME_NAME.DS.'wap'.DS.$template;
         }else{
             $template=PATH_PUBLIC.'theme'.DS.THEME_NAME.DS.'pc'.DS.$template;
         }
+
+        if(!file_exists($template)){
+        	echo "模板文件不存：".$template;exit;
+		}
+
         //系统默认关键替换
         $replace=[
             '{sys_city_name}'=>$this->sys_city_name,
