@@ -29,7 +29,7 @@ class SysAuthAccess extends AdminBase
 		$sort = 'sort';
 		if (IS_ROOT) {
 			$map=[];
-			if(!empty($model)) $map['module']=['=',$model];
+			if(!empty($model)) $map['module']=['in',$model];
 			return $this->logicSysMenu->getSysMenuList($map, true, $sort);
 		}
 
@@ -56,8 +56,7 @@ class SysAuthAccess extends AdminBase
 
 		// 查询条件=>区别按模块
 		$where['id'] = ['in', $menu_ids];
-		if(!empty($model)) $where['module'] = ['=', $model];
-
+		if(!empty($model)) $where['module'] = ['in', $model];//判断模块是否开启
 		return $this->logicSysMenu->getSysMenuList($where, true, $sort)->toArray();
 	}
 

@@ -37,7 +37,7 @@ class Alipay extends Pay implements Driver
     public function driverInfo()
     {
         
-        return ['driver_name' => '支付宝驱动', 'driver_class' => 'Alipay', 'driver_describe' => '支付宝支付', 'author' => 'lingqifei', 'version' => '1.0.1'];
+        return ['driver_name' => '支付宝驱动', 'driver_class' => 'Alipay', 'driver_describe' => '支付宝支付', 'author' => 'lingqifei', 'version' => '1.0'];
     }
     
     /**

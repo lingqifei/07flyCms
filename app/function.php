@@ -106,6 +106,113 @@ function time_friend($time)
 }
 
 
+function make_time(){
+	//获取今日开始时间戳和结束时间戳
+	$beginToday=mktime(0,0,0,date('m'),date('d'),date('Y'));
+	$endToday=mktime(0,0,0,date('m'),date('d')+1,date('Y'))-1;
+	$times['today']['begin'] = $beginToday;
+	$times['today']['end'] = $endToday;
+
+	//获取昨日起始时间戳和结束时间戳
+	$beginYesterday=mktime(0,0,0,date('m'),date('d')-1,date('Y'));
+	$endYesterday=mktime(0,0,0,date('m'),date('d'),date('Y'))-1;
+	$times['yesterday']['begin'] = $beginYesterday;
+	$times['yesterday']['end'] = $endYesterday;
+
+	//获取昨日起始时间戳和结束时间戳
+	$beginYesterday=mktime(0,0,0,date('m'),date('d')-2,date('Y'));
+	$endYesterday=mktime(0,0,0,date('m'),date('d')-1,date('Y'))-2;
+	$times['beforeyesterday']['begin'] = $beginYesterday;
+	$times['beforeyesterday']['end'] = $endYesterday;
+
+	//获取本周开始时间和结束时间，此例中开始时间为周一
+//	$defaultDate = date('Y-m-d');
+//	$first = 1;
+//	$w = date('w',strtotime($defaultDate));
+//	$beginWeek = strtotime("$defaultDate-" . ($w?$w-$first:6) . 'days');
+//	$endWeek = $beginWeek + 6*24*3600-1;
+//	$times['thisweek']['begin'] = $beginWeek;
+//	$times['thisweek']['end'] = $endWeek;
+
+	//获取本周起始时间戳和结束时间戳
+	$beginWeek=mktime(0,0,0,date('m'),date('d')-date('w')+1-7,date('Y'));
+	$endWeek=mktime(23,59,59,date('m'),date('d')-date('w')+7-7,date('Y'));
+	$times['thisweek']['begin'] = $beginWeek;
+	$times['thisweek']['end'] = $endWeek;
+
+	//获取上周起始时间戳和结束时间戳
+	$beginLastweek=mktime(0,0,0,date('m'),date('d')-date('w')+1-14,date('Y'));
+	$endLastweek=mktime(23,59,59,date('m'),date('d')-date('w')+7-14,date('Y'));
+	$times['lastweek']['begin'] = $beginLastweek;
+	$times['lastweek']['end'] = $endLastweek;
+
+
+	//获取上周起始时间戳和结束时间戳
+	$beginLastweek=mktime(0,0,0,date('m'),date('d')-date('w')+1-21,date('Y'));
+	$endLastweek=mktime(23,59,59,date('m'),date('d')-date('w')+7-21,date('Y'));
+	$times['beforelastweek']['begin'] = $beginLastweek;
+	$times['beforelastweek']['end'] = $endLastweek;
+
+	//获取本月起始时间戳和结束时间戳
+	$beginThismonth=mktime(0,0,0,date('m'),1,date('Y'));
+	$endThismonth=mktime(23,59,59,date('m'),date('t'),date('Y'));
+	$times['thismonth']['begin'] = $beginThismonth;
+	$times['thismonth']['end'] = $endThismonth;
+
+	//获取上月的起始时间戳和结束时间戳
+	$beginLastmonth=mktime(0,0,0,date('m')-1,1,date('Y'));
+	$endLastmonth=mktime(23,59,59,date('m'),0,date('Y'));
+
+	$times['lastmonth']['begin'] = $beginLastmonth;
+	$times['lastmonth']['end'] = $endLastmonth;
+
+	//获取上2月的起始时间戳和结束时间戳
+	$beginLastmonth=mktime(0,0,0,date('m')-2,1,date('Y'));
+	$endLastmonth=mktime(23,59,59,date('m')-1,0,date('Y'));
+	$times['beforelastmonth']['begin'] = $beginLastmonth;
+	$times['beforelastmonth']['end'] = $endLastmonth;
+
+	//获取今年的起始时间和结束时间
+	$beginThisyear = mktime(0,0,0,1,1,date('Y'));
+	$endThisyear = mktime(23,59,59,12,31,date('Y'));
+	$times['thisyear']['begin'] = $beginThisyear;
+	$times['thisyear']['end'] = $endThisyear;
+
+	//获取上年的起始时间和结束时间
+	$beginLastyear = mktime(0,0,0,1,1,date('Y')-1);
+	$endLastyear = mktime(23,59,59,12,31,date('Y')-1);
+	$times['lastyear']['begin'] = $beginLastyear;
+	$times['lastyear']['end'] = $endLastyear;
+
+	//获取上2年的起始时间和结束时间
+	$beginLastyear = mktime(0,0,0,1,1,date('Y')-2);
+	$endLastyear = mktime(23,59,59,12,31,date('Y')-2);
+	$times['beforelastyear']['begin'] = $beginLastyear;
+	$times['beforelastyear']['end'] = $endLastyear;
+
+	//获取本季度开始时间和结束时间
+	$season = ceil((date('n'))/3);//当月是第几季度
+	$beginThisSeason = mktime(0, 0, 0,$season*3-3+1,1,date('Y'));
+	$endThisSeason = mktime(23,59,59,$season*3,date('t',mktime(0, 0 , 0,$season*3,1,date("Y"))),date('Y'));
+	$times['thisseason']['begin'] = $beginThisSeason;
+	$times['thisseason']['end'] = $endThisSeason;
+
+	//获取上季度的起始时间和结束时间
+	$beginLastSeason = mktime(0, 0, 0,($season-1)*3-3+1,1,date('Y'));
+	$endLastSeason = mktime(23,59,59,($season-1)*3,date('t',mktime(0, 0 , 0,$season*3,1,date("Y"))),date('Y'));
+	$times['lastseason']['begin'] = $beginLastSeason;
+	$times['lastseason']['end'] = $endLastSeason;
+
+	//获取上季度的起始时间和结束时间
+	$beginLastSeason = mktime(0, 0, 0,($season-2)*3-3+1,1,date('Y'));
+	$endLastSeason = mktime(23,59,59,($season-2)*3,date('t',mktime(0, 0 , 0,$season*3,1,date("Y"))),date('Y'));
+	$times['beforelastseason']['begin'] = $beginLastSeason;
+	$times['beforelastseason']['end'] = $endLastSeason;
+
+	return $times;
+}
+
+
 if (!function_exists('msubstr')) {
     /**
      * 字符串截取，支持中文和其他编码
@@ -629,5 +736,21 @@ if (!function_exists('obj2arr')) {
 			}
 		}
 		return $array;
+	}
+}
+
+/**
+ * 统计二维数组一列和
+ * @param $array
+ * @param $column
+ * @return float|int
+ * Author: 开发人生 goodkfrs@qq.com
+ * Date: 2021/5/31 0031 15:14
+ */
+if (!function_exists('get_2arr_sum')) {
+	function get_2arr_sum($array,$column) {
+		$total=array_sum(array_column($array,$column));
+		$total=round($total,2);
+		return $total;
 	}
 }

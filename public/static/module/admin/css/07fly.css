@@ -85,6 +85,7 @@
 .table td,.table th{font-size:13px;}
 .table {table-layout:fixed;word-break:break-all;}
 
+/*分页面*/
 .page-list {padding-top: 20px;}
 
 /*表单样式*/
@@ -104,7 +105,7 @@
 
 .border-bottom{border-bottom: solid 1px #ccc;}
 .orderlist { list-style: none;}
-.orderlist p {   text-align: center;    height: 25px;}
+.orderlist p {text-align: center;    height: 25px;}
 
 .fly-logo-name {font-size: 80px;}
 
@@ -115,6 +116,7 @@
 .form-group select:before{font-family:"hui-font"; content:"\e63d"; font-size:12px;}
 form-control.daterange-btn{min-width: 180px;}/*双日历*/
 
+/*重写ibox增加阴影*/
 .ibox{
     box-shadow: 0 0 4px
     rgba(0,0,0,0.1);
@@ -123,6 +125,11 @@ form-control.daterange-btn{min-width: 180px;}/*双日历*/
     margin: auto;
     margin-bottom: 10px;
 }
+.ibox-head{background: #efefef;line-height: 30px;padding: 10px 0px;}
+
+.ibox-tools select{width: 150px;color:#0C1021;border: solid 1px #c4c4c4;padding: 2px;margin-top:-5px;border-radius: 3px;}
+.ibox-tools select option{line-height: 25px;height: 25px;}
+
 
 /*//授权样式*/
 .auth-box {border-bottom: #0e9aef 2px solid;line-height: 30px;}
@@ -131,17 +138,19 @@ form-control.daterange-btn{min-width: 180px;}/*双日历*/
 
 .navbar-right{text-align: right;}
 
-/*导航条切换*/
 .ibox-tab{float: left;padding-left:10px;}
 .ibox-tab a{margin-right: 25px;cursor: pointer;}
 .ibox-tab a{color: #666;}
 .ibox-tab a:hover{color: #0e9aef}
 .ibox-tab a.on{color: #0e9aef}
 
+
+/*下划线*/
+.line-b-t{border-bottom: 1px solid #F0F3F4;margin: 5px 0px;}
 .line-bb{border-bottom: 3px solid #F0F3F4;margin: 5px 0px;}
 
-.ibox-content .nav-tabs{margin-bottom: 0px;}
+.ibox-content .nav-tabs{margin-bottom: 20px;}
 .ibox-content .nav-tabs h3{font-weight: 600;font-size:14px;  padding: 5px 30px 0px 5px;}
 
-/*应用插件*/
-.qrcode-scan-icon{background: url('../img/scan.png') no-repeat center;width: 60px;height: 60px;background-size: 100%;display: inline-block}
+
+.list-group-item .time{float: right;}

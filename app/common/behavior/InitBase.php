@@ -183,7 +183,6 @@ class InitBase
     {
 
         $model = model(SYS_COMMON_DIR_NAME . SYS_DS_PROS . 'Config');
-
         $config_list = auto_cache('config_list', create_closure($model, 'all'));
 
         foreach ($config_list as $info) {

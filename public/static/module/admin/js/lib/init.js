@@ -91,11 +91,13 @@ $(document).ready(function () {
     // //日期选择插件yyyy-mm-dd
     $(".datepicker").datepicker({
         language: "zh-CN",
-        minView : 'month',
+        minView : 'year',
         todayHighlight:true,
         autoclose: true,//选中之后自动隐藏日期选择框
         clearBtn: true,//清除按钮
         todayBtn: "linked",//今日按钮
+        minView : 'day',
+        maxView:2,
         format: "yyyy-mm-dd"
     });
 
@@ -129,6 +131,9 @@ $(document).ready(function () {
         format: "yyyy-mm-dd hh:ii:ss",
         initialDate:new Date(),
     });
+
+    //设置当前时间
+    $(".datetimepicker-now").datetimepicker("setDate", new Date())
 
 
     // //日期时间选择插件 yyyy-mm-dd H:i:s
@@ -388,6 +393,135 @@ function url2json(url){
     return res; //{"a": "1", "b": "2", "c": "test", "d": ""}
 }
 
+//时间格式转换
+jQuery.fn.extend(Date.prototype,{
+    Format:function(fmt){
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    },
+    /* 给Date的原型添加年运算的方法
+* @param {Object} num  要加减的时间的数量,加时间填正整数，减时间填负整数
+*/
+    opYear:function(num){
+        var d = this.getFullYear();
+        this.setFullYear(d + num);
+        return this;
+    },
+    /* 给Date的原型添加月运算的方法
+    * @param {Object} num  要加减的时间的数量,加时间填正整数，减时间填负整数
+    */
+    opMonth:function(num){
+        var d = this.getMonth();
+        this.setMonth(d + num);
+        return this;
+    },
+    /* 给Date的原型添加天运算的方法
+    * @param {Object} num  要加减的时间的数量,加时间填正整数，减时间填负整数
+    */
+    opDay:function(num){
+        var d = this.getDate();
+        this.setDate(d + num);
+        return this;
+    },
+    /* 给Date的原型添加分钟运算的方法
+    * @param {Object} num  要加减的时间的数量,加时间填正整数，减时间填负整数
+    */
+    opMinutes:function(num){
+        var d = this.getMinutes();
+        this.setMinutes(d + num);
+        return this;
+    },
+
+    /***参数都是以周一为基准的***/
+    //上周的开始时间
+    //console.log(getTime(7));
+    //上周的结束时间
+    //console.log(getTime(1));
+    //本周的开始时间
+    //console.log(getTime(0));
+    //本周的结束时间
+    //console.log(getTime(-6));
+    getWeekTime:function(n){
+        var year=this.getFullYear();
+        //因为月份是从0开始的,所以获取这个月的月份数要加1才行
+        var month=this.getMonth()+1;
+        var date=this.getDate();
+        var day=this.getDay();
+//		console.log(date);
+        //判断是否为周日,如果不是的话,就让今天的day-1(例如星期二就是2-1)
+        if(day!==0){
+            n=n+(day-1);
+        }else{
+            n=n+day;
+        }
+        if(day){
+            //这个判断是为了解决跨年的问题
+            if(month>1){
+                month=month;
+            }else{
+                //这个判断是为了解决跨年的问题,月份是从0开始的
+                year=year-1;
+                month=12;
+            }
+        }
+        this.setDate(this.getDate()-n);
+        year=this.getFullYear();
+        month=this.getMonth()+1;
+        date=this.getDate();
+//		console.log(year+"-"+(month<10?('0'+month):month)+"-"+(date<10?('0'+date):date));
+        return year+"-"+(month<10?('0'+month):month)+"-"+(date<10?('0'+date):date);
+    },
+
+    pattern:function (fmt) {
+        var o = {
+            "M+" : this.getMonth() + 1, //月份
+            "d+" : this.getDate(), //日
+            "h+" : this.getHours() % 24 == 0 ? 24 : this.getHours() % 24, //小时
+            "H+" : this.getHours(), //小时
+            "m+" : this.getMinutes(), //分
+            "s+" : this.getSeconds(), //秒
+            "q+" : Math.floor((this.getMonth() + 3) / 3), //季度
+            "S" : this.getMilliseconds() //毫秒
+        };
+        var week = {
+            "0" : "/u65e5",
+            "1" : "/u4e00",
+            "2" : "/u4e8c",
+            "3" : "/u4e09",
+            "4" : "/u56db",
+            "5" : "/u4e94",
+            "6" : "/u516d"
+        };
+        if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+        if (/(E+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") : "") + week[this.getDay() + ""]);
+        }
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+        return fmt;
+    }
+
+});
+
+
+
+
 
 //增加必填选项
 //$('input[required]').before('<span style="color:red">*</span>');
@@ -397,28 +531,28 @@ $("input[type='text']").attr('autocomplete','off');
 
 
 
-//ajax-open 时判断窗口高度
-var height = $(window).height();
-var centerHight = height - 100;
-$(".auto-height-box").height(centerHight).css("overflow", "auto");
-
-
-
-
-
 // /*-----页面pannel内容区高度自适应 start-----*/
 $(window).resize(function () {
     setCenterHeight();
 });
-
+setCenterHeight();
 function setCenterHeight() {
+
     var height = $(window).height();
     var centerHight = height - 100;
     $(".auto-height-box").height(centerHight).css("overflow", "auto");
 }
-
-
-
 /*-----页面pannel内容区高度自适应 end-----*/
 
 
+
+
+
+//erp.07fly.xyz
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?580632b24aea12910a1609b81ffaf23d";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();

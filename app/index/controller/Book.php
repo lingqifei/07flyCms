@@ -65,18 +65,29 @@ class Book extends IndexBase
                 abort(404, 'bookid 页面不存在');
                 exit;
             }
+
+
             // 文章列表
             $chap_list = $this->logicBook->getBookChapList(['book_id' => $bookinfo['id']]);
 
             //得到文档树
             $chapmenu=$this->chap_list_tree_html($bookinfo['id'],$bookinfo['pinyin']);
 
-            $map_chap=[];
+            $map_chap['book_id']=['=',$bookinfo['id']];
             $this->chapid = intval($this->chapid);
             if(!empty($this->chapid)){
                 $map_chap['id']=['=',$this->chapid];
             }
             $chapinfo=$this->logicBook->getBookChapInfo($map_chap);
+
+            //未传入章节ID时
+            if(empty($map_chap)){
+				//更新文档的浏览数据
+				$this->logicBook->setBookClick($map_book);
+			}else{
+				//更新文章浏览量
+				$this->logicBook->setBookChapClick($map_chap);
+			}
 
             $pajx = input("param.pajx", '0');
             if(!empty($pajx)){
@@ -159,7 +170,7 @@ class Book extends IndexBase
             }else{
                 $html .='<li class="has_child">';
                 $html .='<span><i class="icon-plus-sign"></i></span><a href="'.$url.'">'.$row['title'].'</a>';
-                $html .="<ul style='display: none;'>";
+                $html .="<ul style='display: block;'>";
                 $html .=$this->chap_list_tree_to($row['nodes']);
                 $html .="</ul>";
                 $html .="</li>";

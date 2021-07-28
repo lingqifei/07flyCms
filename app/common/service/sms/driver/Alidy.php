@@ -28,7 +28,7 @@ class Alidy extends Sms implements Driver
     public function driverInfo()
     {
 
-        return ['driver_name' => '阿里大鱼驱动', 'driver_class' => 'Alidy', 'driver_describe' => '阿里大鱼短信驱动', 'author' => 'lingqifei', 'version' => '1.0.1'];
+        return ['driver_name' => '阿里大鱼驱动', 'driver_class' => 'Alidy', 'driver_describe' => '阿里大鱼短信驱动', 'author' => 'lingqifei', 'version' => '1.0'];
     }
 
     /**

@@ -77,11 +77,15 @@ $(function () {
         }
     });
 
+    $("body").on("click", ".collapse-link", function () {
+        $(this).find('i').toggleClass("fa-chevron-up");
+        $(this).find('i').toggleClass("fa-chevron-down");
+    })
+
 });
 
 
-
-//分页插件
+//分页插件********************************************************************
 var orderField = ''; //排序字字段
 var orderDirection = '';//升序、降序
 var pageSize = '';//每页条数
@@ -100,7 +104,7 @@ $("body").on("click", ".ajax-list-table .sort-filed", function () {
         } else {
             $(this).removeClass('desc');
             orderDirection = 'asc';
-            turnPage(pageNum);
+            turnPage(1);
             return 'asc';
         }
     })
@@ -109,83 +113,96 @@ $("body").on("click", ".ajax-list-table .sort-filed", function () {
 //查询数据，刷新
 $('.ajaxSearchForm').click(function () {
     $(this).children("input").prop("checked", true);
-    ajaxSearchFormData = $("form").serialize();
+    var searchform = $(this).parents("form");
+
+    //是否重置搜索条件
+    if ($(this).hasClass('resetForm')) {
+        searchform[0].reset();
+        // searchform.find('input[type=text],select,input[type=hidden]').each(function() {
+        //     $(this).val('');
+        //  });
+
+    }
+
+    ajaxSearchFormData = searchform.serialize();
     turnPage(1);
 });
 
-//查询数据，下拉执行选择
+//查询条件下拉时搜索
 $("body").on("change", ".searchForm select", function () {
-    $(this).children("input").prop("checked", true);
-    ajaxSearchFormData = $("form").serialize();
+    var searchform = $(this).parents("form");
+    var searchform = $(this);
+    ajaxSearchFormData = searchform.serialize();
     turnPage(1);
-});
+})
+
 
 //设置分页每页条数及跳转页数
 $("body").on("change", ".tfootPageBar", function () {
 
-    var ajaxListTable   = $('.ajax-list-table');
+    var ajaxListTable = $('.ajax-list-table');
 
     pageNum = ajaxListTable.find("tfoot td input[name='pageNum']").val();
 
-    if (pageNum == null)   pageNum = '';
+    if (pageNum == null) pageNum = '';
 
     ajaxSearchFormData = $("form").serialize();
 
-    turnPage(pageNum,ajaxListTable);
+    turnPage(pageNum, ajaxListTable);
 });
-//输入页数跳转
-$("body").on("click", ".tfootClickPageNum", function () {
 
-    var ajaxListTable   = $('.ajax-list-table');
+//输入页数跳转到批定页
+$("body").on("click", ".tfootClickPageNum", function () {
+    var ajaxListTable = $('.ajax-list-table');
     pageNum = $(this).attr('data-id')
     ajaxSearchFormData = $("form").serialize();
-    turnPage(pageNum,ajaxListTable);
+    turnPage(pageNum, ajaxListTable);
 });
 
 
 //获取分页数据及模板
-function turnPage(pageNum,ajaxListTable='') {
+function turnPage(pageNum, ajaxListTable = '') {
 
-    var searchForm    = $('.searchForm');
+    //查询表单
+    var searchForm = $('.searchForm');
 
     //如果没有传入对像默认为
-    if(ajaxListTable==''){
-        var ajaxListTable   = $('.ajax-list-table');
+    if (ajaxListTable == '') {
+        var ajaxListTable = $('.ajax-list-table');
     }
 
-    var ajaxUrl =ajaxListTable.attr("data-url");
+    var ajaxUrl = ajaxListTable.attr("data-url");
 
     //获取查询表单数据
     //ajaxSearchFormData = searchForm.serialize();
-    var searchItemData=localStorage.getItem(ajaxUrl);
+    var searchItemData = localStorage.getItem(ajaxUrl);
 
     pageSize = ajaxListTable.find("tfoot td input[name='pageSize']").val();
 
-    if (pageSize == null)   pageSize = '';
+    if (pageSize == null) pageSize = '';
 
     // 为在保存搜索条件离开返回不失效
-    if(pageSize=='' && ajaxSearchFormData==''){
+    if (pageSize == '' && ajaxSearchFormData == '') {
 
         log("第一步：进入pagesize=0,ajaxsearch=''：");
 
-        if(searchItemData!=null && searchItemData!='null'){
+        if (searchItemData != null && searchItemData != 'null') {
 
-            log("第二步：判断是否之前点击查询过，searchItemData："+searchItemData);
+            log("第二步：判断是否之前点击查询过，searchItemData：" + searchItemData);
 
             //searchForm.setForm(JSON.parse(url2json('?'+searchItemData)));
 
             ajaxSearchFormData = searchItemData;
 
-        }else{
+        } else {
             log("第二步：还没有点击查询，直接获取表单数据：");
             ajaxSearchFormData = $("form").serialize();
         }
 
-    }else{
+    } else {
 
         ajaxSearchFormData = $("form").serialize();
-
-        log("第一步：点击查询了：ajaxSearchFormData:"+ajaxSearchFormData);
+        log("第一步：点击查询了：ajaxSearchFormData:" + ajaxSearchFormData);
 
     }
 
@@ -196,8 +213,7 @@ function turnPage(pageNum,ajaxListTable='') {
     ajaxSearchFormData = $("form").serialize();
     ajaxPostJsonData = ajaxSearchFormData + "&pageNum=" + pageNum + "&pageSize=" + pageSize + "&orderField=" + orderField + "&orderDirection=" + orderDirection;
 
-   // log(ajaxPostJsonData);
-
+    // log(ajaxPostJsonData);
     $.ajax({
         type: 'POST',
         url: ajaxUrl,     //这里是请求的后台地址，自己定义
@@ -214,26 +230,27 @@ function turnPage(pageNum,ajaxListTable='') {
             );
         },
         success: function (returnJsonData) {
+            if (returnJsonData.code == 0) {
+                toast.error(returnJsonData.msg);
+            }
             //移除原来的文档
             ajaxListTable.find("tbody").empty();
-            totalCount  = returnJsonData.total;
-            pageSize    = returnJsonData.per_page;
-            pageNum    = returnJsonData.current_page;
+            totalCount = returnJsonData.total;
+            pageSize = returnJsonData.per_page;
+            pageNum = returnJsonData.current_page;
             //returnJsonData=null2str(returnJsonData);
-
             //模板引擎使用
             var tpl = baidu.template;
             var html = tpl('tableListTpl', returnJsonData);
-
             ajaxListTable.find("tbody").html(html);
         },
         complete: function () {
 
             //1、添加分页按钮栏
-            getPageBar(ajaxListTable,pageNum, pageSize, totalCount);
+            getPageBar(ajaxListTable, pageNum, pageSize, totalCount);
 
             //2、判断表格是否设置显示列
-            if($('a').is('.btn-field-set')){
+            if ($('a').is('.btn-field-set')) {
                 initTableCell();
             }
 
@@ -248,7 +265,7 @@ function turnPage(pageNum,ajaxListTable='') {
 }
 
 //获取分页条（分页按钮栏的规则和样式根据自己的需要来设置）
-function getPageBar(object,pageNum, pageSize, totalCount) {
+function getPageBar(object, pageNum, pageSize, totalCount) {
 
     var pageNum = parseInt(pageNum);
     var pageSize = parseInt(pageSize);
@@ -300,44 +317,48 @@ function getPageBar(object,pageNum, pageSize, totalCount) {
         pageBar += "<span class='btn btn-white' onlick='javascript:turnPage(" + (parseInt(pageNum) + 1) + ")'>>></span>";
         pageBar += "<span class='btn btn-white' onlick='javascript:turnPage(" + totalPage + ")'>尾页</span>";
     }*/
-    pageBar += "<span class='btn btn-white tfootClickPageNum' data-id='" + (parseInt(pageNum) + 1)  + "'><a> >> </a></span>";
-    pageBar += "<span class='btn btn-white tfootClickPageNum' data-id='" + (parseInt(totalPage) )  + "'><a>尾页</a></span>";
+    pageBar += "<span class='btn btn-white tfootClickPageNum' data-id='" + (parseInt(pageNum) + 1) + "'><a> >> </a></span>";
+    pageBar += "<span class='btn btn-white tfootClickPageNum' data-id='" + (parseInt(totalPage)) + "'><a>尾页</a></span>";
     pageBar += "<span class='btn btn-white'> 跳 <input type='text' name='pageNum' class='tfootPageBar pageNum' style='width:50px;height:20px;border:solid #ccc 1px;'> 页 <a>GO</a></span>";
     pageBar += "</div></div>";
 
-    if(totalCount==0){
+    if (totalCount == 0) {
         object.find("tfoot td").html('噢噢噢，暂时没有查询到数据~~');
-    }else{
+    } else {
         object.find("tfoot td").html(pageBar);
     }
 
 
-
 }
 
-//ajax打开,跳转
+//ajax打开,跳转到指定页面
 $("body").on("click", ".ajax-goto", function () {
 
     if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
+
         var tit = $(this).attr('data-title');//打开标题
-        var ids =$(this).attr('data-ids');//判断是否有参数传
 
         //是否设置了参数字段
-        if( typeof(ids)!="undefined" && ids!=0 ){
-            var ids=($.param(eval('('+ids+')'),true));
-            var target=target+"?"+ids;
+        // 参数格式：data-ids="{"name":'value}
+        var ids = $(this).attr('data-ids');//判断是否有参数传
+        if (typeof (ids) != "undefined" && ids != 0) {
+            var ids = ($.param(eval('(' + ids + ')'), true));
+            var target = target + "?" + ids;
         }
+
+        //是否设置导出标签
+        //配套标签：target-from=''search from'
         if ($(this).hasClass('export')) {
             var target_form = $(this).attr('target-form');
             var form = $('.' + target_form);
             var query = form.serialize();
-            var target=target+"?"+query;
+            var target = target + "?" + query;
         }
-        log('执行地址：'+target);
-        if ($(this).attr('target')=='_blank') {
+        log('执行地址：' + target);
+        if ($(this).attr('target') == '_blank') {
             window.open(target)
-        }else{
-            window.location.href=target;
+        } else {
+            window.location.href = target;
         }
     }
     return false;
@@ -349,13 +370,14 @@ $("body").on("click", ".ajax-open", function () {
     if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
 
         var tit = $(this).attr('data-title');//打开标题
-        var ids =$(this).attr('data-ids');//参数传，支持多个参数传送 格式：data-ids="{'tid':'2',''name':'张三'}"
-        var fun =$(this).attr('data-calback');//回调函数
+        var fun = $(this).attr('data-calback');//回调函数
 
-        //是否设置了参数字段
-        if( typeof(ids)!="undefined" && ids!=0 ){
-            var ids=($.param(eval('('+ids+')'),true));
-            var target=target+"?"+ids;
+        //是否带参数字段
+        //参数传，支持多个参数传送 格式：data-ids="{'tid':'2',''name':'张三'}"
+        var ids = $(this).attr('data-ids');
+        if (typeof (ids) != "undefined" && ids != 0) {
+            var ids = ($.param(eval('(' + ids + ')'), true));
+            var target = target + "?" + ids;
         }
 
         //是否设置了单个值
@@ -363,36 +385,23 @@ $("body").on("click", ".ajax-open", function () {
         if (typeof (id) != "undefined" && id != 0) {
             var target = target + "?id=" + id;
         }
-
-        log('打开地址：'+target);
-
-        var obj_width=$(this).attr('width');
-        var obj_height=$(this).attr('height');
-
-        if( typeof(obj_width)=="undefined"){
-            obj_width='90%'
-        }
-
-        if( typeof(obj_height)=="undefined"){
-            obj_height='90%'
-        }
-
+        log('打开地址：' + target);
         layer.open({
             type: 2,
             title: false,
             shadeClose: false,
             //btn: ['关闭'],
             fixed: true, //不固定
-            area: [obj_width, obj_height],
+            area: ['90%', '90%'],
             content: target,
-            success: function(layero, index) {
+            success: function (layero, index) {
                 layer.iframeAuto(index);
             },
             end: function () {
-                log(fun);
-                if(fun!=null){
+                if (fun != null) {
                     eval(fun);
-                }else{
+                    log('执行回调函数：' + fun);
+                } else {
                     turnPage(pageNum);
                 }
             }
@@ -405,29 +414,30 @@ $("body").on("click", ".ajax-open", function () {
 //可以选择多个checkbox值r同时传送参数
 $("body").on("click", ".ajax-open-more", function () {
 
-    var title =$(this).attr('data-title');//打开标题
-    var ids   =$(this).attr('data-ids');//判断是否有参数传
-    var fun  =$(this).attr('data-calback');//判断是否有回调函数
-    var checkedVal =[];
+    var title = $(this).attr('data-title');//打开标题
+    var ids = $(this).attr('data-ids');//判断是否有参数传
+    var fun = $(this).attr('data-calback');//判断是否有回调函数
+    var checkedVal = [];
 
     if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
-        $('.ajax-list-table tbody input[type="checkbox"]:checked').each(function() {
+
+        $('.ajax-list-table tbody input[type="checkbox"]:checked').each(function () {
             checkedVal.push($(this).val());
         });
-        cIds=checkedVal.join(',');
+        cIds = checkedVal.join(',');
         if (cIds.length > 0) {
             var target = target + "?id=" + cIds;
-        }else{
+        } else {
             layer.msg('请选择批量操作数据', {icon: 5});
             return false;
         }
         //是否设置了参数字段
-        if( typeof(ids)!="undefined" && ids!=0 ){
-            var ids=($.param(eval('('+ids+')'),true));
-            var target=target+"?"+ids;
+        if (typeof (ids) != "undefined" && ids != 0) {
+            var ids = ($.param(eval('(' + ids + ')'), true));
+            var target = target + "?" + ids;
         }
 
-        log('打开地址：'+target);
+        log('打开地址：' + target);
 
         layer.open({
             type: 2,
@@ -437,15 +447,14 @@ $("body").on("click", ".ajax-open-more", function () {
             fixed: true, //不固定
             area: ['90%', '90%'],
             content: target,
-            success: function(layero, index) {
+            success: function (layero, index) {
                 layer.iframeAuto(index);
-
             },
             end: function () {
                 log(fun);
-                if(fun!=null){
+                if (fun != null) {
                     eval(fun);
-                }else{
+                } else {
                     turnPage(pageNum);
                 }
             }
@@ -466,17 +475,17 @@ $("body").on("click", ".ajax-del", function () {
         }
     }
 
-    if ((target = $(this).attr('href')) || (target = $(this).attr('url') ) || (target = $(this).attr('data-url') )){
+    if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
 
-        var ids =$(this).attr('data-ids');
-        var fun =$(this).attr('data-calback');
+        var ids = $(this).attr('data-ids');
+        var fun = $(this).attr('data-calback');
 
         //是否设置了参数字段
-        if( typeof(ids)!="undefined" && ids!=0 ){
-            var ids=($.param(eval('('+ids+')'),true));
-            var target=target+"?"+ids;
+        if (typeof (ids) != "undefined" && ids != 0) {
+            var ids = ($.param(eval('(' + ids + ')'), true));
+            var target = target + "?" + ids;
         }
-        log('打开地址：'+target);
+        log('执行地址：' + target);
 
         if ($(this).attr('is-jump') == 'true') {
 
@@ -485,17 +494,19 @@ $("body").on("click", ".ajax-del", function () {
         } else {
             $.get(target).success(function (data) {
                 if (data.code) {
-                    layer.msg(data.msg, {icon: 1});
-                    if(fun!=null){
+                    parent.layer.msg(data.msg, {icon: 1});
+                    if (fun != null) {
                         log(fun);
                         eval(fun);
-                    }else{
-                        turnPage(pageNum);
+                    } else {
+                        setTimeout(function () {
+                            turnPage(pageNum);
+                        }, 1500);
                     }
                 } else {
-                    layer.msg(data.msg, {icon: 5});
+                    parent.layer.msg(data.msg, {icon: 5});
                 }
-            },"json");
+            }, "json");
         }
     }
     return false;
@@ -504,7 +515,6 @@ $("body").on("click", ".ajax-del", function () {
 //ajax get请求
 $("body").on("click", ".ajax-get", function () {
 
-    var target;
 
     if ($(this).hasClass('confirm')) {
         if (!confirm('确认要执行该操作吗?')) {
@@ -512,37 +522,38 @@ $("body").on("click", ".ajax-get", function () {
         }
     }
 
-    if ((target = $(this).attr('href')) || (target = $(this).attr('url') ) || (target = $(this).attr('data-url') )){
+    var target;
+    if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
 
-        var ids =$(this).attr('data-ids');//判断是否有参数传
-        var fun =$(this).attr('data-calback');//判断是否有回调函数
+        var ids = $(this).attr('data-ids');//判断是否有参数传
+        var fun = $(this).attr('data-calback');//判断是否有回调函数
         //是否设置了参数字段
-        if( typeof(ids)!="undefined" && ids!=0 ){
-            var ids=($.param(eval('('+ids+')'),true));
-            var target=target+"?"+ids;
+        if (typeof (ids) != "undefined" && ids != 0) {
+            var ids = ($.param(eval('(' + ids + ')'), true));
+            var target = target + "?" + ids;
         }
 
         $.get(target).success(function (data) {
             if (data.code) {
-                layer.msg(data.msg, {icon: 1, time: 2000, shade: [0.5, '#000', true]}, function () {
-                    if(fun!=null){
-                        eval(fun);
-                    }else{
+                parent.layer.msg(data.msg, {icon: 1});
+                if (fun != null) {
+                    eval(fun);
+                } else {
+                    setTimeout(function () {
                         turnPage(pageNum);
-                    }
-                });
-
+                    }, 1500);
+                }
             } else {
-                layer.msg(data.msg, {icon: 5});
+                parent.layer.msg(data.msg, {icon: 5});
             }
             //如果传了地址表示跳转
-            if (data.url) {
-                setTimeout(function () {
-                    location.href = data.url;
-                }, 1500);
-            }
-            // obalert(data);
-        },"json");
+            // if (data.url) {
+            //     setTimeout(function () {
+            //         location.href = data.url;
+            //     }, 1500);
+            // }
+            // lqfalert(data);
+        }, "json");
     }
     return false;
 });
@@ -557,7 +568,7 @@ $("body").on("click", ".ajax-get-more", function () {
     }
     var checkedArr = $('.ajax-list-table input[type="checkbox"]:checked');
 
-    checkedArr.each(function() {
+    checkedArr.each(function () {
         cIds += $(this).val() + ",";
     });
 
@@ -565,30 +576,30 @@ $("body").on("click", ".ajax-get-more", function () {
         cIds = cIds.substring(0, cIds.length - 1);
         if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
             var ids = $(this).attr('data-ids');//判断是否有参数传
-            var fun= $(this).attr('data-calback');//判断是否有回调函数
+            var fun = $(this).attr('data-calback');//判断是否有回调函数
 
             //是否设置了参数字段
-            if( typeof(ids)!="undefined" && ids!=0 ){
-                var ids=($.param(eval('('+ids+')'),true));
-                var target=target+"?"+ids;
+            if (typeof (ids) != "undefined" && ids != 0) {
+                var ids = ($.param(eval('(' + ids + ')'), true));
+                var target = target + "?" + ids;
             }
 
             $.post(target, {id: cIds}, function (data) {
                 if (data.code) {
-                    layer.msg(data.msg, {icon: 1});
+                    parent.layer.msg(data.msg, {icon: 1});
                     if (fun != null) {
                         eval(fun);
                     } else {
                         turnPage(pageNum);
                     }
                 } else {
-                    layer.msg(data.msg, {icon: 5});
+                    parent.layer.msg(data.msg, {icon: 5});
                 }
             }, "json");
 
         }
-    }else{
-        layer.msg('请选择批量操作数据', {icon: 5});
+    } else {
+        parent.layer.msg('请选择批量操作数据', {icon: 5});
     }
     return false;
 });
@@ -655,7 +666,7 @@ $("body").on("click", ".ajax-post", function () {
 
         var is_repeat_button = $(that).hasClass('no-repeat-button');
 
-        if(is_repeat_button){
+        if (is_repeat_button) {
             $(that).prop('disabled', true);
         }
 
@@ -666,16 +677,17 @@ $("body").on("click", ".ajax-post", function () {
             dataType: "json",
             success: function (result) {
                 if (result.code == '1') {
-                    layer.msg(result.msg, {icon: 1,time: 1000,shade : [0.5 , '#000' , true]}, function(){
+                    layer.msg(result.msg, {icon: 1, time: 500, shade: [0.5, '#000', true]}, function () {
                         var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
                         parent.layer.close(index);
                     });
                 } else {
+                    //toastr.error(result.msg);
                     layer.msg(result.msg, {icon: 5});
                 }
             },
             complete: function () { //执行完之后执行
-                if(is_repeat_button){
+                if (is_repeat_button) {
                     $(that).prop('disabled', false);
                 }
             },
@@ -689,22 +701,12 @@ $("body").on("click", ".ajax-post", function () {
 $("body").on("change", ".ajax-input", function () {
     var target;
     var val = $(this).val();
-
     if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
-
-        //是否设置了字段
-        var ids =$(this).attr('data-ids');
-        //是否设置了参数字段
-        if( typeof(ids)!="undefined" && ids!=0 ){
-            var ids=($.param(eval('('+ids+')'),true));
-            var target=target+"?"+ids;
-        }
-
         $.post(target, {id: $(this).attr('data-id'), value: val}, function (data) {
             if (data.code) {
-                layer.msg(data.msg, {icon: 1});
+                parent.layer.msg(data.msg, {icon: 1});
             } else {
-                layer.msg(data.msg, {icon: 5});
+                parent.layer.msg(data.msg, {icon: 5});
             }
 
         }, "json");
@@ -716,12 +718,13 @@ $("body").on("change", ".ajax-input", function () {
 //启用关闭
 $("body").on("click", ".ajax-checkbox", function () {
     var target;
-    var val=0;
+    var val = 0;
     var chk = $(this).prop('checked');
     log(chk);
-    var id=$(this).attr('data-id');
-
-    if(chk){ val=1; }
+    var id = $(this).attr('data-id');
+    if (chk) {
+        val = 1;
+    }
     if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
         $.post(target, {id: id, value: val}, function (data) {
             if (data.code) {
@@ -744,11 +747,11 @@ $("body").on("change", ".ajax-sort", function () {
             return false;
         }
         //是否设置了字段
-        var ids =$(this).attr('data-ids');
+        var ids = $(this).attr('data-ids');
         //是否设置了参数字段
-        if( typeof(ids)!="undefined" && ids!=0 ){
-            var ids=($.param(eval('('+ids+')'),true));
-            var target=target+"?"+ids;
+        if (typeof (ids) != "undefined" && ids != 0) {
+            var ids = ($.param(eval('(' + ids + ')'), true));
+            var target = target + "?" + ids;
         }
         $.post(target, {id: $(this).attr('data-id'), value: val}, function (data) {
             if (data.code) {
@@ -756,7 +759,32 @@ $("body").on("change", ".ajax-sort", function () {
             } else {
                 layer.msg(data.msg, {icon: 5});
             }
-            //obalert(data);
+            //lqfalert(data);
+        }, "json");
+    }
+    return false;
+});
+
+//排序
+$("body").on("change", ".ajax-field", function () {
+    var target;
+    var val = $(this).val();
+    if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
+
+        //是否设置了字段
+        var ids = $(this).attr('data-ids');
+        //是否设置了参数字段
+        if (typeof (ids) != "undefined" && ids != 0) {
+            var ids = ($.param(eval('(' + ids + ')'), true));
+            var target = target + "?" + ids;
+        }
+        $.post(target, {id: $(this).attr('data-id'), value: val}, function (data) {
+            if (data.code) {
+                layer.msg(data.msg, {icon: 1});
+            } else {
+                layer.msg(data.msg, {icon: 5});
+            }
+            //lqfalert(data);
         }, "json");
     }
     return false;
@@ -765,25 +793,20 @@ $("body").on("change", ".ajax-sort", function () {
 /**
  * 提示或提示并跳转
  */
-var obalert = function (data) {
+var lqfalert = function (data) {
 
     if (data.code) {
         // toast.success(data.msg);
         layer.msg(data.msg, {icon: 1});
     } else {
-
         if (typeof data.msg == "string") {
-
             //toast.error(data.msg);
             layer.msg(data.msg, {icon: 5});
         } else {
-
             var err_msg = '';
-
             for (var item in data.msg) {
                 err_msg += "Θ " + data.msg[item] + "<br/>";
             }
-
             //toast.error(err_msg);
             layer.msg(data.msg, {icon: 5});
         }
@@ -796,84 +819,8 @@ var obalert = function (data) {
     }
 
     if (data.code && !data.url) {
-
         setTimeout(function () {
-
             location.reload();
         }, 1500);
     }
 };
-/**
-  * 将form里面的内容序列化成json
-  * 相同的checkbox用分号拼接起来
-  * @param {dom} 指定的选择器
-  * @param {obj} 需要拼接在后面的json对象
-  * @method serializeJson
-  * */
-$.fn.serializeJson = function (otherString) {
-    var serializeObj = {},
-        array = this.serializeArray();
-    $(array).each(function () {
-        if (serializeObj[this.name]) {
-            serializeObj[this.name] += ';' + this.value;
-        } else {
-            serializeObj[this.name] = this.value;
-        }
-    });
-
-    if (otherString != undefined) {
-        var otherArray = otherString.split(';');
-        $(otherArray).each(function () {
-            var otherSplitArray = this.split(':');
-            serializeObj[otherSplitArray[0]] = otherSplitArray[1];
-        });
-    }
-    return serializeObj;
-};
-
-/**
- * 将josn对象赋值给form
- * @param {dom} 指定的选择器
- * @param {obj} 需要给form赋值的json对象
- * @method serializeJson
- * */
-$.fn.setForm = function (jsonValue) {
-    var obj = this;
-
-    //输出的index 值为该对象的key值
-    for(var key in jsonValue){
-        //console.log(key+":"+jsonValue[key]);
-
-            var name=key;
-            var ival=jsonValue[key];
-
-            var $oinput = obj.find("input[name=" + name + "]");
-            if ($oinput.attr("type") == "checkbox") {
-                if (ival !== null) {
-                    var checkboxObj = $("[name=" + name + "]");
-                    var checkArray = ival.split(";");
-                    for (var i = 0; i < checkboxObj.length; i++) {
-                        for (var j = 0; j < checkArray.length; j++) {
-                            if (checkboxObj[i].value == checkArray[j]) {
-                                checkboxObj[i].click();
-                            }
-                        }
-                    }
-                }
-            } else if ($oinput.attr("type") == "radio") {
-                $oinput.each(function () {
-                    var radioObj = $("[name=" + name + "]");
-                    for (var i = 0; i < radioObj.length; i++) {
-                        if (radioObj[i].value == ival) {
-                            radioObj[i].click();
-                        }
-                    }
-                });
-            } else if ($oinput.attr("type") == "textarea") {
-                obj.find("[name=" + name + "]").html(ival);
-            }else{
-                obj.find("[name=" + name + "]").val(ival);
-            }
-
-    }
-}

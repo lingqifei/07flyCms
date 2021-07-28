@@ -95,4 +95,25 @@ class Book extends IndexBase
         return $this->modelBookChap->getInfo($where, $field);
     }
 
+
+	/**设置文档点击
+	 * @param array $data
+	 * @return mixed|string
+	 * Author: lingqifei created by at 2020/2/27 0027
+	 */
+	public function setBookClick($where = [])
+	{
+		Db::name('book')->where($where)->setInc('click_a','1');
+	}
+
+	/**设置文档的文章点击
+	 * @param array $data
+	 * @return mixed|string
+	 * Author: lingqifei created by at 2020/2/27 0027
+	 */
+	public function setBookChapClick($where = [])
+	{
+		Db::name('book_chap')->where($where)->setInc('click','1');
+	}
+
 }

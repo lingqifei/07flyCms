@@ -28,6 +28,7 @@ class TagTag extends IndexBase
     protected function _initialize()
     {
         parent::_initialize();
+
         $this->aid = input('param.aid/d', 0);
     }
 
@@ -48,7 +49,10 @@ class TagTag extends IndexBase
     public function getTag($getall = 0, $typeid = '', $aid = 0, $row = 30, $sort = 'new', $type = '')
     {
 
+		$this->aid = input('param.aid/d', 0);
+
         $aid = !empty($aid) ? $aid : $this->aid;
+
         $getall = intval($getall);
         !empty($typeid) && $getall = 1;
         $result = [];

@@ -28,7 +28,7 @@ class Tencent extends Sms implements Driver
     public function driverInfo()
     {
 
-        return ['driver_name' => '腾讯短信服务驱动', 'driver_class' => 'Tencent', 'driver_describe' => '腾讯短信驱动', 'author' => 'LingQiFei', 'version' => '1.0.1'];
+        return ['driver_name' => '腾讯短信服务驱动', 'driver_class' => 'Tencent', 'driver_describe' => '腾讯短信驱动', 'author' => 'LingQiFei', 'version' => '1.0'];
     }
 
     /**

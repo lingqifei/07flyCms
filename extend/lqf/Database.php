@@ -94,14 +94,10 @@ class Database{
      */
     private function write($sql){
 
-    	//数据前缀替换为模块前缀
-    	$prefix=$this->config['prefix'];
-    	$prefix_tpl=$this->config['prefix_tpl'];
-		$sql = str_replace(" `{$prefix}", " `{$prefix_tpl}", $sql);
-
         $size = strlen($sql);
         
         //由于压缩原因，无法计算出压缩后的长度，这里假设压缩率为50%，
+
         //一般情况压缩率都会高于50%；
         $size = $this->config['compress'] ? $size / 2 : $size;
         
@@ -117,13 +113,21 @@ class Database{
      */
     public function backup($table = '', $start = 0){
 
-    	//判断备份数据库表，前缀信息，如表名前缀，系统又开启前缀自动添加
+    	//判断备份数据库表，********************************
+		//1、系统表有前缀，输入表名无前缀自动添加前缀
+		//2、备份时表名替换为【模板表名】 模板前缀——表名
 		$prefix=$this->config['prefix'];
+		$prefix_tpl=$this->config['prefix_tpl'];
+		$table_tpl=$prefix_tpl.$table;
 		if(!empty($prefix)){
 			if(strstr($table,$prefix)==false){
 				$table=$prefix.$table;
+				$table_tpl=$prefix_tpl.ltrim($table,$prefix);
 			}
+		}else{
+			$table_tpl=$prefix_tpl.$table;
 		}
+		//表的前缀替换结束**********************************
 
         // 备份表结构
         if(0 == $start){
@@ -133,13 +137,16 @@ class Database{
 
             $result = Db::query("SHOW CREATE TABLE `{$table}`");
             $result = array_map('array_change_key_case', $result);
+			$create = trim($result[0]['create table']) . ";\n\n";
 
-            $sql  = "\n";
+			$sql  = "\n";
             $sql .= "-- -----------------------------\n";
-            $sql .= "-- Table structure for `{$table}`\n";
+            $sql .= "-- Table structure for `{$table_tpl}`\n";
             $sql .= "-- -----------------------------\n";
-            $sql .= "DROP TABLE IF EXISTS `{$table}`;\n";
-            $sql .= trim($result[0]['create table']) . ";\n\n";
+            $sql .= "DROP TABLE IF EXISTS `{$table_tpl}`;\n";
+
+            $sql .= str_replace("CREATE TABLE `{$table}`", "CREATE TABLE `{$table_tpl}`", $create);//表名替换为安装模板表名
+
             if(false === $this->write($sql)){
                 return false;
             }
@@ -163,7 +170,7 @@ class Database{
             $result = Db::query("SELECT * FROM `{$table}` LIMIT {$start}, 1000");
             foreach ($result as $row) {
                 $row = array_map('addslashes', $row);
-                $sql = "INSERT INTO `{$table}` VALUES ('" . str_replace(array("\r","\n"),array('\r','\n'),implode("', '", $row)) . "');\n";
+                $sql = "INSERT INTO `{$table_tpl}` VALUES ('" . str_replace(array("\r","\n"),array('\r','\n'),implode("', '", $row)) . "');\n";
                 if(false === $this->write($sql)){
                     return false;
                 }
@@ -204,11 +211,11 @@ class Database{
 
             if(preg_match('/.*;$/', trim($sql))){
 
-				//2012-04-25 数据表模块添加前缀=>
+				//2012-04-25 数据表模块添加前缀=>*************************************************************************
 				$prefix=$this->config['prefix'];
 				$prefix_tpl=$this->config['prefix_tpl'];
 				$prefix_sql = str_replace(" `{$prefix_tpl}", " `{$prefix}", $sql);//临时改变SQL，修改前缀文件
-				//增加数据库前缀后，定位
+				//增加数据库前缀后，定位***********************************************************************************
 
                 if(false !== Db::execute($prefix_sql)){//执行修改过后的前缀SQL文件，不作为计算位置
                     $start += strlen($sql);

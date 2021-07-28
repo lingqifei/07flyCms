@@ -38,7 +38,7 @@ class Wxpay extends Pay implements Driver
     public function driverInfo()
     {
         
-        return ['driver_name' => '微信支付驱动', 'driver_class' => 'Wxpay', 'driver_describe' => '微信支付', 'author' => 'lingqifei', 'version' => '1.0.1'];
+        return ['driver_name' => '微信支付驱动', 'driver_class' => 'Wxpay', 'driver_describe' => '微信支付', 'author' => 'lingqifei', 'version' => '1.0'];
     }
     
     /**
@@ -100,21 +100,21 @@ class Wxpay extends Pay implements Driver
         
         
         $unifiedOrder->setParameter("body", $order['body']);//商品描述
-
         //自定义订单号，此处仅作举例
         $config = $this->config();
+        
         $unifiedOrder->setConfig($config);
 
         $unifiedOrder->setParameter("out_trade_no",$order['order_sn']);			//商户订单号
         // $unifiedOrder->setParameter("fee_type","USD");
         $unifiedOrder->setParameter("total_fee",$order['order_amount']*100);	//总金额
-        $unifiedOrder->setParameter("notify_url", $order['notify_url']);				//通知地址
+        $unifiedOrder->setParameter("notify_url", Pay::NOTIFY_URL);				//通知地址
         $unifiedOrder->setParameter("trade_type","NATIVE");						//交易类型
 
         //获取统一支付接口结果
         $unifiedOrderResult = $unifiedOrder->getResult();
 
-        return $unifiedOrderResult;
+
 
         //商户根据实际情况设置相应的处理流程
         if ($unifiedOrderResult["return_code"] == "FAIL") {
@@ -127,9 +127,6 @@ class Wxpay extends Pay implements Driver
         } elseif ($unifiedOrderResult["code_url"] != NULL) {
                 //从统一支付接口获取到code_url
                 $code_url = $unifiedOrderResult["code_url"];
-
-               d($unifiedOrderResult);exit;
-
                 //商户自行增加处理流程
                 //......
         }

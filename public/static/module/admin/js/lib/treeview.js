@@ -16,6 +16,7 @@ $(document).ready(function () {
 				onNodeSelected: function (event, node) {
 					//设置新增时的父节点
 					$('.searchForm').find("input[name='pid']").val(node.id);
+					$('.searchForm').find("input[name='id']").val(node.id);
 					$('.add-btn').attr('data-id',node.id);
 					turnPage(1);
 				}
@@ -23,7 +24,6 @@ $(document).ready(function () {
 		}, "json");
 		turnPage(1);//页面加载时初始化分页
 	}
-
 
 	//刷新加载-添加
 	$("body").on("click", ".refresh-tree", function () {

@@ -22,6 +22,7 @@ if($('a').is('.btn-field-set')) {
 
 };
 
+//表格显示列设置* ***********************************************************
 $("body").on("click", ".btn-field-set", function() {
 	a=JSON.parse(localStorage.getItem("listAll"+showTable));
 	b=JSON.parse(localStorage.getItem("listSave"+showTable));
@@ -40,15 +41,32 @@ $("body").on("click", ".btn-field-set", function() {
 		}
 		
 	}
-	listHtml +="</div><div class='ibox-content'><div class='col-sm-4'></div><div class='col-sm-4'><a href='javascript:void(0)' class='layui-layer-close layui-layer-close1' style='padding:5px 15px;background:#23B7E5;color:#fff;border-radius:3px;'>关闭页面</a></div><div class='col-sm-4'><a href='javascript:void(0)' class='btn btn-primary save-list-field'>保存设置</a></div></div>";
-	
-	layer.open({
+	listHtml +="</div>";
+
+	var indxe_list_field =layer.open({
 		type: 1,
 		title:"列表字段设置",
 		scrollbar: false,
 		skin: 'layui-layer-demo', //加上边框
 		area: ['80%', '60%'], //宽高
-		content: listHtml
+		content: listHtml,
+		btn: ['保存', '取消'],
+		yes: function(index, layero){
+			listSave=[];
+			$(".list-all-field input[name='listFieldCheckbox']:checked").each(function(e) {
+				if (true == $(this).prop("checked")) {
+					value = $(this).prop('value');
+					listSave[e]=value
+				}
+			});
+			localStorage.setItem("listSave"+showTable,JSON.stringify(listSave));
+			turnPage(pageNum);
+			//事件
+			layer.close(indxe_list_field);
+		},
+		btn2: function(index, layero){
+			layer.close(index)
+		}
 	});	
 });
 
@@ -64,6 +82,7 @@ $("body").on("click", ".save-list-field", function() {
 	localStorage.setItem("listSave"+showTable,JSON.stringify(listSave));
 	log(listSave);
 });
+//********************************************************************表格显示  结束
 
 var index = layer.getFrameIndex(window.name); //获取窗口索引
 //保存设置的字段
