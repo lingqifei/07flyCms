@@ -23,7 +23,7 @@
 
 ### 效果演示
 
-1、在线演示：http://cms.07fly.xyz
+1、在线演示：http://cms.demo.07fly.xyz
 
 2、程序下载：http://www.07fly.xyz/
 
