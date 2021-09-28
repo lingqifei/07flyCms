@@ -118,17 +118,13 @@ class Database{
 		//2、备份时表名替换为【模板表名】 模板前缀——表名
 		$prefix=$this->config['prefix'];
 		$prefix_tpl=$this->config['prefix_tpl'];
-		$table_tpl=$prefix_tpl.$table;
 		if(!empty($prefix)){
-			if(strstr($table,$prefix)==false){
-				$table=$prefix.$table;
-				$table_tpl=$prefix_tpl.ltrim($table,$prefix);
-			}
+			$table_tpl=$prefix_tpl.ltrim($table,$prefix);
 		}else{
 			$table_tpl=$prefix_tpl.$table;
 		}
 		//表的前缀替换结束**********************************
-
+		
         // 备份表结构
         if(0 == $start){
 

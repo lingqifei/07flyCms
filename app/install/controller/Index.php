@@ -100,6 +100,6 @@ class Index extends Controller
         // 开始安装
         $install_result = $obj->install($db, $admin);
 
-        is_string($install_result) ? $this->error($install_result) : $this->success('安装完成', 'complete');
+        is_string($install_result) ? $this->error($install_result) : $this->success('安装完成', 'admin/login/login');
     }
 }
