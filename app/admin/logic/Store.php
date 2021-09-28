@@ -244,6 +244,8 @@ class Store extends AdminBase
 
 			//2、增加到本地模块
 			$app_info_file=$app_path.'/data/info.php';
+			$app_table_file=$app_path.'/data/table.php';
+			$app_menu_file=$app_path.'/data/menu.php';
 			$app_sql_install_file=$app_path.'/data/install.sql';
 			$app_theme_dir=$app_path.'/data/theme';
 
@@ -276,6 +278,8 @@ class Store extends AdminBase
 					if ($res[0] == RESULT_ERROR) return $res;
 				}
 
+
+
 				//3、更新模块包,
 				$updata=['status'=>1,'visible'=>1];
 				$result=$this->modelSysModule->updateInfo(['id' => $sys_mid], $updata);
@@ -290,6 +294,21 @@ class Store extends AdminBase
 						exit;
 					}
 				}
+
+				//5、判断是否有数据表同步文件 table.php
+				if(file_exists($app_table_file)){
+					$res = $this->logicSysModule->sysModuleSyncTableFile($app_table_file);
+					if ($res[0] == RESULT_ERROR) return $res;
+				}
+
+				//6、判断是否有栏目数据表同步文件 menu.php
+				if(file_exists($app_menu_file)){
+					$res = $this->logicSysModule->sysModuleSyncMenuFile($app_menu_file);
+					if ($res[0] == RESULT_ERROR) return $res;
+				}
+
+
+
 
 				return $result ? [RESULT_SUCCESS, '应用插件安装部署成功'] : [RESULT_ERROR, $this->modelSysModule->getError()];
 				exit;
@@ -346,6 +365,8 @@ class Store extends AdminBase
 
 			//2、增加到本地模块
 			$app_info_file=$app_path.'/data/info.php';
+			$app_table_file=$app_path.'/data/table.php';
+			$app_menu_file=$app_path.'/data/menu.php';
 			$app_sql_upgrade=$app_path.'/data/upgrade.sql';
 			$app_theme_dir=$app_path.'/data/theme';
 
@@ -381,6 +402,18 @@ class Store extends AdminBase
 						return [RESULT_ERROR, '复制模板文件失败'];
 						exit;
 					}
+				}
+
+				//5、判断是否有数据表同步文件 table.php
+				if(file_exists($app_table_file)){
+					$res = $this->logicSysModule->sysModuleSyncTableFile($app_table_file);
+					if ($res[0] == RESULT_ERROR) return $res;
+				}
+
+				//6、判断是否有栏目数据表同步文件 menu.php
+				if(file_exists($app_menu_file)){
+					$res = $this->logicSysModule->sysModuleSyncMenuFile($app_menu_file);
+					if ($res[0] == RESULT_ERROR) return $res;
 				}
 
 				return $result ? [RESULT_SUCCESS, '应用插件安装部署成功'] : [RESULT_ERROR, $this->modelSysModule->getError()];
