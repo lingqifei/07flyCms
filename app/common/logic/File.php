@@ -214,6 +214,11 @@ class File extends LogicBase
 	 */
 	public function getPictureWebUrl($path = '')
 	{
+
+		if (strpos($path, '/uploads/') !== false) {
+			return $path;
+		}
+
 		$root_url = get_file_root_path();
 		if (!empty($path)) {
 			return $root_url . 'upload/picture/' . $path;

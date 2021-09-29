@@ -656,10 +656,13 @@ function get_file_root_path()
  */
 function get_picture_url($id = 0,$member='picture')
 {
-
     $fileLogic = get_sington_object('fileLogic', LogicFile::class);
-
-    return $fileLogic->getPictureUrl($id,$member);
+    $urltype=0;
+    if($urltype==1){
+		return $fileLogic->getPictureUrl($id,$member);
+	}else{
+		return $fileLogic->getPictureWebUrl($id);
+	}
 }
 
 
