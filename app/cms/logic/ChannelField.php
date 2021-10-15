@@ -150,8 +150,7 @@ class ChannelField extends CmsBase
     {
         $where['visible'] = ['=', '1'];
         $where['ext_table'] = ['=', $ext_table];
-        $list = $this->modelChannelField->getList($where, "", 'sort asc', false);
-
+        $list = $this->modelChannelField->getList($where, "", 'sort asc', false)->toArray();
         $htmltxt = "";
         foreach ($list as $key => $row) {
             $field_value = array_key_exists($row["field_name"], $field_val_arr) ? $field_val_arr[$row["field_name"]] : "";//是否存在字段值
@@ -175,6 +174,15 @@ class ChannelField extends CmsBase
                                             </div>
                                     </div>';
                     break;
+				case "text":
+					$htmltxt .= '<div class="form-group">
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+                                            <div class="col-sm-10">
+                                                <textarea name="' . $row["field_name"] . '" class="form-control" >' . $field_value . '</textarea>
+                                                <span class="help-block m-b-none">' . $row['desc'] . '</span> 
+                                            </div>
+                                    </div>';
+					break;
                 case "htmltext":
                     $htmltxt .= '<div class="form-group">
 									        <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
@@ -268,6 +276,22 @@ class ChannelField extends CmsBase
                                             </div>
                                         </div>';
                     break;
+				case "select":
+					$htmltxt .= '<div class="form-group">
+                                            <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
+                                            <div class="col-sm-10">
+                                              <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" style="width: 200px;" tabindex="2">
+                                        ';
+					$option_arr = explode(',', $row['default_value']);
+					foreach ($option_arr as $va) {
+						$option_chk = ($va == $field_value) ? "selected" : "";
+						$htmltxt .= '<option value="' . $va . '" hassubinfo="true" '.$option_chk.'>' . $va . '</option>';
+					}
+					$htmltxt .= '
+                                              </select>
+                                            </div>
+                                        </div>';
+					break;
                 case "linkage":
                     $htmltxt .= '
                                 <div class="form-group">
@@ -437,6 +461,8 @@ class ChannelField extends CmsBase
                     $htmltxt .= '';
             }
         }
+
+
         return $htmltxt;
     }
 

@@ -13,8 +13,6 @@
 
 namespace app\cms\logic;
 
-use app\common\logic\TableField;
-
 /**
  * 友情链接管理=》逻辑层
  */

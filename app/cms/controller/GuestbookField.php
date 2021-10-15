@@ -42,13 +42,14 @@ class GuestbookField extends CmsBase
     public function show_json()
     {
         $where = [];
-        if (!empty($this->param['main_table:'])) {
+        if (!empty($this->param['main_table'])) {
             $where['main_table'] = ['=', $this->param['main_table']];
         }
-        if (!empty($this->param['ext_table:'])) {
+        if (!empty($this->param['ext_table'])) {
             $where['ext_table'] = ['=', $this->param['ext_table']];
         }
-        //排序操作
+
+
         //排序操作
         if (!empty($this->param['orderField'])) {
             $orderField = $this->param['orderField'];
@@ -62,6 +63,7 @@ class GuestbookField extends CmsBase
         } else {
             $order_by = "sort asc";
         }
+
         $list = $this->logicGuestbookField->getGuestbookFieldList($where, true, $order_by);
         return $list;
     }

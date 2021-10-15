@@ -26,18 +26,18 @@ class Search extends IndexBase{
      */
     public function index($keywords=0){
 
-        if(empty($keywords)){
-            if(empty($this->param['keywords'])){
-                $this->keywords=$this->param['keywords'];
-            }
-        }else{
-            $this->keywords=$keywords;
-        }
-
-        if(empty($this->keywords)){
-            echo "keywords不能为空~";
-            exit;
-        }
+//        if(empty($keywords)){
+//            if(empty($this->param['keywords'])){
+//                $this->keywords=$this->param['keywords'];
+//            }
+//        }else{
+//            $this->keywords=$keywords;
+//        }
+//
+//        if(empty($this->keywords)){
+//            echo "keywords不能为空~";
+//            exit;
+//        }
 
         /*模板参数*/
         $rtnArray = array(

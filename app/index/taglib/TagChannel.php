@@ -78,7 +78,7 @@ class TagChannel extends Base
         $result_array=[];
         if (!empty($typeid)) {
             if (!preg_match('/^\d+([\d\,]*)$/i', $typeid)) {
-                echo '标签arclist报错：typeid属性值语法错误，请正确填写栏目ID。';
+                echo '标签channel报错：typeid属性值语法错误，请正确填写栏目ID（0~9）数字。';
                 return false;
             }
             // 过滤typeid中含有空值的栏目ID

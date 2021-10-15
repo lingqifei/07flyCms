@@ -47,6 +47,10 @@ class View extends IndexBase{
             //模型处理
             $this->nid=$this->logicChannel->getChannelValue(['id'=>$type['channel_id']],'nid');
             //字段封装
+
+
+			$archives['typename']=$type['typename'];
+			$archives['typeurl']=$type['typeurl'];
             $rtnArray  = array(
                 'type' => $type,
                 'field' => $archives,

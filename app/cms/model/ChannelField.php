@@ -23,6 +23,7 @@ class ChannelField extends CmsBase
             "varchar" => array( 'name' => '单行文本(varchar)', 'type' => 'varchar' ),
             "textarea" => array( 'name' => '多行文本', 'type' => 'varchar' ),
             "htmltext" => array( 'name' => 'HTML文本', 'type' => 'varchar' ),
+            "text" => array( 'name' => '文本', 'type' => 'varchar' ),
             "int" => array( 'name' => '整数类型', 'type' => 'int' ),
             "float" => array( 'name' => '小数类型', 'type' => 'float' ),
             "datetime" => array( 'name' => '时间类型', 'type' => 'datetime' ),
@@ -32,6 +33,7 @@ class ChannelField extends CmsBase
             "imgs" => array( 'name' => '多个图片', 'type' => 'varchar' ),
             "option" => array( 'name' => '使用option下拉框', 'type' => 'varchar' ),
             "radio" => array( 'name' => '使用radio选项卡', 'type' => 'varchar' ),
+            "select" => array( 'name' => '使用select选项卡', 'type' => 'varchar' ),
             "checkbox" => array( 'name' => 'Checkbox多选框', 'type' => 'varchar' ),
             "linkage" => array( 'name' => '系统内部关联', 'type' => 'varchar' )
         );

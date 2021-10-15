@@ -657,8 +657,7 @@ function get_file_root_path()
 function get_picture_url($id = 0,$member='picture')
 {
     $fileLogic = get_sington_object('fileLogic', LogicFile::class);
-    $urltype=0;
-    if($urltype==1){
+    if(is_numeric($id)){
 		return $fileLogic->getPictureUrl($id,$member);
 	}else{
 		return $fileLogic->getPictureWebUrl($id);

@@ -125,13 +125,13 @@ class Channel extends CmsBase
         $sql="
 CREATE TABLE `$table` (
 	`id` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-	`typeid` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
+	`type_id` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
 	`body` MEDIUMTEXT NULL,
 	`redirecturl` VARCHAR(255) NOT NULL DEFAULT '',
 	`templet` VARCHAR(30) NOT NULL DEFAULT '',
 	`userip` CHAR(15) NOT NULL DEFAULT '',
 	PRIMARY KEY (`id`),
-	INDEX `typeid` (`typeid`)
+	INDEX `type_id` (`type_id`)
 )
 COMMENT='扩展表'
 COLLATE='utf8_general_ci'

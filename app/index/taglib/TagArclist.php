@@ -141,8 +141,8 @@ class TagArclist extends Base
 
         $where = [];
         if(!empty($param['channelid'])){
-            $where['a.channelid']=['in',$param['channelid']];
-            $randMap['channelid']=['in',$param['channelid']];
+            $where['a.channel_id']=['in',$param['channelid']];
+            $randMap['channel_id']=['in',$param['channelid']];
         }
 
         if(!empty($param['cityid'])){

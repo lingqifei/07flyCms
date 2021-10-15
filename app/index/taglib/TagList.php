@@ -155,10 +155,15 @@ class TagList extends Base
         if (strtolower(request()->controller()) == 'search') {
             $keywords = input('param.keywords/s', '');
             $typeid = input('param.typeid/s', '');
-            $where['a.title|a.description|t.typename'] = ['like', "%{$keywords}%"];
+
+            if($keywords){
+				$where['a.title|a.description|t.typename'] = ['like', "%{$keywords}%"];
+			}
+
             if($typeid){
                 $where['a.type_id'] = ['in', $typeid];
             }
+
         }
 
         //标签查询
@@ -184,6 +189,19 @@ class TagList extends Base
             $sjjy = input('param.sjjy/s', '');
             $orderby = input('param.orderby/s', '');
             $orderway = input('param.orderway/s', '');
+
+
+            $co_name = input('param.co_name/s', '');
+            $zs_code = input('param.zs_code/s', '');
+
+			if(!empty($co_name)){
+				$where['e.co_name'] = ['=', $co_name];
+			}
+
+			if(!empty($zs_code)){
+				$where['e.zs_code'] = ['=', $zs_code];
+			}
+
             $sfk = input('param.sfk/s', '');
             if ($orderby) {
                 empty($orderway) && $orderway='desc';

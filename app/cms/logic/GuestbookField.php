@@ -20,261 +20,265 @@ use app\common\logic\TableField;
  */
 class GuestbookField extends CmsBase
 {
-    /**
-     * 析构函数
-     */
-    function  __construct() {
-        $this->tablefield = new TableField();
-    }
-    /**
-     * 模型字段处列表
-     */
-    public function getGuestbookFieldList($where = [], $field = true, $order = '', $paginate = DB_LIST_ROWS)
-    {
+	/**
+	 * 析构函数
+	 */
+	function __construct()
+	{
+		$this->tablefield = new TableField();
+	}
 
-        $list=$this->modelGuestbookField->getList($where, $field, $order, $paginate)->toArray();
-        if($paginate===false) $list['data']=$list;
-        foreach ($list['data'] as &$row){
-            $row['field_type_text']=$this->modelGuestbookField->field_type_text($row['field_type']);
-        }
-        return $list;
-    }
+	/**
+	 * 模型字段处列表
+	 */
+	public function getGuestbookFieldList($where = [], $field = true, $order = '', $paginate = DB_LIST_ROWS)
+	{
+		$list = $this->modelGuestbookField->getList($where, $field, $order, $paginate)->toArray();
+		if ($paginate === false) $list['data'] = $list;
+		foreach ($list['data'] as &$row) {
+			$row['field_type_text'] = $this->modelGuestbookField->field_type_text($row['field_type']);
+		}
+		return $list;
+	}
 
-    /**
-     * 模型字段处列表
-     */
-    public function getGuestbookTypeList()
-    {
+	/**
+	 * 模型字段处列表
+	 */
+	public function getGuestbookTypeList()
+	{
 
-       return  $this->modelGuestbookField->field_type_text();
-    }
+		return $this->modelGuestbookField->field_type_text();
+	}
 
-    /**
-     * 模型管理处信息
-     */
-    public function getGuestbookFieldInfo($where = [], $field = true)
-    {
+	/**
+	 * 模型管理处信息
+	 */
+	public function getGuestbookFieldInfo($where = [], $field = true)
+	{
 
-        return $this->modelGuestbookField->getInfo($where, $field);
-    }
+		return $this->modelGuestbookField->getInfo($where, $field);
+	}
 
-    /**
-     * 模型添加
-     */
-    public function guestbookFieldAdd($data = [])
-    {
+	/**
+	 * 模型添加
+	 */
+	public function guestbookFieldAdd($data = [])
+	{
 
-        $validate_result = $this->validateGuestbookField->scene('add')->check($data);
+		$validate_result = $this->validateGuestbookField->scene('add')->check($data);
 
-        if (!$validate_result) {
+		if (!$validate_result) {
 
-            return [RESULT_ERROR, $this->validateGuestbookField->getError()];
-        }
+			return [RESULT_ERROR, $this->validateGuestbookField->getError()];
+		}
 
-        //为表添加字段
-        $rtn=$this->tablefield->add_field(SYS_DB_PREFIX.$data['ext_table'],$data['field_name'],$data['field_type'],$data['maxlength'],$data['default_value'], $data['desc']);
-        if($rtn[0]==RESULT_ERROR)  return $rtn;
+		//为表添加字段
+		$rtn = $this->tablefield->add_field(SYS_DB_PREFIX . $data['ext_table'], $data['field_name'], $data['field_type'], $data['maxlength'], $data['default_value'], $data['desc']);
+		if ($rtn[0] == RESULT_ERROR) return $rtn;
 
-        $result = $this->modelGuestbookField->setInfo($data);
-        $url = url('show');
-        $result && action_log('新增', '新增留言表单字段，table：' . $data['ext_table'].',field:'. $data['field_name']);
+		$result = $this->modelGuestbookField->setInfo($data);
+		$url = url('show');
+		$result && action_log('新增', '新增留言表单字段，table：' . $data['ext_table'] . ',field:' . $data['field_name']);
 
-        return $result ? [RESULT_SUCCESS, '添加成功', $url] : [RESULT_ERROR, $this->modelGuestbookField->getError()];
-    }
-    /**
-     * 模型编辑
-     */
-    public function guestbookFieldEdit($data = [])
-    {
+		return $result ? [RESULT_SUCCESS, '添加成功', $url] : [RESULT_ERROR, $this->modelGuestbookField->getError()];
+	}
 
-        $validate_result = $this->validateGuestbookField->scene('edit')->check($data);
+	/**
+	 * 模型编辑
+	 */
+	public function guestbookFieldEdit($data = [])
+	{
 
-        if (!$validate_result) {
+		$validate_result = $this->validateGuestbookField->scene('edit')->check($data);
 
-            return [RESULT_ERROR, $this->validateGuestbookField->getError()];
-        }
+		if (!$validate_result) {
 
-        //为表添加字段
-        $rtn=$this->tablefield->modify_field(SYS_DB_PREFIX.$data['ext_table'],$data['field_name'],$data['field_type'],$data['maxlength'],$data['default_value'], $data['desc']);
-        if($rtn[0]==RESULT_ERROR)  return $rtn;
+			return [RESULT_ERROR, $this->validateGuestbookField->getError()];
+		}
 
-        $url = url('show');
+		//为表添加字段
+		$rtn = $this->tablefield->modify_field(SYS_DB_PREFIX . $data['ext_table'], $data['field_name'], $data['field_type'], $data['maxlength'], $data['default_value'], $data['desc']);
+		if ($rtn[0] == RESULT_ERROR) return $rtn;
 
-        $result = $this->modelGuestbookField->setInfo($data);
+		$url = url('show');
 
-        $result && action_log('编辑', '编辑留言表单字段，name：' .$data['ext_table'].',field:'. $data['field_name']);
+		$result = $this->modelGuestbookField->setInfo($data);
 
-        return $result ? [RESULT_SUCCESS, '编辑模型字段', $url] : [RESULT_ERROR, $this->modelGuestbookField->getError()];
-    }
-    /**
-     * 字段删除
-     */
-    public function guestbookFieldDel($where = [])
-    {
+		$result && action_log('编辑', '编辑留言表单字段，name：' . $data['ext_table'] . ',field:' . $data['field_name']);
 
-        $list=$this->getGuestbookFieldList($where);
+		return $result ? [RESULT_SUCCESS, '编辑模型字段', $url] : [RESULT_ERROR, $this->modelGuestbookField->getError()];
+	}
 
-        foreach ($list['data'] as $row){
-            $this->tablefield->del_field(SYS_DB_PREFIX.$row['ext_table'],$row['field_name']);
-        }
+	/**
+	 * 字段删除
+	 */
+	public function guestbookFieldDel($where = [])
+	{
 
-        $result = $this->modelGuestbookField->deleteInfo($where,true);
+		$list = $this->getGuestbookFieldList($where);
 
-        $result && action_log('删除', '模型字段，where：' . http_build_query($where));
+		foreach ($list['data'] as $row) {
+			$this->tablefield->del_field(SYS_DB_PREFIX . $row['ext_table'], $row['field_name']);
+		}
 
-        return $result ? [RESULT_SUCCESS, '字段删除成功'] : [RESULT_ERROR, $this->modelGuestbookField->getError()];
-    }
+		$result = $this->modelGuestbookField->deleteInfo($where, true);
 
+		$result && action_log('删除', '模型字段，where：' . http_build_query($where));
 
-    /**
-     * 模型字段处列表
-     */
-    public function getExtTableFieldList($main_table=null,$ext_table=null)
-    {
-        if($main_table && $ext_table){
-            $where['main_table']=['=',$main_table];
-            $where['ext_table']=['=',$ext_table];
-            return $this->modelGuestbookField->getList($where, true, 'sort asc', false)->toArray();
-        }
-    }
+		return $result ? [RESULT_SUCCESS, '字段删除成功'] : [RESULT_ERROR, $this->modelGuestbookField->getError()];
+	}
 
 
-    /**应用于添加、编辑，扩展字段表单显示，
-     * @param $ext_table
-     * @param array $field_val_arr ，是否有默认值
-     * @return string
-     * Author: lingqifei created by at 2020/3/2 0002
-     */
-    public function getExtTableFieldListHtml($ext_table, $field_val_arr = [] ) {
-        $where['visible']=['=','1'];
-        $where['ext_table']=['=',$ext_table];
-        $list = $this->modelGuestbookField->getList($where, "", 'sort asc', false)->toArray();
-        $htmltxt = "";
-        foreach ( $list as $key => $row ) {
-            //是否存在字段值
-            $field_value = array_key_exists( $row[ "field_name" ], $field_val_arr ) ? $field_val_arr[ $row[ "field_name" ] ] : "";
-            switch ( $row[ 'field_type' ] ) {
-                case "varchar":
-                    $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+	/**
+	 * 模型字段处列表
+	 */
+	public function getExtTableFieldList($main_table = null, $ext_table = null)
+	{
+		if ($main_table && $ext_table) {
+			$where['main_table'] = ['=', $main_table];
+			$where['ext_table'] = ['=', $ext_table];
+			return $this->modelGuestbookField->getList($where, true, 'sort asc', false)->toArray();
+		}
+	}
+
+
+	/**应用于添加、编辑，扩展字段表单显示，
+	 * @param $ext_table
+	 * @param array $field_val_arr ，是否有默认值
+	 * @return string
+	 * Author: lingqifei created by at 2020/3/2 0002
+	 */
+	public function getExtTableFieldListHtml($ext_table, $field_val_arr = [])
+	{
+		$where['visible'] = ['=', '1'];
+		$where['ext_table'] = ['=', $ext_table];
+		$list = $this->modelGuestbookField->getList($where, "", 'sort asc', false)->toArray();
+		$htmltxt = "";
+		foreach ($list as $key => $row) {
+			//是否存在字段值
+			$field_value = array_key_exists($row["field_name"], $field_val_arr) ? $field_val_arr[$row["field_name"]] : "";
+			switch ($row['field_type']) {
+				case "varchar":
+					$htmltxt .= '<div class="form-group">
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-										<input name="' . $row[ "field_name" ] . '" class="form-control" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row[ 'desc' ] . '</span> 
+										<input name="' . $row["field_name"] . '" class="form-control" type="text" value="' . $field_value . '"/>
+										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
 									</div>
 								</div>';
-                    break;
-                case "textarea":
-                    $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+					break;
+				case "textarea":
+					$htmltxt .= '<div class="form-group">
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-										<textarea name="' . $row[ "field_name" ] . '" class="form-control" >' . $field_value . '</textarea>
-										<span class="help-block m-b-none">' . $row[ 'desc' ] . '</span> 
+										<textarea name="' . $row["field_name"] . '" class="form-control" >' . $field_value . '</textarea>
+										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
 									</div>
 								</div>';
-                    break;
-                case "int":
-                    $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+					break;
+				case "int":
+					$htmltxt .= '<div class="form-group">
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-										<input name="' . $row[ "field_name" ] . '" class="form-control" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row[ 'desc' ] . '</span> 
+										<input name="' . $row["field_name"] . '" class="form-control" type="text" value="' . $field_value . '"/>
+										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
 									</div>
 								</div>';
-                    break;
-                case "float":
-                    $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+					break;
+				case "float":
+					$htmltxt .= '<div class="form-group">
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-										<input name="' . $row[ "field_name" ] . '" class="form-control" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row[ 'desc' ] . '</span> 
+										<input name="' . $row["field_name"] . '" class="form-control" type="text" value="' . $field_value . '"/>
+										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
 									</div>
 								</div>';
-                    break;
-                case "datetime":
-                    $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+					break;
+				case "datetime":
+					$htmltxt .= '<div class="form-group">
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-										<input name="' . $row[ "field_name" ] . '" class="form-control datetimepicker" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row[ 'desc' ] . '</span> 
+										<input name="' . $row["field_name"] . '" class="form-control datetimepicker" type="text" value="' . $field_value . '"/>
+										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
 									</div>
 								</div>';
-                    break;
-                case "date":
-                    $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+					break;
+				case "date":
+					$htmltxt .= '<div class="form-group">
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-										<input name="' . $row[ "field_name" ] . '" class="form-control datepicker" type="text" value="' . $field_value . '"/>
-										<span class="help-block m-b-none">' . $row[ 'desc' ] . '</span> 
+										<input name="' . $row["field_name"] . '" class="form-control datepicker" type="text" value="' . $field_value . '"/>
+										<span class="help-block m-b-none">' . $row['desc'] . '</span> 
 									</div>
 								</div>';
-                    break;
-                case "option":
-                    $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+					break;
+				case "option":
+					$htmltxt .= '<div class="form-group">
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-									  <select data-placeholder="选择' . $row[ "show_name" ] . '..." name="' . $row[ "field_name" ] . '" class="chosen-select ' . $row[ "field_name" ] . '-chosen-select" style="width: 200px;" tabindex="2">
+									  <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" style="width: 200px;" tabindex="2">
 								';
-                    $option_arr = explode( ',', $row[ 'default' ] );
-                    foreach ( $option_arr as $va ) {
-                        $htmltxt .= '<option value="' . $va . '" hassubinfo="true">' . $va . '</option>';
-                    }
-                    $htmltxt .= '
+					$option_arr = explode(',', $row['default']);
+					foreach ($option_arr as $va) {
+						$htmltxt .= '<option value="' . $va . '" hassubinfo="true">' . $va . '</option>';
+					}
+					$htmltxt .= '
 									  </select>
 									</div>
 								</div>';
-                    break;
-                case "linkage":
-                    $htmltxt .= '<div class="form-group">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+					break;
+				case "linkage":
+					$htmltxt .= '<div class="form-group">
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
-									  <select data-placeholder="选择' . $row[ "show_name" ] . '..." name="' . $row[ "field_name" ] . '" class="chosen-select ' . $row[ "field_name" ] . '-chosen-select" style="width: 200px;" tabindex="2">
+									  <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" style="width: 200px;" tabindex="2">
 								';
-                    $option_arr = explode( ',', $row[ 'default' ] );
-                    $option_arr = $this->cst_field_ext_linkage( $row[ 'default' ] );
-                    foreach ( $option_arr as $row ) {
-                        $htmltxt .= '<option value="' . $row[ 'id' ] . '" hassubinfo="true">' . $row[ 'name' ] . '</option>';
-                    }
-                    $htmltxt .= '
+					$option_arr = explode(',', $row['default']);
+					$option_arr = $this->cst_field_ext_linkage($row['default']);
+					foreach ($option_arr as $row) {
+						$htmltxt .= '<option value="' . $row['id'] . '" hassubinfo="true">' . $row['name'] . '</option>';
+					}
+					$htmltxt .= '
 									  </select>
 									</div>
 								</div>';
-                    break;
-                case "radio":
-                    $htmltxt .= '<div class="form-group text-left">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+					break;
+				case "radio":
+					$htmltxt .= '<div class="form-group text-left">
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
 										<div class="radio i-checks">
 								';
-                    $option_arr = explode( ',', $row[ 'default' ] );
-                    foreach ( $option_arr as $va ) {
-                        $checked = ( $va == $field_value ) ? "checked" : "";
-                        $htmltxt .= '<input type="radio" name="' . $row[ "field_name" ] . '" value="' . $va . '" ' . $checked . ' /> ' . $va . ' ';
-                    }
-                    $htmltxt .= '
+					$option_arr = explode(',', $row['default']);
+					foreach ($option_arr as $va) {
+						$checked = ($va == $field_value) ? "checked" : "";
+						$htmltxt .= '<input type="radio" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . ' /> ' . $va . ' ';
+					}
+					$htmltxt .= '
 									  </div>
 									</div>
 								</div>';
-                    break;
-                case "checkbox":
-                    $htmltxt .= '<div class="form-group text-left">
-									<label class="col-sm-2 control-label">' . $row[ "show_name" ] . '</label>
+					break;
+				case "checkbox":
+					$htmltxt .= '<div class="form-group text-left">
+									<label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
 									<div class="col-sm-10">
 										<div class="checkbox i-checks">
 								';
-                    $option_arr = explode( ',', $row[ 'default' ] );
-                    foreach ( $option_arr as $va ) {
-                        $htmltxt .= '<input type="checkbox" name="' . $row[ "field_name" ] . '" value="' . $va . '" ' . $checked . '/> ' . $va . ' ';
-                    }
-                    $htmltxt .= '
+					$option_arr = explode(',', $row['default']);
+					foreach ($option_arr as $va) {
+						$htmltxt .= '<input type="checkbox" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . '/> ' . $va . ' ';
+					}
+					$htmltxt .= '
 									  </div>
 									</div>
 								</div>';
-                    break;
-                default:
-                    $htmltxt .= '';
-            }
-        }
-        return $htmltxt;
-    }
+					break;
+				default:
+					$htmltxt .= '';
+			}
+		}
+		return $htmltxt;
+	}
 
 }

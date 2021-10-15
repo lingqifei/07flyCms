@@ -449,7 +449,7 @@ INSERT INTO `#@__sys_menu` VALUES (2388, '修改', 2386, 1, 'cms', 'Friendlink/e
 INSERT INTO `#@__sys_menu` VALUES (2386, '友情链接', 2385, 50, 'cms', 'Friendlink/show', 1, 0, 1, '', 1, 0, 1620872713, 1);
 INSERT INTO `#@__sys_menu` VALUES (2387, '启用', 2386, 1, 'cms', 'Friendlink/set_visible', 1, 0, 0, '', 1, 0, 1620872713, 1);
 INSERT INTO `#@__sys_menu` VALUES (2385, 'CMS内容系统', 0, 20, 'cms', 'cms', 1, 0, 1, '', 1, 1627443252, 1620872713, 1);
-
+INSERT INTO `#@__sys_menu` VALUES (2500, '其它导入', 2385, 50, 'cms', 'OtherCms/config', 1, 0, 1, '', 1, 0, 1620872713, 1);
 
 -- -----------------------------
 -- Table structure for `#@__sys_module`
@@ -776,7 +776,7 @@ CREATE TABLE `#@__archives` (
   `jump_url` varchar(256) DEFAULT '' COMMENT '跳转地址',
   `ismake` smallint(6) NOT NULL DEFAULT '0' COMMENT '是否生成html',
   `arcrank` smallint(6) NOT NULL DEFAULT '0' COMMENT '浏览权限',
-  `click` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '点击',
+  `click` mediumint(8) unsigned NOT NULL DEFAULT '100' COMMENT '点击',
   `money` smallint(6) NOT NULL DEFAULT '0' COMMENT '价格',
   `title` char(60) NOT NULL DEFAULT '' COMMENT '标题',
   `keywords` char(30) NOT NULL DEFAULT '' COMMENT '关键字',

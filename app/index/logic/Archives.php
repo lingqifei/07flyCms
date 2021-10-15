@@ -92,7 +92,7 @@ class Archives extends IndexBase
     public function getArchiveslikeList($where = [], $field = true, $order = '', $paginate = false, $limit = '')
     {
         $this->modelArchives->alias('a');
-        if ($paginate) $this->modelArchives->limit = $paginate;
+        if ($limit) $this->modelArchives->limit = $limit;
         $list = $this->modelArchives->getList($where, $field, $order, false)->toArray();
         $paginate === false && $list['data'] = $list;
         foreach ($list['data'] as &$row) {

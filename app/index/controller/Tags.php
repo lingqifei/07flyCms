@@ -67,6 +67,7 @@ class Tags extends IndexBase{
 
         $field_data = array(
             'tag'   => $tag,
+            'title'   => $tag,
             'tagid'   => $tagid,
         );
 

@@ -59,7 +59,7 @@ class TagLikearticle extends Base
         $result = false;
         $where = [];
         if($channelid){
-            $where['a.channelid']=['in',$channelid];
+            $where['a.channel_id']=['in',$channelid];
         }
 
         if (!empty($typeid)) {

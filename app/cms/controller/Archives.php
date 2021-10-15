@@ -92,6 +92,7 @@ class Archives extends CmsBase
 
         $channel=$this->logicChannel->getChannelInfo(['id'=>$info['channel_id']],'addtable');
         $ext_field= $this->logicChannelField->channelExtFieldHtml($channel['addtable'],$info);
+
         $checkbox= $this->logicArcatt->getArcattCheckbox('flag',$info['flag']);//属性
         $this->assign('arcatt_checkbox_html', $checkbox);
         $this->assign('info', $info);

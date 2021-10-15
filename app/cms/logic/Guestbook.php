@@ -55,7 +55,7 @@ class Guestbook extends CmsBase
         }
 
         $url = url('show');
-        $data['maintable'] = 'archives';//主表
+        $data['maintable'] = 'guestbook';//主表
         $data['addtable'] = 'guestbook_' . $data['nid'];//扩展表
 
         //添加创建表
@@ -159,12 +159,14 @@ class Guestbook extends CmsBase
     {
         $sql = "
 CREATE TABLE `$table` (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`gid` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
-	`content` TEXT NULL,
-	`reply` TEXT NULL,
-	`realname` VARCHAR(255) NOT NULL DEFAULT '',
-	`mobile` VARCHAR(255) NOT NULL DEFAULT '',
+	`content` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`reply` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`mobile` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
+	`realname` VARCHAR(250) NULL DEFAULT '' COMMENT '0' COLLATE 'utf8_general_ci',
+	`create_time` INT(11) NOT NULL DEFAULT '0',
+	`update_time` INT(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
 	INDEX `gid` (`gid`)
 )

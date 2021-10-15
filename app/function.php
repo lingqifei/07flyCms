@@ -280,18 +280,17 @@ function getQuarterStartEndTime($date=''){
 }
 
 
-
+/**
+ * 字符串截取，支持中文和其他编码
+ *
+ * @param string $str 需要转换的字符串
+ * @param string $start 开始位置
+ * @param string $length 截取长度
+ * @param string $suffix 截断显示字符
+ * @param string $charset 编码格式
+ * @return string
+ */
 if (!function_exists('msubstr')) {
-	/**
-	 * 字符串截取，支持中文和其他编码
-	 *
-	 * @param string $str 需要转换的字符串
-	 * @param string $start 开始位置
-	 * @param string $length 截取长度
-	 * @param string $suffix 截断显示字符
-	 * @param string $charset 编码格式
-	 * @return string
-	 */
 	function msubstr($str = '', $start = 0, $length = NULL, $suffix = false, $charset = "utf-8")
 	{
 		if (function_exists("mb_substr"))
@@ -319,17 +318,17 @@ if (!function_exists('msubstr')) {
 	}
 }
 
+/**
+ * 截取内容清除html之后的字符串长度，支持中文和其他编码
+ *
+ * @param string $str 需要转换的字符串
+ * @param string $start 开始位置
+ * @param string $length 截取长度
+ * @param string $suffix 截断显示字符
+ * @param string $charset 编码格式
+ * @return string
+ */
 if (!function_exists('html_msubstr')) {
-	/**
-	 * 截取内容清除html之后的字符串长度，支持中文和其他编码
-	 *
-	 * @param string $str 需要转换的字符串
-	 * @param string $start 开始位置
-	 * @param string $length 截取长度
-	 * @param string $suffix 截断显示字符
-	 * @param string $charset 编码格式
-	 * @return string
-	 */
 	function html_msubstr($str = '', $start = 0, $length = NULL, $suffix = false, $charset = "utf-8")
 	{
 		$str = htmlspecialchars_decode($str);
@@ -338,34 +337,34 @@ if (!function_exists('html_msubstr')) {
 	}
 }
 
+/**
+ * 针对多语言截取，其他语言的截取是中文语言的2倍长度
+ *
+ * @param string $str 需要转换的字符串
+ * @param string $start 开始位置
+ * @param string $length 截取长度
+ * @param string $suffix 截断显示字符
+ * @param string $charset 编码格式
+ * @return string
+ */
 if (!function_exists('text_msubstr')) {
-	/**
-	 * 针对多语言截取，其他语言的截取是中文语言的2倍长度
-	 *
-	 * @param string $str 需要转换的字符串
-	 * @param string $start 开始位置
-	 * @param string $length 截取长度
-	 * @param string $suffix 截断显示字符
-	 * @param string $charset 编码格式
-	 * @return string
-	 */
 	function text_msubstr($str = '', $start = 0, $length = NULL, $suffix = false, $charset = "utf-8")
 	{
 		return msubstr($str, $start, $length, $suffix, $charset);
 	}
 }
 
+/**
+ * 自定义只针对htmlspecialchars编码过的字符串进行解码
+ *
+ * @param string $str 需要转换的字符串
+ * @param string $start 开始位置
+ * @param string $length 截取长度
+ * @param string $suffix 截断显示字符
+ * @param string $charset 编码格式
+ * @return string
+ */
 if (!function_exists('htmlspecialchars_decode')) {
-	/**
-	 * 自定义只针对htmlspecialchars编码过的字符串进行解码
-	 *
-	 * @param string $str 需要转换的字符串
-	 * @param string $start 开始位置
-	 * @param string $length 截取长度
-	 * @param string $suffix 截断显示字符
-	 * @param string $charset 编码格式
-	 * @return string
-	 */
 	function htmlspecialchars_decode($str = '')
 	{
 		if (is_string($str) && stripos($str, '&lt;') !== false && stripos($str, '&gt;') !== false) {
@@ -375,13 +374,13 @@ if (!function_exists('htmlspecialchars_decode')) {
 	}
 }
 
+/**
+ * 过滤Html标签
+ *
+ * @param string $string 内容
+ * @return    string
+ */
 if (!function_exists('checkStrHtml')) {
-	/**
-	 * 过滤Html标签
-	 *
-	 * @param string $string 内容
-	 * @return    string
-	 */
 	function checkStrHtml($string)
 	{
 		$string = trim_space($string);
@@ -441,15 +440,14 @@ if (!function_exists('checkStrHtml')) {
 	}
 }
 
-
+/**
+ * 过滤前后空格等多种字符
+ *
+ * @param string $str 字符串
+ * @param array $arr 特殊字符的数组集合
+ * @return string
+ */
 if (!function_exists('trim_space')) {
-	/**
-	 * 过滤前后空格等多种字符
-	 *
-	 * @param string $str 字符串
-	 * @param array $arr 特殊字符的数组集合
-	 * @return string
-	 */
 	function trim_space($str, $arr = array())
 	{
 		if (empty($arr)) {
@@ -463,15 +461,15 @@ if (!function_exists('trim_space')) {
 	}
 }
 
+/**
+ * 替换指定的符号
+ *
+ * @param array $arr 特殊字符的数组集合
+ * @param string $replacement 符号
+ * @param string $str 字符串
+ * @return string
+ */
 if (!function_exists('func_preg_replace')) {
-	/**
-	 * 替换指定的符号
-	 *
-	 * @param array $arr 特殊字符的数组集合
-	 * @param string $replacement 符号
-	 * @param string $str 字符串
-	 * @return string
-	 */
 	function func_preg_replace($arr = array(), $replacement = ',', $str = '')
 	{
 		if (empty($arr)) {
@@ -486,13 +484,13 @@ if (!function_exists('func_preg_replace')) {
 }
 
 
+/**
+ * 判断url是否完整的链接
+ *
+ * @param string $url 网址
+ * @return boolean
+ */
 if (!function_exists('is_http_url')) {
-	/**
-	 * 判断url是否完整的链接
-	 *
-	 * @param string $url 网址
-	 * @return boolean
-	 */
 	function is_http_url($url)
 	{
 		// preg_match("/^(http:|https:|ftp:|svn:)?(\/\/).*$/", $url, $match);
@@ -505,23 +503,21 @@ if (!function_exists('is_http_url')) {
 	}
 }
 
-
+/**字符串按符号截取
+ * $str='123/456/789/abc';
+ * 示例：
+ * echo cut_str($str,'/',0); //输出 123
+ * echo cut_str($str,'/',2); //输出 789
+ * echo cut_str($str,'/',-1);//输出 abc
+ * echo cut_str($str,'/',-3);//输出 456
+ * @param $str
+ * @param $sign
+ * @param $number
+ * @return string
+ *
+ * Author: lingqifei created by at 2020/2/29 0029
+ */
 if (!function_exists('cut_str')) {
-
-	/**字符串按符号截取
-	 * $str='123/456/789/abc';
-	 * 示例：
-	 * echo cut_str($str,'/',0); //输出 123
-	 * echo cut_str($str,'/',2); //输出 789
-	 * echo cut_str($str,'/',-1);//输出 abc
-	 * echo cut_str($str,'/',-3);//输出 456
-	 * @param $str
-	 * @param $sign
-	 * @param $number
-	 * @return string
-	 *
-	 * Author: lingqifei created by at 2020/2/29 0029
-	 */
 	function cut_str($str, $sign, $number)
 	{
 		$array = explode($sign, $str);
@@ -544,12 +540,11 @@ if (!function_exists('cut_str')) {
 	}
 }
 
+/**
+ * 文件下载函数
+ * Author: lingqifei created by at 2020/6/4 0004
+ */
 if (!function_exists('download')) {
-
-	/**
-	 * 文件下载函数
-	 * Author: lingqifei created by at 2020/6/4 0004
-	 */
 	function download($filepath, $filename = 'downfile.zip')
 	{
 		// 检查文件是否存在
@@ -574,130 +569,13 @@ if (!function_exists('download')) {
 	}
 }
 
-if (!function_exists('check_file_exists')) {
-	/**
-	 * 判断文件是否存在，支持本地及远程文件
-	 * @param String $file 文件路径
-	 * @return Boolean
-	 */
-	function check_file_exists($file)
-	{
-		// 远程文件
-		if (strtolower(substr($file, 0, 4)) == 'http') {
-			$header = get_headers($file, true);
-			return isset($header[0]) && (strpos($header[0], '200') || strpos($header[0], '304'));
-			// 本地文件
-		} else {
-			return file_exists($file);
-		}
-	}
-}
-
-if (!function_exists('httpcode')) {
-	/**
-	 *检测网址是否能正常打开
-	 *
-	 * @param $url
-	 * @return mixed
-	 * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/25 0025
-	 */
-	function httpcode($url)
-	{
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_exec($ch); // $resp = curl_exec($ch);
-		$curl_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
-		return $curl_code;
-//        if ($curl_code == 200 || $curl_code == 302) {
-//            echo '连接成功，状态码：' . $curl_code;
-//        } else {
-//            echo '连接失败，状态码：' . $curl_code;
-//        }
-	}
-}
-if (!function_exists('curl_post')) {
-
-	/**使用curl。post获取数据
-	 * @param $url
-	 * @param $arr_data
-	 * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/25 0025
-	 */
-	function curl_post($url, $post_data)
-	{
-		//$post_data = http_build_query($post_data);
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); //设置header
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-		$response = curl_exec($ch);
-		$errno = curl_errno($ch);
-		$info = curl_getinfo($ch);
-		$error = curl_error($ch);
-//		var_dump($response);
-//		var_dump($error);
-		curl_close($ch);//关闭
-		return $response;
-	}
-}
-
-if (!function_exists('hide_name')) {
-
-	/**使用curl。post获取数据
-	 * @param $url
-	 * @param $arr_data
-	 * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/25 0025
-	 */
-	/**
-	 * 只保留字符串首尾字符，隐藏中间用*代替（两个字符时只显示第一个）
-	 * @param string $user_name 姓名
-	 * @return string 格式化后的姓名
-	 */
-	function hiddle_name($user_name)
-	{
-		$strlen = mb_strlen($user_name, 'utf-8');
-		$firstStr = mb_substr($user_name, 0, 1, 'utf-8');
-		$lastStr = mb_substr($user_name, -1, 1, 'utf-8');
-
-		if ($strlen > 2) {
-			return $firstStr . str_repeat("*", $strlen - 2) . $lastStr;
-		} else if ($strlen == 2) {
-			return $firstStr . str_repeat('*', mb_strlen($user_name, 'utf-8') - 1);
-		} else {
-			return $user_name;
-		}
-	}
-}
-
-if (!function_exists('hide_mobile')) {
-
-	/**
-	 * 定义函数手机号隐藏中间四位
-	 * @param string $str 手机号
-	 * @return string 格式化后手机号
-	 */
-	function hiddle_mobile($str)
-	{
-		$str = $str;
-		$resstr = substr_replace($str, '****', 3, 4);
-		return $resstr;
-	}
-}
-
+/**
+ * 服务器文件下载输出，支持断点输出
+ * @param string $file 文件路径为本地绝对路径
+ *
+ * @return 文件
+ */
 if (!function_exists('downFileOutput')) {
-
-	/**
-	 * 服务器文件下载输出，支持断点输出
-	 * @param string $file 文件路径为本地绝对路径
-	 *
-	 * @return 文件
-	 */
 	function downFileOutput($file)
 	{
 
@@ -754,6 +632,115 @@ if (!function_exists('downFileOutput')) {
 		} else {
 			die('File loading failed');
 		}
+	}
+}
+
+/**
+ * 判断文件是否存在，支持本地及远程文件
+ * @param String $file 文件路径
+ * @return Boolean
+ */
+if (!function_exists('check_file_exists')) {
+	function check_file_exists($file)
+	{
+		// 远程文件
+		if (strtolower(substr($file, 0, 4)) == 'http') {
+			$header = get_headers($file, true);
+			return isset($header[0]) && (strpos($header[0], '200') || strpos($header[0], '304'));
+			// 本地文件
+		} else {
+			return file_exists($file);
+		}
+	}
+}
+
+/**
+ *检测网址是否能正常打开
+ *
+ * @param $url
+ * @return mixed
+ * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/25 0025
+ */
+if (!function_exists('httpcode')) {
+	function httpcode($url)
+	{
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_exec($ch); // $resp = curl_exec($ch);
+		$curl_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch);
+		return $curl_code;
+//        if ($curl_code == 200 || $curl_code == 302) {
+//            echo '连接成功，状态码：' . $curl_code;
+//        } else {
+//            echo '连接失败，状态码：' . $curl_code;
+//        }
+	}
+}
+
+/**curl。post获取数据
+ * @param $url
+ * @param $arr_data
+ * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/25 0025
+ */
+if (!function_exists('curl_post')) {
+	function curl_post($url, $post_data)
+	{
+		//$post_data = http_build_query($post_data);
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); //设置header
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		$response = curl_exec($ch);
+		$errno = curl_errno($ch);
+		$info = curl_getinfo($ch);
+		$error = curl_error($ch);
+//		var_dump($response);
+//		var_dump($error);
+		curl_close($ch);//关闭
+		return $response;
+	}
+}
+
+/**
+ * 只保留字符串首尾字符，隐藏中间用*代替（两个字符时只显示第一个）
+ * @param string $user_name 姓名
+ * @return string 格式化后的姓名
+ */
+if (!function_exists('hide_name')) {
+	function hiddle_name($user_name)
+	{
+		$strlen = mb_strlen($user_name, 'utf-8');
+		$firstStr = mb_substr($user_name, 0, 1, 'utf-8');
+		$lastStr = mb_substr($user_name, -1, 1, 'utf-8');
+
+		if ($strlen > 2) {
+			return $firstStr . str_repeat("*", $strlen - 2) . $lastStr;
+		} else if ($strlen == 2) {
+			return $firstStr . str_repeat('*', mb_strlen($user_name, 'utf-8') - 1);
+		} else {
+			return $user_name;
+		}
+	}
+}
+
+/**
+ * 定义函数手机号隐藏中间四位
+ * @param string $str 手机号
+ * @return string 格式化后手机号
+ */
+if (!function_exists('hide_mobile')) {
+	function hiddle_mobile($str)
+	{
+		$str = $str;
+		$resstr = substr_replace($str, '****', 3, 4);
+		return $resstr;
 	}
 }
 
