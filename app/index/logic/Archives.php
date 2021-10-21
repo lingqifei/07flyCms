@@ -58,8 +58,35 @@ class Archives extends IndexBase
         ];
         $this->modelArchives->join = $join;
         $list = $this->modelArchives->getList($where, $field, $order, $paginate);
+		foreach ($list as &$row) {
+			$row['litpic'] = get_picture_url($row['litpic']);
+			$row['arcurl'] = $this->getArchivesUrl($row);
+		}
         return $list;
     }
+
+	/**文章列表查询=>列表页
+	 * @param array $where
+	 * @param bool $field
+	 * @param string $order
+	 * @param int $paginate
+	 * @return object 返回查询对像
+	 * Author: lingqifei created by at 2020/2/27 0027
+	 */
+	public function getArchivesExtableList($where = [], $field = 'a.*,e.*', $order = '', $paginate = 20,$channelexttable='')
+	{
+		$this->modelArchives->alias('a');
+		$join = [
+			[SYS_DB_PREFIX . $channelexttable.' e', 'e.id = a.id','LEFT'],
+		];
+		$this->modelArchives->join = $join;
+		$list = $this->modelArchives->getList($where, $field, $order, $paginate)->toArray();
+		foreach ($list['data'] as &$row) {
+			$row['litpic'] = get_picture_url($row['litpic']);
+			$row['arcurl'] = $this->getArchivesUrl($row);
+		}
+		return $list;
+	}
 
     /**文章列表查询=>列表页
      * @param array $where
@@ -270,13 +297,14 @@ class Archives extends IndexBase
     {
         switch ($orderby) {
             case 'hot':
+				$orderby = "a.click {$orderWay}";
+				break;
             case 'click':
                 $orderby = "a.click {$orderWay}";
                 break;
             case 'id':
                 $orderby = "a.id {$orderWay}";
                 break;
-
             case 'now':
             case 'new': // 兼容织梦的写法
             case 'pubdate': // 兼容织梦的写法
@@ -289,19 +317,11 @@ class Archives extends IndexBase
             case 'sort':
                 $orderby = "a.sort {$orderWay}";
                 break;
-            case 'rand':
-                if (true === $isrand) {
-                    $orderby = "rand()";
-                } else {
-                    $orderby = "a.aid {$orderWay}";
-                }
-                break;
             default:
                 $orderby = "a.pubdate desc";
                 break;
         }
         return $orderby;
     }
-
 
 }

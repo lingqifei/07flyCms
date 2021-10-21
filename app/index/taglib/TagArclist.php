@@ -169,7 +169,7 @@ class TagArclist extends Base
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
 
-        //排序
+        //排序=>随机特殊处理
         switch ($orderby) {
             case 'rand':
                 $rand_ids=$logicArchives->getArchivesColumn($randMap,'id');
@@ -177,13 +177,19 @@ class TagArclist extends Base
                 $number=(count($rand_ids)>15)?'15':$rand_cnt;
                 $rand_id=array_rand_value($rand_ids,$number);
                 $where['a.id'] = array('in', $rand_id);
-                $orderby = 'create_time DESC';
+                $orderby = 'a.create_time DESC';
                 break;
             default:
                 $orderby =$logicArchives->getOrderBy($orderby,$orderway);
                 break;
         }
-        $result = $logicArchives->getArchivesList($where, true, $orderby,$pagesize);
+
+		//判断是否查询指定频道扩展关联表
+		if (!empty($param['channelexttable'])) {
+			$result = $logicArchives->getArchivesExtableList($where, 'a.*,e.*', $orderby, $pagesize,$param['channelexttable']);
+		}else{
+			$result = $logicArchives->getArchivesList($where, true, $orderby,$pagesize);
+		}
 
         //获取文档栏目信息
         $logicArctype = new \app\index\logic\Arctype();

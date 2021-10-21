@@ -226,6 +226,10 @@ class OtherCms extends CmsBase
 				$this->taglistdata();
 				$rtn = ['code' => 1, 'msg' => '=>标签文档数据导入完成'];
 				break;
+			case 9://友情链接
+				$this->flinkdata();
+				$rtn = ['code' => 1, 'msg' => '=>友情链接数据导入完成'];
+				break;
 
 			default:
 				$rtn = ['code' => 1, 'step' => -1, 'msg' => '=>全部导入完成'];
@@ -279,7 +283,6 @@ class OtherCms extends CmsBase
 				$this->tablefield->modify_field($intoTable,$field,$type,'',$default,$comment);
 
 				if($field=='body') continue;
-
 				//增加模型字段，管理数据
 				$intoChannel=[
 					'main_table'=>'archives',
@@ -287,7 +290,7 @@ class OtherCms extends CmsBase
 					'field_name'=>$field,
 					'field_type'=>$type,
 					'show_name'=>$comment,
-					'default'=>$default,
+					'default_value'=>$default,
 					'maxlength'=>$maxlength,
 					'channel_id'=>$row['id'],
 				];
@@ -376,6 +379,31 @@ class OtherCms extends CmsBase
 			->select();
 		$intoTable=SYS_DB_PREFIX.'taglist';
 		Db::table($intoTable)->where('id', '>', 0)->delete();
+		foreach ($list as $key=>$row){
+			Db::table($intoTable)->insert($row);
+		}
+
+	}
+
+	/**友情链接
+	 * @throws \think\Exception
+	 * @throws \think\db\exception\DataNotFoundException
+	 * @throws \think\db\exception\ModelNotFoundException
+	 * @throws \think\exception\DbException
+	 * @throws \think\exception\PDOException
+	 * Author: 开发人生 goodkfrs@qq.com
+	 * Date: 2021/10/20 0020 10:35
+	 */
+	public function flinkdata()
+	{
+		$list = $this->db->name($this->prefix . "flink")
+			->where('id','>','0')
+			->field('url,webname as title')
+			->select();
+
+		$intoTable=SYS_DB_PREFIX.'friendlink';
+		Db::table($intoTable)->where('id', '>', 0)->delete();
+
 		foreach ($list as $key=>$row){
 			Db::table($intoTable)->insert($row);
 		}

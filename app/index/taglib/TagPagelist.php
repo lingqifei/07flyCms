@@ -18,7 +18,7 @@ use think\Request;
 
 
 /**
- * 栏目列表
+ * 分页函数
  */
 class TagPagelist extends Base
 {

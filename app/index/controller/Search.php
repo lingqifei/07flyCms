@@ -25,20 +25,10 @@ class Search extends IndexBase{
      * created by Administrator at 2020/2/24 0024 15:15
      */
     public function index($keywords=0){
-
-//        if(empty($keywords)){
-//            if(empty($this->param['keywords'])){
-//                $this->keywords=$this->param['keywords'];
-//            }
-//        }else{
-//            $this->keywords=$keywords;
-//        }
-//
-//        if(empty($this->keywords)){
+//        if(empty($this->param['keywords'])){
 //            echo "keywords不能为空~";
 //            exit;
 //        }
-
         /*模板参数*/
         $rtnArray = array(
             'field' => $this->param,
@@ -46,7 +36,12 @@ class Search extends IndexBase{
         $this->assign('fly', $rtnArray);
 
         /*模板文件*/
-        $tpfile= 'search.html' ;
+		if(empty($this->param['tpfile'])){
+			$tpfile= 'search.html';
+		}else{
+			$tpfile= $this->param['tpfile'];
+		}
+
         $viewfile = !empty($tpfile)?strtolower($tpfile):$tpfile;
         return $this->fetch($viewfile);
     }

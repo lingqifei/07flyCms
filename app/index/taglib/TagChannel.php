@@ -60,21 +60,6 @@ class TagChannel extends Base
     public  function getChannel($typeid = '', $type = 'top', $currentstyle = '', $notypeid = '')
     {
         $this->currentstyle = $currentstyle;
-        //$typeid  = !empty($typeid) ? $typeid : input("param.tid", '');
-//        if (empty($typeid)) {
-//            /*应用于没有指定tid的列表，默认获取该控制器下的第一级栏目ID*/
-//            $controller_name = request()->controller();
-//            $channeltype_info = Db::name('Channel')->where(array('nid'=>$controller_name), 'id');
-//            $channeltype = $channeltype_info['id'];
-//            $map = array(
-//                'channeltype'   => $channeltype,
-//                'parent_id' => 0,
-//                'is_hidden' => 0,
-//                'status'    => 1,
-//            );
-//            $typeid = M('arctype')->where($map)->order('sort_order asc')->limit(1)->getField('id');
-//            /*--end*/
-//        }
         $result_array=[];
         if (!empty($typeid)) {
             if (!preg_match('/^\d+([\d\,]*)$/i', $typeid)) {
