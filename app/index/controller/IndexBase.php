@@ -55,15 +55,15 @@ class IndexBase extends ControllerBase
         define('THEME_PATH', PATH_PUBLIC.$web_theme );
 
         $root_url = get_file_root_path();
-
         $this->assign('root_url', $root_url);
 
+        $index_entry_dir=config('index_entry_dir');
         $webconfig = $this->logicWebsite->getWebsiteConfigColumn();
 
         if(is_mobile()  && !empty($webconfig['web_wap'])){
-            $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/wap/');
+            $this->assign('template_dir', $root_url. $index_entry_dir.'theme/' . $web_theme.'/wap/');
         }else{
-            $this->assign('template_dir', $root_url. 'theme/' . $web_theme.'/pc/');
+            $this->assign('template_dir', $root_url. $index_entry_dir. 'theme/' . $web_theme.'/pc/');
         }
     }
 

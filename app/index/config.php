@@ -16,6 +16,7 @@ return [
     
     // 视图输出字符串内容替换
     'view_replace_str' => $static,
+    'index_entry_dir' => '',
 
     //分页配置
     'paginate'               => [
