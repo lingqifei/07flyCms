@@ -29,3 +29,9 @@
 
 3、源码托管：https://gitee.com/07fly/cms-php
 
+###ASP版开源地址
+
+https://gitee.com/07fly/FLY-CMS
+
+（ASP版本）站点演示：http://cms.07fly.com/  
+（PHP版本）站点演示：http://cms.demo.07fly.xyz/  
