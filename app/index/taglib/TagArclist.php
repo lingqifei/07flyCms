@@ -155,6 +155,11 @@ class TagArclist extends Base
             $randMap['type_id']=['in',$param['typeid']];
         }
 
+		if(!empty($param['notypeid'])){
+			$where['a.type_id']=['not in',$param['notypeid']];
+			$randMap['type_id']=['not in',$param['notypeid']];
+		}
+
         if(!empty($param['typeid2'])){
             $where['a.type_id2']=['in',$param['typeid2']];
             $randMap['type_id2']=['in',$param['typeid2']];
