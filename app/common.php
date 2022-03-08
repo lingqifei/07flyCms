@@ -657,11 +657,15 @@ function get_file_root_path()
 function get_picture_url($id = 0,$member='picture')
 {
     $fileLogic = get_sington_object('fileLogic', LogicFile::class);
-    if(is_numeric($id)){
-		return $fileLogic->getPictureUrl($id,$member);
-	}else{
-		return $fileLogic->getPictureWebUrl($id);
-	}
+    if (is_numeric($id)) {
+        return $fileLogic->getPictureUrl($id, $member);
+    } else {
+        if (strpos($id, '/') === false && strpos($id, '.') === false) {//图片路径
+            return $fileLogic->getPictureUrl($id, $member);
+        } else {//文件编号 1,2,..n
+            return $fileLogic->getPictureWebUrl($id);
+        }
+    }
 }
 
 
@@ -684,7 +688,15 @@ function get_file_url($id = 0)
 
     $fileLogic = get_sington_object('fileLogic', LogicFile::class);
 
-    return $fileLogic->getFileUrl($id);
+    if (is_numeric($id)) {
+        return $fileLogic->getPictureUrl($id);
+    } else {
+        if (strpos($id, '/') === false) {
+            return $fileLogic->getFileUrl($id);//文件编号 1,2,..n
+        } else {
+            return $fileLogic->getFileWebUrl($id);//文件路径
+        }
+    }
 }
 
 /**
@@ -824,6 +836,29 @@ function dd($arr = [])
 {
     dump($arr);
     die;
+}
+
+/**
+ * 日志输出保存函数
+ */
+function dlog($var, $fpath = RUNTIME_PATH . 'dlog.txt', $echo = true, $label = null, $flags = ENT_SUBSTITUTE)
+{
+
+    $label = (null === $label) ? '' : rtrim($label) . ':';
+    ob_start();
+    var_dump($var);
+    $output = ob_get_clean();
+    $output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
+    if (IS_CLI) {
+        $output = PHP_EOL . $label . $output . PHP_EOL;
+    } else {
+        if (!extension_loaded('xdebug')) {
+            $output = htmlspecialchars($output, $flags);
+        }
+        $output = $label . $output;
+    }
+    $output = "\r\n" . $output . "\r\n";
+    file_put_contents($fpath, date('Y-m-d H:i:s') . ' ' . 'pid:' . $output, FILE_APPEND | LOCK_EX);
 }
 
 
