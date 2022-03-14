@@ -177,6 +177,4 @@ class TableField extends LogicBase
 	{
 		return Db::table($table)->getTableFields();
 	}
-
-
 }

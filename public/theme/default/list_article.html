@@ -1,4 +1,17 @@
+
+
+{$fly.field.typename}-{$fly.field.seotitle}-{fly:global name='web_name'/}
+{$fly.field.keywords}
+{$fly.field.description}
+
+
+
+
 {$fly.field.typename}
+
+
+
+列表调用：
 
 {fly:list  pagesize='5' empty='暂时没有数据'}
 
@@ -11,4 +24,5 @@
 <hr>
 {/fly:list}
 
+分页标签
 {fly:pagelist listitem='index,pre,pageno,next,end,info' listsize='2'/}

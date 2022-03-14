@@ -1,10 +1,8 @@
 全局变量：
-
 <p>网站标题：{fly:global name='web_title' /}</p>
 <p>网站名称：{fly:global name='web_name' /}</p>
 <p>网站描述：{fly:global name='web_description' /}</p>
 <p>网站关键字：{fly:global name='web_keywords' /}</p>
-
 
 {fly:global name='web_name' /}
 {fly:global name='web_beian' /}
@@ -23,14 +21,14 @@
 {/fly:guestbookform}
 
 
-<!--{fly:tag sort='now' getall='0' row='100'}-->
-<!--<a href='{$field.link}'>{$field.tag}</a>-->
-<!--{/fly:tag}-->
+{fly:tag sort='now' getall='0' row='100'}
+<a href='{$field.link}'>{$field.tag}</a>
+{/fly:tag}
 
 
-<!--<hr>全局标签：<br>-->
+<hr>全局标签：<br>
 
-<!--{fly:global name='web_name|md5' /}-->
+{fly:global name='web_name|md5' /}
 
 <!--<style>-->
 <!--   .active{color:#f00;}-->
@@ -55,14 +53,14 @@
 <hr>
 {/fly:arclist}
 
-<!--<hr>单页标签：<br>-->
-<!--{fly:arcview aid='99'}-->
-<!--{$field.typename}-->
-<!--<a href="{$field.arcurl}">{$field.title}</a>-->
-<!--{/fly:arcview}-->
+<hr>单页标签：<br>
+{fly:arcview aid='99'}
+{$field.typename}
+<a href="{$field.arcurl}">{$field.title}</a>
+{/fly:arcview}
 
-<!--<hr>导航标签：<br>-->
-<!--{fly:position style="crumb" symbol='>>' /}-->
+<hr>导航标签：<br>
+{fly:position style="crumb" symbol='>>' /}
 
 <!--<hr>模板标签：<br>-->
 <!--{fly:assign name='typeid' value='2' /}-->

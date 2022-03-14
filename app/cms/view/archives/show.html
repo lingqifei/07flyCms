@@ -3,7 +3,7 @@
         <div class="col-sm-2">
             <div class="ibox">
                 <div class="ibox-title">内容栏目分类</div>
-                <div class="ibox-content">
+                <div class="ibox-content no-padding">
                     <div id="left-tree" data-url="{:url('Archives/show',array('data_type'=>'get_arctype_tree'))}"></div>
                 </div>
             </div>
@@ -53,11 +53,11 @@
                             <th width="50"><span>ID号</span></th>
                             <th width="200"><span>文章标题</span></th>
                             <th width="100"><span>栏目名称</span></th>
-                            <th width="50"><span>点击</span></th>
+                            <th width="80"><span>点击</span></th>
                             <th width="80"><span>作者</span></th>
                             <th width="100"><span>更新时间</span></th>
-                            <th width="80"><span>排序</span></th>
-                            <th width="80">操作</th>
+                            <th width="80" class="text-center"><span>排序</span></th>
+                            <th width="80" class="text-center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -87,13 +87,13 @@
         <td><%=data[i]['click']%></td>
         <td><%=data[i]['writer']%></td>
         <td><%=data[i]['pubdate']%></td>
-        <td><input type="text" class="w50 ajax-sort" data-url="{:url('Archives/set_sort')}" data-ids="{'id':'<%=data[i]['id']%>'}" value="<%=data[i]['sort']%>"></td>
-        <td>
-            <p>
+        <td class="text-center"><input type="text" class="w50 ajax-sort text-center" data-url="{:url('Archives/set_sort')}" data-ids="{'id':'<%=data[i]['id']%>'}" value="<%=data[i]['sort']%>"></td>
+        <td class="text-center">
+
                 <lqf_link><a class="ajax-open" data-url="{:url('Archives/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改">修改</a></lqf_link>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('Archives/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
                 <lqf_link><a class="ajax-open" data-url="{:url('ArcextInfo/show')}" data-ids="{'archives_id':'<%=data[i]['id']%>','channel_id':'<%=data[i]['channel_id']%>'}">扩展</a></lqf_link>
-            </p>
+
         </td>
     </tr>
     <% } %>

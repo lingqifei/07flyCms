@@ -69,7 +69,7 @@ class Store extends AdminBase
 	 */
 	public function apps_json()
 	{
-		return $this->logicStore->getCloudStoreList();
+		return $this->logicStore->getCloudStoreList($this->param);
 	}
 
 	/**
@@ -116,7 +116,6 @@ class Store extends AdminBase
 			exit;
 		}else{
 			$orderinfo=$this->logicStore->getCloudAppOrderInfo($this->param);
-//			d($orderinfo);
 			$this->assign('userinfo', $userinfo);
 			$this->assign('orderinfo', $orderinfo);
 			return $this->fetch('upgrade');

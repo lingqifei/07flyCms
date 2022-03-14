@@ -97,8 +97,6 @@ class Upgrade extends AdminBase
 		}
 	}
 
-
-
 	/**
 	 * 返回当前版本号
 	 * @return string
@@ -133,13 +131,17 @@ class Upgrade extends AdminBase
 			if (!empty($info['data'])) {
 				$listdata = $info['data'];
 				foreach ($listdata as &$row) {
-					$status = $this->check_version_down($row['version']);
-					if (!$status) {
+					$fileinfo = $this->check_version_down($row['version']);
+					if (!$fileinfo['status']) {
 						$row['status'] = '<font color="red">文件没有下载</font>';
 						$row['operate'] = '<a href="javascript:void(0);" class="down" data-ver="' . $row['version'] . '" data-url="' . url('upgrade/down') . '">点击下载更新包文件HTTP</a>';
 					} else {
-						$row['status'] = '<font color="green">文件已下载[文件完整]</font>';
-						$row['operate'] = '<a href="javascript:void(0);" class="execute" data-ver="' . $row['version'] . '" data-url="' . url('upgrade/execute') . '">点击升级更新包</a>';
+						$row['status'] = '
+<font color="green">文件已下载,文件大小('.format_bytes($fileinfo['size']).')</font>
+&nbsp;&nbsp;<a  class="ajax-get text-danger" data-url="' . url('upgrade/del',array('version'=>$row['version'])) . '">删除</a>
+';
+						$row['operate'] = '
+						<a href="javascript:void(0);" class="execute" data-ver="' . $row['version'] . '" data-url="' . url('upgrade/execute') . '">点击升级更新包</a>';
 					}
 				}
 			}
@@ -254,15 +256,15 @@ class Upgrade extends AdminBase
 			if ($res[0] == RESULT_ERROR) return $res;
 		}
 
-		//2、判断是否有栏目数据表同步文件 menu.php
+		//2、执行升级的数据，在应用目录data/upgrade.sql文件
+		$this->modelSysModule->importModuleSqlExec(array('time' => time(), 'module_dir' => $admin_dir, 'sqlfile' => 'upgrade.sql'));
+
+		//3、判断是否有栏目数据表同步文件 menu.php
 		if(file_exists($menu_file)){
 			$res = $this->logicSysModule->sysModuleSyncMenuFile($menu_file);
 			if ($res[0] == RESULT_ERROR) return $res;
 		}
-
 		//执行升级SQL文件
-		$this->logicSysModule->importModuleSqlExec(array('time' => time(), 'module_dir' => $admin_dir, 'sqlfile' => 'upgrade.sql'));
-
 		return [RESULT_SUCCESS, '数据库升级成功了哟'];
 	}
 
@@ -272,7 +274,7 @@ class Upgrade extends AdminBase
 	 * @throws \Exception
 	 * Author: lingqifei created by at 2020/6/13 0013
 	 */
-	public function getUpgradeDel($data = [])
+	public function setUpgradeDel($data = [])
 	{
 		$pack_zip = $this->upgrade_path_down . $data['version'] . '.zip';
 		if (check_file_exists($pack_zip)) {
@@ -310,7 +312,14 @@ class Upgrade extends AdminBase
 	public function check_version_down($version)
 	{
 		$downfile = $this->upgrade_path_down . $version . '.zip';
-		return check_file_exists($downfile);
+		if(check_file_exists($downfile)){
+			$fp=new \lqf\File();
+			$info=$fp->list_info($downfile);
+			$info['status']=true;
+		}else{
+			$info['status']=false;
+		}
+		return $info;
 	}
 
 	/**

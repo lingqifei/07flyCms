@@ -200,13 +200,13 @@ class File extends LogicBase
 		}
 
 		$root_url = get_file_root_path();
-		$index_entry_dir=config('index_entry_dir');
+
 		if (!empty($info['path'])) {
-			return $root_url .$index_entry_dir. 'upload/picture/' . $info['path'];
+			return $root_url . 'upload/picture/' . $info['path'];
 
 		}
 
-		return $root_url . $index_entry_dir.'static/module/admin/img/onimg.png';
+		return $root_url . 'static/module/admin/img/onimg.png';
 	}
 
 	/**
@@ -214,16 +214,11 @@ class File extends LogicBase
 	 */
 	public function getPictureWebUrl($path = '')
 	{
-
-		if (strpos($path, '/uploads/') !== false) {
-			return $path;
-		}
-		$index_entry_dir=config('index_entry_dir');
 		$root_url = get_file_root_path();
 		if (!empty($path)) {
-			return $root_url .$index_entry_dir. 'upload/picture/' . $path;
+			return $root_url . 'upload/picture/' . $path;
 		}
-		return $root_url .$index_entry_dir. 'static/module/admin/img/onimg.png';
+		return $root_url . 'static/module/admin/img/onimg.png';
 	}
 
 	/**

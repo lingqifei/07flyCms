@@ -6,7 +6,7 @@
                     栏目管理
                     <div class="ibox-tools"><a class="refresh-tree">顶级分类</a></div>
                 </div>
-                <div class="ibox-content" style="">
+                <div class="ibox-content no no-paddding" style="padding:0px;">
                     <div id="left-tree" data-url="{:url('Arctype/get_list_tree')}"></div>
                 </div>
             </div>
@@ -44,12 +44,12 @@
                         <tr>
                             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
                             <th width="22">编号</th>
-                            <th width="100">名称</th>
-                            <th width="100">类型</th>
-                            <th width="80">模块</th>
-                            <th width="60">排序</th>
-                            <th width="60">启用</th>
-                            <th width="80">操作</th>
+                            <th width="200">名称</th>
+                            <th width="100" class="text-center">类型</th>
+                            <th width="80" class="text-center">模块</th>
+                            <th width="60" class="text-center">排序</th>
+                            <th width="60" class="text-center">启用</th>
+                            <th width="80" class="text-center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -80,24 +80,21 @@
         <td><%=data[i]['id']%></td>
         <td><a class="ajax-goto" href="{:url('index/lists/adminindex')}" data-ids="{'tid':'<%=data[i]['id']%>'}"
                target="_blank"><%=data[i]['typename']%></a></td>
-        <td><%=data[i]['ispart_text']%></td>
-        <td><%=data[i]['channel_text']%></td>
-        <td><input type="text" name="sort" value="<%=data[i]['sort']%>" class="form-control w50 ajax-sort"
+        <td class="text-center"><%=data[i]['ispart_text']%></td>
+        <td class="text-center"><%=data[i]['channel_text']%></td>
+        <td class="text-center">
+            <input type="text" name="sort" value="<%=data[i]['sort']%>" class="w50 ajax-sort text-center"
                    data-url="{:url('Arctype/set_sort',array('name'=>'sort'))}" data-id="<%=data[i]['id']%>" size="5">
         </td>
-        <td>
+        <td class="text-center">
             <input name="visible" class="ajax-checkbox" type="checkbox"
                    data-url="{:url('Arctype/set_visible',array('name'=>'visible'))}" data-id="<%=data[i]['id']%>"
             <%=visible%> >
         </td>
-        <td>
-            <p>
-                <lqf_link><a class="ajax-open" data-url="{:url('Arctype/add')}" data-ids="{'id':'<%=data[i]['id']%>'}">添加下级</a>
-                </lqf_link>
-                <lqf_link><a class="ajax-open" data-url="{:url('Arctype/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}">修改</a>
-                </lqf_link>
-                <lqf_link><a class="ajax-del confirm" data-url="{:url('Arctype/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
-            </p>
+        <td class="text-center">
+            <lqf_link><a class="ajax-open" data-url="{:url('Arctype/add')}" data-ids="{'id':'<%=data[i]['id']%>'}">添加下级</a></lqf_link>
+            <lqf_link><a class="ajax-open" data-url="{:url('Arctype/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}">修改</a></lqf_link>
+            <lqf_link><a class="ajax-del confirm" data-url="{:url('Arctype/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
         </td>
     </tr>
     <% } %>

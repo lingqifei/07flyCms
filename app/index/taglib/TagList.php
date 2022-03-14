@@ -249,7 +249,7 @@ class TagList extends Base
 				$row['typename'] = $typeinfo['typename'];
 				$row['typeurl'] = $typeinfo['typeurl'];
 			}
-			$row['litpic'] = get_picture_url($row['litpic']);
+			//$row['litpic'] = get_picture_url($row['litpic']);//logic函数已经处理过
 			$row['arcurl'] = $logicArchives->getArchivesUrl($row);
 		}
 
