@@ -25,8 +25,9 @@ use think\Session;
 class IndexBase extends ControllerBase
 {
 
-    //当前地区
-    public $sys_city_name = '';
+    public $sys_city_name = '';//当前地区
+    public $web_theme_name = '';//主题
+    public $web_config = '';//网站配置
 
     /**
      * 构造方法
@@ -39,9 +40,6 @@ class IndexBase extends ControllerBase
         //基本信息载入
         $this->initBaseInfo();
 
-        //多地区数据调用
-        $this->initSysCityInfo();
-
     }
 
     /**
@@ -50,21 +48,46 @@ class IndexBase extends ControllerBase
     final private function initBaseInfo()
     {
 
-        $web_theme = $this->logicWebsite->getWebsiteConfig('web_theme');
-        define('THEME_NAME', $web_theme );
-        define('THEME_PATH', PATH_PUBLIC.$web_theme );
+        $this->web_config = $this->logicWebsite->getWebsiteConfigColumn();
+        $this->web_theme_name = $this->web_config['web_theme'];
 
+        //配置模板目录设置
         $root_url = get_file_root_path();
         $this->assign('root_url', $root_url);
-
-        $index_entry_dir=config('index_entry_dir');
-        $webconfig = $this->logicWebsite->getWebsiteConfigColumn();
-
-        if(is_mobile()  && !empty($webconfig['web_wap'])){
-            $this->assign('template_dir', $root_url. $index_entry_dir.'theme/' . $web_theme.'/wap/');
-        }else{
-            $this->assign('template_dir', $root_url. $index_entry_dir. 'theme/' . $web_theme.'/pc/');
+        $index_entry_dir = config('index_entry_dir');
+        if (is_mobile() && !empty($this->web_config['web_wap'])) {
+            $this->assign('template_dir', $root_url . $index_entry_dir . 'theme/' . $this->web_theme_name . '/wap/');
+        } else {
+            $this->assign('template_dir', $root_url . $index_entry_dir . 'theme/' . $this->web_theme_name . '/pc/');
         }
+
+        //是否开启多城市站点
+        if(!empty($this->web_config['web_multi_city'])){
+            $this->initSysCityInfo();
+        }
+    }
+
+    /**
+     * 重写fetch方法
+     */
+    final protected function fetch($template = '', $vars = [], $replace = [], $config = [])
+    {
+        //判断终端是PC、Wap
+        if (is_mobile() && !empty($this->web_config['web_wap'])) {
+            $template = PATH_PUBLIC . 'theme' . DS . $this->web_theme_name . DS . 'wap' . DS . $template;
+        } else {
+            $template = PATH_PUBLIC . 'theme' . DS . $this->web_theme_name . DS . 'pc' . DS . $template;
+        }
+        if (!file_exists($template)) {
+            echo "模板文件不存：" . $template;
+            exit;
+        }
+
+        //系统默认关键替换
+        $replace = [
+            '{sys_city_name}' => $this->sys_city_name,
+        ];
+        return parent::fetch($template, $vars, $replace, $config);
     }
 
     /**
@@ -75,10 +98,11 @@ class IndexBase extends ControllerBase
      *
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/12/23 0023
      */
-    final private function initSysCityInfo(){
+    final private function initSysCityInfo()
+    {
         //默认初始化地区信息,i不存在表示为第一次进入，调用默认信息
 
-        if(!Session::has('sys_city_name') || !Session::has('sys_city_id')){
+        if (!Session::has('sys_city_name') || !Session::has('sys_city_id')) {
             $this->logicSysArea->getSysAreaDefaultInfo();
         }
         //模板调用字段属性
@@ -86,37 +110,7 @@ class IndexBase extends ControllerBase
         $this->assign('sys_city_name', Session::get('sys_city_name'));
 
         //模板标签自动替换
-        $this->sys_city_name =Session::get('sys_city_name');
+        $this->sys_city_name = Session::get('sys_city_name');
 
     }
-
-
-    /**
-     * 重写fetch方法
-     */
-    final protected function fetch($template = '', $vars = [], $replace = [], $config = [])
-    {
-
-        $webconfig = $this->logicWebsite->getWebsiteConfigColumn();
-
-        if(is_mobile()  && !empty($webconfig['web_wap'])){
-            $template=PATH_PUBLIC.'theme'.DS.THEME_NAME.DS.'wap'.DS.$template;
-        }else{
-            $template=PATH_PUBLIC.'theme'.DS.THEME_NAME.DS.'pc'.DS.$template;
-        }
-
-        if(!file_exists($template)){
-        	echo "模板文件不存：".$template;exit;
-		}
-
-        //系统默认关键替换
-        $replace=[
-            '{sys_city_name}'=>$this->sys_city_name,
-            '{sys_keywords_name}'=>'培训'
-        ];
-//        $template=str_replace('.html' , '', strtolower($template));
-//        $template=str_replace('.htm' , '', strtolower($template));
-        return parent::fetch($template, $vars, $replace, $config);
-    }
-
 }

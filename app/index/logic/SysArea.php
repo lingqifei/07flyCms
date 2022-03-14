@@ -23,6 +23,15 @@ class SysArea extends IndexBase
 {
 
 
+    /**获得市场列表
+     * @param array $where
+     * @param bool $field
+     * @param string $order
+     * @param int $paginate
+     * @return mixed
+     * Author: 开发人生 goodkfrs@qq.com
+     * Date: 2022/3/14 0014 11:20
+     */
     public function getSysAreaList($where = [], $field = true, $order = '', $paginate = 15)
     {
 
@@ -31,11 +40,25 @@ class SysArea extends IndexBase
         return $list;
     }
 
+    /**获得城市信息
+     * @param array $where
+     * @param bool $field
+     * @return mixed
+     * Author: 开发人生 goodkfrs@qq.com
+     * Date: 2022/3/14 0014 11:20
+     */
     public function getSysAreaInfo($where = [], $field = true)
     {
         return $this->modelSysArea->getInfo($where, $field);
     }
 
+    /**获得字段值
+     * @param array $where
+     * @param bool $field
+     * @return mixed
+     * Author: 开发人生 goodkfrs@qq.com
+     * Date: 2022/3/14 0014 11:20
+     */
     public function getSysAreaFieldValue($where = [], $field = true)
     {
         return $this->modelSysArea->getValue($where, $field);
@@ -108,6 +131,4 @@ class SysArea extends IndexBase
             Session::set('sys_city_id', '1');
         }
     }
-
-
 }

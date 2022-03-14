@@ -19,28 +19,6 @@ use \think\Db;
 class Website extends IndexBase
 {
 
-    /**列表查询
-     * @param array $where
-     * @param bool $field
-     * @param string $order
-     * @param int $paginate
-     * @return mixed
-     * Author: lingqifei created by at 2020/2/27 0027
-     */
-    public function getWebsiteList($where = [], $field = true, $order = '', $paginate = 15)
-    {
-        $this->modelWebsite->alias('a');
-        $list= $this->modelWebsite->getList($where, $field, $order, $paginate)->toArray();
-
-        $paginate===false && $list['data']=$list;
-
-        foreach ($list['data'] as &$row){
-           // $row['litpic'] =get_picture_url($row['litpic']);
-           // $row['target'] = ($row['target'] == 1) ? 'target="_blank"' : 'target="_self"';
-        }
-        return $list;
-    }
-
     /**返回配置列表值
      * @param null $name
      * @return mixed
@@ -59,7 +37,6 @@ class Website extends IndexBase
             return $name.'标签不存在了~';
         }
     }
-
 
     /**
      * 获取配置列表
