@@ -29,6 +29,21 @@ class Archives extends IndexBase
      * @return array
      * Author: lingqifei created by at 2020/2/27 0027
      */
+    public function getAllList($where = [], $field = true, $order = '', $paginate =false)
+    {
+        $list = $this->modelArchives->getList($where, $field, $order, $paginate);
+        return $list;
+    }
+
+
+    /**文章列表查询
+     * @param array $where
+     * @param bool $field
+     * @param string $order
+     * @param int $paginate
+     * @return array
+     * Author: lingqifei created by at 2020/2/27 0027
+     */
     public function getArchivesList($where = [], $field = true, $order = '', $paginate =20)
     {
         $this->modelArchives->alias('a');

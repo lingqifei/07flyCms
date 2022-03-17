@@ -18,6 +18,22 @@ namespace app\index\logic;
  */
 class Arctype extends IndexBase
 {
+
+
+    /**
+     * 栏目列表
+     * @param array $where
+     * @param bool $field
+     * @param string $order
+     * @param int|mixed $paginate
+     * @return
+     */
+    public function getAllList($where = [], $field = true, $order = '', $paginate = false)
+    {
+        $list= $this->modelArctype->getList($where, $field, $order, $paginate)->toArray();
+        return $list;
+    }
+
     /**
      * 栏目列表
      * @param array $where
@@ -36,9 +52,7 @@ class Arctype extends IndexBase
             $row['litpic'] =get_picture_url($row['litpic']);
             $row['typeurl']=$this->getArctypeUrl($row);
         }
-
         return $list;
-
     }
 
     /**查询单条
