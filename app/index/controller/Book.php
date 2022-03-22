@@ -80,8 +80,9 @@ class Book extends IndexBase
             }
             $chapinfo=$this->logicBook->getBookChapInfo($map_chap);
 
+
             //未传入章节ID时
-            if(empty($map_chap)){
+            if(empty($this->chapid)){
 				//更新文档的浏览数据
 				$this->logicBook->setBookClick($map_book);
 			}else{
@@ -100,6 +101,7 @@ class Book extends IndexBase
                 'chap_list' => $chap_list,
                 'bookinfo' => $bookinfo,
                 'chapinfo' => $chapinfo,
+                'chapid' => $this->chapid,
             );
 
             /*模板文件*/
@@ -164,20 +166,18 @@ class Book extends IndexBase
         foreach ($list as $key=>$row){
             $url=url('index/book/read',array('bookid'=>$row['bookid'],'chapid'=>$row['id']));
             if(empty($row['nodes'])){
-                $html .="<li>";
+                $html .="<li data-id='".$row['id']."'>";
                 $html .='<span><i></i></span><a href="'.$url.'">'.$row['title'].'</a>';
                 $html .="</li>";
             }else{
                 $html .='<li class="has_child">';
                 $html .='<span><i class="icon-plus-sign"></i></span><a href="'.$url.'">'.$row['title'].'</a>';
-                $html .="<ul style='display: block;'>";
+                $html .="<ul style='display: none;'>";
                 $html .=$this->chap_list_tree_to($row['nodes']);
                 $html .="</ul>";
                 $html .="</li>";
             }
-
         }
-
         return $html;
     }
 

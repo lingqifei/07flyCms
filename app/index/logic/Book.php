@@ -80,7 +80,7 @@ class Book extends IndexBase
         $list=Db::name('book_chap')
             ->where($where)
             ->field($field)
-            ->order('sort asc')
+            ->order('sort asc,id asc')
             ->select();
         return $list;
     }
