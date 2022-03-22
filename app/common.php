@@ -662,10 +662,19 @@ function get_picture_url($id = 0, $member = 'picture')
     if (is_numeric($id)) {
         return $fileLogic->getPictureUrl($id, $member);
     } else {
-        if (strpos($id, '/') === false) {//图片路径
+        //1、表示为多张图的id 如：1，2，3，4
+        if (strpos($id, '/') === false) {
+
             return $fileLogic->getPictureUrl($id, $member);
-        } else {//文件编号 1,2,..n
+
+        } else if (strpos($id, '/') === 0) {//表示路径为绝对路路不要转换 如：/upload/img/demo.jpg
+
+            return $id;
+
+        } else {//表示为相对路径：imgaes/demo.jpg
+
             return $fileLogic->getPictureWebUrl($id);
+
         }
     }
 }
@@ -852,7 +861,7 @@ function dd($arr = [])
  */
 function dlog($var, $file = 'dlog.txt', $label = null, $flags = ENT_SUBSTITUTE)
 {
-    $fpath=RUNTIME_PATH.$file;
+    $fpath = RUNTIME_PATH . $file;
     $label = (null === $label) ? '' : rtrim($label) . ':';
     ob_start();
     var_dump($var);
