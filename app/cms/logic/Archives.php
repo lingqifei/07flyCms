@@ -68,7 +68,7 @@ class Archives extends CmsBase
         //1、关键字处理
         $arctype=$this->logicArctype->getArctypeInfoDetail($data['type_id']);
         if(!empty($data['keywords'])){
-            $keywords=$data['keywords'];
+            $keywords=preg_replace("/(\n)|(\s)|(\t)|(\')|(')|(，)/" ,',' ,$data['keywords']);
         }else{
             $keywords=getKeywords($data['title'],html_msubstr($data['body'],0));
             $keywords && $keywords=arr2str($keywords,',');
@@ -79,6 +79,22 @@ class Archives extends CmsBase
         }else{
             $description=html_msubstr($data['body'],0,200);
         }
+
+        //内容处理
+        $body=get_picture_body($data['body']);
+
+        //没有缩略图提取内容第一张
+        if(empty($data['litpic'])){
+            $pattern="/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png]))[\'|\"].*?[\/]?>/";
+            preg_match_all($pattern,$body,$matchContent);
+            if(isset($matchContent[1][0])){
+                $data['litpic']=$matchContent[1][0];
+            }else{
+                $data['litpic']="";//在相应位置放置一张命名为no-image的jpg图片
+            }
+        }
+
+
         //2、主表数据
         $main_data=[
             'channel_id'=>$arctype['channel_id'],
@@ -102,12 +118,13 @@ class Archives extends CmsBase
 
         //调用ag标签接口
         $this->logicTagindex->tagindexAddArchives($keywords,$aid,$data['type_id']);
+
         //3、添加附加表
         $ext_field=$this->logicChannelField->getExtTableFieldList($arctype['maintable'],$arctype['addtable']);
         $ext_data=array(
             "id"=>$aid,
             "type_id"=>$data['type_id'],
-            "body"=>$data['body'],
+            "body"=>$body,
         );
         foreach($ext_field as $row){
             $field=$row['field_name'];
@@ -115,6 +132,7 @@ class Archives extends CmsBase
                 $ext_data=array_merge($ext_data,array("$field"=>$data[$field]));
             }
         }
+
         $result=Db::table(SYS_DB_PREFIX.$arctype['addtable'])->insert($ext_data);
 
         $url = url('show');
