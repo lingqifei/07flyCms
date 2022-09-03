@@ -146,7 +146,8 @@ class Archives extends ControllerBase
         return $typeurl;
     }
 
-    /**转换一条文章的实际地址
+    /**
+     * 转换一条文章的实际地址
      * @param array $data
      * @return mixed|string
      * Author: lingqifei created by at 2020/2/27 0027
