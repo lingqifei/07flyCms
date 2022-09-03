@@ -498,32 +498,28 @@ $("body").on("click", ".ajax-open-more", function () {
 
 // ajax删除
 $("body").on("click", ".ajax-del", function () {
-
-    var target;
-
-    if ($(this).hasClass('confirm')) {
-        if (!confirm('确认要执行该操作吗?')) {
-            return false;
-        }
+    var target='';
+    if(typeof($(this).attr('data-url'))!="undefined"){
+        target=$(this).attr('data-url');
     }
-
-    if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
-
-        var ids = $(this).attr('data-ids');
-        var fun = $(this).attr('data-calback');
-
-        //是否设置了参数字段
-        if (typeof (ids) != "undefined" && ids != 0) {
-            var ids = ($.param(eval('(' + ids + ')'), true));
-            var target = target + "?" + ids;
-        }
-        log('执行地址：' + target);
-
-        if ($(this).attr('is-jump') == 'true') {
-
-            $.pjax({url: target, container: '.content'});
-
-        } else {
+    if(typeof($(this).attr('href'))!="undefined"){
+        target=$(this).attr('href');
+    }
+    if(target==''){
+        parent.layer.msg('未找到执行地址~', {icon: 5});
+        return false;
+    }
+    //是否设置了参数字段，执行回调函数
+    var ids = $(this).attr('data-ids');
+    var fun = $(this).attr('data-calback');
+    if (typeof (ids) != "undefined" && ids != 0) {
+        ids = ($.param(eval('(' + ids + ')'), true));
+        target = target + "?" + ids;
+    }
+    log('删除执行地址：' + target);
+    layer.confirm('您确定要删除吗?', {btn: ['确定', '取消'], icon: 3,title: "提示"}, function (index) {
+        if (target) {
+            log('确定执行删除操作：');
             $.get(target).success(function (data) {
                 if (data.code) {
                     parent.layer.msg(data.msg, {icon: 1});
@@ -540,20 +536,18 @@ $("body").on("click", ".ajax-del", function () {
                 }
             }, "json");
         }
-    }
+    });
     return false;
 });
 
 //ajax get请求
 $("body").on("click", ".ajax-get", function () {
 
-
     if ($(this).hasClass('confirm')) {
         if (!confirm('确认要执行该操作吗?')) {
             return false;
         }
     }
-
     var target;
     if ((target = $(this).attr('href')) || (target = $(this).attr('url')) || (target = $(this).attr('data-url'))) {
 
@@ -579,11 +573,11 @@ $("body").on("click", ".ajax-get", function () {
                 parent.layer.msg(data.msg, {icon: 5});
             }
             //如果传了地址表示跳转
-            if (data.url) {
-                setTimeout(function () {
-                    location.href = data.url;
-                }, 1500);
-            }
+            // if (data.url) {
+            //     setTimeout(function () {
+            //         location.href = data.url;
+            //     }, 1500);
+            // }
         }, "json");
     }
     return false;
@@ -803,7 +797,6 @@ $("body").on("click", ".ajax-post-trace", function () {
                     layer.msg(result.msg, {icon: 1, time: 500, shade: [0.5, '#000', true]}, function () {
                         var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
                         parent.layer.close(index);
-
                         if (fun != null) {
                             eval(fun);
                         }

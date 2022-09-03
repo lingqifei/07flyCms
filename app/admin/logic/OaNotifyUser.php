@@ -35,12 +35,9 @@ class OaNotifyUser extends AdminBase
         $join = [
             [SYS_DB_PREFIX . 'oa_notify n', 'n.id = a.notify_id','LEFT'],
         ];
-
         $this->modelOaNotifyUser->join = $join;
-        $list = $this->modelOaNotifyUser->getList($where, $field, $order, $paginate)->toArray();
-
-        if($paginate===false) $list['data']=$list;
-        foreach ($list['data'] as &$row){
+        $list = $this->modelOaNotifyUser->getList($where, $field, $order, $paginate);
+        foreach ($list as &$row){
             $row['read_state_text']=($row['read_state']=='1')?'<span class="label">已读</span>':'<span class="label-danger label">未读</span>';
             $row['create_user_name']=$this->modelSysUser->getValue(['id'=>$row['create_user_id']],'realname');
         }
@@ -131,7 +128,8 @@ class OaNotifyUser extends AdminBase
 	public function getWhere($data = [])
 	{
 
-		$where['a.owner_user_id'] =SYS_USER_ID;
+        //定义当前登录id
+		$where['a.owner_user_id'] =!empty($data['owner_user_id'])?$data['owner_user_id']:SYS_USER_ID;;
 
 		//关键字查
 		!empty($data['keywords']) && $where['n.name|n.content'] = ['like', '%'.$data['keywords'].'%'];
@@ -142,7 +140,40 @@ class OaNotifyUser extends AdminBase
 			$where['a.create_time'] = ['between', [strtotime($range_date['begin']),strtotime($range_date['end'])]];
 		}
 
+        //是否已读
+        if (isset($data['read_state'])) {
+            if (!empty($data['read_state']) || is_numeric($data['read_state'])) {
+                $where['read_state'] = ['=', '' . $data['read_state'] . ''];
+            }
+        }
+
 		return $where;
 	}
+
+    /**
+     * 获取排序条件
+     */
+    public function getOrderBy($data = [])
+    {
+        $order_by = "";
+        //排序操作
+        if (!empty($data['orderField'])) {
+            $orderField = $data['orderField'];
+            $orderDirection = $data['orderDirection'];
+        } else {
+            $orderField = "";
+            $orderDirection = "";
+        }
+        if ($orderField == 'create_time') {
+            $order_by = "a.create_time $orderDirection";
+        } else if ($orderField == 'update_time') {
+            $order_by = "a.update_time $orderDirection";
+        } else if ($orderField == 'read_time') {
+            $order_by = "a.read_time $orderDirection";
+        } else {
+            $order_by = "a.create_time desc";
+        }
+        return $order_by;
+    }
 
 }

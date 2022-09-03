@@ -7,7 +7,7 @@
     <div class="upload-pre-item">
         <div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel{$addons_data.name}(this)" ><img src="__STATIC__/addon/file/uploadify-cancel.png" /></div>
         <a target="_blank" href="{$info[$addons_data['name']]|default='0'|get_picture_url=$addons_data.addons_model}">
-            <img  style="max-width:{$addons_config['maxwidth']};" src="{$info[$addons_data['name']]|default='0'|get_picture_url=$addons_data.addons_model}"/>
+            <img  style="max-width: {$addons_config['maxwidth']};" src="{$info[$addons_data['name']]|default='0'|get_picture_url=$addons_data.addons_model}"/>
         </a>
     </div>
     {/notempty}
@@ -38,7 +38,7 @@
         $("#{$addons_data['name']}").val(data.id);
 
         var src ='__STATIC__/upload/picture/' + data.path;
-
+        
         var src =src.replace(/\/static/g, '');
 
         $(".upload-img-box{$addons_data['name']}").html('<div class="upload-pre-item"> <a target="_blank" href="' + src + '"> <img style="max-width: ' + maxwidth + ';" src="' + src + '"/></a></div>');

@@ -268,6 +268,7 @@ class AdminBase extends LogicBase
 	public function getConfigData()
 	{
 		$auth = $this->logicUpgrade->upgrade_auth_check();
+        $auth['code'] = 1;
 		if ($auth['code'] == 1) {
 			$data['seo_title'] = config('seo_title');
 			$data['seo_description'] = config('seo_description');
@@ -279,6 +280,7 @@ class AdminBase extends LogicBase
 			$data['main_title'] = config('main_title');
 			$data['main_weburl'] = config('main_weburl');
 			$data['top_links'] = '';
+			$data['is_grant'] = 0;
 		} else {
 			$data['seo_title'] = '07FLY-ERP是一款开放式的管理平台，能快速搭建适合自己的是一款开放式的管理平台-零起飞科技';
 			$data['seo_description'] = '07FLY-ERP是一款开放式的管理平台，能容纳管理各种数据、实现信息互通共享；能快速搭建适合自己的是一款开放式的管理平台，能容纳管理各种数据、实现信息互通共享；';
@@ -298,6 +300,7 @@ class AdminBase extends LogicBase
                     <a href="http://erp.demo.07fly.xyz/" target="_blank" title="旅行社ERP管理软件地接版S1-ERP">S1-ERP</a>
                     <a href="http://cms.demo.07fly.xyz/" target="_blank" title="旅行社ERP管理软件地接版S1-CMS">S1-CMS</a>
                   ';
+            $data['is_grant'] = 1;
 		}
 
 		$data['document'] = '<a target="_blank" href="http://www.07fly.xyz">http://www.07fly.xyz</a>';
