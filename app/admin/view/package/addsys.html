@@ -50,9 +50,9 @@
     </div>
 </div>
 <script>
+    var fakeloaderBox='';
+
     $(document).ready(function () {
-        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-        var fakeloader='';
         //删除选中产品
         $("body").on("click", ".ajax-save-post", function () {
             var target, query, form;
@@ -67,7 +67,7 @@
                 dataType: "json",
                 beforeSend: function(){
                     $('.fakeloader').html('<div class="ibox-content">正在打包中请务操作其它</div>');
-                    fakeloader=layer.open({
+                    fakeloaderBox=layer.open({
                         type: 1,
                         shade: [0.2, '#393D49'],
                         closeBtn:1,
@@ -79,14 +79,18 @@
                     });
                 },
                 success: function (result) {
+                    //log(textStatus);
                     if (result.code == '1') {
                         layer.msg(result.msg, {icon: 1, time: 500, shade: [0.5, '#000', true]}, function () {
                             $('.package-log').html(result.data);
-                            parent.layer.close(fakeloader);
+                            layer.close(fakeloaderBox);
                         });
                     } else {
                         layer.msg(result.msg, {icon: 5});
                     }
+                },
+                error:function (xhr) {
+                    alert("错误提示： " + xhr.status + " " + xhr.statusText);
                 }
             });//end ajax post
         });

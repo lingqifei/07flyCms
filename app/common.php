@@ -658,26 +658,14 @@ function get_picture_url($id = 0, $member = 'picture')
 {
 
     $fileLogic = get_sington_object('fileLogic', LogicFile::class);
+
     if (is_numeric($id)) {
         return $fileLogic->getPictureUrl($id, $member);
     } else {
-        //1、表示为多张图的id 如：1，2，3，4
-        if (strpos($id, '/') === false) {
-
+        if (strpos($id, '/') === false) {//图片路径
             return $fileLogic->getPictureUrl($id, $member);
-
-        } else if (strpos($id, 'http') === 0) {//表示外网路路不要转换 如：http://www.07fly.com/upload/img/demo.jpg
-
-            return $id;
-
-        } else if (strpos($id, '/') === 0) {//表示路径为绝对路路不要转换 如：/upload/img/demo.jpg
-
-            return $id;
-
-        } else {//表示为相对路径：imgaes/demo.jpg
-
+        } else {//文件编号 1,2,..n
             return $fileLogic->getPictureWebUrl($id);
-
         }
     }
 }
@@ -989,7 +977,6 @@ function update_cache_version($obj = null)
 
 //api签名函数
 use \Firebase\JWT\JWT;
-
 // 解密user_token
 function decoded_user_token($token = '')
 {
@@ -1006,7 +993,7 @@ function decoded_user_token($token = '')
     }
 }
 
-// 获取解密信息中的data
+//获取解密信息中的data
 function get_member_by_token($token = '')
 {
 
