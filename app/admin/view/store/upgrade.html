@@ -38,7 +38,6 @@
     </div>
 
 </div>
-<!--表示未购买-->
 {if condition="$orderinfo.ispayment eq 0"}
 <div class="ibox-title">扫一扫付款：</div>
 <div class="ibox-content app_order_payinfo"  data-url="{:url('Store/app_order_check')}">
@@ -66,7 +65,6 @@
 </div>
 {/if}
 
-<!--已经购买同时在授权时间内-->
 {if condition="$orderinfo.ispayment eq 1"}
 <div class="ibox-title">已经购买授权：</div>
 <div class="ibox-content">
@@ -76,9 +74,9 @@
             <div class="title">
                 <div class=" btn btn-success btn-block">
                     <div class="row">
-                        <div class="col-sm-12 text-center down-install"
-                             data-url="{:url('Store/down_install',array('app_id'=>$orderinfo.app_id))}">
-                            请点击按钮执行安装操作
+                        <div class="col-sm-12 text-center down-install" data-id="{$orderinfo.app_id|default='0'}" data-val="{$orderinfo.app_version|default=''}"
+                             data-url="{:url('Store/down_upgrade')}">
+                            请点击按钮执行升级操作
                         </div>
                     </div>
                 </div>
@@ -96,7 +94,7 @@
         var order_id="{$orderinfo.order_id}";
         var order_code="{$orderinfo.order_code}";
 
-        //是否支付
+
         if(ispay==0){
             time1 = window.setInterval("checkOrderPay()",5000);
         }
@@ -116,17 +114,19 @@
     //下载安装
     function appDownInstall() {
         var target = $('.down-install').attr('data-url');
+        var app_id = $('.down-install').attr('data-id');
+        var version = $('.down-install').attr('data-val');
         var layerLoadIndex,layerMsgIndex;
         $.ajax({
             type: "POST",
             url: target,
-            data: '',
+            data: {'app_id':app_id,'version':version},
             dataType: "json",
             beforeSend: function () {
                 layerMsgIndex=layer.msg('请不要关闭浏览器,正在下载升级程序升级，...',
                     {
                         time: 0,
-                        icon: '1',
+                        icon: '-1',
                         shade: 0.01
                     }
                 );
@@ -141,9 +141,6 @@
                 } else {
                     layer.msg(result.msg, {icon: 5});
                 }
-            }, complete: function () {
-                layer.close(layerMsgIndex);
-                layer.close(layerLoadIndex);
             }
         });//end ajax post
     }

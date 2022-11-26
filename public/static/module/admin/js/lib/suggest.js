@@ -7,13 +7,13 @@ var config = {
         'module/admin/js/plugins/suggest/bootstrap-suggest.js',
     ]
 }
-
+//外部css加载
 function link(cssAr = config.cssAr, type) {
     for (var i = 0; i < cssAr.length; i++) {
         document.write('<link rel="stylesheet" href="' + static_root + cssAr[i] + '?version=' + config.version + '"/>');
     }
 }
-
+//外部JS加载
 function script(jsAr = config.jsAr, type) {
     for (var i = 0; i < jsAr.length; i++) {
         document.write('<script src="' + static_root + jsAr[i] + '?version=' + config.version + ' type="text/javascript" charset="utf-8"><\/script>');
@@ -31,7 +31,7 @@ $(document).ready(function () {
         initSuggest($(this));
     });
 
-    //点击清空
+    //独立点击清空
     $("body").on("click", ".suggest-search-box .clearable", function () {
         log('sgugest-input 点击清空返回值');
         var object=$(this).parents(".suggest-search-box");
