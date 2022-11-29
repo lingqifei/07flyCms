@@ -18,22 +18,6 @@ namespace app\index\logic;
  */
 class Arctype extends IndexBase
 {
-
-
-    /**
-     * 栏目列表
-     * @param array $where
-     * @param bool $field
-     * @param string $order
-     * @param int|mixed $paginate
-     * @return
-     */
-    public function getAllList($where = [], $field = true, $order = '', $paginate = false)
-    {
-        $list= $this->modelArctype->getList($where, $field, $order, $paginate)->toArray();
-        return $list;
-    }
-
     /**
      * 栏目列表
      * @param array $where
@@ -52,7 +36,9 @@ class Arctype extends IndexBase
             $row['litpic'] =get_picture_url($row['litpic']);
             $row['typeurl']=$this->getArctypeUrl($row);
         }
+
         return $list;
+
     }
 
     /**查询单条
@@ -87,7 +73,7 @@ class Arctype extends IndexBase
     public function getArctypeAllPid($typeid=0, $data=[])
     {
         $where['id']=['=',$typeid];
-        $info = $this->modelArctype->getInfo($where,true);
+        $info = $this->modelArctype->getInfo($where,'parent_id');
         if(!empty($info) && $info['parent_id']){
             $data[]=$info['parent_id'];
             return $this->getArctypeAllPid($info['parent_id'],$data);
@@ -103,7 +89,7 @@ class Arctype extends IndexBase
     public function getArctypeAllSon($typeid=0, $data=[])
     {
         $where['parent_id']=['=',$typeid];
-        $sons = $this->modelArctype->getList($where,true,'sort asc',false);
+        $sons = $this->modelArctype->getList($where,'id','sort asc',false);
         if (count($sons) > 0) {
             foreach ($sons as $v) {
                 $data[] = $v['id'];

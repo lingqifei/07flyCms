@@ -22,6 +22,7 @@ class Lists extends IndexBase
     public $type = '';
 
     /**
+     * 列表主页
      * @return mixed
      * created by Administrator at 2020/2/24 0024 15:15
      */
@@ -43,6 +44,7 @@ class Lists extends IndexBase
             $map = array('id' => $tid);
         }
 
+        //栏目详细
         $type = $this->logicArctype->getArctypeInfo($map);
 		$type['title']=$type['typename'];
         if (empty($type)) {
@@ -54,18 +56,46 @@ class Lists extends IndexBase
 
         $rtnArray = array(
             'field' => $type,
-            'param' => $this->param,//输出自带参数
         );
+        $this->nid = $this->logicChannel->getChannelValue(['id' => $type['channel_id']], 'nid');
 
-		/*模板文件*/
-		$this->nid = $this->logicChannel->getChannelValue(['id' => $type['channel_id']], 'nid');
-		$tpfile = 'lists_' . $this->nid;
-		//判断栏目类型0=列表，1=封面
-		if ($type['ispart'] == 0) {
-			$tpfile = $type['temp_list'];
-		} else if ($type['ispart'] == 1) {
-			$tpfile = $type['temp_index'];
-		}
+        /*模板文件*/
+        $tpfile = 'lists_' . $this->nid;
+        //判断栏目类型0=列表，1=封面
+        if ($type['ispart'] == 0) {
+            $tpfile = $type['temp_list'];
+        } else if ($type['ispart'] == 1) {
+            $tpfile = $type['temp_index'];
+        }
+
+        //start  动态添加搜索关键字变量 start *******************************************************
+
+//        if(!empty($this->param['filterform'])){
+//            $filterform=$this->param['filterform'];
+//            $filterField=str2arr($filterform);
+//            foreach ($filterField as $ffd){
+//                if(!empty($this->param[$ffd])){//面积
+//                    $this->assign($ffd, $this->param[$ffd]);
+//                }else{
+//                    $this->assign($ffd, '');
+//                }
+//            }
+//        }
+
+
+        if (!empty($this->param['orderway'])) {//升降
+//            if($this->param['orderway']=='desc'){
+//                $this->assign('orderway', 'asc');
+//            }else{
+//                $this->assign('orderway', 'desc');
+//            }
+            $this->assign('orderway', 'desc');
+        } else {
+            $this->assign('orderway', 'desc');
+        }
+
+        //end 动态添加搜索关键字变量 end *******************************************************
+
         $viewfile = !empty($tpfile) ? strtolower($tpfile) : $tpfile;
         $this->typeinfo = $rtnArray;
         $this->assign('fly', $this->typeinfo);

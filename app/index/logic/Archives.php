@@ -21,22 +21,8 @@ use \think\Db;
 class Archives extends IndexBase
 {
 
-    /**文章列表查询
-     * @param array $where
-     * @param bool $field
-     * @param string $order
-     * @param int $paginate
-     * @return array
-     * Author: lingqifei created by at 2020/2/27 0027
-     */
-    public function getAllList($where = [], $field = true, $order = '', $paginate =false)
-    {
-        $list = $this->modelArchives->getList($where, $field, $order, $paginate);
-        return $list;
-    }
-
-
-    /**文章列表查询
+    /**
+     * 文章列表查询
      * @param array $where
      * @param bool $field
      * @param string $order
@@ -57,7 +43,8 @@ class Archives extends IndexBase
     }
 
 
-    /**文章列表查询=>列表页
+    /**
+     * 文章列表查询=>列表页
      * @param array $where
      * @param bool $field
      * @param string $order
@@ -71,37 +58,10 @@ class Archives extends IndexBase
         $join = [
             [SYS_DB_PREFIX . 'arctype t', 't.id = a.type_id','LEFT'],
         ];
-        $this->modelArchives->join = $join;
+       // $this->modelArchives->join = $join;
         $list = $this->modelArchives->getList($where, $field, $order, $paginate);
-		foreach ($list as &$row) {
-			$row['litpic'] = get_picture_url($row['litpic']);
-			$row['arcurl'] = $this->getArchivesUrl($row);
-		}
         return $list;
     }
-
-	/**文章列表查询=>列表页
-	 * @param array $where
-	 * @param bool $field
-	 * @param string $order
-	 * @param int $paginate
-	 * @return object 返回查询对像
-	 * Author: lingqifei created by at 2020/2/27 0027
-	 */
-	public function getArchivesExtableList($where = [], $field = 'a.*,e.*', $order = '', $paginate = 20,$channelexttable='')
-	{
-		$this->modelArchives->alias('a');
-		$join = [
-			[SYS_DB_PREFIX . $channelexttable.' e', 'e.id = a.id','LEFT'],
-		];
-		$this->modelArchives->join = $join;
-		$list = $this->modelArchives->getList($where, $field, $order, $paginate)->toArray();
-		foreach ($list['data'] as &$row) {
-			$row['litpic'] = get_picture_url($row['litpic']);
-			$row['arcurl'] = $this->getArchivesUrl($row);
-		}
-		return $list;
-	}
 
     /**文章列表查询=>列表页
      * @param array $where
@@ -131,13 +91,16 @@ class Archives extends IndexBase
      * @return array
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function getArchiveslikeList($where = [], $field = true, $order = '', $paginate = false, $limit = '')
+    public function getArchiveslikeList($where = [], $field = true, $order = '', $paginate = false)
     {
         $this->modelArchives->alias('a');
-        if ($limit) $this->modelArchives->limit = $limit;
-        $list = $this->modelArchives->getList($where, $field, $order, false)->toArray();
-        $paginate === false && $list['data'] = $list;
-        foreach ($list['data'] as &$row) {
+        $islimit=str2arr($paginate);
+        if(count($islimit)==2){
+            $this->modelArchives->limit = $paginate;
+            $paginate=false;
+        }
+        $list = $this->modelArchives->getList($where, $field, $order, $paginate);
+        foreach ($list as &$row) {
             $row['litpic'] = get_picture_url($row['litpic']);
             $row['arcurl'] = $this->getArchivesUrl($row);
         }
@@ -189,7 +152,8 @@ class Archives extends IndexBase
     }
 
 
-    /**获取文章详细
+    /**
+     * 获取文章详细
      * @param array $data
      * @return mixed|string
      * Author: lingqifei created by at 2020/2/27 0027
@@ -202,11 +166,11 @@ class Archives extends IndexBase
             $info['arcurl'] = $this->getArchivesUrl($info);//加载链接地址
             $info['litpic'] = get_picture_url($info['litpic']);
             $addtable = $this->modelChannel->getValue(['id' => $info['channel_id']], 'addtable');
-            $ext_info = Db::table(SYS_DB_PREFIX.$addtable)->where('id', $info['id'])->find();
+            $ext_info = Db::name($addtable)->where('id', $info['id'])->find();
             if ($ext_info) {
                 return array_merge($info, $ext_info);
             } else {
-                Db::table(SYS_DB_PREFIX.$addtable)->insert(['id' => $info['id']]);
+                Db::name($addtable)->insert(['id' => $info['id']]);
                 return $info;
             }
         }
@@ -286,18 +250,15 @@ class Archives extends IndexBase
         return $info;
     }
 
-    /**设置文章点击
+    /**
+     * 设置文章点击
      * @param array $data
      * @return mixed|string
      * Author: lingqifei created by at 2020/2/27 0027
      */
-    public function setArchivesClick($where = [], $field = true)
+    public function setArchivesClick($where = [], $clicks=0)
     {
-        $click = $this->modelArchives->getValue($where, 'click');
-        if($click){
-            $click=(int)$click+1;
-            $this->modelArchives->setFieldValue($where, 'click',$click);
-        }
+        $this->modelArchives->setFieldValue($where, 'click',$clicks+1);
     }
 
 
@@ -312,14 +273,13 @@ class Archives extends IndexBase
     {
         switch ($orderby) {
             case 'hot':
-				$orderby = "a.click {$orderWay}";
-				break;
             case 'click':
                 $orderby = "a.click {$orderWay}";
                 break;
             case 'id':
                 $orderby = "a.id {$orderWay}";
                 break;
+
             case 'now':
             case 'new': // 兼容织梦的写法
             case 'pubdate': // 兼容织梦的写法
@@ -332,11 +292,19 @@ class Archives extends IndexBase
             case 'sort':
                 $orderby = "a.sort {$orderWay}";
                 break;
+            case 'rand':
+                if (true === $isrand) {
+                    $orderby = "rand()";
+                } else {
+                    $orderby = "a.aid {$orderWay}";
+                }
+                break;
             default:
                 $orderby = "a.pubdate desc";
                 break;
         }
         return $orderby;
     }
+
 
 }

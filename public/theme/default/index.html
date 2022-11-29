@@ -62,6 +62,14 @@
 <hr>导航标签：<br>
 {fly:position style="crumb" symbol='>>' /}
 
+
+<!--单页栏目调用-->
+{fly:type typeid='1'}
+<a href="{$field.typeurl}" rel="nofollow" target="_self">
+    <span>{$field.content|msubstr=0,300,false}</span>
+</a>
+{/fly:type}
+
 <!--<hr>模板标签：<br>-->
 <!--{fly:assign name='typeid' value='2' /}-->
 <!--{fly:channel type='son'  typeid='$typeid'  currentstyle='active' }-->

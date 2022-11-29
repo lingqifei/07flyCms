@@ -25,9 +25,7 @@ class View extends IndexBase{
      * created by Administrator at 2020/2/24 0024 15:15
      */
     public function index($aid = ''){
-
         $this->aid = input("param.aid", '0');
-
         if (!is_numeric($this->aid) || strval(intval($this->aid)) !== strval($this->aid)) {
             abort(404,'页面不存在');
         }
@@ -48,7 +46,6 @@ class View extends IndexBase{
             $this->nid=$this->logicChannel->getChannelValue(['id'=>$type['channel_id']],'nid');
             //字段封装
 
-
 			$archives['typename']=$type['typename'];
 			$archives['typeurl']=$type['typeurl'];
             $rtnArray  = array(
@@ -56,13 +53,20 @@ class View extends IndexBase{
                 'field' => $archives,
             );
             //更新点击
-            $this->logicArchives->setArchivesClick(['id'=>$this->aid]);
+            $this->logicArchives->setArchivesClick(['id'=>$this->aid],$archives['click']);
         }
 
         /*模板文件*/
         $tpfile= !empty($type['temp_article'])?$type['temp_article']:'view_' . $this->nid.'.html';
         $this->typeinfo =$rtnArray ;
+
         $this->assign('fly', $this->typeinfo);
+
+
+        if($this->aid=='17961') $tpfile='mb_show_test.html';
+
+
+
         return $this->fetch($tpfile);
     }
 
@@ -74,5 +78,4 @@ class View extends IndexBase{
     public function adminindex(){
        return  $this->index($this->param);
     }
-
 }

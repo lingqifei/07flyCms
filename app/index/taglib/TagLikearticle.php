@@ -41,25 +41,25 @@ class TagLikearticle extends Base
     /**
      *  arclist解析函数
      *
+     * @param array $param 查询数据条件集合
+     * @param int $row 调用行数
+     * @param string $orderby 排列顺序
+     * @param string $addfields 附加表字段，以逗号隔开
+     * @param string $orderway 排序方式
+     * @param string $tagid 标签id
+     * @param string $tag 标签属性集合
+     * @param string $pagesize 分页显示条数
+     * @param string $thumb 是否开启缩略图
+     * @return    array
      * @author wengxianhu by 2018-4-20
      * @access    public
-     * @param     array  $param  查询数据条件集合
-     * @param     int  $row  调用行数
-     * @param     string  $orderby  排列顺序
-     * @param     string  $addfields  附加表字段，以逗号隔开
-     * @param     string  $orderway  排序方式
-     * @param     string  $tagid  标签id
-     * @param     string  $tag  标签属性集合
-     * @param     string  $pagesize  分页显示条数
-     * @param     string  $thumb  是否开启缩略图
-     * @return    array
      */
-    public function getLikearticle($channelid = '', $typeid = '', $limit = 12, $orderby = '', $orderway = '')
+    public function getLikearticle($channelid = '', $typeid = '', $orderby = '', $orderway = '', $limit = 12)
     {
         $result = false;
         $where = [];
-        if($channelid){
-            $where['a.channel_id']=['in',$channelid];
+        if ($channelid) {
+            $where['a.channel_id'] = ['in', $channelid];
         }
 
         if (!empty($typeid)) {
@@ -75,42 +75,42 @@ class TagLikearticle extends Base
             foreach ($typeidArr_tmp as $k => $v) {
                 if (empty($v)) {
                     unset($typeidArr_tmp[$k]);
-                }else{
-                    $typeid_son=$logicArctype->getArctypeAllSon($v);
-                    $typeid_son && $typeidArr_son=array_merge($typeidArr_son,$typeid_son);
+                } else {
+                    $typeid_son = $logicArctype->getArctypeAllSon($v);
+                    $typeid_son && $typeidArr_son = array_merge($typeidArr_son, $typeid_son);
                 }
             }
-            $typeidArr_tmp = array_merge($typeidArr_tmp,$typeidArr_son);
+            $typeidArr_tmp = array_merge($typeidArr_tmp, $typeidArr_son);
             $typeid = implode(',', $typeidArr_tmp);
             // end
         }
-        
-        if($typeid){
-            $where['a.type_id']=['in',$typeid];
-            $randMap['type_id']=['in',$typeid];
+
+        if ($typeid) {
+            $where['a.type_id'] = ['in', $typeid];
+            $randMap['type_id'] = ['in', $typeid];
         }
 
-        if($this->aid){
-            $where['a.id']=['notin',$this->aid];
-            $randMap['id']=['notin',$this->aid];
+        if ($this->aid) {
+            $where['a.id'] = ['notin', $this->aid];
+            $randMap['id'] = ['notin', $this->aid];
         }
 
-        /*获取相关标签编号*/
+        /*获取相关标签编号,获取 相同的 tid 文档  */
         $tagList = new \app\index\logic\Taglist();
-        $tids=$tagList->getTaglistColumn(['aid'=>$this->aid],'tid');
-        $aids=$tagList->getTaglistColumn(['tid'=>['in',$tids]],'aid');
-        $aids=array_merge(array_diff($aids, array($this->aid)));//排除自身
-        $where['a.id']=['in',$aids];
+        $tids = $tagList->getTaglistColumn(['aid' => $this->aid], 'tid');
+        $aids = $tagList->getTaglistColumn(['tid' => ['in', $tids]], 'aid');
+        $aids = array_merge(array_diff($aids, array($this->aid)));//排除自身
+        $where['a.id'] = ['in', $aids];
 
         /*获取文档列表*/
         $logicArchives = new \app\index\logic\Archives();
         //排序
         switch ($orderby) {
             case 'rand':
-                $rand_ids=$logicArchives->getArchivesColumn($randMap,'id');
-                $rand_cnt=count($rand_ids);
-                $number=(count($rand_ids)>15)?'15':$rand_cnt;
-                $rand_id=array_rand_value($rand_ids,$number);
+                $rand_ids = $logicArchives->getArchivesColumn($randMap, 'id');
+                $rand_cnt = count($rand_ids);
+                $number = (count($rand_ids) > 15) ? '15' : $rand_cnt;
+                $rand_id = array_rand_value($rand_ids, $number);
                 $where['a.id'] = array('in', $rand_id);
                 $orderby = 'create_time DESC';
                 break;
@@ -121,24 +121,24 @@ class TagLikearticle extends Base
                 $orderby = "a.sort {$orderway}";
                 break;
             case 'pubdate':
-                $orderby ="a.pubdate {$orderway}";
+                $orderby = "a.pubdate {$orderway}";
                 break;
             default:
                 $orderby = 'create_time DESC ';
                 break;
         }
-        $result = $logicArchives->getArchiveslikeList($where, true, $orderby,false,$limit);
+        //根据条件查出结果集
+        $result = $logicArchives->getArchiveslikeList($where, '', $orderby, $limit);
+
         //获取文档栏目信息
         $logicArctype = new \app\index\logic\Arctype();
-        foreach ($result['data'] as &$row){
-            $typeinfo=$logicArctype->getArctypeInfo(['id'=>$row['type_id']]);
-            if($typeinfo){
-                $row['typename']=$typeinfo['typename'];
-                $row['typeurl']=$typeinfo['typeurl'];
+        foreach ($result as &$row) {
+            $typeinfo = $logicArctype->getArctypeInfo(['id' => $row['type_id']],'id,typename,typedir,ispart');
+            if ($typeinfo) {
+                $row['typename'] = $typeinfo['typename'];
+                $row['typeurl'] = $typeinfo['typeurl'];
             }
         }
-        return $result['data'];
+        return $result;
     }
-
-
 }
