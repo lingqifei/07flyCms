@@ -101,10 +101,48 @@
 
 <link href="__STATIC__/module/admin/js/plugins/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet">
 <script src="__STATIC__/module/admin/js/plugins/bootstrap-treeview/bootstrap-treeview.js"></script>
+<link href="__STATIC__/module/admin/js/plugins/jquery-contextmenu/jquery.contextMenu.min.css?version=2022090401" rel="stylesheet">
+<script src="__STATIC__/module/admin/js/plugins/jquery-contextmenu/jquery.contextMenu.min.js"></script>
+<script src="__STATIC__/module/admin/js/plugins/jquery-contextmenu/jquery.ui.position.min.js"></script>
+<style type="text/css">
+    .list-group-item{position: relative;}
+    .list-group-item:hover span.node-icon{
+        position: absolute;
+        display: inline-block;
+        text-align:left;
+        right: -70px;
+        top:10px;
+        width: 100px;
+        z-index: 10;
+        height: 20px;
+    }
+    .list-group-item:hover span.node-icon:after{content: "···";font-weight: bold;color: #000;font-size: 20px;}
+    .list-group-item .list-group-menu{
+        z-index: 9999;
+        padding: 10px;
+        border:solid 1px #ccc;
+        background: #EFEFEF;
+        display: none;text-align: center;
+        border-radius: 10px;
+        position: absolute;
+        width: 100px;
+    }
+    .list-group-item span.node-icon:hover .list-group-menu{display: block;color: #666;}
+    .list-group-item .list-group-menu p{background: #DDDDDD;color: #000;}
+</style>
 <script type="text/javascript">
     $(document).ready(function () {
         ajax_type_list();
+
         turnPage(1);//页面加载时初始化分页
+
+        //增加操作菜单
+        // $('body').on('mouseover', '.list-group-item span.node-icon', function (e) {
+        //     var html="<div class='list-group-menu'><p>添加</p><p>删除</p></div>"
+        //     $(this).html(html);
+        //     console.log(html);
+        // });
+
     });
 
     //加载栏目分类到左边数据
@@ -124,15 +162,15 @@
                     showTags: false,//显示右边tags
                     showCheckbox: false,//是否显示多选
                     multiSelect: false,
-                    showBorder: false,
+                    showBorder: true,
                     onNodeSelected: function (event, node) {
                         type_id = node.tags;
                         $("#type_id").val(type_id);
                         //设置添加地址
                         ids='{\'type_id\':\''+type_id+'\'}';
                         $("#archives_add").attr('data-ids',ids);
-
                         $(".archive-list-title").html(node.text+'文章列表');
+
                         singpage(type_id);
                     }
                 });
@@ -170,5 +208,7 @@
             }
         });
     }
+
+
 
 </script>
