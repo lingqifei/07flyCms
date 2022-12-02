@@ -75,6 +75,7 @@ $(document).ready(function () {
         var heightWithoutNavbar = $("body > #wrapper").height() - 61;
         $(".sidebard-panel").css("min-height", heightWithoutNavbar + "px");
     }
+
     fix_height();
 
     $(window).bind("load resize click scroll", function () {
@@ -149,8 +150,6 @@ $(document).ready(function () {
     });
 
     //表格点击行之后选中+添加颜色
-
-
 
 
 });
@@ -549,9 +548,6 @@ function null2zero(data) {
 }
 
 
-
-
-
 // /*-----页面pannel内容区高度自适应 start-----*/
 $(window).resize(function () {
     setCenterHeight();
@@ -620,3 +616,14 @@ function getBG() {
     var color = bgArray[Math.floor(Math.random() * bgArray.length)];
     return color
 };
+
+
+function replaceComma(obj) {
+    var oldValue = obj.value;
+    while (oldValue.indexOf("，") != -1)//寻找每一个中文逗号，并替换
+    {
+        obj.value = oldValue.replace("，", ",");
+        oldValue = obj.value;
+    }
+    obj.value = oldValue;
+}
