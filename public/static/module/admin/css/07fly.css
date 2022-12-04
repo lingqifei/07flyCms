@@ -107,3 +107,4 @@
 .detail-tabs .nav-tabs{margin-bottom: 0px;background: #F9F9F9;}
 .detail-tabs .nav-tabs h3{font-weight: 600;font-size:14px;  padding: 5px 30px 0px 5px;}
 .detail-tabs .tab-content{border-left: solid 1px #e7eaec;border-right: solid 1px #e7eaec;border-bottom: solid 1px #e7eaec;}
+.detail-tabs .nav-tabs li.active{background: #ffffff;}

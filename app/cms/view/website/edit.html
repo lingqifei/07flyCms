@@ -22,7 +22,7 @@
                     <div class="col-sm-10">
                         <select name="type" class="form-control">
                             {volist name='type_list' id='type'}
-                            <option value="{$key}"  {noempty name="info['type']"} {if condition="$info['type'] eq $key " }  selected="selected" {/if} {/noempty}>{$type}</option>
+                            <option value="{$key}"  {notempty name="info['type']"} {if condition="$info['type'] eq $key " }  selected="selected" {/if} {/notempty}>{$type}</option>
                             {/volist}
                         </select>
                         <span class="help-block m-b-none">（系统会根据不同类型解析配置值）</span>
@@ -34,7 +34,7 @@
                         <select name="group" class="form-control">
                             <option value="0">不分组</option>
                             {volist name='group_list' id='group'}
-                            <option value="{$key}" {noempty name="info['group']"} {if condition="$info['group'] eq $key " }  selected="selected" {/if} {/noempty}>{$group}</option>
+                            <option value="{$key}" {notempty name="info['group']"} {if condition="$info['group'] eq $key " }  selected="selected" {/if} {/notempty}>{$group}</option>
                             {/volist}
                         </select>
                         <span class="help-block m-b-none">（配置分组，不分组则不会显示在系统设置中）</span>

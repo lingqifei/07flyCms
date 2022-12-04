@@ -55,7 +55,7 @@
                 <select data-placeholder="上级栏目..." name="type_id" class="chosen-select chosen-select-typeid">
                     <option value="">请选择栏目</option>
                     {volist name='arctypelist' id='vo'}
-                    <option value="{$vo['id']}" {noempty name="type_id" } {if condition="$type_id eq $vo['id'] " } selected="selected" {/if} {/noempty}>{$vo['name']}</option>
+                    <option value="{$vo['id']}" {notempty name="type_id" } {if condition="$type_id eq $vo['id'] " } selected="selected" {/if} {/notempty}>{$vo['name']}</option>
                     {/volist}
                 </select>
                 <span class="help-block m-b-none">文章主栏目必须选择，不能为空</span>

@@ -24,7 +24,6 @@ class Index extends IndexBase
      */
     public function index()
     {
-
         return $this->fetch('index.html');
     }
 
@@ -36,7 +35,6 @@ class Index extends IndexBase
      */
     public function sitemap()
     {
-
         $sitemaplist = $this->logicInfoType->getInfoTypeSitemapChannel();
         $this->assign('sitemaplist', $sitemaplist);
         return $this->fetch('sitemap.html');

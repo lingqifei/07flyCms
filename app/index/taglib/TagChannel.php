@@ -103,6 +103,9 @@ class TagChannel extends Base
                 $typeid  = !empty($typeid) ? $typeid : $this->tid;
                 $result = $this->getSon($typeid, true);
                 break;
+            case 'set': // 设置指定的
+                $result = $this->getSet($typeid,$notypeid);
+                break;
             case 'first': // 第一级栏目
                 $typeid  = !empty($typeid) ? $typeid : $this->tid;
                 $result = $this->getFirst($typeid);
@@ -223,6 +226,37 @@ class TagChannel extends Base
             }
         }
         $result= list2tree($result,0,0,'id','parent_id','typename');//把所以树形展示
+        return $result;
+    }
+
+    /**
+     * 获取=>指定typeid
+     * @param string $notypeid
+     * @return array
+     * @author 07fly by 2020-02-24
+     */
+    private function getSet($typeid='',$notypeid = '')
+    {
+        $result = array();
+        /*获取所有栏目*/
+        $logicArctype = new \app\index\logic\Arctype();
+        $map['visible']=['=','1'];//显示
+        !empty($typeid) && $map['id'] = ['In', $typeid]; // 指定ID
+        !empty($notypeid) && $map['id'] = ['NOTIN', $notypeid]; // 排除指定栏目ID
+        $list = $logicArctype->getArctypeList($map, true, 'sort asc',false);
+        /*--end*/
+        if (count($list['data']) > 0) {
+            foreach ($list['data'] as $key => $val) {
+                //处理栏目标识
+                $topTypeid=$this->getTopTypeid($this->tid);
+                if (in_array($val['id'],$topTypeid) || $val['id']==$this->tid) {
+                    $val['currentstyle'] = $this->currentstyle;
+                }else{
+                    $val['currentstyle'] ='';
+                }
+                $result[$key] = $val;
+            }
+        }
         return $result;
     }
 

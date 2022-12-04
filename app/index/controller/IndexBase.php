@@ -55,6 +55,8 @@ class IndexBase extends ControllerBase
         $root_url = get_file_root_path();
         $this->assign('root_url', $root_url);
         $index_entry_dir = config('index_entry_dir');
+
+        //判断是否为移动端,是否启用移动站
         if (is_mobile() && !empty($this->web_config['web_wap'])) {
             $this->assign('template_dir', $root_url . $index_entry_dir . 'theme/' . $this->web_theme_name . '/wap/');
         } else {
@@ -78,11 +80,12 @@ class IndexBase extends ControllerBase
         } else {
             $template = PATH_PUBLIC . 'theme' . DS . $this->web_theme_name . DS . 'pc' . DS . $template;
         }
+
+
         if (!file_exists($template)) {
             echo "模板文件不存：" . $template;
             exit;
         }
-
         //系统默认关键替换
         $replace = [
             '{sys_city_name}' => $this->sys_city_name,

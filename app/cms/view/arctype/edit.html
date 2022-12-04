@@ -15,11 +15,11 @@
                             <label class="col-sm-2 control-label">是否隐藏栏目 </label>
                             <div class="col-sm-10">
                                 <div class="radio radio-info radio-inline">
-                                    <input type="radio" id="inlineRadio1" value="1" name="visible" {noempty name="$info.visible"} {if condition="$info.visible eq '1' " }  checked {/if} {/noempty}>
+                                    <input type="radio" id="inlineRadio1" value="1" name="visible" {notempty name="$info.visible"} {if condition="$info.visible eq '1' " }  checked {/if} {/notempty}>
                                     <label for="inlineRadio1"> 显示 </label>
                                 </div>
                                 <div class="radio radio-info radio-inline">
-                                    <input type="radio" id="inlineRadio2" value="0" name="visible" {noempty name="$info.visible"} {if condition="$info.visible eq '0' " }  checked {/if} {/noempty}>
+                                    <input type="radio" id="inlineRadio2" value="0" name="visible" {notempty name="$info.visible"} {if condition="$info.visible eq '0' " }  checked {/if} {/notempty}>
                                     <label for="inlineRadio2"> 隐藏 </label>
                                 </div>
                             </div>
@@ -29,7 +29,7 @@
                             <div class="col-sm-10">
                                 <select data-placeholder="请选内容模型..." name="channel_id" class="chosen-select">
                                     {volist name='channellist' id='vo'}
-                                    <option value="{$vo['id']}"  {noempty name="info['channel_id']"} {if condition="$info['channel_id'] eq $vo['id'] " }  selected="selected" {/if} {/noempty}>{$vo['name']}</option>
+                                    <option value="{$vo['id']}"  {notempty name="info['channel_id']"} {if condition="$info['channel_id'] eq $vo['id'] " }  selected="selected" {/if} {/notempty}>{$vo['name']}</option>
                                     {/volist}
                                 </select>
                                 <span class="help-block m-b-none"></span></div>
@@ -40,7 +40,7 @@
                                 <select data-placeholder="上级栏目..." name="parent_id" class="chosen-select chosen-select-parent">
                                     <option value="0">选择栏目</option>
                                     {volist name='arctypelist' id='vo'}
-                                    <option value="{$vo['id']}" {noempty name="info['parent_id']"} {if condition="$info['parent_id'] eq $vo['id'] " }  selected="selected" {/if} {/noempty}>{$vo['name']}</option>
+                                    <option value="{$vo['id']}" {notempty name="info['parent_id']"} {if condition="$info['parent_id'] eq $vo['id'] " }  selected="selected" {/if} {/notempty}>{$vo['name']}</option>
                                     {/volist}
                                 </select>
                                 <span class="help-block m-b-none"></span></div>
@@ -82,11 +82,11 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">栏目属性 </label>
                             <div class="col-sm-10">
-                                <input name="ispart" type="radio" value="0" {noempty name="$info.ispart"} {if condition="$info.ispart eq '0' " }  checked {/if} {/noempty}>
+                                <input name="ispart" type="radio" value="0" {notempty name="$info.ispart"} {if condition="$info.ispart eq '0' " }  checked {/if} {/notempty}>
                                 最终列表栏目（允许在本栏目发布文档，并生成文档列表） <br>
-                                <input name="ispart" type="radio" value="1" {noempty name="$info.ispart"} {if condition="$info.ispart eq '1' " }  checked {/if} {/noempty}>
+                                <input name="ispart" type="radio" value="1" {notempty name="$info.ispart"} {if condition="$info.ispart eq '1' " }  checked {/if} {/notempty}>
                                 频道封面（栏目本身不允许发布文档） <br>
-                                <input name="ispart" type="radio" value="2"  {noempty name="$info.ispart"} {if condition="$info.ispart eq '2' " }  checked {/if} {/noempty}>
+                                <input name="ispart" type="radio" value="2"  {notempty name="$info.ispart"} {if condition="$info.ispart eq '2' " }  checked {/if} {/notempty}>
                                 外部连接（在"文件保存目录"处填写网址） <span class="help-block m-b-none"></span></div>
                         </div>
                     </div>
