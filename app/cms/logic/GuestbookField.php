@@ -66,9 +66,7 @@ class GuestbookField extends CmsBase
 	{
 
 		$validate_result = $this->validateGuestbookField->scene('add')->check($data);
-
 		if (!$validate_result) {
-
 			return [RESULT_ERROR, $this->validateGuestbookField->getError()];
 		}
 

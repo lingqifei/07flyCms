@@ -20,7 +20,7 @@
             <div class="col-sm-8">
                 <select data-placeholder="选择数据类型..." name="field_type" class="chosen-select type-chosen-select"  style="width: 200px;" >
                     {volist name='typelist' id='vo'}
-                    <option value="{$key}"   {notempty name="info[field_type]"} {if condition="$info.field_type eq $key " }  selected {/if} {/notempty} >{$vo['name']}</option>
+                    <option value="{$key}"   {notempty name="info.field_type"} {if condition="$info.field_type eq $key " }  selected {/if} {/notempty} >{$vo['name']}</option>
                     {/volist}
                 </select>
             </div>

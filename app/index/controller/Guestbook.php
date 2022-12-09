@@ -33,6 +33,7 @@ class Guestbook extends IndexBase{
     }
 
     /**
+     * 留言添加
      * @return mixed
      * created by Administrator at 2020/2/24 0024 15:15
      */
@@ -45,7 +46,7 @@ class Guestbook extends IndexBase{
     }
 
     /**
-     * 短信发磅测试
+     * 短信发送测试
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/7/12 0012
      */
     public function  send_sms(){

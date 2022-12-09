@@ -32,7 +32,7 @@ class Guestbook extends IndexBase
 
         $extfieldArr=array_column($extfieldlist,'field_name');
 
-        $url = url('index/index');
+        $url=empty($data['url'])?url('index/index'):$data['url'];
 
         if(empty($extfieldlist)){
            return  [RESULT_ERROR, '请填写正确的表单号', $url];
