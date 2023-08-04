@@ -31,7 +31,8 @@ class Member extends MemberBase
         return $result ? [RESULT_SUCCESS, '编辑成功', $url] : [RESULT_ERROR, $this->modelMember->getError()];
     }
 
-    /**会员列表信息
+    /**
+     * 会员列表信息
      * @param array $where
      * @param bool $field
      * @return
@@ -39,10 +40,13 @@ class Member extends MemberBase
     public function getMemberInfo($where = [], $field = true)
     {
         $info = $this->modelMember->getInfo($where, $field);
-        $info['province_name'] = $this->logicRegion->getRegionListName($info['province_id']);
-        $info['city_name'] = $this->logicRegion->getRegionListName($info['city_id']);
-        $info['county_name'] = $this->logicRegion->getRegionListName($info['county_id']);
-        $info['level'] = $this->modelMemberLevel->getInfo(['id'=>$info['level_id']]);
+        if(!empty($info)){
+            $info['province_name'] = $this->logicRegion->getRegionListName($info['province_id']);
+            $info['city_name'] = $this->logicRegion->getRegionListName($info['city_id']);
+            $info['county_name'] = $this->logicRegion->getRegionListName($info['county_id']);
+            $info['level'] = $this->modelMemberLevel->getInfo(['id'=>$info['level_id']]);
+        }
+
         return $info;
     }
 
