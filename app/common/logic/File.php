@@ -1,15 +1,13 @@
 <?php
-/**
- * 零起飞-(07FLY-CRM)
- * ==============================================
- * 版权所有 2015-2028   成都零起飞网络，并保留所有权利。
- * 网站地址: http://www.07fly.xyz
- * ----------------------------------------------------------------------------
- * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
- * ==============================================
- * Author: kfrs <goodkfrs@QQ.com> 574249366
- * Date: 2019-10-3
- */
+// +----------------------------------------------------------------------
+// | 07FLYCRM [基于ThinkPHP5.0开发]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016-2021 http://www.07fly.xyz
+// +----------------------------------------------------------------------
+// | Professional because of focus  Persevering because of happiness
+// +----------------------------------------------------------------------
+// | Author: 开发人生 <goodkfrs@qq.com>
+// +----------------------------------------------------------------------
 
 
 namespace app\common\logic;
@@ -194,18 +192,17 @@ class File extends LogicBase
 			default :
 				$info = $this->modelPicture->getInfo(['id' => $id], 'path,url');
 		}
-
+        //设置了静态地址
 		if (!empty($info['url'])) {
 			return config('static_domain') . SYS_DS_PROS . $info['url'];
 		}
 
-		$root_url = get_file_root_path();
-
+        //得到根地址
+        $root_url = get_file_root_path();
 		if (!empty($info['path'])) {
 			return $root_url . 'upload/picture/' . $info['path'];
 
 		}
-
 		return $root_url . 'static/module/admin/img/onimg.png';
 	}
 

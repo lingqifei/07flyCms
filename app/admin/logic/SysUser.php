@@ -1,15 +1,13 @@
 <?php
-/**
- * 零起飞-(07FLY-CRM)
- * ==============================================
- * 版权所有 2015-2028   成都零起飞网络，并保留所有权利。
- * 网站地址: http://www.07fly.xyz
- * ----------------------------------------------------------------------------
- * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
- * ==============================================
- * Author: kfrs <goodkfrs@QQ.com> 574249366
- * Date: 2019-10-3
- */
+// +----------------------------------------------------------------------
+// | 07FLYCRM [基于ThinkPHP5.0开发]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016-2021 http://www.07fly.xyz
+// +----------------------------------------------------------------------
+// | Professional because of focus  Persevering because of happiness
+// +----------------------------------------------------------------------
+// | Author: 开发人生 <goodkfrs@qq.com>
+// +----------------------------------------------------------------------
 
 namespace app\admin\logic;
 
@@ -25,20 +23,37 @@ class SysUser extends AdminBase
     // 菜单Select结构
     public static $menuSelect = [];
 
+
+    /**
+     * 获取列表
+     */
+    public function getAllList($where = [], $field = true, $order = 'id desc', $paginate = DB_LIST_ROWS)
+    {
+        $list = $this->modelSysUser->getList($where, $field, $order, $paginate);
+        return $list;
+    }
+
     /**
      * 获取列表
      */
     public function getSysUserList($where = [], $field = true, $order = 'id desc', $paginate = DB_LIST_ROWS)
     {
         $list = $this->modelSysUser->getList($where, $field, $order, $paginate)->toArray();
-
         if ($paginate === false) $list['data'] = $list;
         foreach ($list['data'] as &$row) {
             $row['dept_name'] = $this->modelSysDept->getValue(['id' => $row['dept_id']], 'name');
             $row['position_name'] = $this->modelSysPosition->getValue(['id' => $row['position_id']], 'name');
-            $row['sys_auth_name'] =$this->logicSysAuthAccess->getUserAuthListName($row['id']);
+            $row['sys_auth_name'] = $this->logicSysAuthAccess->getUserAuthListName($row['id']);
         }
         return $list;
+    }
+
+    /**
+     * 获取列
+     */
+    public function getSysUserColumn($where = [], $field = true)
+    {
+        return $this->modelSysUser->getColumn($where, $field);
     }
 
     /**
@@ -56,7 +71,6 @@ class SysUser extends AdminBase
     {
 
         $validate_result = $this->validateSysUser->scene('add')->check($data);
-
         if (!$validate_result) {
             return [RESULT_ERROR, $this->validateSysUser->getError()];
         }
@@ -67,9 +81,7 @@ class SysUser extends AdminBase
         $result = $this->modelSysUser->setInfo($data);
 
         $result && action_log('新增', '新增系统用户，name：' . $data['username']);
-
         $url = url('show');
-
         return $result ? [RESULT_SUCCESS, '系统用户添加成功', $url] : [RESULT_ERROR, $this->modelSysUser->getError()];
     }
 
@@ -80,37 +92,39 @@ class SysUser extends AdminBase
     {
 
         $validate_result = $this->validateSysUser->scene('edit')->check($data);
-
         if (!$validate_result) {
             return [RESULT_ERROR, $this->validateSysUser->getError()];
         }
 
         $url = url('show');
-
         $result = $this->modelSysUser->setInfo($data);
-
         $result && action_log('编辑', '编辑用户，name：' . $data['username']);
-
         return $result ? [RESULT_SUCCESS, '编辑用户成功', $url] : [RESULT_ERROR, $this->modelSysUser->getError()];
     }
 
     /**
      * 删除
      */
-    public function sysUserDel($where = [], $data = [])
+    public function sysUserDel($data = [])
     {
 
-        if (SYS_ADMINISTRATOR_ID == $data['id']) {
-            return [RESULT_ERROR, '系统超级管理不能删除哦~'];
-        }
-        if (SYS_ORG_USER_ID == $data['id']) {
-            return [RESULT_ERROR, '企业超级管理不能删除哦~'];
+        if (empty($data['id'])) {
+            throw_response_error('选择执行的参数');
         }
 
+        $ids = str2arr($data['id']);
+
+        //防止误删超级权限
+        if (in_array(SYS_ADMINISTRATOR_ID, $ids)) {
+            throw_response_error('系统超级管理不能删除哦');
+        }
+        if (in_array(SYS_ADMINISTRATOR_ID, $ids)) {
+            throw_response_error('企业超级管理不能删除哦');
+        }
+
+        $where['id'] = ['in', $ids];
         $result = $this->modelSysUser->deleteInfo($where, true);
-
         $result && action_log('删除', '删除用户，where：' . http_build_query($where));
-
         return $result ? [RESULT_SUCCESS, '用户删除成功'] : [RESULT_ERROR, $this->modelSysUser->getError()];
     }
 
@@ -129,32 +143,27 @@ class SysUser extends AdminBase
             return [RESULT_ERROR, '企业超级管理不能授权哦~', $url];
         }
 
+        //清除之前权限与用户的映射关联
         $where = ['sys_user_id' => ['in', $data['id']]];
-
         $this->modelSysAuthAccess->deleteInfo($where, true);
 
         if (empty($data['sys_auth_id'])) {
             return [RESULT_SUCCESS, '会员授权成功', $url];
         }
 
+        $user_ids = str2arr($data['id']);//兼容多个用户批量设置,id=1,2,3,4
         $add_data = [];
-
-        foreach ($data['sys_auth_id'] as $auth_id) {
-
-            $add_data[] = ['sys_user_id' => $data['id'], 'sys_auth_id' => $auth_id];
+        foreach ($user_ids as $userid) {
+            foreach ($data['sys_auth_id'] as $auth_id) {
+                $add_data[] = ['sys_user_id' => $userid, 'sys_auth_id' => $auth_id];
+            }
         }
+        $result = $this->modelSysAuthAccess->setList($add_data);
 
-        if ($this->modelSysAuthAccess->setList($add_data)) {
+        $result && action_log('授权', '会员授权，id：' . $data['id']);
 
-            action_log('授权', '会员授权，id：' . $data['id']);
+        return $result ? [RESULT_SUCCESS, '会员授权成功'] : [RESULT_ERROR, $this->modelSysAuthAccess->getError()];
 
-            //$this->logicSysAuth->updateSubAuthByUser($data['id']);
-
-            return [RESULT_SUCCESS, '会员授权成功', $url];
-        } else {
-
-            return [RESULT_ERROR, $this->modelAuthGroupAccess->getError()];
-        }
     }
 
     /**
@@ -185,7 +194,6 @@ class SysUser extends AdminBase
     {
 
         $validate_result = $this->validateSysUser->scene('password')->check($data);
-
         if (!$validate_result) {
             return [RESULT_ERROR, $this->validateSysUser->getError()];
         }
@@ -198,38 +206,65 @@ class SysUser extends AdminBase
 
         $data['id'] = SYS_USER_ID;
         $data['password'] = data_md5_key($data['password']);
-        $url = url('index/index');
-
         $result = $this->modelSysUser->setInfo($data);
 
         $result && action_log('编辑', '会员密码修改，id：' . $data['id']);
 
+        $url = url('index/index');
         return $result ? [RESULT_SUCCESS, '密码修改成功', $url] : [RESULT_ERROR, $this->modelSysUser->getError()];
     }
 
     /**
      * 重置密码
      */
-    public function ResetPassword($data = [])
+    public function resetPassword($data = [])
     {
 
         $validate_result = $this->validateSysUser->scene('resetpassword')->check($data);
-
         if (!$validate_result) {
 
             return [RESULT_ERROR, $this->validateSysUser->getError()];
         }
-        $user = $this->getSysUserInfo(['id' => $data['id']]);
 
-        $data['password'] = data_md5_key($data['password']);
+        $md5password = data_md5_key($data['password']);
+        $where['id'] = ['in', $data['id']];
+
+        $result = $this->modelSysUser->setFieldValue($where, 'password', $md5password);
+
+        $result && action_log('编辑', '重置密码修改，name：' . $data['username']);
 
         $url = url('index/index');
-
-        $result = $this->modelSysUser->setInfo($data);
-
-        $result && action_log('编辑', '重置密码修改，name：' . $user['username']);
-
         return $result ? [RESULT_SUCCESS, '重置密码修改', $url] : [RESULT_ERROR, $this->modelSysUser->getError()];
+    }
+
+    /**
+     * 设置职位
+     */
+    public function setPosition($data = [])
+    {
+
+        $where['id'] = ['in', $data['id']];
+        $result = $this->modelSysUser->setFieldValue($where, 'position_id', $data['position_id']);
+
+        $result && action_log('编辑', '设置职位，name：' . $data['username']);
+
+        $url = url('index/index');
+        return $result ? [RESULT_SUCCESS, '操作成功', $url] : [RESULT_ERROR, $this->modelSysUser->getError()];
+    }
+
+    /**
+     * 设置部门
+     */
+    public function setDept($data = [])
+    {
+
+        $where['id'] = ['in', $data['id']];
+        $result = $this->modelSysUser->setFieldValue($where, 'dept_id', $data['dept_id']);
+
+        $result && action_log('编辑', '设置部门，name：' . $data['username']);
+
+        $url = url('index/index');
+        return $result ? [RESULT_SUCCESS, '操作成功', $url] : [RESULT_ERROR, $this->modelSysUser->getError()];
     }
 
     /**
@@ -259,7 +294,6 @@ class SysUser extends AdminBase
             $ids[] = $data['pid'];
             $where['dept_id'] = ['in', $ids];
         }
-
         return $where;
     }
 

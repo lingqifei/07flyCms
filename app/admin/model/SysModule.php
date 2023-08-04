@@ -1,15 +1,13 @@
 <?php
-/**
- * 零起飞-(07FLY-CRM)
- * ==============================================
- * 版权所有 2015-2028   成都零起飞网络，并保留所有权利。
- * 网站地址: http://www.07fly.xyz
- * ----------------------------------------------------------------------------
- * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
- * ==============================================
- * Author: kfrs <goodkfrs@QQ.com> 574249366
- * Date: 2019-10-3
- */
+// +----------------------------------------------------------------------
+// | 07FLYCRM [基于ThinkPHP5.0开发]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016-2021 http://www.07fly.xyz
+// +----------------------------------------------------------------------
+// | Professional because of focus  Persevering because of happiness
+// +----------------------------------------------------------------------
+// | Author: 开发人生 <goodkfrs@qq.com>
+// +----------------------------------------------------------------------
 
 namespace app\admin\model;
 
@@ -63,7 +61,8 @@ class SysModule extends AdminBase
     }
 
     /**
-     * 创建模块目录
+     * 创建模块目录=》模块默认的目录
+     * 目录名称：'controller', 'logic', 'model', 'service', 'validate', 'data', 'view'
      * @param $module
      * @return string
      * Author: lingqifei created by at 2020/6/4 0004
@@ -72,11 +71,6 @@ class SysModule extends AdminBase
     {
         //模块目录
         $module_dir = $path . $module_name . DS;
-//        if (is_dir($module_dir)) {
-//            return [RESULT_ERROR, '模块目录名称已经存在'];
-//            exit;
-//        }
-        //创建模块目录
         !is_dir($module_dir) && mkdir($module_dir, 0755, true);
 
         //模块子目录
@@ -85,8 +79,7 @@ class SysModule extends AdminBase
             $action_dir = $module_dir . $dir_name;
             !is_dir($action_dir) && mkdir($action_dir, 0755, true);
         }
-
-        //2、移动模板文件
+        //2、移动模板文件（从/app/admin/data/mdtpl）复制过去
         $tpl_list = [
             'controller/Base.tpl',
             'logic/Base.tpl',
@@ -105,6 +98,7 @@ class SysModule extends AdminBase
         $modulename = strtolower($module_name);//转为小写
         $modulenameUc = ucwords(strtolower($module_name));//转为小写,首字母大写
 
+        //替换为创建模块名称信息
         $reaplce = [
             'spacename' => $modulename,
             'modulename' => $modulename,
@@ -149,13 +143,13 @@ class SysModule extends AdminBase
 //        //数据目录
 //        $data_dir = $module_dir . DS . 'data';
 //        !is_dir($data_dir) && mkdir($data_dir, 0755, true);
-
         return true;
     }
 
     /**
-     * 生成模块目录信息文件
+     * 生成模块=>目录信息文件
      * param ['name'=>'模块名称','dirnamr'=>'目录名称','path'=>'模块路径',]
+     * 文件路径：/app/name/dirname/nameBase.php
      * @author lingqifei <364666827@qq.com>
      */
     public function mkModuleDirFile($data = [])
@@ -171,8 +165,8 @@ class SysModule extends AdminBase
 *
 * {$name_lo}.{$action_lo}  模型
 *
-* =========================================================
-* 零起飞网络 - 专注于网站建设服务和行业系统开发
+* ----------------------------------------------
+* 零起飞网络 - 专注于企业管理系统开发
 * 以质量求生存，以服务谋发展，以信誉创品牌 !
 * ----------------------------------------------
 * @copyright Copyright (C) 2017-2022 07FLY Network Technology Co,LTD.
@@ -205,7 +199,8 @@ INFO;
     }
 
 
-    /**生成模块信息文件
+    /**
+     * 生成模块=》/app/name/data/info.php文件
      * @param array $data
      * @param $module_dir
      * @return bool|int
@@ -218,11 +213,11 @@ INFO;
         $config = <<<INFO
 <?php
 // +----------------------------------------------------------------------
-// | 07FLY系统 [基于ThinkPHP5.0开发]
+// | 07FLYCRM系统 [基于ThinkPHP5.0开发]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016-2021 http://www.07fly.xyz
 // +----------------------------------------------------------------------
-// | 07FLY承诺基础框架永久开源，您可用于学习和商用，但必须保留软件版权信息。
+// |  以质量求生存，以服务谋发展，以信誉创品牌 !
 // +----------------------------------------------------------------------
 // | Author: 开发人生 <574249366@qq.com>
 // +----------------------------------------------------------------------
@@ -261,9 +256,10 @@ INFO;
 
     /**
      * 模块的栏目导出
-     *1、生成模块的栏目信息
+     * 1、生成模块的栏目信息
      * 2、把生成的格式写入配置文件
      * @param $modulename
+     * @param $module_dir
      * Author: lingqifei created by at 2020/6/4 0004
      */
     public function exportModuleMenu($modulename, $module_dir)
@@ -278,9 +274,12 @@ INFO;
     }
 
     /**
-     * 模块栏目导入
-     * @param $modulename
-     * Author: lingqifei created by at 2020/6/4 0004
+     * 模块=》菜单栏目导入
+     * @param $modulename 模块名
+     * @param $module_dir 目录
+     * @return array|void
+     * @author: 开发人生 goodkfrs@qq.com
+     * @Time: 2022/12/28 16:32
      */
     public function importModuleMenu($modulename, $module_dir)
     {
@@ -310,14 +309,13 @@ INFO;
      */
     public function importModuleSqlExec($param = [])
     {
-
         header('Content-Type:application/json; charset=utf-8');
 
         if (!isset($param['part']) && !isset($param['start'])) {
 
-            $module_table_file = $param['module_dir'] . DS . $param['sqlfile'];
+            $module_table_file = $param['module_dir']  .DS. $param['sqlfile'];
             if (!file_exists($module_table_file)) {
-                return [RESULT_SUCCESS, $module_table_file . '文件不存在,跳过数据导入步骤！'];
+                throw_response_error($module_table_file . '文件不存在,跳过数据导入步骤！');
                 exit;
             }
             //参数1为序号，2，文件，3 ，是否压缩
@@ -380,7 +378,7 @@ INFO;
     }
 
     /**
-     * 导出模块表的数据敷衍到文件
+     * 导出模块表=》导出到文件
      * $param[] 为模块信息,name tables
      * Author: kfrs <goodkfrs@QQ.com> created by at 2020/9/14 0014
      */
@@ -431,7 +429,7 @@ INFO;
     }
 
     /**
-     * 数据备份，步骤2
+     * 数据表备份=》步骤2
      */
     public function exportModuleTableStep2($param = [])
     {
@@ -487,6 +485,81 @@ INFO;
         } else {
             return false;
         }
+    }
+
+
+    /**
+     * 同步=>数据表结构
+     * @param string $filename
+     * Author: 开发人生 goodkfrs@qq.com
+     * Date: 2021/8/3 0003 9:52
+     */
+    public function sysModuleSyncTableFile($filename = '')
+    {
+        if (file_exists($filename)) {
+            $content = include($filename);//加载table结构数组
+            $table = new \lqf\SyncTableDesc($content, SYS_DB_PREFIX);
+            $table->generate();
+        }
+    }
+
+    /**
+     * 同步=>菜单栏目功能=》1步
+     * @param string $filename
+     * Author: 开发人生 goodkfrs@qq.com
+     * Date: 2021/8/3 0003 9:52
+     */
+    public function sysModuleSyncMenuFile($filename = '')
+    {
+        if (file_exists($filename)) {
+            $content = file_get_contents($filename);
+            $content = isJson($content, true);
+            $this->sysModuleMenuImport($content);
+        }
+    }
+
+
+    /**
+     * 同步=>菜单栏目功能=》2步=》同步更新栏目数据，增加不存的栏目数据
+     * @param array $data
+     * @param int $pid
+     * @return bool
+     * Author: 开发人生 goodkfrs@qq.com
+     * Date: 2021/8/5 0005 18:44
+     */
+    public function sysModuleMenuImport($data = [], $pid = 0)
+    {
+        if (empty($data)) {
+            return true;
+        }
+        foreach ($data as $v) {
+            $map['url'] = ['=', $v['url']];
+            $map['module'] = ['=', $v['module']];
+            $info = $this->modelSysMenu->getInfo($map, true);
+            //整理是否有下级
+            $childs = '';
+            if (isset($v['nodes'])) {
+                $childs = $v['nodes'];
+                unset($v['nodes']);
+            }
+            //当栏目不存在、添加栏目
+            if (empty($info)) {
+                if (!isset($v['pid'])) {
+                    $v['pid'] = $pid;
+                }
+                $result = $this->modelSysMenu->setInfo($v);
+            } else {//存在跳过
+                $result = $info['id'];//设置本为上级栏目
+                $this->sysModuleMenuImport($childs, $result);
+            }
+            if (!$result) {
+                return false;
+            }
+            if (!empty($childs)) {
+                $this->sysModuleMenuImport($childs, $result);
+            }
+        }
+        return true;
     }
 
 }

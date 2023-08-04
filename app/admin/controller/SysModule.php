@@ -1,15 +1,13 @@
 <?php
-/**
- * 零起飞-(07FLY-CRM)
- * ==============================================
- * 版权所有 2015-2028   成都零起飞网络，并保留所有权利。
- * 网站地址: http://www.07fly.xyz
- * ----------------------------------------------------------------------------
- * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
- * ==============================================
- * Author: kfrs <goodkfrs@QQ.com> 574249366
- * Date: 2019-10-3
- */
+// +----------------------------------------------------------------------
+// | 07FLYCRM [基于ThinkPHP5.0开发]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016-2021 http://www.07fly.xyz
+// +----------------------------------------------------------------------
+// | Professional because of focus  Persevering because of happiness
+// +----------------------------------------------------------------------
+// | Author: 开发人生 <goodkfrs@qq.com>
+// +----------------------------------------------------------------------
 
 namespace app\admin\controller;
 use think\db;
@@ -86,15 +84,6 @@ class SysModule extends AdminBase
     }
 
     /**
-     * 模块上传
-     */
-    public function upload()
-    {
-        IS_POST &&   $this->jump($this->logicSysModule->sysModuleUpload($this->param));
-        return $this->fetch('upload');
-    }
-
-    /**
      * 模块安装
      */
     public function install()
@@ -135,19 +124,40 @@ class SysModule extends AdminBase
     }
 
 	/**
-	 * 模块卸载
-	 */
-	public function createsys()
-	{
-		return $this->jump($this->logicSysModule->sysModuleCreateSys($this->param));
-	}
-
-	/**
 	 * 模块同步
 	 */
 	public function synctable()
 	{
 		return $this->jump($this->logicSysModule->sysModuleSyncTable($this->param));
 	}
+
+    /**
+     * 模块上传
+     */
+    public function upload()
+    {
+        if (!empty($this->param['ajaxmodel'])) {
+            switch ($this->param['ajaxmodel']) {
+                case 'get':
+                    return $this->logicUpload->getUploadFile($this->param);
+                    break;
+                case 'del':
+                    return $this->jump($this->logicUpload->delUploadFile($this->param));
+                    break;
+                case 'upload':
+                    return $this->jump($this->logicUpload->uploadFile($this->param));
+                    break;
+                case 'install':
+                    return $this->jump($this->logicSysModule->sysModuleUpload($this->param));
+                    break;
+            }
+        }
+        $uploadfilepath = 'sysmodule_' . SYS_USER_ID;//上传文件目录
+        $uploadtarget = url('SysModule/upload', array('ajaxmodel' => 'upload', 'uploadfilepath' => $uploadfilepath));
+        $this->assign('uploadfilepath', $uploadfilepath);
+        $this->assign('ajaxtarget', url());
+        $this->assign('uploadtarget', $uploadtarget);
+        return $this->fetch('upload');//上传接口模板
+    }
 
 }
