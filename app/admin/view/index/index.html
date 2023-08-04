@@ -5,30 +5,28 @@
     <meta name="keywords" content="{$sys_config.seo_keywords|default=''}">
     <meta name="description" content="{$sys_config.seo_description|default=''}">
     <link rel="shortcut icon" href="__STATIC__/img/favicon.png">
-    <link href="__STATIC__/module/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="__STATIC__/module/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="__STATIC__/module/admin/css/plugins/iCheck/custom.css" rel="stylesheet">
-    <link href="__STATIC__/module/admin/css/plugins/chosen/chosen.css" rel="stylesheet">
-    <link href="__STATIC__/module/admin/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-    <link href="__STATIC__/module/admin/css/plugins/datapicker/datetimepicker.min.css" rel="stylesheet">
-    <link href="__STATIC__/module/admin/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"
-          rel="stylesheet">
-    <link href="__STATIC__/module/admin/css/animate.css" rel="stylesheet">
-    <link href="__STATIC__/module/admin/css/style.css?v=4.1.0" rel="stylesheet">
-    <!-- 自定义CSS -->
-    <link href="__STATIC__/module/admin/css/07fly.css?v=1.1.0" rel="stylesheet">
+    <!--    <link href="__STATIC__/module/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">-->
+    <!--    <link href="__STATIC__/module/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">-->
+    <!--    <link href="__STATIC__/module/admin/css/plugins/iCheck/custom.css" rel="stylesheet">-->
+    <!--    <link href="__STATIC__/module/admin/css/plugins/chosen/chosen.css" rel="stylesheet">-->
+    <!--    <link href="__STATIC__/module/admin/css/plugins/datapicker/datepicker3.css" rel="stylesheet">-->
+    <!--    <link href="__STATIC__/module/admin/css/plugins/datapicker/datetimepicker.min.css" rel="stylesheet">-->
+    <!--    <link href="__STATIC__/module/admin/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"  rel="stylesheet">-->
+    <!--    <link href="__STATIC__/module/admin/css/animate.css" rel="stylesheet">-->
+    <!--    <link href="__STATIC__/module/admin/css/style.css?v=4.1.0" rel="stylesheet">-->
+    <!--    <link href="__STATIC__/module/admin/css/07fly.css?v=1.1.0" rel="stylesheet">-->
     <!-- 全局js -->
     <script src="__STATIC__/module/admin/js/jquery.min.js?v=2.1.4"></script>
-    <script src="__STATIC__/module/admin/js/jquery.cookie.js"></script>
     <script src="__STATIC__/module/admin/js/bootstrap.min.js?v=3.3.6"></script>
-    <script src="__STATIC__/module/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="__STATIC__/module/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="__STATIC__/module/admin/js/plugins/layer/layer.min.js"></script>
     <script type="text/javascript">
         var pjax_mode = "{$pjax_mode|default=''}";
         var static_root = "{$static_root|default=''}";
     </script>
 </head>
+<!--压缩过后的css-->
+<link href="__STATIC__/module/admin/mini/1afe45ed6d19c098df0b9e85d9f92f77.css" rel="stylesheet">
+
 <body class="fixed-sidebar gray-bg " style="overflow:hidden">
 <div id="wrapper">
     <!--左侧导航开始-->
@@ -37,15 +35,15 @@
         <div class="sidebar-collapse">
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
-<!--                    <div class="dropdown profile-element">-->
-<!--                        <a data-toggle="dropdown" class="dropdown-toggle" href="{:url('index/main')}">-->
-<!--                            <span class="clear">-->
-<!--                                <span class="block m-t-xs" style="font-size:18px;">-->
-<!--                                <strong class="font-bold">{$sys_config.main_title}</strong>-->
-<!--                                </span>-->
-<!--                            </span>-->
-<!--                        </a>-->
-<!--                    </div>-->
+                    <!--                    <div class="dropdown profile-element">-->
+                    <!--                        <a data-toggle="dropdown" class="dropdown-toggle" href="{:url('index/main')}">-->
+                    <!--                            <span class="clear">-->
+                    <!--                                <span class="block m-t-xs" style="font-size:18px;">-->
+                    <!--                                <strong class="font-bold">{$sys_config.main_title}</strong>-->
+                    <!--                                </span>-->
+                    <!--                            </span>-->
+                    <!--                        </a>-->
+                    <!--                    </div>-->
                     <div class="profile-element">
                         <a class="dropdown-toggle J_menuItem" href="{:url('index/main')}">
                             <span class="clear">
@@ -77,7 +75,24 @@
                     {$sys_config.top_links|default=''}
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
+
+                    <!--人工客服-->
+                    {if condition="$sys_config.is_grant eq '0'"}
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-weixin"></i>人工客服
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <img src="__STATIC__/module/admin/img/lxwx.jpg" width="100%">
+                            </li>
+
+                        </ul>
+                    </li>
+                    {/if}
                     {$sys_config.top_links_right|default=''}
+
+                    <!--系统公告-->
                     <li class="dropdown msg-icon">
                         <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                             <i class="fa fa-bell "></i> <span class="label label-danger msg-icon-nums">0</span>
@@ -100,6 +115,8 @@
                             </li>
                         </ul>
                     </li>
+
+                    <!--修改详细-->
                     <li class="dropdown">
                         <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                             {$sys_user_info['realname']} <i class="fa fa-chevron-down"></i>
@@ -107,14 +124,14 @@
                         <ul class="dropdown-menu dropdown-alerts">
                             <li>
                                 <a data-url="{:url('SysUser/editInfo',array('id'=>$sys_user_info['id']))}"
-                                   class="ajax-open" title="个人资料" data-calback="">
+                                   class="ajax-open" title="个人资料" data-calback="" width="800" height="500">
                                     <div><i class="fa fa-envelope fa-fw"></i>个人资料</div>
                                 </a>
                             </li>
                             <li class="divider"></li>
                             <li>
                                 <a href="{:url('SysUser/editPwd',array('id'=>$sys_user_info['id']))}" class="ajax-open"
-                                   title="个人资料">
+                                   title="个人资料" width="600" height="400">
                                     <div><i class="fa fa-qq fa-fw"></i> 密码修改</div>
                                 </a>
                             </li>
@@ -141,9 +158,8 @@
     <!--右侧部分结束-->
 </div>
 <audio id='audioPlay' src='' hidden='true' muted="true">
-
-    {include file="layout/bottom"}
-    <script>
+{include file="layout/bottom"}
+<script type="text/javascript">
         //顶部菜单栏目
         $(".navbar-module a").click(function () {
             $(this).addClass("on");
@@ -151,14 +167,12 @@
         });
 
         $(document).ready(function () {
-
             //默认设置当前加载地址
             var iframeUrl = localStorage.getItem('iframeUrl');
             if (typeof (iframeUrl) != "undefined" && iframeUrl != null) {
             } else {
                 iframeUrl = "{:url('Index/main')}";
             }
-
             //阻止F5刷新
             document.onkeypress = function (e) {
                 if (e.keyCode == 116) {
@@ -179,20 +193,18 @@
             //保存点击=>记录当前链接地址
             $(".J_menuItem").on('click', function () {
                 var itemUrl = $(this).attr('href');
-                console.log(iframeUrl);
                 localStorage.setItem('iframeUrl', itemUrl);
+                $(".J_menuItem").removeClass('active')
+                $(this).addClass('active');
             });
 
             //点击任何事件开启语音提醒
             document.body.addEventListener('mousedown', function () {
                 var audio = document.getElementById("audioPlay");
                 audio.muted = false;
-
                 //audio.play();
                 log('取消静音效果')
-
             }, false);
-
         });
 
         //声音播放插件

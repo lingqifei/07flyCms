@@ -20,7 +20,7 @@ class CronJob extends ControllerBase
 {
 
     /**
-     * 后台页面插件提醒=》系统消息发送
+     * 后台页面插件提醒=》系统消息
      * index.html调用执行
      * Author: 开发人生 goodkfrs@qq.com
      * Date: 2022/5/19 0019 17:43
@@ -60,7 +60,7 @@ class CronJob extends ControllerBase
 
     /**
      * 定时任务=》扫描业务数提醒=》推送到系统消息中去
-     * 调用执行：http://localhost/admin/rpc.CronJob/sys_msg_scanbus
+     * 调用执行：http://您的域名/admin/rpc.CronJob/sys_msg_scanbus
      * Author: 开发人生 goodkfrs@qq.com
      * Date: 2022/5/25 0025 14:48
      */

@@ -266,7 +266,6 @@ class AdminBase extends LogicBase
 	public function getConfigData()
 	{
 		$auth = $this->logicUpgrade->upgrade_auth_check();
-//        $auth['code'] = 1;
 		if ($auth['code'] == 1) {
 			$data['seo_title'] = config('seo_title');
 			$data['seo_description'] = config('seo_description');
@@ -279,7 +278,7 @@ class AdminBase extends LogicBase
 			$data['main_weburl'] = config('main_weburl');
 			$data['top_links'] = '';
             $data['top_links_right']='';
-			$data['is_grant'] = 0;
+			$data['is_grant'] = 1;
 		} else {
 			$data['seo_title'] = '07FLY-ERP是一款开放式的管理平台，能快速搭建适合自己的是一款开放式的管理平台-零起飞科技';
 			$data['seo_description'] = '07FLY-ERP是一款开放式的管理平台，能容纳管理各种数据、实现信息互通共享；能快速搭建适合自己的是一款开放式的管理平台，能容纳管理各种数据、实现信息互通共享；';
@@ -297,8 +296,8 @@ class AdminBase extends LogicBase
                     <a href="http://djt.07fly.xyz/" target="_blank" title="旅行社ERP管理软件地接版">地接通</a>
                   ';
             $data['top_links_right']  = '<li><a href="'.url('admin/Store/apps').'" class="J_menuItem" target="_blank"><i class="fa fa-fire"></i>应用</a></li>';
-            $data['top_links_right'] .= '<li><a href="http://http.07fly.xyz/" target="_blank" title="零起飞网络">官网</a></li>';
-            $data['is_grant'] = 1;
+            $data['top_links_right'] .= '<li><a href="http://www.07fly.xyz/" target="_blank" title="零起飞网络">官网</a></li>';
+            $data['is_grant'] = 0;
 		}
 		$data['document'] = '<a target="_blank" href="http://www.07fly.xyz">http://www.07fly.xyz</a>';
 		return $data;
