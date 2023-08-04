@@ -9,31 +9,26 @@
 // | Author: 开发人生 <goodkfrs@qq.com>
 // +----------------------------------------------------------------------
 
-namespace addon;
+namespace app\admin\controller\api;
+
+use app\admin\controller\api\AdminApiBase;
 
 /**
- * 插件接口
+ * 系统用户
  */
-interface AddonInterface
+class SysUser extends AdminApiBase
 {
-    
     /**
-     * 插件安装
+     * 消息列表
+     * @return mixed
+     * Author: 开发人生 goodkfrs@qq.com
+     * Date: 2022/7/23 0023 9:49
      */
-    public function addonInstall();
-    
-    /**
-     * 插件卸载
-     */
-    public function addonUninstall();
-    
-    /**
-     * 插件信息
-     */
-    public function addonInfo();
-    
-    /**
-     * 插件配置信息
-     */
-    public function addonConfig($param);
+    public function get_sys_user_sons(){
+
+		$list = $this->logicSysUser->getSysUserSons1();
+		return $this->apiReturn($list);
+	}
+
+
 }
