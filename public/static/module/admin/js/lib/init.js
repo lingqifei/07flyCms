@@ -75,7 +75,6 @@ $(document).ready(function () {
         var heightWithoutNavbar = $("body > #wrapper").height() - 61;
         $(".sidebard-panel").css("min-height", heightWithoutNavbar + "px");
     }
-
     fix_height();
 
     $(window).bind("load resize click scroll", function () {
@@ -150,7 +149,6 @@ $(document).ready(function () {
     });
 
     //表格点击行之后选中+添加颜色
-
 
 });
 
@@ -548,19 +546,17 @@ function null2zero(data) {
 }
 
 
-// /*-----页面pannel内容区高度自适应 start-----*/
+/*-----页面pannel内容区高度自适应 start-----*/
 $(window).resize(function () {
     setCenterHeight();
 });
-setCenterHeight();
-
 function setCenterHeight() {
     var height = $(window).height();
     var centerHight = height - 40;
     $(".auto-height-box").height(centerHight).css("overflow", "auto");
     $(".auto-height-box").css("background", "#fff");
 }
-
+setCenterHeight();//自适应高度
 /*-----页面pannel内容区高度自适应 end-----*/
 
 //文字转为图片
@@ -606,7 +602,6 @@ function textToImg(str) {
     context.fillText(name, fontSize, fontSize);
     return canvas.toDataURL("image/png")
 }
-
 //随机颜色
 function getBG() {
     var bgArray = ["#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e",
@@ -616,14 +611,3 @@ function getBG() {
     var color = bgArray[Math.floor(Math.random() * bgArray.length)];
     return color
 };
-
-
-function replaceComma(obj) {
-    var oldValue = obj.value;
-    while (oldValue.indexOf("，") != -1)//寻找每一个中文逗号，并替换
-    {
-        obj.value = oldValue.replace("，", ",");
-        oldValue = obj.value;
-    }
-    obj.value = oldValue;
-}

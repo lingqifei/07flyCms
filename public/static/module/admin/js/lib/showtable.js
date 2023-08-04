@@ -1,7 +1,7 @@
 // 列表数据列处理
 var listAll = [];
 if ($('a').is('.btn-field-set')) {
-    showTable = $("a.btn-field-set").attr("data-id");
+    var showTable = $("a.btn-field-set").attr("data-id");
     listAll = [];//所有字段
     $(".ajax-list-table").find("thead tr th").each(function (e) {
         f_name = $(this).find("span").html();
@@ -19,8 +19,9 @@ if ($('a').is('.btn-field-set')) {
     }
 }
 
-//表格显示列设置* ***********************************************************
+//表格显示列设置,设置列表表格显示列
 $("body").on("click", ".btn-field-set", function () {
+    var showTable = $("a.btn-field-set").attr("data-id");
     a = JSON.parse(localStorage.getItem("listAll" + showTable));
     b = JSON.parse(localStorage.getItem("listSave" + showTable));
     var listHtml = '';
@@ -93,16 +94,6 @@ function initTableCell() {
     bindClass();
 }
 
-//点击隐藏区域显示提示
-$("body").on("click", ".MHover", function () {
-    var msg = $(this).html();
-    layer.tips(msg, $(this), {
-        tips: [1, '#3595CC'],
-        time: 4000
-    });
-    $(this).prev().hide();
-})
-
 /*表格长文字的过滤*/
 function filterTd(v) {
     var rstr = '无';
@@ -155,6 +146,16 @@ function bindClass() {
         $(this).next(".MALL").hide();
     });
 }
+
+//点击隐藏区域，显示所有文字
+$("body").on("click", ".MHover", function () {
+    var msg = $(this).html();
+    layer.tips(msg, $(this), {
+        tips: [1, '#3595CC'],
+        time: 4000
+    });
+    $(this).prev().hide();
+})
 
 //判断字符是否为空的方法
 function isEmpty(obj) {

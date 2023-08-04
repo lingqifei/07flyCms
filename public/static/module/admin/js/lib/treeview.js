@@ -22,7 +22,7 @@ $(document).ready(function () {
 				}
 			});
 		}, "json");
-		turnPage(1);//页面加载时初始化分页
+		//turnPage(1);//页面加载时初始化分页
 	}
 
 	//刷新加载-添加
