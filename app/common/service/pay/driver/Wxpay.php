@@ -1,13 +1,15 @@
 <?php
-// +----------------------------------------------------------------------
-// | 07FLYCRM [基于ThinkPHP5.0开发]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2016-2021 http://www.07fly.xyz
-// +----------------------------------------------------------------------
-// | Professional because of focus  Persevering because of happiness
-// +----------------------------------------------------------------------
-// | Author: 开发人生 <goodkfrs@qq.com>
-// +----------------------------------------------------------------------
+/**
+ * 零起飞-(07FLY-CRM)
+ * ==============================================
+ * 版权所有 2015-2028   成都零起飞网络，并保留所有权利。
+ * 网站地址: http://www.07fly.xyz
+ * ----------------------------------------------------------------------------
+ * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
+ * ==============================================
+ * Author: kfrs <goodkfrs@QQ.com> 574249366
+ * Date: 2019-10-3
+ */
 
 namespace app\common\service\pay\driver;
 
@@ -78,13 +80,16 @@ class Wxpay extends Pay implements Driver
     public function config($data = [])
     {
         $wxpay_config['curl_timeout'] = 30;
-        //$wxpay_config['notify_url'] = Pay::NOTIFY_URL;
-        if (!empty($this->config)) {
-            $db_config = $this->config;
-        } else {
-            $db_config = $this->driverConfig('Wxpay');
-        }
-        return array_merge($wxpay_config, $db_config);
+        $wxpay_config['notify_url'] = Pay::NOTIFY_URL;
+        $db_config = $this->driverConfig('Wxpay');
+//        if (!empty($this->config)) {
+//          //  $db_config = $this->config;
+//        } else {
+//           // $db_config = $this->driverConfig('Wxpay');
+//        }
+        //d($db_config);
+        $config= array_merge($wxpay_config, $db_config);
+        return $config;
     }
     
     /**
@@ -105,18 +110,18 @@ class Wxpay extends Pay implements Driver
 
         //使用统一支付接口
         $unifiedOrder = new wxpay\UnifiedOrder_pub();
-        
-        
+
+
         $unifiedOrder->setParameter("body", $order['body']);//商品描述
         //自定义订单号，此处仅作举例
         $config = $this->config();
-        
+
         $unifiedOrder->setConfig($config);
 
         $unifiedOrder->setParameter("out_trade_no",$order['order_sn']);			//商户订单号
         // $unifiedOrder->setParameter("fee_type","USD");
         $unifiedOrder->setParameter("total_fee",$order['order_amount']*100);	//总金额
-        $unifiedOrder->setParameter("notify_url", Pay::NOTIFY_URL);				//通知地址
+        $unifiedOrder->setParameter("notify_url",  $order['notify_url']);				//通知地址
         $unifiedOrder->setParameter("trade_type","NATIVE");						//交易类型
 
         //获取统一支付接口结果
