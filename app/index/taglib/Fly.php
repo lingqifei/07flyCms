@@ -817,7 +817,6 @@ class Fly extends TagLib
             $typeid = !empty($tag['typeid']) ? $tag['typeid'] : '';
             $mytypeid = $this->varOrvalue($typeid);
         }
-
         $name    = !empty($tag['name']) ? $tag['name'] : '';
         $id      = isset($tag['id']) ? $tag['id'] : 'field';
         $key     = !empty($tag['key']) ? $tag['key'] : 'i';

@@ -185,7 +185,7 @@ function register_administrator($db_object, $prefix, $admin, $auth)
     $sql = str_replace(array('[PREFIX]'),array($prefix),$sql);
     $db_object->execute($sql);
     $sql = "INSERT INTO `[PREFIX]sys_user` (`id`, `username`, `password`, `realname`,  `dept_id`, `email`, `qicq`, `mobile`,  `create_time`, `update_time`, `sort`, `visible`, `org_id`) 
- VALUES " . "(1, '[USERNAME]', '[PASSWORD]', '零起飞','1', '[EMAIL]', '1871720801','18030402705', '[UPDATETIME]', '[CREATETIME]', 1, 1, 1)";
+ VALUES " . "(1, '[USERNAME]', '[PASSWORD]', '零起飞','1', '[EMAIL]', '1871720801','1871720801', '[UPDATETIME]', '[CREATETIME]', 1, 1, 1)";
     $password = data_md5_key($admin['password'], $auth);
     $time = time();
     $sql = str_replace(
@@ -202,7 +202,7 @@ function register_administrator($db_object, $prefix, $admin, $auth)
 	$db_object->execute($sql);
 
 	$sql = "INSERT INTO `[PREFIX]sys_org` (`id`, `username`, `password`, `company`, `linkman`, `mobile`, `create_time`, `update_time`, `sort`, `visible`, `org_id`) 
- VALUES " . "(1, '[USERNAME]', '[PASSWORD]', '零起飞网络', '李经理','18030402705', '[UPDATETIME]', '[CREATETIME]', 1, 1, 1)";
+ VALUES " . "(1, '[USERNAME]', '[PASSWORD]', '零起飞网络', '李经理','1871720801', '[UPDATETIME]', '[CREATETIME]', 1, 1, 1)";
 	$password = data_md5_key($admin['password'], $auth);
 	$time = time();
 	$sql = str_replace(
