@@ -474,7 +474,7 @@ class Template
     }
 
     /**
-     * 解析模板中的eyou:include标签 by 开发人生
+     * 解析模板中的fly:include标签 by 开发人生
      * @access private
      * @param  string $content 要解析的模板内容
      * @return void
@@ -661,7 +661,7 @@ class Template
     }
 
     /**
-     * 替换页面中的eyou:literal标签
+     * 替换页面中的fly:literal标签
      * @access private
      * @param  string   $content 模板内容
      * @param  boolean  $restore 是否为还原

@@ -49,7 +49,8 @@ class TagPosition extends Base
     }
 
 
-    /**获取面包屑位置
+    /**
+     * 获取面包屑位置
      * @param string $typeid
      * @param string $symbol
      * @param string $style
@@ -73,18 +74,21 @@ class TagPosition extends Base
         $symbol = htmlspecialchars_decode($symbol);
         $str = "<a href='{$home_url}' class='{$style}'>{$basic_indexname}</a>";
 
-        //解析当前栏目分类
+        //解析当前栏目分类,父级菜单
         $logicArctype = new \app\index\logic\Arctype();
         $pids = $logicArctype->getArctypeAllPid($typeid);
-        $result=$logicArctype->getArctypeList(['id'=>['in',$pids]]);
-        $i = 1;
-        foreach ($result['data'] as $key => $val) {
-            if ($i < count($result)) {
-                $str .= " {$symbol} <a href='{$val['typeurl']}' class='{$style}'>{$val['typename']}</a>";
-            } else {
-                $str .= " {$symbol} <a href='{$val['typeurl']}'>{$val['typename']}</a>";
+        if (!empty($pids)) {
+            $pids = array_reverse($pids);
+            $i = 1;
+            foreach ($pids as $tid) {
+                $info = $logicArctype->getArctypeInfo(['id' => $tid], 'id,ispart,typedir,typename');
+                if ($i < count($pids)) {
+                    $str .= " {$symbol} <a href='{$info['typeurl']}' class='{$style}'>{$info['typename']}</a>";
+                } else {
+                    $str .= " {$symbol} <a href='{$info['typeurl']}'>{$info['typename']}</a>";
+                }
+                ++$i;
             }
-            ++$i;
         }
 
         $typeinfo=$logicArctype->getArctypeInfo(['id'=>$typeid]);
