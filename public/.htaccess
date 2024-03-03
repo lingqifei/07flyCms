@@ -1,7 +1,17 @@
+<<<<<<< HEAD
 <IfModule mod_rewrite.c> 
 Options +FollowSymlinks -Multiviews 
 RewriteEngine on 
 RewriteCond %{REQUEST_FILENAME} !-d 
 RewriteCond %{REQUEST_FILENAME} !-f 
 RewriteRule ^(.*)$ index.php [L,E=PATH_INFO:$1] 
+=======
+<IfModule mod_rewrite.c>
+  Options +FollowSymlinks -Multiviews
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+    RewriteRule ^(.*)$ index.php [L,E=PATH_INFO:$1]
+>>>>>>> d0ae8b48b641b3202eb46b55ab6e41571b91d5cf
 </IfModule>

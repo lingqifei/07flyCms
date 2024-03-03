@@ -94,7 +94,6 @@ class Archives extends CmsBase
             }
         }
 
-
         //2、主表数据
         $main_data=[
             'channel_id'=>$arctype['channel_id'],
@@ -222,6 +221,16 @@ class Archives extends CmsBase
             'type_id'=>$data['type_id'],
         ];
         $result=$this->modelArchives->setInfo($post_data,$where);
+        //同步附加表
+        $arclist=$this->modelArchives->getList($where,'id,type_id',true,false);
+        foreach ($arclist as $row){
+            $arctype=$this->logicArctype->getArctypeInfoDetail($row['type_id']);
+            if(!empty($arctype)){
+                $updata['id']=$row['id'];
+                $updata['type_id']=$data['type_id'];
+                Db::table(SYS_DB_PREFIX.$arctype['addtable'])->update($updata,true);
+            }
+        }
         $url = url('show');
         $result && action_log('移动', '移动文档，name：' . $data['id']);
         return $result ? [RESULT_SUCCESS, '操作成功', $url] : [RESULT_ERROR, $this->modelArchives->getError()];
@@ -232,7 +241,6 @@ class Archives extends CmsBase
      */
     public function archivesDel($data = [])
     {
-
         if(empty($data['id'])){
             return [RESULT_ERROR, '选择操作数据'];
             exit;
