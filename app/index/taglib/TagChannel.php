@@ -217,7 +217,7 @@ class TagChannel extends Base
             foreach ($list['data'] as $key => $val) {
                 //处理栏目标识
                 $topTypeid=$this->getTopTypeid($this->tid);
-                if (in_array($val['id'],$topTypeid) || $val['id']==$this->tid) {
+                if (in_array($val['id'],$topTypeid) || in_array($typeid,$topTypeid) || $val['id']==$this->tid) {
                     $val['currentstyle'] = $this->currentstyle;
                 }else{
                     $val['currentstyle'] ='';
