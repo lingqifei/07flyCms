@@ -176,7 +176,6 @@ ENGINE=MyISAM;";
         return $sql;
     }
 
-
     /**
      *  留言扩展列表
      */
@@ -232,11 +231,35 @@ ENGINE=MyISAM;";
      */
     public function getGuestbookExtListDown($data = [])
     {
-        $list = $this->getGuestbookExtList($data, 100000000);
+        if (empty($data['gid'])) {
+            return [RESULT_ERROR, '选择表单'];
+        }
+        $table = $this->getGuesbookExtTableInfo($data['gid']);
+        $extfieldlist = $this->logicGuestbookField->getExtTableFieldList($table['maintable'], $table['addtable']);
+        //扩展数据处理
+        $where['gid'] = ['=', $data['gid']];
+        if (!empty($data['bdate'])) {
+            $where['create_time'] = ['>=', strtotime($data['bdate'])];
+        }
+        if (!empty($data['edate'])) {
+            $where['create_time'] = ['<', strtotime($data['edate'])];
+        }
+        if (!empty($data['bdate']) && !empty($data['edate'])) {
+            $date_range = [strtotime($data['bdate']), strtotime($data['edate'])];
+            $where['create_time'] = ['between', $date_range];
+        }
+        $list = Db::table(SYS_DB_PREFIX . $table['addtable'])
+            ->where($where)
+            ->order('create_time desc')
+            ->select();
         $titles = "手机号,内容,时间,回复";
-        $keys = "mobile,dwtcontent,create_time,rereply";
-        action_log('下载', '表单列表');
-        export_excel($titles, $keys, $list['data'], '表单列表');
+        $fields = "mobile,content,create_time,rereply";
+        foreach ($extfieldlist as $item) {
+            $titles .= ','.$item['show_name'];
+            $fields .= ','.$item['field_name'];
+        }
+        action_log('下载', '留言表单列表');
+        export_excel($titles, $fields, $list, '表单列表-'.$table['name']);
     }
 
     /**
@@ -295,7 +318,7 @@ ENGINE=MyISAM;";
      */
     public function getGuesbookExtTableInfo($gid = 0)
     {
-        $info = $this->modelGuestbook->getInfo(['id' => $gid], 'addtable,maintable');
+        $info = $this->modelGuestbook->getInfo(['id' => $gid], 'name,addtable,maintable');
         return $info;
     }
 
