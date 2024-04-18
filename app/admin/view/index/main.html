@@ -3,11 +3,12 @@
         <div class="col-sm-6">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5>系统公告</h5>
+                    <h5>{:lang("system announcement")}</h5>
                 </div>
                 <div class="ibox-content">
                     <table class="table table-hover ajax-list-table" data-type="oanotify"
-                           data-url="{:url('admin/OaNotify/main_json',array('owner_user_id'=>$sys_user_info.id))}" width="100%">
+                           data-url="{:url('admin/SysNotify/main_json',array('owner_user_id'=>$sys_user_info.id))}"
+                           width="100%">
                         <tbody>
 
                         </tbody>
@@ -18,11 +19,12 @@
         <div class="col-sm-6">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5>提醒消息</h5>
+                    <h5>{:lang("system reminder")}</h5>
                 </div>
                 <div class="ibox-content">
                     <table class="table table-hover ajax-list-table" data-type="sysmsg"
-                           data-url="{:url('admin/SysMsg/show_json',array('deal_user_id'=>$sys_user_info.id,'deal_status'=>0))}" width="100%">
+                           data-url="{:url('admin/SysMsg/show_json',array('deal_user_id'=>$sys_user_info.id,'deal_status'=>0))}"
+                           width="100%">
                         <tbody>
 
                         </tbody>
@@ -33,33 +35,33 @@
     </div>
     {notempty name='sys_config.is_grant'}
     {neq name='sys_config.is_grant' value="1"}
-        <div class="row">
+    <div class="row">
         <div class="col-sm-6">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5>系统信息</h5>
+                    <h5>{:lang("system information")}</h5>
                 </div>
                 <div class="ibox-content collapse in" id="demo">
                     <table class="table table-hover">
                         <tbody>
                         <tr>
-                            <td width="20%">当前版本</td>
+                            <td width="20%">{:lang("current version")}</td>
                             <td>{$info['lqf_version']}</td>
                         </tr>
                         <tr>
-                            <td>操作系统</td>
+                            <td>{:lang("operating system")}</td>
                             <td>{$info['os']}</td>
                         </tr>
                         <tr>
-                            <td>运行环境</td>
+                            <td>{:lang("operating environment")}</td>
                             <td>{$info['software']}</td>
                         </tr>
                         <tr>
-                            <td>MySql版本</td>
+                            <td>{:lang("mysql version")}</td>
                             <td>{$info['mysql_version']}</td>
                         </tr>
                         <tr>
-                            <td>PHP版本</td>
+                            <td>{:lang("php version")}</td>
                             <td>{$info['php_version']}</td>
                         </tr>
                         </tbody>
@@ -70,30 +72,30 @@
         <div class="col-sm-6">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5>产品信息</h5>
+                    <h5>{:lang("product information")}</h5>
                 </div>
                 <div class="ibox-content">
                     <table class="table table-hover">
                         <tbody>
 
                         <tr>
-                            <td width="20%">产品名称</td>
+                            <td width="20%">{:lang("product name")}</td>
                             <td>{$info['product_name']}</td>
                         </tr>
                         <tr>
-                            <td>产品设计及研发团队</td>
+                            <td>{:lang("product design and team")}</td>
                             <td>{$info['author']}</td>
                         </tr>
                         <tr>
-                            <td>官方网址</td>
+                            <td>{:lang("official website")}</td>
                             <td><a target="_blank" href="http://{$info['website']}">{$info['website']}</a></td>
                         </tr>
                         <tr>
-                            <td>QQ交流群</td>
+                            <td>{:lang("qq communication group")}</td>
                             <td>{$info['qun']}</td>
                         </tr>
                         <tr>
-                            <td>开发手册</td>
+                            <td>{:lang("development manual")}</td>
                             <td>{$info['document']}</td>
                         </tr>
                         </tbody>
@@ -108,6 +110,14 @@
 
 </div>
 <script type="text/javascript">
+
+    //自动加载数据
+    $(document).ready(function () {
+        $('.ajax-list-table').each(function () {
+            var that = $(this);
+            ajaxListData(that);
+        });
+    });
 
     //加载数据
     function ajaxListData(that) {
@@ -146,7 +156,7 @@
         $.each(data, function (idx, obj) {
             if (type == 'oanotify') {
                 html += '<tr>';
-                html += '<td width="70"><a class="ajax-open" data-calback="javascript:void(0)" data-ids="{\'id\':\''+obj.id+'\'}" data-url="{:url(\'OaNotify/main_json\')}" >' + obj.name + '</td></a>';
+                html += '<td width="70"><a class="ajax-open" data-calback="javascript:void(0)" data-ids="{\'id\':\'' + obj.id + '\'}" data-url="{:url(\'SysNotify/main_json\')}" >' + obj.name + '</td></a>';
                 html += '<td width="30" class="text-right">' + obj.create_time + '</td>';
                 html += '</tr>';
             } else if (type == 'sysmsg') {
@@ -161,11 +171,5 @@
     }
 
 
-    $(document).ready(function () {
-        //自动输出=>客户关联 列表数
-        $('.ajax-list-table').each(function () {
-            var that = $(this);
-            ajaxListData(that);
-        });
-    });
+
 </script>

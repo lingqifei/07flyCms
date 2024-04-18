@@ -88,7 +88,6 @@ class SysMsgType extends AdminBase
         }
     }
 
-
     /**
      * 扫描=》跟进记录提醒
      * @param $data
@@ -123,7 +122,6 @@ class SysMsgType extends AdminBase
         }
     }
 
-
     /**
      * 扫描=》销售合同到期提醒
      * @param $data
@@ -136,7 +134,7 @@ class SysMsgType extends AdminBase
         $endtime = date_calc(format_time(), '+ ' . $data['hours'] . '', 'hours', 'Y-m-d H:i:s');
         $where['end_date'] = ['between', [format_time(), $endtime]];
         if (tableExists('sal_contract')) {
-            $buslist = Db::name('sal_contract')->field('id,name,contract_no,end_date,create_user_id')->where($where)->select();
+            $buslist = Db::name('sal_contract')->field('id,name,contract_no,end_date,owner_user_id')->where($where)->select();
             foreach ($buslist as $one) {
                 $intoData = [
                     'bus_type' => $data['type'],
@@ -275,7 +273,6 @@ class SysMsgType extends AdminBase
             }
         }
     }
-
 
     /**
      * 扫描=》提醒审批处理

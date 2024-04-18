@@ -11,7 +11,7 @@
     <link href="__STATIC__/module/admin/css/plugins/chosen/chosen.css" rel="stylesheet">
     <link href="__STATIC__/module/admin/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     <link href="__STATIC__/module/admin/css/plugins/datapicker/datetimepicker.min.css" rel="stylesheet">
-    <link href="__STATIC__/module/admin/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"  rel="stylesheet">
+    <link href="__STATIC__/module/admin/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
     <link href="__STATIC__/module/admin/css/animate.css" rel="stylesheet">
     <link href="__STATIC__/module/admin/css/style.css?v=4.1.0" rel="stylesheet">
     <link href="__STATIC__/module/admin/css/07fly.css?v=1.1.0" rel="stylesheet">
@@ -35,25 +35,17 @@
         <div class="sidebar-collapse">
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
-                    <!--                    <div class="dropdown profile-element">-->
-                    <!--                        <a data-toggle="dropdown" class="dropdown-toggle" href="{:url('index/main')}">-->
-                    <!--                            <span class="clear">-->
-                    <!--                                <span class="block m-t-xs" style="font-size:18px;">-->
-                    <!--                                <strong class="font-bold">{$sys_config.main_title}</strong>-->
-                    <!--                                </span>-->
-                    <!--                            </span>-->
-                    <!--                        </a>-->
-                    <!--                    </div>-->
                     <div class="profile-element">
-                        <a class="dropdown-toggle J_menuItem" href="{:url('index/main')}">
+                        <a class="dropdown-toggle J_menuItem" href="{:url('admin/Index/main')}">
                             <span class="clear">
                                 <span class="block m-t-xs" style="font-size:18px;">
+                                    <img src="__STATIC__/img/logo.png" width="30">
                                 <strong class="font-bold">{$sys_config.main_title}</strong>
                                 </span>
                             </span>
                         </a>
                     </div>
-                    <div class="logo-element">{$sys_config.main_title}</div>
+                    <div class="logo-element"><img src="__STATIC__/img/logo.png" width="30"></div>
                 </li>
                 <li class="line dk"></li>
                 {$menu_view}
@@ -80,7 +72,7 @@
                     {if condition="$sys_config.is_grant eq '0'"}
                     <li class="dropdown">
                         <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                            <i class="fa fa-weixin"></i>人工客服
+                            <i class="fa fa-weixin"></i>{:lang('manual customer service')}
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
                             <li>
@@ -92,7 +84,29 @@
                     {/if}
                     {$sys_config.top_links_right|default=''}
 
-                    <!--系统公告-->
+                    <!--语言包-->
+                    <li class="dropdown msg-icon">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-language "></i>{:lang('language')}
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <a href="{:url('index/language',array('lang'=>'cn'))}" class="ajax-get"
+                                   data-calback="window.location.reload();">
+                                    {:lang('chinese')}
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="{:url('index/language',array('lang'=>'en'))}" class="ajax-get"
+                                   data-calback="window.location.reload();">
+                                    {:lang('english')}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!--{:lang("system announcement")}-->
                     <li class="dropdown msg-icon">
                         <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                             <i class="fa fa-bell "></i> <span class="label label-danger msg-icon-nums">0</span>
@@ -101,15 +115,15 @@
                             <li>
                                 <a href="{:url('admin/SysMsg/show_my')}" class="J_menuItem">
                                     <div>
-                                        <i class="fa fa-qq fa-fw"></i> 您有<span class="msg-icon-my">0</span>条未读消息
+                                        <i class="fa fa-qq fa-fw"></i> <span class="msg-icon-my">0</span>{:lang('unread messages')}
                                     </div>
                                 </a>
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="{:url('admin/OaNotifyUser/show')}" class="J_menuItem">
+                                <a href="{:url('admin/SysNotifyUser/show')}" class="J_menuItem">
                                     <div>
-                                        <i class="fa fa-volume-up fa-fw"></i> <span class="msg-icon-noti">0</span>条未读公告
+                                        <i class="fa fa-volume-up fa-fw"></i> <span class="msg-icon-noti">0</span>{:lang('unread announcements')}
                                     </div>
                                 </a>
                             </li>
@@ -124,15 +138,15 @@
                         <ul class="dropdown-menu dropdown-alerts">
                             <li>
                                 <a data-url="{:url('SysUser/editInfo',array('id'=>$sys_user_info['id']))}"
-                                   class="ajax-open" title="个人资料" data-calback="" width="800" height="500">
-                                    <div><i class="fa fa-envelope fa-fw"></i>个人资料</div>
+                                   class="ajax-open" title="{:lang('personal data')}" data-calback="" width="800" height="500">
+                                    <div><i class="fa fa-envelope fa-fw"></i>{:lang('personal data')}</div>
                                 </a>
                             </li>
                             <li class="divider"></li>
                             <li>
                                 <a href="{:url('SysUser/editPwd',array('id'=>$sys_user_info['id']))}" class="ajax-open"
-                                   title="个人资料" width="600" height="400">
-                                    <div><i class="fa fa-qq fa-fw"></i> 密码修改</div>
+                                   title="{:lang('personal data')}" width="600" height="400">
+                                    <div><i class="fa fa-qq fa-fw"></i> {:lang('password')}修改</div>
                                 </a>
                             </li>
                             <li class="divider"></li>
@@ -140,7 +154,7 @@
                                 <div class="text-center link-block">
                                     <a class="ajax-get" href="{:url('Login/logout')}"
                                        data-calback="window.location.reload();">
-                                        <strong>退出登录 </strong> <i class="fa fa-angle-right"></i>
+                                        <strong>{:lang('login out')} </strong> <i class="fa fa-angle-right"></i>
                                     </a>
                                 </div>
                             </li>
@@ -151,188 +165,12 @@
         </div>
         <!--右侧窗口数据-->
         <div class="row J_mainContent" id="content-main">
-            <iframe id="J_iframe" width="100%" height="95%" src="{:url('Index/main')}" frameborder="0" data-id="index_v1.html" seamless></iframe>
+            <iframe id="J_iframe" width="100%" height="95%" src="{:url('admin/Index/main')}" frameborder="0"
+                    data-id="index_v1.html" seamless></iframe>
         </div>
     </div>
     <!--右侧部分结束-->
 </div>
-<audio id='audioPlay' src='' hidden='true' muted="true">
+
 {include file="layout/bottom"}
-<script type="text/javascript">
-        //顶部菜单栏目
-        $(".navbar-module a").click(function () {
-            $(this).addClass("on");
-            $(this).siblings().removeClass('on');
-        });
-
-        $(document).ready(function () {
-            //默认设置当前加载地址
-            var iframeUrl = localStorage.getItem('iframeUrl');
-            if (typeof (iframeUrl) != "undefined" && iframeUrl != null) {
-            } else {
-                iframeUrl = "{:url('Index/main')}";
-            }
-            //阻止F5刷新
-            document.onkeypress = function (e) {
-                if (e.keyCode == 116) {
-                    e.preventDefault(); //组织默认刷新
-                    iframe.src = iframeUrl;
-                }
-            }
-
-            //刷新时设置当前点击页面数据
-            if (typeof (iframeUrl) != "undefined") {
-                that = $("a[href='" + iframeUrl + "']");
-                //that.parent('li').addClass('active');
-                that.parents('ul.nav').addClass('in');
-                that.parents('ul.nav').parent('li').addClass('active');
-                $('#J_iframe').attr('src', iframeUrl);//重新设置获取的url，实现刷新显示当前页面
-            }
-
-            //保存点击=>记录当前链接地址
-            $(".J_menuItem").on('click', function () {
-                var itemUrl = $(this).attr('href');
-                localStorage.setItem('iframeUrl', itemUrl);
-                $(".J_menuItem").removeClass('active')
-                $(this).addClass('active');
-            });
-
-            //点击任何事件开启语音提醒
-            document.body.addEventListener('mousedown', function () {
-                var audio = document.getElementById("audioPlay");
-                audio.muted = false;
-                //audio.play();
-                log('取消静音效果')
-            }, false);
-        });
-
-        //声音播放插件
-        var playSound = function () {
-            var borswer = window.navigator.userAgent.toLowerCase();
-            var num = Math.floor(Math.random() * 4) + 1;
-            var src = "__STATIC__/module/admin/img/" + num + ".wav";
-            var audio = document.getElementById("audioPlay");
-            $("audio").attr('src', src);
-
-            log('播放当前地址');
-            log(src);
-            audio.play();
-
-            // if (borswer.indexOf("ie") >= 0) {
-            //     //IE内核浏览器
-            //     var strEmbed = '<embed name="embedPlay" src="' + video + '" autostart="true" hidden="true" loop="false" muted></embed>';
-            //     if ($("body").find("embed").length <= 0)
-            //         $("body").append(strEmbed);
-            //     var embed = document.embedPlay;
-            //     //浏览器不支持 audion，则使用 embed 播放
-            //     embed.volume = 100;
-            //     //embed.play();这个不需要
-            // } else {
-            //     //非IE内核浏览器
-            //     var strAudio = "<audio id='audioPlay' src='" + video + "' hidden='true' muted>";
-            //     if ($("#audioPlay").length <= 0) {
-            //         $("body").append(strAudio);
-            //     }
-            //     var audio = document.getElementById("audioPlay");
-            //     //浏览器支持 audio
-            //     audio.play();
-            // }
-        }
-
-        //提示通知插件
-        var playNotice = function (id, title, content, url = '') {
-            toastr.options = {
-                "closeButton": true,
-                "debug": false,
-                "progressBar": true,
-                "positionClass": "toast-bottom-right",
-                "onclick": null,
-                "showDuration": "400",
-                "hideDuration": "1000",
-                "timeOut": "20000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            }
-            //点击事件
-            toastr.options.onclick = function () {
-                layer.open({
-                    type: 2,
-                    title: '查看通知',
-                    shadeClose: true,
-                    fixed: false, //不固定
-                    area: ['90%', '90%'],
-                    content: url
-                });
-            };
-            toastr.info(content, title);
-        }
-        //提示通知插件
-        var runSysMsg = function () {
-            var target = "{:url('admin/rpc.CronJob/sys_msg_plug',array('deal_user_id'=>$sys_user_info.id))}";//显示系统通知
-            $.ajax({
-                type: 'POST',
-                url: target,
-                data: '',
-                dataType: 'json',
-                success: function (jsonData) {
-                    $(jsonData.data).each(function (index, item) {
-                        playNotice(item.id, '系统提醒', item.bus_name, item.bus_url);
-                    });
-                    if (jsonData.data.length > 0) {
-
-                        $(".msg-icon-my").text(jsonData.data.length);
-
-                        //插件提醒声音
-                        playSound();
-
-                        //插件显示消息条数
-                        getMsgNums();
-                    }
-                }
-            });
-        }
-        //系统公告
-        var runSysNotify = function () {
-            var target = "{:url('admin/rpc.CronJob/oa_notify_plug',array('owner_user_id'=>$sys_user_info.id,'read_state'=>0))}";
-            var detail = "{:url('admin/rpc.CronJob/oa_notify_plug')}";
-            $.ajax({
-                type: 'POST',
-                url: target,
-                data: {"status": "-1"},
-                dataType: 'json',
-                success: function (jsonData) {
-                    $(jsonData.data).each(function (index, item) {
-                        playNotice(item.id, '系统公告', item.name, detail + '?id=' + item.id);
-                    });
-                    if (jsonData.data.length > 0) {
-
-                        $(".msg-icon-noti").text(jsonData.data.length);
-
-                        //插件提醒声音
-                        playSound();
-                        //插件显示消息条数
-                        getMsgNums();
-
-                    }
-                }
-            });
-        }
-
-        // 插件显示消息条数
-        function getMsgNums() {
-            var my = $(".msg-icon-my").text();
-            var noti = $(".msg-icon-noti").text();
-            var nums = Number(my) + Number(noti);
-            $(".msg-icon-nums").text(nums);
-        }
-
-        //主动调用
-        //setInterval("func()", 60000);
-        setInterval("runSysNotify()", 1000 * 60 * 5);
-        setInterval("runSysMsg()", 1000 * 60 * 10);
-        runSysNotify();
-        runSysMsg();
-    </script>
+{include file="index/function"}

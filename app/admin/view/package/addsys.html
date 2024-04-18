@@ -1,17 +1,17 @@
 <div class="ibox-content">
     <form class="form-horizontal" method="post" action="{:url('Package/addsys')}">
         <div class="form-group">
-            <label class="col-sm-2 control-label">打包版本号</label>
+            <label class="col-sm-2 control-label">打包{:lang('version')}</label>
             <div class="col-sm-4">
-                <input name="version" class="form-control" type="text" placeholder="输入版本号"
+                <input name="version" class="form-control" type="text" placeholder="输入{:lang('version')}"
                        value="{$version|default=''}"/>
-                <span class="help-block m-b-none">系统当前的版本号为：{$version|default='1.0.1'}</span>
+                <span class="help-block m-b-none">系统当前的{:lang('version')}为：{$version|default='1.0.1'}</span>
             </div>
             <label class="col-sm-1 control-label">是否安装包</label>
             <div class="col-sm-2">
                 <div class="checkbox ">
                     <input type="checkbox" id="visible1" value="1" name="install">
-                    <label for="visible1"> 是 </label>
+                    <label for="visible1"> {:lang('yes')} </label>
                 </div>
                 <span class="help-block m-b-none"></span>
             </div>

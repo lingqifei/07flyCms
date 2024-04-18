@@ -26,6 +26,8 @@ class Index extends AdminBase
         //生成压缩文件
         //$this->getcss();
         //$this->getjs();
+        //系统配置
+        $this->assign('sys_config', $this->logicLogin->getConfigData());
 
         return $this->fetch('index');
     }
@@ -39,6 +41,28 @@ class Index extends AdminBase
         $index_data = $this->logicAdminBase->getIndexData();
         $this->assign('info', $index_data);
         return $this->fetch('main');
+    }
+
+    // 多语言支持
+    public function language()
+    {
+        $lang = input('lang');
+        switch ($lang) {
+            case 'zh':
+                cookie('think_var', 'zh-cn');
+                break;
+            case 'en':
+                cookie('think_var', 'en-us');
+                break;
+            case 'brazil':
+                cookie('think_var', 'pt-br');
+                break;
+            default:
+                cookie('think_var', 'zh-cn');
+                break;
+        }
+        $rtn = [RESULT_SUCCESS, lang('set success')];
+        $this->jump($rtn);
     }
 
     public function getcss()

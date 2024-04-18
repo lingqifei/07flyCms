@@ -10,15 +10,15 @@
                         <div class="col-sm-6 text-right">
                             <div class="row">
                                 <form id="pagerForm" method="post" class="form-inline searchForm">
-                                    <div class="col-sm-12 m-b-xs text-right">
+                                    <div class="col-sm-12">
                                         <div class="input-group">
-                                            <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
+                                            <input type="text" name="keywords" placeholder="{:lang('enter keyword search')}" class="form-control">
                                         </div>
                                         <div class="input-group">
-                                            <span class="input-group-btn"> <button type="button" class="btn btn-primary ajaxSearchForm"><i class="fa fa-search"></i> 搜索</button></span>
+                                            <span class="input-group-btn"> <button type="button" class="btn btn-primary ajaxSearchForm"><i class="fa fa-search"></i> {:lang('search')}</button></span>
                                         </div>
                                         <div class="input-group">
-                                            <span class="input-group-btn"> <button type="button" class="btn btn-warning ajaxSearchForm resetForm"><i class="fa fa-recycle"></i> 重置</button></span>
+                                            <span class="input-group-btn"> <button type="button" class="btn btn-warning ajaxSearchForm resetForm"><i class="fa fa-recycle"></i> {:lang('resetting')}</button></span>
                                         </div>
                                     </div>
                                 </form>
@@ -33,11 +33,11 @@
                         <tr>
                             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
                             <th width="80">模块标题</th>
-                            <th width="80">模块名称</th>
+                            <th width="80">{:lang('module name')}</th>
                             <th width="200">模块描述</th>
                             <th width="80">服务商</th>
-                            <th width="60">版本号</th>
-                            <th width="50">操作</th>
+                            <th width="60">{:lang('version')}</th>
+                            <th width="50">{:lang('operate')}</th>
                         </tr>
                         </thead>
                         <tbody>
