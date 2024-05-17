@@ -61,6 +61,10 @@
                             var imgSrc = decodeURIComponent(_that.attr("src"));
                             if (imgSrc.indexOf("file://") > -1) {
                                 layer.close(layerindex);
+                            }else if (imgSrc.indexOf("http://") > -1) {
+                                layer.close(layerindex);
+                            } else if (imgSrc.indexOf("https://") > -1) {
+                                layer.close(layerindex);
                             } else if (imgSrc.indexOf("data:") > -1) {
                                 var blob = dataURLtoBlob(imgSrc);
                                 // 上传粘贴板中的截图到服务器
