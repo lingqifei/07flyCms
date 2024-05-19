@@ -67,7 +67,7 @@ class MemberBase extends ControllerBase
         //因为启用了多级控制器，需要单独指定路径
         $dirname = str_replace('/', DS, strtolower($this->template_member_dir));
         $template = PATH_PUBLIC . $dirname . $template . '.html';
-
+        //关键字替换
         $replace=[
             '{sys_keywords_name}'=>'培训'
         ];
