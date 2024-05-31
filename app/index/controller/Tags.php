@@ -25,13 +25,14 @@ class Tags extends IndexBase{
      */
     public function index()
     {
+
         /*获取当前页面URL*/
         $result['pageurl'] = $this->request->url(true);
+
         /*--end*/
         $rtnArray = array(
             'field' => $result,
         );
-
         /*模板文件*/
         $viewfile = 'tags_index.html';
         /*--end*/

@@ -45,7 +45,7 @@
         <div class="zhuanti whitebg">
             <h2 class="htitle"><span class="hnav"></span>特别推荐</h2>
             <ul>
-                {fly:arclist typeid='0'  titlelen='200' infolen='160' row='6' orderby='id' orderway='desc' mod='3' empty='暂时没有数据'}
+                {fly:arclist typeid='0' flag='a' titlelen='200' infolen='160' row='6' orderby='id' orderway='desc' mod='3' empty='暂时没有数据'}
                 <li><i class="ztpic"><a href="{$field.arcurl}"><img src="{$field.litpic}"></a></i>
                     <b>{$field.title}</b><span>{$field.description}</span><a href="{$field.arcurl}" class="readmore">文章阅读</a></li>
                 {/fly:arclist}
@@ -90,7 +90,7 @@
             <p>Email：web@07fly.com</p>
             <ul class="linkmore">
                 <li><a href="http://www.07fly.xyz/" class="iconfont icon-zhuye"></a></li>
-                <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=web@07fly.com" target="_blank" class="iconfont icon-youxiang"></a></li>
+                <li><a href="mailto:{fly:global name='web_email'}" target="_blank" class="iconfont icon-youxiang"></a></li>
                 <li><a href="http://wpa.qq.com/msgrd?v=3&uin=1871720801&site=qq&menu=yes" target="_blank"  class="iconfont icon---"></a></li>
                 <li id="weixin"><a href="#" class="iconfont icon-weixin"></a><i><img src="{$template_dir}static/picture/weixin.png"></i></li>
             </ul>

@@ -17,6 +17,7 @@ return [
     //cms 路由设置
 	'html/:typeid/:aid$' => ['index/view/index',['method'=>'get','ext'=>'html']],
 	'html/:tid' => 'index/lists/index',
+	'tags/index' => 'index/tags/index',
 	'tags/:tagid' => 'index/tags/lists',
 
 
