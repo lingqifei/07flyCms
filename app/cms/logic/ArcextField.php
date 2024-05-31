@@ -137,7 +137,8 @@ class ArcextField extends CmsBase
     }
 
 
-    /**应用于添加、编辑，扩展字段表单显示，
+    /**
+     * 应用于添加、编辑，扩展字段表单显示，
      * @param $ext_table
      * @param array $field_val_arr ，是否有默认值
      * @return string

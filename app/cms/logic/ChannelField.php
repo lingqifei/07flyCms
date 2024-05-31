@@ -174,15 +174,15 @@ class ChannelField extends CmsBase
                                             </div>
                                     </div>';
                     break;
-				case "text":
-					$htmltxt .= '<div class="form-group">
+                case "text":
+                    $htmltxt .= '<div class="form-group">
                                             <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
                                             <div class="col-sm-10">
                                                 <textarea name="' . $row["field_name"] . '" class="form-control" >' . $field_value . '</textarea>
                                                 <span class="help-block m-b-none">' . $row['desc'] . '</span> 
                                             </div>
                                     </div>';
-					break;
+                    break;
                 case "htmltext":
                     $htmltxt .= '<div class="form-group">
 									        <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
@@ -194,32 +194,127 @@ class ChannelField extends CmsBase
 <script src="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/editor/kindeditor/kindeditor-all-min.js"></script>
 <script src="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/editor/kindeditor/lang/zh-CN.js"></script>
 <script type="text/javascript">
-    $(function(){
-        var editor_' . $row["field_name"] . ';
-        editor_' . $row["field_name"] . ' = KindEditor.create(\'textarea[name="'.$row["field_name"].'"]\', {
-                themesPath: KindEditor.basePath+\'/themes/\',//主题路径
-                width: \'100%\',
-                height: \'100px\',
-                resizeType: 1,
-                pasteType : 2,
-                urlType : \'absolute\',
-                fileManagerJson : \'\',
-                uploadJson : \'{:addons_url("editor://Upload/pictureUpload")}\',
-                items : [
-                \'source\', \'undo\', \'redo\', \'cut\', \'copy\',\'paste\', \'plainpaste\', \'wordpaste\',\'selectall\',
-                \'justifyleft\',\'justifycenter\',\'justifyright\',\'justifyfull\',\'insertorderedlist\',\'insertunorderedlist\',\'indent\',
-                \'outdent\',\'subscript\',\'superscript\',\'fontname\',\'fontsize\',\'forecolor\',\'hilitecolor\',\'bold\',
-                \'italic\',\'underline\',\'strikethrough\',\'removeformat\',\'image\',\'multiimage\',\'table\',
-                \'link\',\'unlink\',\'fullscreen\'
-                ],
-                extraFileUploadParams: { session_id : \'{:session_id()}\'}
-            });
+$(function(){
+    var editor_' . $row["field_name"] . ';
+    
+    editor_' . $row["field_name"] . ' = KindEditor.create(\'textarea[name="' . $row["field_name"] . '"]\', {
+            themesPath: KindEditor.basePath+\'/themes/\',//主题路径
+            width: \'100%\',
+            height: \'100px\',
+            resizeType: 1,
+            pasteType : 2,
+            urlType : \'absolute\',
+            fileManagerJson : \'\',
+            uploadJson : "' . addons_url("editor://Upload/pictureUpload") . '",
+            items : [
+            \'source\', \'undo\', \'redo\', \'cut\', \'copy\',\'paste\', \'plainpaste\', \'wordpaste\',\'selectall\',
+            \'justifyleft\',\'justifycenter\',\'justifyright\',\'justifyfull\',\'insertorderedlist\',\'insertunorderedlist\',\'indent\',
+            \'outdent\',\'subscript\',\'superscript\',\'fontname\',\'fontsize\',\'forecolor\',\'hilitecolor\',\'bold\',
+            \'italic\',\'underline\',\'strikethrough\',\'removeformat\',\'image\',\'multiimage\',\'table\',
+            \'link\',\'unlink\',\'fullscreen\'
+            ],
+             afterCreate: function () {
+                var editorObj = this;
+                var doc = editorObj.edit.doc;
+                $(doc.body).bind("paste", function (event) {
+                    setTimeout(function () {
+                        // 处理bug
+                        var useless = $(doc.body).find(".__kindeditor_paste__");
+                        if (useless) {
+                            useless.removeAttr("style");
+                            useless.removeClass("__kindeditor_paste__");
+                        }
+                        var imgs = $(doc.body).find("img");
+                        $.each(imgs, function (index, item) {
+                            // layer
+                            layerindex = layer.load(1, {
+                                shade: [0.3, "#fff"],
+                                content: \'转存中\',
+                                success: function (layero) {
+                                    layero.find(\'.layui-layer-content\').css({
+                                        \'padding-top\': \'39px\',
+                                        \'width\': \'120px\',
+                                        \'margin-left\': \'-60px\'
+                                    });
+                                }
+                            });
+                            var _that = $(this);
+                            var imgSrc = decodeURIComponent(_that.attr("src"));
+                            if (imgSrc.indexOf("file://") > -1) {
+                                layer.close(layerindex);
+                            }else if (imgSrc.indexOf("http://") > -1) {
+                                layer.close(layerindex);
+                            } else if (imgSrc.indexOf("https://") > -1) {
+                                layer.close(layerindex);
+                            } else if (imgSrc.indexOf("data:") > -1) {
+                                var blob = dataURLtoBlob(imgSrc);
+                                // 上传粘贴板中的截图到服务器
+                                var form = document.imgForm;
+                                var formData = new FormData(form);
+                                formData.append("imgFile", blob);
+                                $.ajax({
+                                        type: "POST",
+                                        url: "' . addons_url("editor://Upload/pictureUpload") . '",
+                                        data: formData,
+                                        dataType: "json",
+                                        // async: false,
+                                        processData: false,
+                                        contentType: false,
+                                        success: function (res) {
+                                            log(res);
+                                            layer.close(layerindex);
+                                            if (res.error=="0") {
+                                                _that.attr(\'src\',res.url);
+                                                _that.attr(\'data-ke-src\',res.url);
+                                                _that.attr(\'alt\', res.url);
+                                            }
+                                        },
+                                        fail: function () {
+                                                layer.close(layerindex);
+                                        }
+                                       
+                                });
+                            } else if (imgSrc.indexOf("/upload/") === -1) {
+                                // ajax异步上传其他网络图片
+                                $.ajax({
+                                    type: "POST",
+                                    url:"'.addons_url("editor://Upload/pictureUpload").'",
+                                    data: JSON.stringify({ url: imgSrc }),
+                                    dataType: "json",
+                                    // async: false,
+                                    processData: false,
+                                    contentType: "application/json;charset=UTF-8",
+                                    success: function (res) {
+                                        layer.close(layerindex);
+                                            // 重置图片
+                                            _that.attr("src", res.url);
+                                            _that.attr("data-ke-src", res.url);
+                                            _that.attr("alt", res.name);
+                                    },
+                                    fail: function () {
+                                        layer.close(layerindex);
+                                    }
+                                                
+                                });     
+                            } else {
+                                // 本站网络图片不处理
+                                layer.close(layerindex);
+                            }
+                        });
+                        
+                    }, 10);//end timeout
+                    
+                });//end bind paste
+             },//end afterCreate
+             extraFileUploadParams: { session_id : "'.session_id().'"}
 
-        //ajax提交之前同步
-        $(\'button[type="submit"],#submit,.ajax-post,#autoSave\').click(function(){
-                editor_' . $row["field_name"] . '.sync();
-        });
+    });//editor
+
+    //ajax提交之前同步
+    $(\'button[type="submit"],#submit,.ajax-post,#autoSave\').click(function(){
+            editor_' . $row["field_name"] . '.sync();
     });
+});
 </script>
 									</div>
 								</div>';
@@ -266,32 +361,32 @@ class ChannelField extends CmsBase
                                             <div class="col-sm-10">
                                               <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" style="width: 200px;" tabindex="2">
                                         ';
-                                            $option_arr = explode(',', $row['default_value']);
-                                            foreach ($option_arr as $va) {
-                                                $option_chk = ($va == $field_value) ? "selected" : "";
-                                                $htmltxt .= '<option value="' . $va . '" hassubinfo="true" '.$option_chk.'>' . $va . '</option>';
-                                            }
-                            $htmltxt .= '
+                    $option_arr = explode(',', $row['default_value']);
+                    foreach ($option_arr as $va) {
+                        $option_chk = ($va == $field_value) ? "selected" : "";
+                        $htmltxt .= '<option value="' . $va . '" hassubinfo="true" ' . $option_chk . '>' . $va . '</option>';
+                    }
+                    $htmltxt .= '
                                               </select>
                                             </div>
                                         </div>';
                     break;
-				case "select":
-					$htmltxt .= '<div class="form-group">
+                case "select":
+                    $htmltxt .= '<div class="form-group">
                                             <label class="col-sm-2 control-label">' . $row["show_name"] . '</label>
                                             <div class="col-sm-10">
                                               <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" style="width: 200px;" tabindex="2">
                                         ';
-					$option_arr = explode(',', $row['default_value']);
-					foreach ($option_arr as $va) {
-						$option_chk = ($va == $field_value) ? "selected" : "";
-						$htmltxt .= '<option value="' . $va . '" hassubinfo="true" '.$option_chk.'>' . $va . '</option>';
-					}
-					$htmltxt .= '
+                    $option_arr = explode(',', $row['default_value']);
+                    foreach ($option_arr as $va) {
+                        $option_chk = ($va == $field_value) ? "selected" : "";
+                        $htmltxt .= '<option value="' . $va . '" hassubinfo="true" ' . $option_chk . '>' . $va . '</option>';
+                    }
+                    $htmltxt .= '
                                               </select>
                                             </div>
                                         </div>';
-					break;
+                    break;
                 case "linkage":
                     $htmltxt .= '
                                 <div class="form-group">
@@ -299,10 +394,10 @@ class ChannelField extends CmsBase
 									<div class="col-sm-10">
 									  <select data-placeholder="选择' . $row["show_name"] . '..." name="' . $row["field_name"] . '" class="chosen-select ' . $row["field_name"] . '-chosen-select" >
 								';
-                                        $option_arr = $this->channelExtFieldLinkage($row['default_value']);
-                                        foreach ($option_arr as $row) {
-                                            $htmltxt .= '<option value="' . $row['id'] . '" hassubinfo="true">' . $row['name'] . '</option>';
-                                        }
+                    $option_arr = $this->channelExtFieldLinkage($row['default_value']);
+                    foreach ($option_arr as $row) {
+                        $htmltxt .= '<option value="' . $row['id'] . '" hassubinfo="true">' . $row['name'] . '</option>';
+                    }
                     $htmltxt .= '
 									  </select>
 									</div>
@@ -314,11 +409,11 @@ class ChannelField extends CmsBase
                                             <div class="col-sm-10">
                                                 <div class="radio i-checks">
                                         ';
-                                                $option_arr = explode(',', $row['default_value']);
-                                                foreach ($option_arr as $va) {
-                                                    $checked = ($va == $field_value) ? "checked" : "";
-                                                    $htmltxt .= '<input type="radio" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . ' /> ' . $va . ' ';
-                                                }
+                    $option_arr = explode(',', $row['default_value']);
+                    foreach ($option_arr as $va) {
+                        $checked = ($va == $field_value) ? "checked" : "";
+                        $htmltxt .= '<input type="radio" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . ' /> ' . $va . ' ';
+                    }
                     $htmltxt .= '
                                               </div>
                                             </div>
@@ -330,10 +425,10 @@ class ChannelField extends CmsBase
 									<div class="col-sm-10">
 										<div class="checkbox i-checks">
 								';
-                                        $option_arr = explode(',', $row['default_value']);
-                                        foreach ($option_arr as $va) {
-                                            $htmltxt .= '<input type="checkbox" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . '/> ' . $va . ' ';
-                                        }
+                    $option_arr = explode(',', $row['default_value']);
+                    foreach ($option_arr as $va) {
+                        $htmltxt .= '<input type="checkbox" name="' . $row["field_name"] . '" value="' . $va . '" ' . $checked . '/> ' . $va . ' ';
+                    }
                     $htmltxt .= '
 									  </div>
 									</div>
@@ -344,7 +439,7 @@ class ChannelField extends CmsBase
                     if ($field_value) {
                         $pic_url = get_picture_url($field_value);
                         $pic_div .= '<div style="cursor:pointer; color:red;" class="pic_del"  onclick="picDel' . $row["field_name"] . '(this)" ><img src="' . STATIC_DOMAIN . SYS_DS_PROS . SYS_STATIC_DIR_NAME . '/addon/file/uploadify-cancel.png" /></div>';
-                        $pic_div  .= ' <a target="_blank" href="' . $pic_url . '"><img  style="max-width:150px;" src="' . $pic_url . '"/></a>';
+                        $pic_div .= ' <a target="_blank" href="' . $pic_url . '"><img  style="max-width:150px;" src="' . $pic_url . '"/></a>';
                     }
                     $htmltxt .= '
                                         <div class="form-group text-left">
@@ -466,12 +561,13 @@ class ChannelField extends CmsBase
         return $htmltxt;
     }
 
-    public function channelExtFieldLinkage($linkpage){
+    public function channelExtFieldLinkage($linkpage)
+    {
         $data = [];
-        switch ( $linkpage ) {
+        switch ($linkpage) {
             case "sys_user":
                 $sql = "select id,name from fly_sys_user";
-                $data = $this->C( $this->cacheDir )->findAll( $sql );
+                $data = $this->C($this->cacheDir)->findAll($sql);
                 break;
             default:
                 echo "Your favorite fruit is neither apple, banana, or orange!";

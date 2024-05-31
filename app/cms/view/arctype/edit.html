@@ -94,8 +94,15 @@
                                         </div>
                                         <div class="radio radio-success">
                                             <input type="radio" name="ispart" id="radio2" value="2" {if condition="$info.ispart eq '2' " }  checked {/if}>
-                                            <label for="radio2"> 外部连接（在"文件保存目录"处填写网址，可以直接跳转到第三方网址） </label>
+                                            <label for="radio2"> 外部连接（在"外部地址"处填写网址，可以直接跳转到第三方网址） </label>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">外部地址 </label>
+                                    <div class="col-sm-10">
+                                        <input name="jump_url" class="form-control" type="text" value="{$info.jump_url|default=''}" required/>
+                                        <span class="help-block m-b-none">当栏目属性设置为外部连接时，请填写此选项。</span>
                                     </div>
                                 </div>
                             </div>

@@ -23,27 +23,28 @@
 return [
 	'tables' => [
 
-		'taglist' => [
-			//表名
-			'table_name' => 'taglist',
-			//表注释
-			'comment' => '[系统]系统用户表',
-			//'engine' => 'InnoDB',
-			'engine' => 'InnoDB',
-			'charset' => 'utf8mb4',
-			'collate' => 'utf8mb4_general_ci',
-			//字段信息
-			'columns' => [
-				'id' => ['type' => 'int', 'length' => 16, 'unsigned' => false, 'autoincrement' => true, 'comment' => '主id',],
-			],
-			//主键 多个主键['user_id','name']
-			'primary' => ['id'],
-			//索引
-			'index' => [
-				'tid' => ['type' => "normal", 'columns' => ['tid','aid','typeid']],
-				//'ind_age' => ['type' => "normal", 'columns' => ['test002']],
-			],
-		],
+        'arctype' => [
+            //表名
+            'table_name' => 'arctype',
+            //表注释
+            'comment' => '[系统]文章分类',
+            //'engine' => 'InnoDB',
+            'engine' => 'InnoDB',
+            'charset' => 'utf8mb4',
+            'collate' => 'utf8mb4_general_ci',
+            //字段信息
+            'columns' => [
+                'id' => ['type' => 'int', 'length' => 16, 'unsigned' => false, 'autoincrement' => true, 'comment' => '主id',],
+                'jump_url' => ['type' => 'varchar', 'length' => 256, 'required' => true, 'default' => '', 'comment' => '跳转地址',],
+            ],
+            //主键 多个主键['user_id','name']
+            'primary' => ['id'],
+            //索引
+            'index' => [
+                'tid' => ['type' => "normal", 'columns' => ['tid','aid','typeid']],
+                //'ind_age' => ['type' => "normal", 'columns' => ['test002']],
+            ],
+        ],
 
 	],//end tables;
 

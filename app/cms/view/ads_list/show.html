@@ -5,9 +5,7 @@
 
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-
                     <h5> {$page_title}</h5>
-
                     <div class="ibox-tools"><a href="javascript:void(0);" class="btn btn-xs btn-default btn-help-detail"  data-type="cst_customer"> <i class="fa fa-question-circle"> 操作说明</i></a>
                     </div>
                 </div>
@@ -54,7 +52,8 @@
                             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
                             <th width="120">标题</th>
                             <th width="100">链接地址</th>
-                            <th width="120">缩略图</th>
+                            <th width="120" class="text-center">缩略图</th>
+                            <th width="120" class="text-center">缩略图(手机)</th>
                             <th width="100" orderField="by_sort" class="sort-filed"><span>排序</span></th>
                             <th width="80">启用</th>
                             <th width="80">操作</th>
@@ -82,9 +81,14 @@
         <td><input name="field_ext_id" class="checkboxCtrlId" value="<%=data[i]['field_ext_id']%>" type="checkbox"></td>
         <td><%=data[i]['title']%></td>
         <td><%=data[i]['links']%></td>
-        <td>
+        <td class="text-center">
             <a class="fancybox" href="<%=data[i]['litpic']%>" title="图片1">
-                <img src="<%=data[i]['litpic']%>" width="100">
+                <img src="<%=data[i]['litpic']%>" width="60">
+            </a>
+        </td>
+        <td class="text-center">
+            <a class="fancybox" href="<%=data[i]['litpic2']%>" title="图片1">
+                <img src="<%=data[i]['litpic2']%>" width="60">
             </a>
         </td>
         <td><input type="text" name="sort" value="<%=data[i]['sort']%>" class="form-control w50 ajax-sort" data-url="{:url('AdsList/set_sort',array('name'=>'sort'))}" data-id="<%=data[i]['id']%>" size="5"></td>
