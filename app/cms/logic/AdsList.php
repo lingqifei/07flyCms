@@ -31,7 +31,12 @@ class AdsList extends CmsBase
         if($paginate===false) $list['data']=$list;
         foreach ($list['data'] as &$row){
             $row['litpic']=get_picture_url($row['litpic']);
-            $row['litpic2']=get_picture_url($row['litpic2']);
+            //兼容手机图片
+            if(!empty($row['litpic2'])){
+                $row['litpic2'] =get_picture_url($row['litpic2']);
+            }else{
+                $row['litpic2'] ='';
+            }
         }
         return $list;
     }
