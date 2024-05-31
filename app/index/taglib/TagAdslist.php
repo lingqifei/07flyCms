@@ -43,7 +43,6 @@ class TagAdslist extends Base
         /*获取文档列表*/
         $logicAdsList = new \app\index\logic\AdsList();
         $result = $logicAdsList->getAdsListList($where, true, $orderby,false);
-
         if($result['data']){
             return $result['data'];
         }

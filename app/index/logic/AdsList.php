@@ -35,6 +35,12 @@ class AdsList extends IndexBase
         foreach ($list['data'] as &$row){
             $row['litpic'] =get_picture_url($row['litpic']);
             $row['target'] = ($row['target'] == 1) ? 'target="_blank"' : 'target="_self"';
+            //兼容手机图片
+            if(!empty($row['litpic2'])){
+                $row['litpic2'] =get_picture_url($row['litpic2']);
+            }else{
+               $row['litpic2'] ='';
+            }
         }
         return $list;
     }

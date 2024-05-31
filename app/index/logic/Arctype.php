@@ -146,7 +146,8 @@ class Arctype extends IndexBase
     }
 
 
-    /**获得所有指定id所有父级
+    /**
+     * 获得所有指定id所有父级
      * @param int $typeid
      * @param array $data
      * @return array
@@ -157,7 +158,7 @@ class Arctype extends IndexBase
             $data['typeurl'] = $data['typedir'];
             if (!is_http_url($data['typeurl'])) {
                 $typeurl = '//'.request()->host();
-                $typeurl .= '/'.trim($data['typeurl'], '/');
+                $typeurl .= '/'.trim($data['jump_url'], '/');
             }
         } else {
         	if($data['typedir']){
