@@ -17,17 +17,15 @@ use think\Controller;
 
 class Index extends IndexBase
 {
-
     /**
      * @return mixed
      * created by Administrator at 2020/2/24 0024 15:15
      */
     public function index()
     {
+        $member = session('member_auth');
         return $this->fetch('index.html');
     }
-
-
     /**
      * 后台调用方法，可以配合路由配置
      * @return mixed
