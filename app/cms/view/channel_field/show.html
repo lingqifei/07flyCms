@@ -33,7 +33,7 @@
                             <th width="80">最大值</th>
                             <th width="100" orderField="by_sort" class="sort-filed"><span>排序</span></th>
                             <th width="80">启用</th>
-                            <th width="80">操作</th>
+                            <th width="80" class="text-center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -65,11 +65,9 @@
         <td>
             <input name="visible" class="ajax-checkbox" type="checkbox"   data-url="{:url('ChannelField/set_visible',array('name'=>'visible'))}"  data-id="<%=data[i]['id']%>" <%=visible%> >
         </td>
-        <td>
-            <p>
+        <td class="text-center">
                 <lqf_link><a class="ajax-open" data-url="{:url('ChannelField/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改">修改</a></lqf_link>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('ChannelField/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
-            </p>
         </td>
     </tr>
     <% } %>

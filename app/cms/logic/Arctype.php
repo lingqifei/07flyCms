@@ -38,9 +38,8 @@ class Arctype extends CmsBase
      */
     public function getArctypeList($where = [], $field = true, $order = 'sort asc', $paginate = DB_LIST_ROWS)
     {
-        $list=$this->modelArctype->getList($where, $field, $order, $paginate)->toArray();
-        if($paginate===false) $list['data']=$list;
-        foreach ($list['data'] as &$row){
+        $list=$this->modelArctype->getList($where, $field, $order, $paginate);
+        foreach ($list as &$row){
             $row['ispart_text']=$this->modelArctype->ispart_text($row['ispart']);
             $row['channel_text']=$this->modelChannel->getValue(['id'=>$row['channel_id']],'name');
         }
@@ -82,6 +81,31 @@ class Arctype extends CmsBase
         $result && action_log('编辑', '编辑栏目，name：' . $data['typename']);
         $url = url('show');
         return $result ? [RESULT_SUCCESS, '栏目编辑成功', $url] : [RESULT_ERROR, $this->modelArctype->getError()];
+    }
+
+    /**
+     * 模型编辑
+     */
+    public function arctypeEditMoban($data = [])
+    {
+        $originalArray=$data['rowlist'];
+        $keys=array_keys($originalArray);
+        // 初始化新数组,
+        $newArray = [];
+        // 遍历原数组的长度，构建新的二维数组
+        foreach ($originalArray[$keys[0]] as $index => $value) {
+            $newArray[] = [];
+            foreach ($keys as $key) {
+                $newArray[$index][$key] = $originalArray[$key][$index];
+            }
+        }
+        // 循环遍历新数组，将新数组中的数据更新数据库
+        foreach ($newArray as $row){
+            $result = $this->modelArctype->updateInfo(['id'=>$row['id']],$row);
+        }
+        $result && action_log('编辑', '批量编辑栏目，name：' .arr2str($data['rowlist']['id']));
+        $url = url('show');
+        return $result ? [RESULT_SUCCESS, '操作成功', $url] : [RESULT_ERROR, $this->modelArctype->getError()];
     }
     
     /**
@@ -129,8 +153,8 @@ class Arctype extends CmsBase
     //得到数形参数
     public function getArctypeListTree($where='')
     {
-        $list = $this->getArctypeList($where,'','sort asc',false);
-        $tree= list2tree($list['data'],0,0,'id','parent_id','typename');
+        $list = $this->getArctypeList($where,'','sort asc',false)->toArray();
+        $tree= list2tree($list,0,0,'id','parent_id','typename');
         return $tree;
     }
 

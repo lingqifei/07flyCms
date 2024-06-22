@@ -55,7 +55,6 @@ class Arcext extends CmsBase
      */
     public function add()
     {
-
         IS_POST && $this->jump($this->logicArcext->arcextAdd($this->param));
         $this->common_data();
         return $this->fetch('add');

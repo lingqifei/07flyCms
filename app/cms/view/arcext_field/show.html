@@ -8,6 +8,7 @@
                         <form id="pagerForm" method="post" class="form-inline searchForm">
                             <input type="hidden" name="main_table" id="main_table" value="{$info.maintable}">
                             <input type="hidden" name="ext_table" id="ext_table" value="{$info.addtable}">
+                            <input type="hidden" name="arcext_id" id="arcext_id" value="{$info.id}">
                             <div class="col-sm-3 m-b-xs">
                                 <a class="btn btn-default btn-history"  ><i class="fa fa-history"></i> 返回</a>
                                 <lqf_link><a class="btn btn-info ajax-open"  data-url="{:url('arcextField/add',array('channel_id'=>$info.id))}" data-title="添加" ><i class="fa fa-plus"></i>添加</a></lqf_link>

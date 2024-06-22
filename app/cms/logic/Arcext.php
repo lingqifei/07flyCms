@@ -114,12 +114,12 @@ class Arcext extends CmsBase
      */
     public function getArcextInfo($where = [], $field = true)
     {
-
         return $this->modelArcext->getInfo($where, $field);
     }
 
 
-    /**封装orderby
+    /**
+     * 封装orderby
      * @param array $data
      * Author: lingqifei created by at 2020/3/2 0002
      */

@@ -19,12 +19,18 @@
                         <form id="pagerForm" method="post" class="form-inline searchForm">
                             <input type="hidden" name="pid" value="">
                             <div class="col-sm-3 m-b-xs">
-                                <a class="btn btn-default refresh-tree"><i class="fa fa-refresh"> </i>刷新</a>
                                 <lqf_link>
                                     <a class="btn btn-info ajax-open add-btn" data-url="{:url('Arctype/add')}" data-title="添加分类">
-                                        <i class="fa fa-plus"></i>添加
+                                        <i class="fa fa-plus"></i> 添加
                                     </a>
                                 </lqf_link>
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">批量操作 <span class="caret"></span> </button>
+                                    <ul class="dropdown-menu">
+                                        <lqf_link><li><a class="ajax-open-more"  data-url="{:url('Arctype/edit_moban')}">修改模板</a></li></lqf_link>
+                                        <lqf_link><li><a class="ajax-open-more"  data-url="{:url('Arctype/del')}"  >批量删除</a></li></lqf_link>
+                                    </ul>
+                                </div>
                             </div>
                             <div class="col-sm-9 m-b-xs text-right">
                                 <div class="input-group">

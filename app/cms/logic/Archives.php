@@ -44,12 +44,10 @@ class Archives extends CmsBase
             [SYS_DB_PREFIX . 'arctype t', 't.id = a.type_id','LEFT'],
         ];
         $this->modelArchives->join = $join;
-
-        $list=$this->modelArchives->getList($where, $field, $order, $paginate)->toArray();
-        if($paginate===false) $list['data']=$list;
-
-        foreach ($list['data'] as &$row){
+        $list=$this->modelArchives->getList($where, $field, $order, $paginate);
+        foreach ($list as &$row){
            $row['flag_name']=$this->logicArcatt->getArcattName($row['flag']);
+           $row['arcext_id']=$this->modelArcext->getValue(['channel_id'=>$row['channel_id']],'id');
         }
         return $list;
     }

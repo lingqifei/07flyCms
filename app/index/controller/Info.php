@@ -202,6 +202,4 @@ class Info extends IndexBase{
         $this->jump($this->logicInfoAskfor->infoAskforAdd($this->param));
 
     }
-
-
 }

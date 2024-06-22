@@ -50,22 +50,23 @@ class Ads extends IndexBase
 
             if (!empty($list['data'])) {
 
-                $one = array_rand_value($list['data'], 1);
+                $one = array_rand_value($list['data'], 1);//随机选择一条广告，随机数
 
                 if (!empty($one[0])) {
-
                     $ads = $one[0];
-
                     //更新点击
                     $this->logicAdsList->updateAdsListView(['id' => $ads['id']]);
 
                     $text = '';
+                    $gotolink = DOMAIN .url('index/Ads/gotolink',array('id'=>$ads['id']));
                     switch ($ads['ads_type']) {
                         case '0':
-                            $text = '<a href="' . $ads['links'] . '" ' . $ads['target'] . '><img src="' . $ads['litpic'] . '" width="' . $info['width'] . '" height="' . $info['height'] . '"></a>';
+                            $text = '<a href="' . $gotolink . '" ' . $ads['target'] . '>
+                            <img src="' . DOMAIN . '' . $ads['litpic'] . '" width="' . $info['width'] . '" height="' . $info['height'] . '">
+                            </a>';
                             break;
                         case '1':
-                            $text = '<a href="' . $ads['links'] . '" ' . $ads['target'] . '>' . $ads['intro'] . '</a>';
+                            $text = '<a href="' . $gotolink . '" ' . $ads['target'] . '>' . $ads['intro'] . '</a>';
                             break;
                         case '2':
                             $text = $ads['intro'];
@@ -108,7 +109,7 @@ class Ads extends IndexBase
             abort(404, 'aid 页面不存在');
             exit;
         } else {
-            /**广告位信息**/
+            /**广告信息**/
             $info = $this->logicAdsList->getAdsListInfo(['id' => $this->aid]);
             if (empty($info)) {
                 abort(404, 'info 页面不存在');
@@ -181,7 +182,7 @@ class Ads extends IndexBase
                 //更新浏览
                 $this->logicMemberAdvDis->updateMemberAdvDisView(['id' => $ads['id']]);
 
-            // d($ads->toArray());exit;
+                // d($ads->toArray());exit;
 
                 $text = '';
                 switch ($adv['ad_type']) {
@@ -206,17 +207,48 @@ class Ads extends IndexBase
                 $adbody = str_replace("\r", "\\r", $adbody);
                 $adbody = str_replace("\n", "\\n", $adbody);
                 $adbody = "<!--\r\ndocument.write(\"{$adbody}\");\r\n-->\r\n";
-            }else{
+            } else {
                 $adbody = '<a href="' . $adv['links'] . '" ><img src="' . get_picture_url2($adv['litpic']) . '" width="' . $adv['width'] . '" height="' . $adv['height'] . '"></a>';
                 $adbody = str_replace('"', '\"', $adbody);
                 $adbody = str_replace("\r", "\\r", $adbody);
                 $adbody = str_replace("\n", "\\n", $adbody);
                 $adbody = "<!--\r\ndocument.write(\"{$adbody}\");\r\n-->\r\n";
             }
-
             echo $adbody;
-
         }
     }
 
+    /**
+     * 会员广告位跳转
+     *
+     * @return mixed
+     * created by Administrator at 2020/2/24 0024 15:15
+     */
+    public function gotolink($id = '')
+    {
+        $this->id = input("param.id", '0');
+        if (!is_numeric($this->id) || strval(intval($this->id)) !== strval($this->id)) {
+            abort(404, 'mem ads id 不存在');
+        }
+        $this->id = intval($this->id);
+        if (empty($this->id)) {
+            abort(404, 'mem ads id 不存在');
+            exit;
+        } else {
+            /**广告信息**/
+            $info = $this->logicAdsList->getAdsListInfo(['id' => $this->id]);
+            if (empty($info)) {
+                abort(404, 'info 页面不存在');
+                exit;
+            }
+            //更新点击
+            $this->logicAdsList->updateAdsListClick(['id' => $info['id']]);
+            //根据地址跳转
+            if ($info['links'] != '') {
+                $this->redirect($info['links']);
+            } else {
+                $this->redirect('/');
+            }
+        }
+    }
 }

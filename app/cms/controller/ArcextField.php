@@ -42,13 +42,15 @@ class ArcextField extends CmsBase
     public function show_json()
     {
         $where = [];
-        if (!empty($this->param['main_table:'])) {
+        if (!empty($this->param['main_table'])) {
             $where['main_table'] = ['=', $this->param['main_table']];
         }
-        if (!empty($this->param['ext_table:'])) {
+        if (!empty($this->param['ext_table'])) {
             $where['ext_table'] = ['=', $this->param['ext_table']];
         }
-        //排序操作
+        if (!empty($this->param['arcext_id'])) {
+            $where['arcext_id'] = ['=', $this->param['arcext_id']];
+        }
         //排序操作
         if (!empty($this->param['orderField'])) {
             $orderField = $this->param['orderField'];

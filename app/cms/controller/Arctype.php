@@ -120,6 +120,19 @@ class Arctype extends CmsBase
         return $this->fetch('edit_content');
     }
 
+    /*
+     * 修改模板
+     */
+    public function edit_moban()
+    {
+        IS_POST && $this->jump($this->logicArctype->arctypeEditMoban($this->param));
+        $where = empty($this->param['id']) ? ['id' => 0] : ['id' => ['in', $this->param['id']]];
+        $list = $this->logicArctype->getArctypeList($where);
+        $this->assign('list', $list);
+        $this->comm();
+        return $this->fetch('edit_moban');
+    }
+
     /**
      * 删除
      */

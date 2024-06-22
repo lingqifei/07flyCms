@@ -5,16 +5,16 @@
 
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
+
                     <h5> {$page_title}</h5>
+
                     <div class="ibox-tools"><a href="javascript:void(0);" class="btn btn-xs btn-default btn-help-detail"  data-type="cst_customer"> <i class="fa fa-question-circle"> 操作说明</i></a>
                     </div>
                 </div>
                 <div class="ibox-content">
                     <div class="row">
                         <form id="pagerForm" method="post" class="form-inline searchForm">
-                            <div class="col-sm-3 m-b-xs">
-                            </div>
-                            <div class="col-sm-9 m-b-xs text-right">
+                            <div class="col-sm-12">
                                 <div class="input-group text-left">
                                     <select data-placeholder="请选内容模型..." name="ads_id" class="chosen-select chosen-select-ads-id" style="width: 200px;">
                                         {volist name='ads_list' id='vo'}
@@ -50,13 +50,15 @@
                         <thead>
                         <tr>
                             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
-                            <th width="120">标题</th>
-                            <th width="100">链接地址</th>
-                            <th width="120" class="text-center">缩略图</th>
-                            <th width="120" class="text-center">缩略图(手机)</th>
-                            <th width="100" orderField="by_sort" class="sort-filed"><span>排序</span></th>
+                            <th width="30">ID</th>
+                            <th width="100">标题</th>
+                            <th width="100">链接</th>
+                            <th width="100">浏览</th>
+                            <th width="100">点击</th>
+                            <th width="80">缩略图</th>
+                            <th width="80" orderField="by_sort" class="sort-filed"><span>排序</span></th>
                             <th width="80">启用</th>
-                            <th width="80">操作</th>
+                            <th width="80" class="text-center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -79,27 +81,23 @@
     %>
     <tr>
         <td><input name="field_ext_id" class="checkboxCtrlId" value="<%=data[i]['field_ext_id']%>" type="checkbox"></td>
+        <td><%=data[i]['id']%></td>
         <td><%=data[i]['title']%></td>
         <td><%=data[i]['links']%></td>
-        <td class="text-center">
+        <td><%=data[i]['view']%></td>
+        <td><%=data[i]['click']%></td>
+        <td>
             <a class="fancybox" href="<%=data[i]['litpic']%>" title="图片1">
                 <img src="<%=data[i]['litpic']%>" width="60">
-            </a>
-        </td>
-        <td class="text-center">
-            <a class="fancybox" href="<%=data[i]['litpic2']%>" title="图片1">
-                <img src="<%=data[i]['litpic2']%>" width="60">
             </a>
         </td>
         <td><input type="text" name="sort" value="<%=data[i]['sort']%>" class="form-control w50 ajax-sort" data-url="{:url('AdsList/set_sort',array('name'=>'sort'))}" data-id="<%=data[i]['id']%>" size="5"></td>
         <td>
             <input name="visible" class="ajax-checkbox" type="checkbox"   data-url="{:url('AdsList/set_visible',array('name'=>'visible'))}"  data-id="<%=data[i]['id']%>" <%=visible%> >
         </td>
-        <td>
-            <p>
+        <td class="text-center">
                 <lqf_link><a class="ajax-open" data-url="{:url('AdsList/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改">修改</a></lqf_link>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('AdsList/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
-            </p>
         </td>
     </tr>
     <% } %>

@@ -46,11 +46,9 @@ class ArcextInfo extends CmsBase
         }
     }
 
-
+    //扩展表信息列表
     public function show(){
-
         $this->common_data();
-
         //查询文章模块扩展项目
         if (!empty($this->param['channel_id'])) {
             $where['channel_id'] = ['=',$this->param['channel_id']];
@@ -75,11 +73,7 @@ class ArcextInfo extends CmsBase
     public function add()
     {
         IS_POST && $this->jump($this->logicArcextInfo->arcextInfoAdd($this->param));
-
         $this->common_data();
-//        $info = $this->logicArcext->getArcextExtInfo( $this->param);
-//        $this->assign('info', $info);
-
         return $this->fetch('add');
     }
 
@@ -89,11 +83,8 @@ class ArcextInfo extends CmsBase
     public function edit()
     {
         IS_POST && $this->jump($this->logicArcextInfo->arcextInfoEdit($this->param));
-
-        $info = $this->logicArcextInfo->getArcextExtInfo( $this->param);
-
+        $info = $this->logicArcextInfo->getArcextInfoInfo( $this->param);
         $this->assign('info', $info);
-
         return $this->fetch('edit');
     }
 
