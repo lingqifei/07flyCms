@@ -5,10 +5,16 @@
 {$fly.field.description}
 
 
+{fly:position style="crumb" symbol='>'/}
 
 <!--栏目的名称，内容-->
 {$fly.field.typename}
 {$fly.field.content}
+
+<!--栏目列表-->
+{fly:channel  type ='son' currentstyle="active"}
+<li class="{$field.currentstyle}"><a href='{$field.typeurl}' title='Technical'>{$field.typename}</a></li>
+{/fly:channel}
 
 
 <h3>列表数据调用：</h3>

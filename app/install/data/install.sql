@@ -162,6 +162,24 @@ CREATE TABLE `#@__picture` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='[系统]图片表';
 
+
+-- -----------------------------
+-- Table structure for `#@__file`
+-- -----------------------------
+DROP TABLE IF EXISTS `#@__file`;
+CREATE TABLE `#@__file` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '文件ID',
+    `name` varchar(100) NOT NULL DEFAULT '' COMMENT '原始文件名',
+    `path` varchar(255) NOT NULL DEFAULT '' COMMENT '保存名称',
+    `url` varchar(255) NOT NULL DEFAULT '' COMMENT '远程地址',
+    `sha1` char(40) NOT NULL DEFAULT '' COMMENT '文件 sha1编码',
+    `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上传时间',
+    `update_time` int(11) unsigned NOT NULL DEFAULT '0',
+    `status` tinyint(1) NOT NULL DEFAULT '1',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='[系统]文件表';
+
+
 -- -----------------------------
 -- Table structure for `#@__region`
 -- -----------------------------
@@ -947,24 +965,29 @@ CREATE TABLE `#@__oa_notify_user` (
 
 
 -- -----------------------------
+-- Table structure for cms-php-module
+-- -----------------------------
+
+
+-- -----------------------------
 -- Table structure for `#@__ads`
 -- -----------------------------
 DROP TABLE IF EXISTS `#@__ads`;
 CREATE TABLE `#@__ads` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `title` varchar(60) NOT NULL DEFAULT '' COMMENT '广告位置名称',
-   `width` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '广告位宽度',
-   `height` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '广告位高度',
-   `litpic` varchar(256) NOT NULL DEFAULT '0' COMMENT '广告图片',
-   `links` varchar(256) NOT NULL DEFAULT '0' COMMENT '广告链接地址',
-   `intro` text NOT NULL COMMENT '广告描述',
-   `visible` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0关闭1开启',
-   `target` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否开启浏览器新窗口',
-   `lang` varchar(50) NOT NULL DEFAULT 'cn' COMMENT '多语言',
-   `sys_user_id` int(10) NOT NULL DEFAULT '0' COMMENT '管理员ID',
-   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '新增时间',
-   `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-   PRIMARY KEY (`id`)
+                           `id` int(11) NOT NULL AUTO_INCREMENT,
+                           `title` varchar(60) NOT NULL DEFAULT '' COMMENT '广告位置名称',
+                           `width` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '广告位宽度',
+                           `height` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '广告位高度',
+                           `litpic` varchar(256) NOT NULL DEFAULT '0' COMMENT '广告图片',
+                           `links` varchar(256) NOT NULL DEFAULT '0' COMMENT '广告链接地址',
+                           `intro` text NOT NULL COMMENT '广告描述',
+                           `visible` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0关闭1开启',
+                           `target` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否开启浏览器新窗口',
+                           `lang` varchar(50) NOT NULL DEFAULT 'cn' COMMENT '多语言',
+                           `sys_user_id` int(10) NOT NULL DEFAULT '0' COMMENT '管理员ID',
+                           `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '新增时间',
+                           `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+                           PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='[cms]广告位置表';
 
 -- -----------------------------
@@ -978,53 +1001,51 @@ INSERT INTO `#@__ads` VALUES ('2', 'en首页-大幻灯片', '1920', '550', '0', 
 -- -----------------------------
 DROP TABLE IF EXISTS `#@__ads_list`;
 CREATE TABLE `#@__ads_list` (
-    `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '广告id',
-    `ads_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '广告位置ID',
-    `ads_type` tinyint(1) DEFAULT '0' COMMENT '广告类型0=图片，1=文本，2=html',
-    `title` varchar(60) DEFAULT '' COMMENT '广告名称',
-    `links` varchar(255) DEFAULT '' COMMENT '广告链接',
-    `litpic` varchar(255) DEFAULT '' COMMENT '图片地址',
-    `set_time` int(11) DEFAULT '0' COMMENT '时间设置0=长期，1=设置时间内',
-    `start_time` int(11) DEFAULT '0' COMMENT '投放时间',
-    `stop_time` int(11) DEFAULT '0' COMMENT '结束时间',
-    `intro` varchar(1024) DEFAULT '' COMMENT '描述',
-    `expintro` varchar(1024) DEFAULT '' COMMENT '到期后提示',
-    `link_man` varchar(60) DEFAULT '' COMMENT '添加人',
-    `link_email` varchar(60) DEFAULT '' COMMENT '添加人邮箱',
-    `link_phone` varchar(60) DEFAULT '' COMMENT '添加人联系电话',
-    `click` int(11) DEFAULT '1' COMMENT '点击量',
-    `view` int(11) DEFAULT '1' COMMENT '展示量',
-    `bgcolor` varchar(30) DEFAULT '' COMMENT '背景颜色',
-    `visible` tinyint(1) unsigned DEFAULT '1' COMMENT '1=显示，0=屏蔽',
-    `sort` int(11) DEFAULT '0' COMMENT '排序',
-    `target` varchar(50) DEFAULT '' COMMENT '是否开启浏览器新窗口',
-    `member_id` int(10) DEFAULT '0' COMMENT '会员idID',
-    `lang` varchar(50) DEFAULT 'cn' COMMENT '多语言',
-    `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
-    `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-    `litpic2` varchar(255) DEFAULT '' COMMENT '图片地址2',
-    PRIMARY KEY (`id`),
-    KEY `position_id` (`ads_id`) USING BTREE,
-    KEY `status` (`visible`) USING BTREE
+                                `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '广告id',
+                                `ads_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '广告位置ID',
+                                `ads_type` tinyint(1) DEFAULT '0' COMMENT '广告类型0=图片，1=文本，2=html',
+                                `title` varchar(60) DEFAULT '' COMMENT '广告名称',
+                                `links` varchar(255) DEFAULT '' COMMENT '广告链接',
+                                `litpic` varchar(255) DEFAULT '' COMMENT '图片地址',
+                                `litpic2` varchar(255) DEFAULT '' COMMENT '图片地址2（手机）',
+                                `set_time` int(11) DEFAULT '0' COMMENT '时间设置0=长期，1=设置时间内',
+                                `start_time` int(11) DEFAULT '0' COMMENT '投放时间',
+                                `stop_time` int(11) DEFAULT '0' COMMENT '结束时间',
+                                `intro` varchar(1024) DEFAULT '' COMMENT '描述',
+                                `expintro` varchar(1024) DEFAULT '' COMMENT '到期后提示',
+                                `link_man` varchar(60) DEFAULT '' COMMENT '添加人',
+                                `link_email` varchar(60) DEFAULT '' COMMENT '添加人邮箱',
+                                `link_phone` varchar(60) DEFAULT '' COMMENT '添加人联系电话',
+                                `click` int(11) DEFAULT '1' COMMENT '点击量',
+                                `view` int(11) DEFAULT '1' COMMENT '展示量',
+                                `bgcolor` varchar(30) DEFAULT '' COMMENT '背景颜色',
+                                `visible` tinyint(1) unsigned DEFAULT '1' COMMENT '1=显示，0=屏蔽',
+                                `sort` int(11) DEFAULT '0' COMMENT '排序',
+                                `target` varchar(50) DEFAULT '' COMMENT '是否开启浏览器新窗口',
+                                `member_id` int(10) DEFAULT '0' COMMENT '会员idID',
+                                `lang` varchar(50) DEFAULT 'cn' COMMENT '多语言',
+                                `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
+                                `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
+                                PRIMARY KEY (`id`),
+                                KEY `position_id` (`ads_id`) USING BTREE,
+                                KEY `status` (`visible`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='[cms]广告列表';
 
 -- -----------------------------
 -- Records of `lqf_ads_list`
 -- -----------------------------
-INSERT INTO `#@__ads_list` VALUES ('1', '1', '0', '大1-3', 'http://wd.s5.07fly.com', '71', '0', '1524215594', '0', '这里广告内容的填写哟', '', '', '', '', '0', '13', '', '1', '4', '1', '0', 'cn', '1524215652', '1627366877');
-INSERT INTO `#@__ads_list` VALUES ('16', '1', '0', '大2-1', 'http://www.07fly.com', '47', '0', '0', '0', '234234', '', '', '', '', '0', '42', '', '0', '1', '1', '1', 'cn', '1553046945', '1627367480');
-INSERT INTO `#@__ads_list` VALUES ('2', '1', '0', '大1-2', 'http://wd.s5.07fly.com', '72', '0', '0', '0', '<p>填写广告的备注信息，方便于后期的跟进</p>', '', '', '', '', '0', '6', '', '1', '3', '1', '0', 'cn', '1524214017', '1627366981');
-INSERT INTO `#@__ads_list` VALUES ('5', '1', '1', '大1-1', 'http://wd.s5.07fly.com', '46', '0', '0', '0', '234234', '', '', '', '', '0', '7', '', '0', '2', '1', '1', 'cn', '1553046945', '1627367481');
+INSERT INTO `#@__ads_list` VALUES ('1', '1', '0', '大1-3', 'http://www.07fly.com', '71', '', '0', '1524215594', '0', '这里广告内容的填写哟', '', '', '', '', '0', '13', '', '1', '4', '1', '0', 'cn', '1524215652', '1717137691');
+INSERT INTO `#@__ads_list` VALUES ('2', '1', '0', '大1-2', 'http://www.07fly.com', '72', '', '0', '0', '0', '<p>填写广告的备注信息，方便于后期的跟进</p>', '', '', '', '', '0', '6', '', '1', '3', '1', '0', 'cn', '1524214017', '1721098616');
 
 -- -----------------------------
 -- Table structure for `#@__arcatt`
 -- -----------------------------
 DROP TABLE IF EXISTS `#@__arcatt`;
 CREATE TABLE `#@__arcatt` (
-  `sortid` smallint(6) NOT NULL DEFAULT '0',
-  `att` char(10) NOT NULL DEFAULT '' COMMENT '属性标志',
-  `attname` char(30) NOT NULL DEFAULT '' COMMENT '属性名称',
-  PRIMARY KEY (`att`)
+                              `sortid` smallint(6) NOT NULL DEFAULT '0',
+                              `att` char(10) NOT NULL DEFAULT '' COMMENT '属性标志',
+                              `attname` char(30) NOT NULL DEFAULT '' COMMENT '属性名称',
+                              PRIMARY KEY (`att`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='[cms]文章属性表';
 
 -- -----------------------------
@@ -1044,89 +1065,99 @@ INSERT INTO `#@__arcatt` VALUES ('6', 'b', '加粗');
 -- -----------------------------
 DROP TABLE IF EXISTS `#@__arcext`;
 CREATE TABLE `#@__arcext` (
-  `id` smallint(6) NOT NULL AUTO_INCREMENT,
-  `channel_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '关联模块',
-  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '名称',
-  `nid` varchar(64) NOT NULL DEFAULT '' COMMENT '标识',
-  `maintable` varchar(64) NOT NULL DEFAULT '' COMMENT '主表',
-  `addtable` varchar(64) NOT NULL DEFAULT '' COMMENT '附表',
-  `tablename` varchar(30) NOT NULL DEFAULT '' COMMENT '数据表',
-  `create_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `update_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='[cms]文章扩展表';
+                              `id` smallint(6) NOT NULL AUTO_INCREMENT,
+                              `channel_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '关联模块',
+                              `name` varchar(64) NOT NULL DEFAULT '' COMMENT '名称',
+                              `nid` varchar(64) NOT NULL DEFAULT '' COMMENT '标识',
+                              `maintable` varchar(64) NOT NULL DEFAULT '' COMMENT '主表',
+                              `addtable` varchar(64) NOT NULL DEFAULT '' COMMENT '附表',
+                              `tablename` varchar(30) NOT NULL DEFAULT '' COMMENT '数据表',
+                              `create_time` int(10) unsigned NOT NULL DEFAULT '0',
+                              `update_time` int(10) unsigned NOT NULL DEFAULT '0',
+                              `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+                              PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='[cms]文章扩展表';
 
+-- -----------------------------
+-- Records of `lqf_arcext`
+-- -----------------------------
+INSERT INTO `#@__arcext` VALUES ('8', '1', '我们的优势', 'youshi', 'arcext', 'arcext_youshi', '', '1719041602', '0', '0');
+INSERT INTO `#@__arcext` VALUES ('9', '1', '我们的缺点', 'quedian', 'arcext', 'arcext_quedian', '', '1719042455', '0', '0');
 
 -- -----------------------------
 -- Table structure for `#@__arcext_field`
 -- -----------------------------
 DROP TABLE IF EXISTS `#@__arcext_field`;
 CREATE TABLE `#@__arcext_field` (
-    `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-    `arcext_id` int(16) NOT NULL DEFAULT '0' COMMENT '扩展表id',
-    `channel_id` int(16) NOT NULL DEFAULT '0' COMMENT '频道表id',
-    `main_table` varchar(50) NOT NULL DEFAULT '' COMMENT '关联主表',
-    `ext_table` varchar(50) NOT NULL DEFAULT '' COMMENT '扩展表名',
-    `show_name` varchar(256) NOT NULL DEFAULT '' COMMENT '字段表单名称',
-    `field_name` varchar(256) NOT NULL DEFAULT '' COMMENT '字段名称',
-    `field_type` varchar(50) NOT NULL DEFAULT '' COMMENT '单文本=varchar,文本=text,多行文本=textarea,整数=int,小数=float,图片=img,下拉=option,单选=radio,复选=checkbox',
-    `default_value` varchar(256) NOT NULL DEFAULT '' COMMENT '字段默认值',
-    `maxlength` varchar(256) NOT NULL DEFAULT '' COMMENT '最大值',
-    `desc` varchar(256) NOT NULL DEFAULT '' COMMENT '表单说明',
-    `visible` smallint(1) NOT NULL DEFAULT '1' COMMENT '是否使用',
-    `is_system` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否为系统字段，1=是（不能删除）0=否',
-    `is_must` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否改填',
-    `sort` int(16) NOT NULL DEFAULT '0' COMMENT '显示排序',
-    `create_time` int(11) NOT NULL DEFAULT '0',
-    `update_time` int(11) NOT NULL DEFAULT '0',
-    `sys_user_id` int(16) NOT NULL DEFAULT '0',
-    PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='[cms]文章扩展表字段';
+                                    `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
+                                    `arcext_id` int(16) NOT NULL DEFAULT '0' COMMENT '扩展表id',
+                                    `channel_id` int(16) NOT NULL DEFAULT '0' COMMENT '频道表id',
+                                    `main_table` varchar(50) NOT NULL DEFAULT '' COMMENT '关联主表',
+                                    `ext_table` varchar(50) NOT NULL DEFAULT '' COMMENT '扩展表名',
+                                    `show_name` varchar(256) NOT NULL DEFAULT '' COMMENT '字段表单名称',
+                                    `field_name` varchar(256) NOT NULL DEFAULT '' COMMENT '字段名称',
+                                    `field_type` varchar(50) NOT NULL DEFAULT '' COMMENT '单文本=varchar,文本=text,多行文本=textarea,整数=int,小数=float,图片=img,下拉=option,单选=radio,复选=checkbox',
+                                    `default_value` varchar(256) NOT NULL DEFAULT '' COMMENT '字段默认值',
+                                    `maxlength` varchar(256) NOT NULL DEFAULT '' COMMENT '最大值',
+                                    `desc` varchar(256) NOT NULL DEFAULT '' COMMENT '表单说明',
+                                    `visible` smallint(1) NOT NULL DEFAULT '1' COMMENT '是否使用',
+                                    `is_system` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否为系统字段，1=是（不能删除）0=否',
+                                    `is_must` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否改填',
+                                    `sort` int(16) NOT NULL DEFAULT '0' COMMENT '显示排序',
+                                    `create_time` int(11) NOT NULL DEFAULT '0',
+                                    `update_time` int(11) NOT NULL DEFAULT '0',
+                                    `sys_user_id` int(16) NOT NULL DEFAULT '0',
+                                    PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='[cms]文章扩展表字段';
 
+-- -----------------------------
+-- Records of `lqf_arcext_field`
+-- -----------------------------
+INSERT INTO `#@__arcext_field` VALUES ('1', '8', '1', 'arcext', 'arcext_youshi', '名称', 'name', 'varchar', '', '250', '', '1', '0', '0', '100', '1719041618', '0', '0');
+INSERT INTO `#@__arcext_field` VALUES ('2', '8', '1', 'arcext', 'arcext_youshi', '描述', 'intro', 'varchar', '', '250', '', '1', '0', '0', '100', '1719041629', '0', '0');
 
 -- -----------------------------
 -- Table structure for `#@__archives`
 -- -----------------------------
 DROP TABLE IF EXISTS `#@__archives`;
 CREATE TABLE `#@__archives` (
-    `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-    `channel_id` smallint(6) NOT NULL DEFAULT '1' COMMENT '频道',
-    `type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '所属主栏目编号',
-    `type_id2` varchar(90) NOT NULL DEFAULT '0' COMMENT '所属副栏目编号',
-    `sortrank` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-    `flag` set('c','h','p','f','s','j','a','b') DEFAULT NULL COMMENT '文章属性',
-    `is_jump` tinyint(2) DEFAULT '0' COMMENT '是否跳转',
-    `jump_url` varchar(256) DEFAULT '' COMMENT '跳转地址',
-    `ismake` smallint(6) NOT NULL DEFAULT '0' COMMENT '是否生成html',
-    `arcrank` smallint(6) NOT NULL DEFAULT '0' COMMENT '浏览权限',
-    `click` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '点击',
-    `money` smallint(6) NOT NULL DEFAULT '0' COMMENT '价格',
-    `title` char(60) NOT NULL DEFAULT '' COMMENT '标题',
-    `keywords` char(30) NOT NULL DEFAULT '' COMMENT '关键字',
-    `shorttitle` char(36) NOT NULL DEFAULT '' COMMENT '短标题',
-    `description` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
-    `color` char(7) NOT NULL DEFAULT '' COMMENT '颜色',
-    `writer` char(20) NOT NULL DEFAULT '' COMMENT '作者',
-    `source` char(30) NOT NULL DEFAULT '' COMMENT '来源',
-    `litpic` char(100) NOT NULL DEFAULT '' COMMENT '缩略图,编号',
-    `member_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '会员ID',
-    `lastpost` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后评论时间',
-    `scores` mediumint(8) NOT NULL DEFAULT '0' COMMENT '最后分数',
-    `goodpost` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '好评',
-    `badpost` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '差评',
-    `notpost` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '不允许回复',
-    `filename` varchar(40) NOT NULL DEFAULT '' COMMENT '文件名称',
-    `weight` int(10) NOT NULL DEFAULT '0' COMMENT '权重',
-    `sort` int(10) NOT NULL DEFAULT '100' COMMENT '排序',
-    `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '录入时间',
-    `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
-    `pubdate` datetime NOT NULL COMMENT '发布时间',
-    PRIMARY KEY (`id`),
-    KEY `sortrank` (`sortrank`),
-    KEY `mainindex` (`arcrank`,`type_id`,`channel_id`,`flag`,`member_id`),
-    KEY `lastpost` (`lastpost`,`scores`,`goodpost`,`badpost`,`notpost`)
-) ENGINE=MyISAM AUTO_INCREMENT=340 DEFAULT CHARSET=utf8 COMMENT='[cms]文章信息主表';
+                                `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+                                `channel_id` smallint(6) NOT NULL DEFAULT '1' COMMENT '频道',
+                                `type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '所属主栏目编号',
+                                `type_id2` varchar(90) NOT NULL DEFAULT '0' COMMENT '所属副栏目编号',
+                                `sortrank` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+                                `flag` set('c','h','p','f','s','j','a','b') DEFAULT NULL COMMENT '文章属性',
+                                `is_jump` tinyint(2) DEFAULT '0' COMMENT '是否跳转',
+                                `jump_url` varchar(256) DEFAULT '' COMMENT '跳转地址',
+                                `ismake` smallint(6) NOT NULL DEFAULT '0' COMMENT '是否生成html',
+                                `arcrank` smallint(6) NOT NULL DEFAULT '0' COMMENT '浏览权限',
+                                `click` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '点击',
+                                `money` smallint(6) NOT NULL DEFAULT '0' COMMENT '价格',
+                                `title` char(60) NOT NULL DEFAULT '' COMMENT '标题',
+                                `keywords` char(30) NOT NULL DEFAULT '' COMMENT '关键字',
+                                `shorttitle` char(36) NOT NULL DEFAULT '' COMMENT '短标题',
+                                `description` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
+                                `color` char(7) NOT NULL DEFAULT '' COMMENT '颜色',
+                                `writer` char(20) NOT NULL DEFAULT '' COMMENT '作者',
+                                `source` char(30) NOT NULL DEFAULT '' COMMENT '来源',
+                                `litpic` char(100) NOT NULL DEFAULT '' COMMENT '缩略图,编号',
+                                `member_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '会员ID',
+                                `lastpost` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后评论时间',
+                                `scores` mediumint(8) NOT NULL DEFAULT '0' COMMENT '最后分数',
+                                `goodpost` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '好评',
+                                `badpost` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '差评',
+                                `notpost` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '不允许回复',
+                                `filename` varchar(40) NOT NULL DEFAULT '' COMMENT '文件名称',
+                                `weight` int(10) NOT NULL DEFAULT '0' COMMENT '权重',
+                                `sort` int(10) NOT NULL DEFAULT '100' COMMENT '排序',
+                                `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '录入时间',
+                                `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                `pubdate` datetime NOT NULL COMMENT '发布时间',
+                                PRIMARY KEY (`id`),
+                                KEY `sortrank` (`sortrank`),
+                                KEY `mainindex` (`arcrank`,`type_id`,`channel_id`,`flag`,`member_id`),
+                                KEY `lastpost` (`lastpost`,`scores`,`goodpost`,`badpost`,`notpost`)
+) ENGINE=MyISAM AUTO_INCREMENT=341 DEFAULT CHARSET=utf8 COMMENT='[cms]文章信息主表';
 
 -- -----------------------------
 -- Records of `lqf_archives`
@@ -1139,40 +1170,41 @@ INSERT INTO `#@__archives` VALUES ('119', '1', '5', '0', '0', '', '0', '', '0', 
 INSERT INTO `#@__archives` VALUES ('120', '1', '5', '0', '0', '', '0', '', '0', '0', '100', '0', 'CRM系统-v2', 'CRM管理系统', 'http://erp.07fly.com', '基于GPLv3协议发行，针对中小企业管理活动，目前提供客户关系管理员(CRM),销售管理，客户管理，供应商管理，采购管理，库存管理，财务管理，基本数据，系统设置，系统采用PHP5.5+MYSQL5.5+Hadmin(前端)等技术开发.\r\n<br>演示帐号：admin/admin123456', '', '管理员', '原创', '39', '0', '0', '0', '0', '0', '0', '', '0', '10', '1591857036', '1602989743', '2020-10-18 10:58:00');
 INSERT INTO `#@__archives` VALUES ('121', '1', '5', '0', '0', '', '0', '0', '0', '0', '100', '0', '地接通', '旅行社ERP管理', 'http://djt.07fly.xyz', '地接通地接社管理系统,专业的旅行社ERP管理软件地接版，为地接社提供产品报价、计划管理、调度安排、导游报账、审核对账、财务管理、汇总统计与决策分析等功能模块', '', '管理员', '原创', '42', '0', '0', '0', '0', '0', '0', '', '0', '30', '1591859126', '1608792849', '2020-12-24 14:54:00');
 INSERT INTO `#@__archives` VALUES ('122', '1', '39', '0', '0', '', '0', '', '0', '0', '484', '0', '安装V2后 登录显示帐号密码出错', '密码,帐号,登录,显示,出错,fly', '', '分析：检查数据库中fly_sys_user数据表中是否把安装时的帐号密码写入进去，如果没有写入进去，执行下方SQL，插入 fly-sys-user', '', '管理员', '原创', '0', '0', '0', '0', '0', '0', '0', '', '0', '100', '1592184516', '1607504093', '2020-07-23 17:27:00');
-INSERT INTO `#@__archives` VALUES ('123', '1', '33', '0', '0', '', '0', '0', '0', '0', '688', '0', '07FLY-CRM-V2 系统安装指导', 'nbsp,安装,系统,信息,环境,管理', '', '前言 本文档主要是为了让用户能够全面的认识和了解本产品，通过文档用户可以了解到产品从安装到使用的相关方法和支持功能。  系统安装 1.系统简介  07FLY-CRM是一款开放式的管理平台，能容纳管理各种数据、实现信息互通共享；能快速搭建适合自己的是一款开放式的管理平台，能容纳管理各种数据、实现信息互通共享；能快速搭建适合自己的 OA、CRM、ERP、HR 等管理软件。小到个人的记账记事，', '', '管理员', '原创', '0', '0', '0', '0', '0', '0', '0', '', '0', '100', '1592185840', '1691115122', '2023-08-04 10:11:00');
+INSERT INTO `#@__archives` VALUES ('123', '1', '33', '0', '0', '', '0', '0', '0', '0', '689', '0', '07FLY-CRM-V2 系统安装指导', 'nbsp,安装,系统,信息,环境,管理', '', '前言 本文档主要是为了让用户能够全面的认识和了解本产品，通过文档用户可以了解到产品从安装到使用的相关方法和支持功能。  系统安装 1.系统简介  07FLY-CRM是一款开放式的管理平台，能容纳管理各种数据、实现信息互通共享；能快速搭建适合自己的是一款开放式的管理平台，能容纳管理各种数据、实现信息互通共享；能快速搭建适合自己的 OA、CRM、ERP、HR 等管理软件。小到个人的记账记事，', '', '管理员', '原创', '0', '0', '0', '0', '0', '0', '0', '', '0', '100', '1592185840', '1717126037', '2023-08-04 10:11:00');
 INSERT INTO `#@__archives` VALUES ('124', '1', '5', '0', '0', 'p', '0', '0', '0', '0', '102', '0', 'ERP系统-S1', '系统,ERP,支持,-S1ERP,针对,销售', 'http://erp.07fly.xyz', '零起飞（ERP）企业资源管理系统针对中小企业管理活动，目前提供客户关系管理员(CRM)，进销存(JXC)，适用各类行业，主要针对中小型销售/售后服务团队。\r\n该系统支持客户资料自定义配置、查询以及支持二次开发接口。\r\n演示帐号：demo/123456', '', '管理员', '原创', '45', '0', '0', '0', '0', '0', '0', '', '0', '1', '1593824373', '1627441582', '2020-12-24 14:53:00');
 INSERT INTO `#@__archives` VALUES ('125', '1', '40', '0', '0', 'h', '0', '0', '0', '0', '271', '0', '定制软件完成之成后，为什么还要有软件服务费用', 'nbsp,技术,人员,维护费,公司,林主任', '', ' 软件系统投入使用，通过验收并超过免费维护期，公司每年向用户单位收取一定的维护费，这点得到越来越多的用户单位领导认可。可是，这维护费到底该怎么收，该收多少，收了维护费公司该给用户什么样的服务，这些问题常常让用户单位感到疑惑。     不久前我就因为一个新开发的项目，跟客户单位的林主任洽谈有关合同条款，双方就合同上的条款基本上都达成了一致，可就是在软件系统免费', '', '管理员', '原创', '91', '0', '0', '0', '0', '0', '0', '', '0', '100', '1595491693', '1627442698', '2021-07-28 11:24:00');
 INSERT INTO `#@__archives` VALUES ('126', '1', '39', '0', '0', '', '0', '0', '0', '0', '388', '0', '安装V2版之后，提示：404，您请求的文件不存在!', '404,07FLY-CRM-V2', '', '安装V2版之后，提示：404，您请求的文件不存在!', '', '管理员', '原创', '0', '0', '0', '0', '0', '0', '0', '', '0', '100', '1595496299', '1691115095', '2023-08-04 10:11:00');
 INSERT INTO `#@__archives` VALUES ('127', '1', '33', '0', '0', '', '0', '', '0', '0', '123', '0', 'V2版本业务总体操作流程', '业务流程,crm,销售,采购，入库，出库', '', '介绍系统业务总体操作流程', '', '管理员', '原创', '0', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603021246', '1607030531', '2020-10-18 19:42:00');
 INSERT INTO `#@__archives` VALUES ('128', '1', '33', '0', '0', '', '0', '0', '0', '0', '122', '0', '系统管理中系统常用参数设置', '系统设置,crm,系统', '', '介绍系统中共用的一些参数设置，以及管理系统的菜单和权限功能信息', '', '管理员', '原创', '0', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603021496', '1691115167', '2023-08-04 10:12:00');
 INSERT INTO `#@__archives` VALUES ('129', '1', '33', '0', '0', '', '0', '0', '0', '0', '124', '0', 'v2数据库备份与恢复操作说明', '数据库,备份,恢复', '', '介绍如何在系统中备份数据库数据和恢复操作，恢复文件必须得通过传输工具下载到本地', '', '管理员', '原创', '0', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603021812', '1691115223', '2023-08-04 10:13:00');
-INSERT INTO `#@__archives` VALUES ('130', '1', '33', '0', '0', '', '0', '0', '0', '0', '115', '0', '业务表单字段扩展', '字段,业务,表单,修改,扩展,选择', '', '针对业务表单字段管理，针对客户表单，客户联系人，供应商，供应商联系人信息字段扩展', '', '管理员', '原创', '90', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603021981', '1691115187', '2023-08-04 10:13:00');
+INSERT INTO `#@__archives` VALUES ('130', '1', '33', '0', '0', '', '0', '0', '0', '0', '116', '0', '业务表单字段扩展', '字段,业务,表单,修改,扩展,选择', '', '针对业务表单字段管理，针对客户表单，客户联系人，供应商，供应商联系人信息字段扩展', '', '管理员', '原创', '90', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603021981', '1717128739', '2023-08-04 10:13:00');
 INSERT INTO `#@__archives` VALUES ('131', '1', '33', '0', '0', '', '0', '0', '0', '0', '122', '0', '组织结构的部门 员工 职位 角色管理', '部门管理，组织结构，员工，角色', '', '对各个部门所对应的电话、传真和部门职能进行统一管理，通过增、删、改对栏目进行排序统计。\r\n左侧显示为职务信息树形结构数据，默认展为2级，右侧数据默认为当前第一级数据，当点击左侧时显示为点击项的下一级信息，', '', '管理员', '原创', '89', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603023297', '1691115214', '2023-08-04 10:13:00');
 INSERT INTO `#@__archives` VALUES ('132', '1', '33', '0', '0', '', '0', '0', '0', '0', '130', '0', '系统的商品（产品）信息设置', '产品，商品，', '', '介绍系统中的产品如何添加，修改，删除和管理', '', '管理员', '原创', '88', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603023570', '1691115254', '2023-08-04 10:14:00');
 INSERT INTO `#@__archives` VALUES ('133', '1', '33', '0', '0', '', '0', '0', '0', '0', '126', '0', '财务类型管理 财务项目设置 收款付款银行帐号设置', '财务，财务项目，收款，付款，银行帐号', '', '主要是用于财务管理相关参数处设置，如财务项目分类，收款付款银行帐号管理', '', '管理员', '原创', '87', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603023739', '1627442639', '2021-07-28 11:23:00');
 INSERT INTO `#@__archives` VALUES ('134', '1', '33', '0', '0', '', '0', '0', '0', '0', '130', '0', '客户的基本信息与客户的相关信息操作  通过增、删、改', '客户，联系人，沟通，服务，合同', '', '针对客户的添加，删除，修改，同时管理客户的联系人，沟通记录，合同，服务记录信息', '', '管理员', '原创', '85', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603024148', '1627442599', '2021-07-28 11:23:00');
 INSERT INTO `#@__archives` VALUES ('135', '1', '33', '0', '0', '', '0', '0', '0', '0', '178', '0', '供应商信息管理', '供应商，信息，管理', '', '供应商主要用于公司内部对久采购公司的信息管理，方便对进货源头把控', '', '管理员', '原创', '86', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603067767', '1691115263', '2023-08-04 10:14:00');
 INSERT INTO `#@__archives` VALUES ('136', '1', '33', '0', '0', '', '0', '0', '0', '0', '121', '0', '采购订单管理', '采购，订单', '', '采购订单主要针对于公司对外采购订单和商品详细管理', '', '管理员', '原创', '84', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603067925', '1691115269', '2023-08-04 10:14:00');
-INSERT INTO `#@__archives` VALUES ('137', '1', '33', '0', '0', '', '0', '0', '0', '0', '179', '0', '如何使用库存清单', '库存，清单', '', '清单记录仓库中商品的库存信息，如商品名称，SKU规格，库存数量，所在仓库，库存清单信息对应“商品管理=》商品清单”必须通通过采购入库操作，才能生成。', '', '管理员', '原创', '83', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603068027', '1691115275', '2023-08-04 10:14:00');
+INSERT INTO `#@__archives` VALUES ('137', '1', '33', '0', '0', '', '0', '0', '0', '0', '180', '0', '如何使用库存清单', '库存，清单', '', '清单记录仓库中商品的库存信息，如商品名称，SKU规格，库存数量，所在仓库，库存清单信息对应“商品管理=》商品清单”必须通通过采购入库操作，才能生成。', '', '管理员', '原创', '83', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603068027', '1717128727', '2023-08-04 10:14:00');
 INSERT INTO `#@__archives` VALUES ('138', '1', '33', '0', '0', '', '0', '0', '0', '0', '174', '0', '如何创建生成入库单', '入库，创建入库单', '', '介绍入库单创建流程，必须得配合采购合同使用，先有采购合同，后有才有入库单', '', '管理员', '原创', '82', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603068183', '1691115285', '2023-08-04 10:14:00');
 INSERT INTO `#@__archives` VALUES ('139', '1', '33', '0', '0', '', '0', '0', '0', '0', '188', '0', '如何创建出库单', '出库，出库单', '', '出库单必须和销售合同配合使用，通过创建销售合同，通过销售合同生成出库单', '', '管理员', '原创', '81', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603068379', '1691115299', '2023-08-04 10:14:00');
 INSERT INTO `#@__archives` VALUES ('140', '1', '33', '0', '0', '', '0', '0', '0', '0', '245', '0', '付款管理', '付款，供应商，采购订单', '', '付款管理主要是针对企业对外采购订单财务支出记录数据。包括了付款计划，付款记录，收票记录', '', '管理员', '原创', '80', '0', '0', '0', '0', '0', '0', '', '0', '100', '1603068890', '1691115317', '2023-08-04 10:15:00');
-INSERT INTO `#@__archives` VALUES ('142', '1', '2', '0', '0', 'f', '0', '0', '0', '0', '102', '0', 'PHP企业网站内容管理系统（07FLY-CMS-PHP）', 'cms,07fly-cms', '', '零起飞内容管理系统(07FLY-CMS) ，以模板多、易优化、开源而闻名，是国内新锐的PHP开源网站管理系统，也是受广大用户好评的PHP类CMS系统。', '', '管理员', '原创', '77', '0', '0', '0', '0', '0', '0', '', '0', '100', '1627442039', '1691115326', '2023-08-04 10:15:00');
-INSERT INTO `#@__archives` VALUES ('143', '1', '2', '0', '0', '', '0', '0', '0', '0', '100', '0', '客户关系管理系统（07FLY-CRM）', 'CRM,零起飞,客户管理', '', '零起飞CRM管理系统（07FLY-CRM），基于GPLv3协议发行，针对中小企业管理活动，目前提供客户关系管理员(CRM)，进销存(JXC)，办公(OA)，财务（FMS）等软件开源，争取打造中国开源CRM软件第一品牌。', '', '管理员', '原创', '78', '0', '0', '0', '0', '0', '0', '', '0', '100', '1627442136', '1691115331', '2023-08-04 10:15:00');
-INSERT INTO `#@__archives` VALUES ('144', '1', '2', '0', '0', 'p', '0', '0', '0', '0', '102', '0', '零起飞进销存管理（07FLY-ERP）', 'ERP,零起飞,CRM', '', '07FLY-ERP是一款开放式的管理平台，能容纳管理各种数据、实现信息互通共享；能快速搭建适合自己的是一款开放式的管理平台，能容纳管理各种数据、实现信息互通共享；\r\n系统小到个人的记账记事，大到企事业单位的客户信息、项目信息、销售订单、售后报修、出库入库、固定资产、人事薪资、办公信息、收费付费…等各种信息，全都能管理，\r\n具有完善应用插件扩展功能，在线安装卸载升级应用插件，第三方应用模块支持(CMS（会员中心）、办工OA、客户CRM、进销ERP、财务管理FMS、项目管理PMS等应用系统', '', '管理员', '原创', '79', '0', '0', '0', '0', '0', '0', '', '0', '100', '1627442205', '1691115336', '2023-08-04 10:15:00');
+INSERT INTO `#@__archives` VALUES ('142', '1', '2', '0', '0', 'f,a', '0', '0', '0', '0', '102', '0', 'PHP企业网站内容管理系统（07FLY-CMS-PHP）', 'cms,07fly-cms', '', '零起飞内容管理系统(07FLY-CMS) ，以模板多、易优化、开源而闻名，是国内新锐的PHP开源网站管理系统，也是受广大用户好评的PHP类CMS系统。', '', '管理员', '原创', '77', '0', '0', '0', '0', '0', '0', '', '0', '100', '1627442039', '1717126595', '2024-05-31 11:36:00');
+INSERT INTO `#@__archives` VALUES ('143', '1', '2', '0', '0', 'a', '0', '0', '0', '0', '103', '0', '客户关系管理系统（07FLY-CRM）', 'CRM,零起飞,客户管理', '', '零起飞CRM管理系统（07FLY-CRM），基于GPLv3协议发行，针对中小企业管理活动，目前提供客户关系管理员(CRM)，进销存(JXC)，办公(OA)，财务（FMS）等软件开源，争取打造中国开源CRM软件第一品牌。', '', '管理员', '原创', '78', '0', '0', '0', '0', '0', '0', '', '0', '100', '1627442136', '1717126645', '2024-05-31 11:36:00');
+INSERT INTO `#@__archives` VALUES ('144', '1', '2', '0', '0', 'p,a', '0', '0', '0', '0', '110', '0', '零起飞进销存管理（07FLY-ERP）', 'ERP,零起飞,CRM', '', '07FLY-ERP是一款开放式的管理平台，能容纳管理各种数据、实现信息互通共享；能快速搭建适合自己的是一款开放式的管理平台，能容纳管理各种数据、实现信息互通共享；\r\n系统小到个人的记账记事，大到企事业单位的客户信息、项目信息、销售订单、售后报修、出库入库、固定资产、人事薪资、办公信息、收费付费…等各种信息，全都能管理，\r\n具有完善应用插件扩展功能，在线安装卸载升级应用插件，第三方应用模块支持(CMS（会员中心）、办工OA、客户CRM、进销ERP、财务管理FMS、项目管理PMS等应用系统', '', '管理员', '原创', '79', '0', '0', '0', '0', '0', '0', '', '0', '100', '1627442205', '1717128752', '2024-05-31 11:36:00');
+INSERT INTO `#@__archives` VALUES ('340', '24', '5', '0', '0', '', '0', '0', '0', '0', '100', '0', '零起飞案例测试', '零起飞案例测试', '', '零起飞案例测试', '', '管理员', '原创', '', '0', '0', '0', '0', '0', '0', '', '0', '100', '1719043391', '0', '2024-06-22 16:02:00');
 
 -- -----------------------------
 -- Table structure for `#@__archives_article`
 -- -----------------------------
 DROP TABLE IF EXISTS `#@__archives_article`;
 CREATE TABLE `#@__archives_article` (
-    `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-    `type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目id',
-    `body` mediumtext COMMENT '内容',
-    `redirecturl` varchar(255) NOT NULL DEFAULT '' COMMENT '跳转地址',
-    `ks_name` text COMMENT '这是科室',
-    PRIMARY KEY (`id`),
-    KEY `typeid` (`type_id`)
+                                        `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+                                        `type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目id',
+                                        `body` mediumtext COMMENT '内容',
+                                        `redirecturl` varchar(255) NOT NULL DEFAULT '' COMMENT '跳转地址',
+                                        `ks_name` text COMMENT '这是科室',
+                                        PRIMARY KEY (`id`),
+                                        KEY `typeid` (`type_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=340 DEFAULT CHARSET=utf8 COMMENT='[cms]文章扩展表';
 
 -- -----------------------------
@@ -1234,70 +1266,72 @@ CREATE TABLE `#@__archives_case` (
                                      KEY `typeid` (`typeid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='[cms]扩展表';
 
+-- -----------------------------
+-- Records of `lqf_archives_case`
+-- -----------------------------
+INSERT INTO `#@__archives_case` VALUES ('340', '0', '零起飞案例测试', '', '', '', '');
 
 -- -----------------------------
 -- Table structure for `#@__arctype`
 -- -----------------------------
 DROP TABLE IF EXISTS `#@__arctype`;
 CREATE TABLE `#@__arctype` (
-   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-   `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '父级id',
-   `top_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '顶级',
-   `sort` smallint(5) unsigned NOT NULL DEFAULT '50' COMMENT '排序',
-   `typename` char(30) NOT NULL DEFAULT '' COMMENT '名称',
-   `typedir` char(60) NOT NULL DEFAULT '' COMMENT '目录',
-   `litpic` int(11) DEFAULT '0' COMMENT '图片编号',
-   `isdefault` smallint(6) NOT NULL DEFAULT '0',
-   `defaultname` char(15) NOT NULL DEFAULT 'index.html' COMMENT '默认名称',
-   `issend` smallint(6) NOT NULL DEFAULT '0' COMMENT '是否发布',
-   `channel_id` smallint(6) DEFAULT '1' COMMENT '频道id',
-   `maxpage` smallint(6) NOT NULL DEFAULT '-1',
-   `ispart` smallint(6) NOT NULL DEFAULT '0' COMMENT '0：最终列表栏目；1：频道封面；2：外部连接',
-   `jump_url` varchar(256) NOT NULL DEFAULT '' COMMENT '外部链接URL',
-   `corank` smallint(6) NOT NULL DEFAULT '0',COMMENT '浏览权限',
-   `temp_index` char(50) NOT NULL DEFAULT '' COMMENT '主页模板',
-   `temp_list` char(50) NOT NULL DEFAULT '' COMMENT '列表模板',
-   `temp_article` char(50) NOT NULL DEFAULT '' COMMENT '文章模板',
-   `name_rule_article` char(50) NOT NULL DEFAULT '' COMMENT '文章名称',
-   `name_rule_list` char(50) NOT NULL DEFAULT '' COMMENT '列表名称规则',
-   `modname` char(20) NOT NULL DEFAULT '',
-   `description` char(150) NOT NULL DEFAULT '' COMMENT '描述',
-   `keywords` varchar(60) NOT NULL DEFAULT '' COMMENT '关键字',
-   `seotitle` varchar(80) NOT NULL DEFAULT '' COMMENT 'seo标题',
-   `moresite` tinyint(1) unsigned NOT NULL DEFAULT '0',
-   `sitepath` char(60) NOT NULL DEFAULT '',
-   `siteurl` char(50) NOT NULL DEFAULT '',
-   `visible` smallint(6) NOT NULL DEFAULT '1' COMMENT '0=隐藏\r\n1=显示',
-   `cross` tinyint(1) NOT NULL DEFAULT '0',
-   `crossid` text,
-   `content` text,
-   `smalltypes` text,
-   `create_time` int(11) DEFAULT '0',
-   `update_time` int(11) DEFAULT '0',
-   `sys_user_id` int(11) DEFAULT '0',
-   PRIMARY KEY (`id`),
-   KEY `reid` (`parent_id`,`isdefault`,`channel_id`,`ispart`,`corank`,`top_id`,`visible`),
-   KEY `sortrank` (`sort`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='[cms]文章栏目表';
+                               `id` int(16) NOT NULL AUTO_INCREMENT COMMENT '主id',
+                               `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '父级id',
+                               `top_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '顶级',
+                               `sort` smallint(5) unsigned NOT NULL DEFAULT '50' COMMENT '排序',
+                               `typename` char(30) NOT NULL DEFAULT '' COMMENT '名称',
+                               `typedir` char(60) NOT NULL DEFAULT '' COMMENT '目录',
+                               `litpic` int(11) DEFAULT '0' COMMENT '图片编号',
+                               `isdefault` smallint(6) NOT NULL DEFAULT '0',
+                               `defaultname` char(15) NOT NULL DEFAULT 'index.html' COMMENT '默认名称',
+                               `issend` smallint(6) NOT NULL DEFAULT '0' COMMENT '是否发布',
+                               `channel_id` smallint(6) DEFAULT '1' COMMENT '频道id',
+                               `maxpage` smallint(6) NOT NULL DEFAULT '-1',
+                               `ispart` smallint(6) NOT NULL DEFAULT '0' COMMENT '0：最终列表栏目；1：频道封面；2：外部连接',
+                               `corank` smallint(6) NOT NULL DEFAULT '0',
+                               `temp_index` char(50) NOT NULL DEFAULT '' COMMENT '主页模板',
+                               `temp_list` char(50) NOT NULL DEFAULT '' COMMENT '列表模板',
+                               `temp_article` char(50) NOT NULL DEFAULT '' COMMENT '文章模板',
+                               `name_rule_article` char(50) NOT NULL DEFAULT '' COMMENT '文章名称',
+                               `name_rule_list` char(50) NOT NULL DEFAULT '' COMMENT '列表名称规则',
+                               `modname` char(20) NOT NULL DEFAULT '',
+                               `description` char(150) NOT NULL DEFAULT '' COMMENT '描述',
+                               `keywords` varchar(60) NOT NULL DEFAULT '' COMMENT '关键字',
+                               `seotitle` varchar(80) NOT NULL DEFAULT '' COMMENT 'seo标题',
+                               `moresite` tinyint(1) unsigned NOT NULL DEFAULT '0',
+                               `sitepath` char(60) NOT NULL DEFAULT '',
+                               `siteurl` char(50) NOT NULL DEFAULT '',
+                               `visible` smallint(6) NOT NULL DEFAULT '1' COMMENT '0=隐藏\r\n1=显示',
+                               `cross` tinyint(1) NOT NULL DEFAULT '0',
+                               `crossid` text,
+                               `content` text,
+                               `smalltypes` text,
+                               `create_time` int(11) DEFAULT '0',
+                               `update_time` int(11) DEFAULT '0',
+                               `sys_user_id` int(11) DEFAULT '0',
+                               `jump_url` varchar(256) NOT NULL DEFAULT '' COMMENT '跳转地址',
+                               PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='[cms]文章栏目表';
 
 -- -----------------------------
 -- Records of `lqf_arctype`
 -- -----------------------------
-INSERT INTO `#@__arctype` VALUES ('1', '0', '0', '8', '关于我们', 'about', '0', '0', '', '0', '1', '-1', '1', '0', 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '<p style=\"text-align:justify;\">\r\n	勿道致力于为所有谋求长远发展的各类企业提供品牌创建、品牌更新、品牌管理设计服务。以策略为导向，注重实效，结合对市场、企业、消费者、文化的深刻理解和对时尚潮流的准确把握，协助客户提升产品的销售力和形象力，打造“最具有赢响力”的品牌核心价值。以视觉为沟通语言，以设计为传达媒介，创造整合性、全面性、国际性的视觉传播系统，为客户提供完整而有效的品牌锐变方案。\r\n</p>\r\n<p style=\"text-align:justify;\">\r\n	随着市场竞争程度的加剧，市场供需和大众审美都在被互联网思维重新定义，而瞳创团队始终筹谋思变，以引领前沿的年轻思维重新诠释品牌定位，为企业品牌发展注入新生血液，力求为客户提供适合的、全面的品牌发展策略。\r\n</p>\r\n<p style=\"text-align:justify;\">\r\n	<br />\r\n</p>\r\n<p style=\"text-align:justify;\">\r\n	我们不断融合创作激情与战略视野，迎接新的挑战，向巅峰迈进。当我们同客户站在一起时，我们表现出更多的理解和热情。我们深知，只有真正融入品牌的发展进程，关注企业面临的问题，才能争取到客户对设计价值的认可。内外兼顾，知人者智，让瞳创成为你的品牌智囊团，与你的品牌一起成长！\r\n</p>\r\n<p style=\"text-align:justify;\">\r\n	<br />\r\n</p>\r\n我们的优势\r\n<p style=\"text-align:justify;\">\r\n	—\r\n</p>\r\n<p style=\"text-align:justify;\">\r\n	基于洞察之上的创想，我们始终专注于一件事：品牌形象策划与设计。 由资深创作人员亲自沟通，扁平化的组织架构，确保内外部沟通高效，精确的表现品牌诉求。对每一个案子都精益求精，拒绝大规模经营的流水线式低端作业。众多的成功案例和客户好评证明了勿道的专业。\r\n</p>', '', '0', '1627366276', '0');
-INSERT INTO `#@__arctype` VALUES ('2', '0', '0', '2', '产品中心', 'pro', '76', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_index.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '国内企业CRM客户管理系统专业厂商,好用的智能企业办公软件！零起飞CRM+OA+BPM支持私有化、定制开发！零起飞客户管理系统功能强大,可对接钉钉、微信,移动办公在线CRM,零起飞CRM软件好用不贵！', 'CRM系统,CRM客户管理系统,CRM软件,在线CRM,CRM库,企业办公软件,CRM软件定制,crm系统是什么,CRM', 'CRM系统_企业CRM客户关系管理系统_CRM软件私有化_可定制', '0', '', '', '1', '0', '', '<p>\r\n	07FLY-CRM是零起飞网络开发的，基于GPLv3协议发行，针对中小企业管理活动，提供客户关系管理员(CRM)，进销存(JXC),人力资源(HRM)，后勤(办公用品，固定资产，公物维修)、物业管理等功能，软件开源免费，争取打造中国开源CRM软件第一品牌。\r\n 软件发行协议:GPLv3.<br />\r\n<br />\r\n统一的客户管理平台，将分散的客户资源提供统一的管理提供客户全生命周期管理。客户是公司重要的资产，客户资产集中统一管理，解决了销售人员占有关键客户资料的问题；<br />\r\n全面资讯：全方位提供客户360度全视图，更好的为营销、销售、服务环节服务；<br />\r\n区别对待：通过客户价值分析，找出公司的黄金客户，使公司为其提供个性化的服务，提升客户满意度和忠诚度；<br />\r\n高效：销售、服务、营销人员共享客户信息，减少信息断点，节省了很多花在客户信息搜索时间，提高工作效率\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<p>\r\n	<strong>使用前需知：</strong> \r\n</p>\r\n<pre>1、软件开放源码(发行协议:GPLv3)，用户可免费使用，但禁止任何单位或个人修改软件后再次发行的行为。\r\n2、软件集成了CRM、进销存、后勤、物业、人事等模块。\r\n3、技术支持：QQ:574249366(开发人生,CRM技术支持)\r\n4、功能定制：1871720801（零起飞）\r\n\r\n</pre>\r\n<p>\r\n	<strong>软件未来改进:</strong> \r\n</p>\r\n<p>\r\n	1、增加第三方应用程序集成功能,开放组件接口标准,允许第三方开发者开发组件系统,完善组件开发生态 <br />\r\n2、对移动设备进行支持,可以在线管理客户,订单,服务,维修,查看邮件,短消息,公告,新闻等信息\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<p>\r\n	<strong>有偿服务请联系:</strong> \r\n</p>\r\n<pre>定制化开发,公司培训,技术支持,解决使用过程中出现的全部疑难问题\r\n开发团队：零起飞网络\r\n合作电话：1871720801(李先生)\r\n技术支持：goodmuzi@qq.com\r\n\r\n</pre>\r\n<p>\r\n	<strong>有限担保和免责声明:</strong> \r\n</p>\r\n<pre>本软件及所附带的文件是作为不提供任何明确的或隐含的赔偿或担保的形式提供的。\r\n用户出于自愿而使用本软件，您必须了解使用本软件的风险，在尚未购买产品技术服务之前， \r\n我们不承诺提供任何形式的技术支持、使用担保，也不承担任何因使用本软件而产生问题的相关责任。</pre>', '', '0', '1627441540', '0');
-INSERT INTO `#@__arctype` VALUES ('3', '0', '0', '1', '新闻中心', 'news', '10', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '<p align=\"left\">\r\n	在专业领域的探索与思考让我们深入了解设计的本质。\r\n</p>\r\n<p align=\"left\">\r\n	我们为超过100 个企业提供了创新的品牌设计解决方案，帮助客户实现品牌革新，并向互联网发展。\r\n</p>', '', '0', '1627115221', '0');
-INSERT INTO `#@__arctype` VALUES ('5', '0', '0', '3', '案例展示', 'demo', '10', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '联系我们联系我们联系我们<br />', '', '1581929689', '1627440951', '0');
-INSERT INTO `#@__arctype` VALUES ('31', '1', '0', '3', '服务客户', 'service', '0', '0', 'index.html', '0', '1', '-1', '1', '0', 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉， 让用户透过设计去体验您的品牌信息。', '', '', '0', '', '', '1', '0', '', '透过洞察与理解，找出品牌最初的理念，将无形价值，经由丰富的设计经验转化为有形视觉，<br />\r\n让用户透过设计去体验您的品牌信息。', '', '1582948987', '1627441496', '0');
-INSERT INTO `#@__arctype` VALUES ('32', '2', '0', '50', '功能特色', 'gongneng', '0', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '本栏目为CRM版本功能说明 CRM版本下载 CRM升级包下载', 'CRM功能说明,功能特点', 'CRM版本功能说明 CRM版本下载 CRM升级包下载', '0', '', '', '1', '0', '', '<h3>\r\n	<strong>基础数据:</strong> \r\n</h3>\r\n<p>\r\n	1、商品管理(商品颜色,计量单位,商品类型,商品维护)； <br />\r\n2、组织结构(部门、权限、职务、用户管理)； <br />\r\n3、企业类型,仓库管理,发货方式,销售阶段,服务类型；\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<h3>\r\n	<strong>供应商管理 </strong> \r\n</h3>\r\n<p>\r\n	1、供应商管理:主要实现对公司提供产品及服务的货源进行基本信息的记录。其主要涉及的字段有供应商名称，预付款，经济类型，供应商等级，采购员，办公地址，电话，传真，开户行，账号，经营范围，建立日期。 <br />\r\n2、供应商联系人:主要实现对供应商联系人的基本信息进行录入，公司销售人员在对供应商进行深入合作的时候可以方便的找到供应商的主要联系人。 <br />\r\n3、供应商报价管理:记录供应商的商品报价金额，报价日起及供货周期，以方便公司对各个供应商报价进行分析，从而做出有利于公司的决策。\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<h3>\r\n	<strong>客户管理 </strong> \r\n</h3>\r\n<p>\r\n	1、客户基本信息:实现对客户信息的添加及修改查询功能。主要记录了客户名称，联系地址，电话，E-mail等信息。同时在此模块还可添加客户联系人及跟踪信息。 <br />\r\n客户删除后其对应的联系人、销售机会、报价单、费用等数据随之删除，存在销售单的客户不能删除； <br />\r\n私有客户只能被创建人及其部门主管看到，同级之间数据隔离，公共客户所有人都能看到。 <br />\r\n2、客户联系人:主要是显示客户联系人列表并且对联系人基本信息的“导入”，“导出”，“新建”，“编辑”，“删除”，“多条件查询”等进行操作。 <br />\r\n3、报销申请功能:记录了公司员工联系客户所需的费用，比如餐饮费，运输费等。员工可以申请公司报销。一般用户只有新建功能，如果权限是老板，则可以“同意”或“否决”报销申请。 <br />\r\n4、客户服务功能模块:记录了公司为哪些客户进行服务，及服务类型，服务方式，开始时间，花费时间，联系人，关联销售单，服务内容，客户反馈等信息。 <br />\r\n5、客户移交功能:实现用户之间客户移交的功能。本模块有两种移交方式：一是将某个用户下的客户移交给另一个用户；而是选择客户将其移交给某个用户。\r\n</p>\r\n<h3>\r\n	<br />\r\n<strong></strong> \r\n</h3>\r\n<h3>\r\n	<strong>采购单 </strong> \r\n</h3>\r\n<p>\r\n	采购单:是对采购员与供应商所签订的订单信息的记录，便于后勤查询与跟踪。其主要涉及的字段有单号，主题，供应商，联系人，采购日期，仓库，预计到货日期，创建人，总金额，去零金额，已付金额，已入库金额，已收票金额，关联订单，关联客户，单据状态，付款状态，收货状态，收票状态。<br />\r\n采购商品的价格是商品零售价，在商品维护中看查看与编辑。若是商品区分颜色，则数量是各个颜色所需数量之和。 <br />\r\n<br />\r\n<strong>采购订单管理需注意： </strong><br />\r\n1、采购员新建采购单，此时单据状态为“执行中”。 <br />\r\n2、采购员本人和其上级用户有权限看到并操作此单，录入单据明细保存后收货状态为“已录明细”。 <br />\r\n3、生成入库单，生成后收货状态为待入库。 <br />\r\n4、如果在生成入库单过程中，只是部分入库，则保存后收货状态为部分。 <br />\r\n5、全部入库完成后，收货状态为全部。\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<h3>\r\n	<strong>库存管理 </strong> \r\n</h3>\r\n<p>\r\n	1、库存初始化:是将商品列表中的商品进行入库，并自动生成入库单。只有商品列表中是否计算库存为是的才能入库。 <br />\r\n2、库存清单:是库存初始化完成后生成。主要记录了入库产品的编号，名称，型号，规格，库存数量，仓库，类型，图片等信息。 <br />\r\n3、入库单:是产品入库后生成的单据。记录了产品的入库时间，数量，仓库，状态等信息。这里主要是进行采购入库的确认入库操作。 <br />\r\n4、出库单:是用户添加销售订单并进行生成出库单操作后生成的单据。生成出库单后，需要仓库管理员进行确认出库操作。 <br />\r\n5、发货单:主要实现对已确认出库的单据进行发货操作，并生成发货单据。若是商品还没有发货，则状态为“未发货”，需要相关人员进行“确认发货”操作。 <br />\r\n6、库存盘点单:是对正在进行盘点的仓库信息的记录，并将仓库盘点的信息记录下来。该模块只有仓库管理员有权限管辖。 <br />\r\n7、库存挑拨单:是对商品调换仓库信息的记录。新建库存挑拨单后，需对挑拨仓库的商品的基本信息进行编辑并保存。 <br />\r\n8、生产组装单:是对一种或多种产品组装成另一种或多种产品信息的记录。此模块和库存挑拨单模块相似。\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<h3>\r\n	<strong>销售管理 </strong> \r\n</h3>\r\n<span style=\"color:#ff0000;\">销售流程：完善客户信息（客户管理）---销售机会---跟踪----记录客户需求，制定相关的解决方案----分析竞争产品----报价---项目报备----订单----编辑出库商品信息---生成出库单---仓库管理员确认出库----发货。 </span><br />\r\n<br />\r\n1、销售机会主要管理销售过程中的售前部分，或者说从一个销售机会的确立到签署合同之间的过程管理。 <br />\r\n2、跟踪记录 是对员工与客户之间的联系信息及效果进行记录。对客户的跟踪是一个延续性的工作，在这期间很多数据会不断地变化，比如阶段、可能性、状态等，只有及时地更新这些数据，系统才能正常的发挥作用，比如销售漏斗、销售预测等。<br />\r\n3、需求与方案 是在与客户联系中，记录下客户的各种需求，并为其制定相关的解决方案，以便后期公司内部人员查询跟踪。 <br />\r\n4、竞争产品 主要是记录和分析公司竞争对手的产品信息，我方的竞争优势和劣势及应对策略，以便在竞争中立于不败之地。 <br />\r\n5、产品报价主要实现操作人员对客户需要的产品及服务进行初步的价格评估，记录报价信息后以便后期使用或查询。 <br />\r\n6、项目报备主要实现公司员工申请项目信息及所需支持的记录。 <br />\r\n7、合同管理主要实现公司与客户已达成的某种利润关系进行文字的记录以便后期的跟踪与维护。 <br />\r\n8、订单管理主要是实现客户对产品及服务数量及质量的需求，操作人员记录后方便公司后期查询与跟踪。<br />\r\n<h3>\r\n	<strong>财务管理 </strong> \r\n</h3>\r\n1、资金注入抽取:主要实现公司银行账户资金的注入和资金的抽取信息的管理，方便管理公司资金。 <br />\r\n2、付款管理:付款计划 是针对供应商制定的付款计划。记录了公司每个其次所付款额，日期等信息。同时进行付款操作，确认付款。付款记录 \r\n是在付款计划模块中点击付款后生成的付款记录，也可以在本页面新建完成。收票记录 是对公司采购产品付款后所开票据信息的管理，便于后期查询。 <br />\r\n3、收入开支:报销单审核 是管理公司内部员工申请报销所支出款项的信息，实现了对已通过审核的报销信息的进行支付的操作。费用支出单是对公司对外开支信息的记录。用户可新建，删除费用支出信息。 <br />\r\n4、预收预付款:预付款 \r\n是记录公司采购产品的预付款的信息，如供应商，收款人，付款账户，上次余额，预付金额，冲抵货款，帐户余额，操作类型，关联单号，创建人，创建时间等，便于后期查询。预收款是对公司销售产品的预收款信息的记录，其涉及字段主要有交款人，客户，收款账户，上次余额，预收金额，冲抵货款，账户余额，操作类型，关联单号。 <br />\r\n5、账户操作记录:对公司银行账户各项收入和支出信息的管理。主要涉及字段有银行账户，期初，收入，支出，余额，操作类型，关联单号，创建人，创建时间。', '', '1587366405', '1627440318', '0');
-INSERT INTO `#@__arctype` VALUES ('33', '36', '0', '50', '帮助手册', 'help', '74', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_index.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', 'crm帮助手册，crm帮助文档', '', 'CRM帮助手册', '0', '', '', '1', '0', '', '<p>\r\n	V1帮助手册：\r\n</p>\r\n<p>\r\n	<br />\r\n</p>', '', '1587366446', '1627369806', '0');
-INSERT INTO `#@__arctype` VALUES ('34', '2', '0', '50', '版本下载', 'down', '24', '0', 'index.html', '0', '1', '-1', '1', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '本栏目提供CRM的版本下载和升级包的下载', '', 'CRM版本下载 CRM升级包下载', '0', '', '', '1', '0', '', '<p>\r\n	源码下载地址：\r\n</p>\r\n<p>\r\n	https://gitee.com/07fly/FLY-CRM\r\n</p>', '', '1587366470', '1627440309', '0');
-INSERT INTO `#@__arctype` VALUES ('36', '0', '0', '7', '技术文档', 'doc', '73', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '企业愿景是组织在未来所能达到的一种状态的蓝图，阐述的是企业存在的最终目的。', '', '', '0', '', '', '1', '0', '', '<span>企业愿景是组织在未来所能达到的一种状态的蓝图，阐述的是企业存在的最终目的。回答的是“去哪里”的问题。愿景是关于理想的一幅独特的画面，它面向未来，可以为众人带来共同利益</span>', '', '1587367054', '1627369774', '0');
-INSERT INTO `#@__arctype` VALUES ('37', '35', '0', '50', '商业授权(V版)', 'business_v2', '0', '0', 'index.html', '0', '1', '-1', '1', '0', 'auth_index.html', 'auth_index.html', 'auth_index.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '企业价值观是指企业及其员工的价值取向，是指企业在追求经营成功过程中所推崇的基本信念和奉行的目标', '', '', '0', '', '', '1', '0', '', '应广大开发者与软件公司的要求，07FLY-CRM正式推出商业授权。使用低价授权，解决大家在07FLY-CRM框架使用过程中的各种版权纠纷。\r\n<p>\r\n	取得商业后，不再受07FLY-CRM开源版本的License限制，可以去掉著作权申明，可以有偿提供给第三方。\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<table style=\"text-align:center;width:100%;\" class=\"\" height=\"491\" cellspacing=\"0\" cellpadding=\"5\" border=\"1\" align=\"center\">\r\n	<tbody>\r\n		<tr>\r\n			<td colspan=\"5\" class=\"et2\" width=\"687\" height=\"27\">\r\n				07FLY-CRM框架商业授权\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et3\" width=\"100\" height=\"23\" align=\"center\">\r\n				模块\r\n			</td>\r\n			<td class=\"et5\" width=\"157\">\r\n				产品功能\r\n			</td>\r\n			<td class=\"et6\" width=\"122\">\r\n				免费版\r\n			</td>\r\n			<td class=\"et6\" width=\"136\">\r\n				标准版\r\n			</td>\r\n			<td class=\"et6\" width=\"158\">\r\n				高级版\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td rowspan=\"7\" class=\"et3\" height=\"188\">\r\n				产品授权\r\n			</td>\r\n			<td class=\"et5\" width=\"157\">\r\n				授权有效期\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				永久\r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				永久\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				永久\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				授权价格\r\n			</td>\r\n			<td class=\"et10\" width=\"122\">\r\n				<span style=\"color:#FF9900;\">￥0</span> \r\n			</td>\r\n			<td class=\"et11\" width=\"136\">\r\n				<span style=\"color:#E56600;\">￥500</span><span class=\"font0\"></span> \r\n			</td>\r\n			<td class=\"et11\" width=\"158\">\r\n				<span style=\"color:#E56600;\">￥2880</span><span class=\"font0\"></span> \r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				技术服务费和升级费用（可选）\r\n			</td>\r\n			<td class=\"et5\" width=\"122\">\r\n				不支持\r\n			</td>\r\n			<td class=\"et5\" width=\"136\">\r\n				1000元/年\r\n			</td>\r\n			<td class=\"et5\" width=\"158\">\r\n				1000元/年\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				授权域名\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				无需授权\r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				1个\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				无限制\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				商业用途\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\"></span>不支持\r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				允许\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				允许\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				去除版权信息\r\n			</td>\r\n			<td class=\"et12\" width=\"122\">\r\n				<span style=\"color:#E53333;\">禁止去除版权</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				允许\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				允许\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				官方插件模块\r\n			</td>\r\n			<td class=\"et12\" width=\"122\">\r\n				<span style=\"color:#E53333;\">按域名授权</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				部分应用无限域名\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				全免费/无限制\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td rowspan=\"8\" class=\"et3\" height=\"253\">\r\n				服务内容\r\n			</td>\r\n			<td class=\"et5\" width=\"157\">\r\n				技术支持服务(售后服务期限一年，不包括二开)\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				支持\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				支持\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				升级服务(授权用户可在服务期限内免费多次升级系统)\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				支持\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				支持\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				系统安装部署\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				支持\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				支持\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				产品使用手册\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				支持\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				支持\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				授权源码提供\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				支持\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				支持\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				在线技术支持(包括QQ、微信等)\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				支持\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				支持\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				项目定制服务\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et13\" width=\"136\">\r\n				咨询\r\n			</td>\r\n			<td class=\"et14\" width=\"158\">\r\n				咨询\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				功能二次开发\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et13\" width=\"136\">\r\n				咨询\r\n			</td>\r\n			<td class=\"et14\" width=\"158\">\r\n				咨询\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n<p>\r\n	说明：\r\n</p>\r\n<p>\r\n	1、权限说明：07FLY-CRM所有版本，你只有使用权，没有著作权，二开的源码内容所有权归属于你。<br />\r\n2、禁止任何人在07FLY-CRM整体或任何部分基础上发展任何派生版本、修改版本或第三方版本用于重新分发。<br />\r\n3、禁止任何人以任何形式出售或转让07FLY-CRM源码或授权。高级版用户可以用07FLY-CRM开发项目给客户使用，前提是不损害到07FLY-CRM利益，且不得在线上售卖源代码，可以发展自己的线下客户。<br />\r\n4、07FLY-CRM受国家计算机软件著作权保护，不得恶意分享产品源代码、二次转售等，违者必究。<br />\r\n5、授权版的价格并不是永恒不变的，后续随着功能的增加，费用将不断的上调（注：已购买授权的用户主版本号内升级免费）。\r\n</p>\r\n<p>\r\n	6、以上价格均不含税。\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<p>\r\n	零起飞衷心的祝愿各位财源广进！\r\n</p>\r\n<br />\r\n<br />\r\n<br />', '', '1587367081', '1593569445', '0');
-INSERT INTO `#@__arctype` VALUES ('38', '3', '0', '50', '最新公告', 'note', '0', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '', '', '1587370361', '1591581395', '0');
-INSERT INTO `#@__arctype` VALUES ('39', '36', '0', '50', '常见问题', 'faq', '75', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_index.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '提高市场占有率的有效行为，一份可执行、可操作、创意突出的活动策划案，可有效提升企业的知名度及品牌美誉度', '', 'CRM常见问题', '0', '', '', '1', '0', '', '提高市场占有率的有效行为，一份可执行、可操作、创意突出的活动策划案，可有效提升企业的知名度及品牌美誉度', '', '1587370818', '1627369818', '0');
-INSERT INTO `#@__arctype` VALUES ('40', '3', '0', '50', '行业资讯', 'hangye', '0', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '', '', '1587451565', '1627440909', '0');
-INSERT INTO `#@__arctype` VALUES ('41', '1', '0', '2', '管理团队', 'tema', '0', '0', 'index.html', '0', '1', '-1', '1', '0', 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '', '', '1587522683', '1587522772', '0');
-INSERT INTO `#@__arctype` VALUES ('42', '1', '0', '1', '公司简介', 'about', '0', '0', 'index.html', '0', '1', '-1', '1', '0', 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '', '', '1587522764', '1627440386', '0');
+INSERT INTO `#@__arctype` VALUES ('1', '0', '0', '8', '关于我们', 'about', '0', '0', '', '0', '1', '-1', '1', '0', 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '描述文件的', '关于我们', '关于我们', '0', '', '', '1', '0', '', '<p class=\"MsoNormal\" style=\"text-indent:21.0000pt;\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\"><span>成都零起飞</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>网络</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>是一个具有专业水平和非凡创意的制作者的组合，主要从事网站策划运营推广、</span><span>SEO搜索引擎优化、网站建设、域名注册、主机租用</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>、</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>软件定制开发</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>等</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>业</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>务。我们拥有丰富的网站推广及制作经验，良好的企业电子商务解决方案。根据企业主营业务和网站建设目的，分析并确定包括网站客户群定位、网站形象定位、网站功能定位、信息结构设计、栏目设计等内容。为您量身订制出一套完整的电子商务宣传平台让您的网站真正为您带来源源不断的客户。</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"></span>\r\n</p>\r\n<p class=\"MsoNormal\" style=\"text-indent:21.0000pt;\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\">&nbsp;</span>\r\n</p>\r\n<p class=\"MsoNormal\">\r\n	<b><span style=\"font-family:宋体;font-weight:bold;font-size:10.5000pt;\"><span>您的需求我们来实现，用我们的真诚打造您的品牌。</span></span></b><b><span style=\"font-family:宋体;font-weight:bold;font-size:10.5000pt;\"></span></b>\r\n</p>\r\n<p class=\"MsoNormal\" style=\"text-indent:21.0000pt;\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\">&nbsp;</span>\r\n</p>\r\n<p class=\"MsoNormal\" style=\"text-indent:21.0000pt;\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\"><span>如果您只有一个模糊概念，那么让我们一起来帮您分析策划出一套趋于完美的方案与您探讨</span><span>,如果您有构想，我们将竭尽全力为您打造您所需要的，当然，同时我们也会利用专业审美和精湛的技术帮您实现的更加完美。市场只相信实力！我们热烈欢迎一切有需要的企业、团体、组织或个人联系我们。</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"></span>\r\n</p>\r\n<p class=\"MsoNormal\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\">&nbsp;</span>\r\n</p>\r\n<p class=\"MsoNormal\" style=\"text-indent:21.0000pt;\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\"><span>我们深信一个好的网站取决于它给企业带来多大的效益，如果一个没有访问量的网站，没有给企业承包带来直正客户的网站，做得再好，也只能是一个垃圾，而当前社会众多企业却还把这种</span><span>“垃圾网站”视为自身所谓“企业形象”这是一个相当愚昧的思想！如何来摆脱这种可怕的思想？ 让我们从零开始来帮助您解决这一切...</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"></span>\r\n</p>', '', '0', '1719040641', '0', '');
+INSERT INTO `#@__arctype` VALUES ('2', '0', '0', '2', '产品中心', 'pro', '76', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_index.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '国内企业CRM客户管理系统专业厂商,好用的智能企业办公软件！零起飞CRM+OA+BPM支持私有化、定制开发！零起飞客户管理系统功能强大,可对接钉钉、微信,移动办公在线CRM,零起飞CRM软件好用不贵！', 'CRM系统,CRM客户管理系统,CRM软件,在线CRM,CRM库,企业办公软件,CRM软件定制,crm系统是什么,CRM', 'CRM系统_企业CRM客户关系管理系统_CRM软件私有化_可定制', '0', '', '', '1', '0', '', '<p>\r\n	07FLY-CRM是零起飞网络开发的，基于GPLv3协议发行，针对中小企业管理活动，提供客户关系管理员(CRM)，进销存(JXC),人力资源(HRM)，后勤(办公用品，固定资产，公物维修)、物业管理等功能，软件开源免费，争取打造中国开源CRM软件第一品牌。\r\n 软件发行协议:GPLv3.<br />\r\n<br />\r\n统一的客户管理平台，将分散的客户资源提供统一的管理提供客户全生命周期管理。客户是公司重要的资产，客户资产集中统一管理，解决了销售人员占有关键客户资料的问题；<br />\r\n全面资讯：全方位提供客户360度全视图，更好的为营销、销售、服务环节服务；<br />\r\n区别对待：通过客户价值分析，找出公司的黄金客户，使公司为其提供个性化的服务，提升客户满意度和忠诚度；<br />\r\n高效：销售、服务、营销人员共享客户信息，减少信息断点，节省了很多花在客户信息搜索时间，提高工作效率\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<p>\r\n	<strong>使用前需知：</strong> \r\n</p>\r\n<pre>1、软件开放源码(发行协议:GPLv3)，用户可免费使用，但禁止任何单位或个人修改软件后再次发行的行为。\r\n2、软件集成了CRM、进销存、后勤、物业、人事等模块。\r\n3、技术支持：QQ:574249366(开发人生,CRM技术支持)\r\n4、功能定制：1871720801（零起飞）\r\n\r\n</pre>\r\n<p>\r\n	<strong>软件未来改进:</strong> \r\n</p>\r\n<p>\r\n	1、增加第三方应用程序集成功能,开放组件接口标准,允许第三方开发者开发组件系统,完善组件开发生态 <br />\r\n2、对移动设备进行支持,可以在线管理客户,订单,服务,维修,查看邮件,短消息,公告,新闻等信息\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<p>\r\n	<strong>有偿服务请联系:</strong> \r\n</p>\r\n<pre>定制化开发,公司培训,技术支持,解决使用过程中出现的全部疑难问题\r\n开发团队：零起飞网络\r\n合作电话：18030402705(李先生)\r\n技术支持：goodmuzi@qq.com\r\n\r\n</pre>\r\n<p>\r\n	<strong>有限担保和免责声明:</strong> \r\n</p>\r\n<pre>本软件及所附带的文件是作为不提供任何明确的或隐含的赔偿或担保的形式提供的。\r\n用户出于自愿而使用本软件，您必须了解使用本软件的风险，在尚未购买产品技术服务之前， \r\n我们不承诺提供任何形式的技术支持、使用担保，也不承担任何因使用本软件而产生问题的相关责任。</pre>', '', '0', '1719040641', '0', '');
+INSERT INTO `#@__arctype` VALUES ('3', '0', '0', '1', '新闻中心', 'news', '10', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '<p align=\"left\">\r\n	在专业领域的探索与思考让我们深入了解设计的本质。\r\n</p>\r\n<p align=\"left\">\r\n	我们为超过100 个企业提供了创新的品牌设计解决方案，帮助客户实现品牌革新，并向互联网发展。\r\n</p>', '', '0', '1719040641', '0', '');
+INSERT INTO `#@__arctype` VALUES ('5', '0', '0', '3', '案例展示', 'demo', '10', '0', 'index.html', '0', '24', '-1', '0', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '联系我们联系我们联系我们<br />', '', '1581929689', '1719043370', '0', '');
+INSERT INTO `#@__arctype` VALUES ('31', '1', '0', '3', '服务客户', 'service', '0', '0', 'index.html', '0', '1', '-1', '1', '0', 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '零起飞网络工作室拥有专业的营销策划队伍、资深的技术团队和强大的服务力量，主要从事网站建设及推广、协同管理系统和应用软件研发等全方位的信息化服务，将全面致力于为广大用户提供一体式整体信息化解决方案', '企业网站、品牌网站、成品网站、商城类电子商务、网站改版、网站托管', '主要从事网站建设及推广、协同管理系统和应用软件研发等全方位的信息化服务', '0', '', '', '1', '0', '', '<p class=\"MsoNormal\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\"><span>零起飞</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>网络</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>工作室拥有专业的营销策划队伍、资深的技术团队和强大的服务力量，主要从事网站建设</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>及</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>推广、协同管理系统</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>和</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>应用软件研发等全方位的信息化服务，将全面致力于为广大用户提供一体式整体信息化解决方案</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"></span>\r\n</p>\r\n<p class=\"MsoNormal\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\">&nbsp;</span>\r\n</p>\r\n<p class=\"MsoNormal\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\"><span>我们具体的服务项目主要有以下几类</span><span>:</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"></span>\r\n</p>\r\n<p class=\"MsoNormal\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\"><span>1：</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>网站建设（企业网站、品牌网站、成品网站、商城类电子商务、网站改版、网站托管）</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"></span>\r\n</p>\r\n<p class=\"MsoNormal\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\"><span>2：</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>软件定制开发（办公系统（</span><span>OA）、</span></span><span style=\"font-family:宋体;font-size:10.5000pt;background:#FFFFFF;\"><span>进销存管理</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>（</span><span>ERP）、人力资源管理（HR）、供应链管理（</span></span><span style=\"font-family:宋体;font-size:10.5000pt;background:#FFFFFF;\"><span>SCM</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>）、客户关系管理（</span><span>CRM）等品种）</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"></span>\r\n</p>\r\n<p class=\"MsoNormal\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\"><span>3：</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>移动业务（手机网站、微商城、微分销、小程序、</span><span>APP）</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"></span>\r\n</p>\r\n<p class=\"MsoNormal\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\"><span>4：</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>基础业务（</span><span>SSL证书、域名注册、虚拟主机、云主机、短信群发/短信通知）</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"></span>\r\n</p>\r\n<p class=\"MsoNormal\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\">&nbsp;</span>\r\n</p>\r\n<p class=\"MsoNormal\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\"><span>公司网站：</span></span><span><a href=\"http://www.07fly.com\"><span style=\"font-family:宋体;font-size:10.5000pt;\"><span>http://www.07fly.com</span></span></a></span><span style=\"font-family:宋体;font-size:10.5000pt;\"></span>\r\n</p>\r\n<p class=\"MsoNormal\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\">&nbsp;</span>\r\n</p>\r\n<p class=\"MsoNormal\">\r\n	<span style=\"font-family:宋体;font-size:10.5000pt;\"><span>网站建设</span><span>,网站推广,网站改版,网站托管,软件定制开发,OA,CRM,ERP,微商城,微分销,小程序,APP</span></span><span style=\"font-family:宋体;font-size:10.5000pt;\"></span>\r\n</p>', '', '1582948987', '1717125776', '0', '');
+INSERT INTO `#@__arctype` VALUES ('32', '2', '0', '50', '功能特色', 'gongneng', '0', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '本栏目为CRM版本功能说明 CRM版本下载 CRM升级包下载', 'CRM功能说明,功能特点', 'CRM版本功能说明 CRM版本下载 CRM升级包下载', '0', '', '', '1', '0', '', '<h3>\r\n	<strong>基础数据:</strong> \r\n</h3>\r\n<p>\r\n	1、商品管理(商品颜色,计量单位,商品类型,商品维护)； <br />\r\n2、组织结构(部门、权限、职务、用户管理)； <br />\r\n3、企业类型,仓库管理,发货方式,销售阶段,服务类型；\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<h3>\r\n	<strong>供应商管理 </strong> \r\n</h3>\r\n<p>\r\n	1、供应商管理:主要实现对公司提供产品及服务的货源进行基本信息的记录。其主要涉及的字段有供应商名称，预付款，经济类型，供应商等级，采购员，办公地址，电话，传真，开户行，账号，经营范围，建立日期。 <br />\r\n2、供应商联系人:主要实现对供应商联系人的基本信息进行录入，公司销售人员在对供应商进行深入合作的时候可以方便的找到供应商的主要联系人。 <br />\r\n3、供应商报价管理:记录供应商的商品报价金额，报价日起及供货周期，以方便公司对各个供应商报价进行分析，从而做出有利于公司的决策。\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<h3>\r\n	<strong>客户管理 </strong> \r\n</h3>\r\n<p>\r\n	1、客户基本信息:实现对客户信息的添加及修改查询功能。主要记录了客户名称，联系地址，电话，E-mail等信息。同时在此模块还可添加客户联系人及跟踪信息。 <br />\r\n客户删除后其对应的联系人、销售机会、报价单、费用等数据随之删除，存在销售单的客户不能删除； <br />\r\n私有客户只能被创建人及其部门主管看到，同级之间数据隔离，公共客户所有人都能看到。 <br />\r\n2、客户联系人:主要是显示客户联系人列表并且对联系人基本信息的“导入”，“导出”，“新建”，“编辑”，“删除”，“多条件查询”等进行操作。 <br />\r\n3、报销申请功能:记录了公司员工联系客户所需的费用，比如餐饮费，运输费等。员工可以申请公司报销。一般用户只有新建功能，如果权限是老板，则可以“同意”或“否决”报销申请。 <br />\r\n4、客户服务功能模块:记录了公司为哪些客户进行服务，及服务类型，服务方式，开始时间，花费时间，联系人，关联销售单，服务内容，客户反馈等信息。 <br />\r\n5、客户移交功能:实现用户之间客户移交的功能。本模块有两种移交方式：一是将某个用户下的客户移交给另一个用户；而是选择客户将其移交给某个用户。\r\n</p>\r\n<h3>\r\n	<br />\r\n<strong></strong> \r\n</h3>\r\n<h3>\r\n	<strong>采购单 </strong> \r\n</h3>\r\n<p>\r\n	采购单:是对采购员与供应商所签订的订单信息的记录，便于后勤查询与跟踪。其主要涉及的字段有单号，主题，供应商，联系人，采购日期，仓库，预计到货日期，创建人，总金额，去零金额，已付金额，已入库金额，已收票金额，关联订单，关联客户，单据状态，付款状态，收货状态，收票状态。<br />\r\n采购商品的价格是商品零售价，在商品维护中看查看与编辑。若是商品区分颜色，则数量是各个颜色所需数量之和。 <br />\r\n<br />\r\n<strong>采购订单管理需注意： </strong><br />\r\n1、采购员新建采购单，此时单据状态为“执行中”。 <br />\r\n2、采购员本人和其上级用户有权限看到并操作此单，录入单据明细保存后收货状态为“已录明细”。 <br />\r\n3、生成入库单，生成后收货状态为待入库。 <br />\r\n4、如果在生成入库单过程中，只是部分入库，则保存后收货状态为部分。 <br />\r\n5、全部入库完成后，收货状态为全部。\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<h3>\r\n	<strong>库存管理 </strong> \r\n</h3>\r\n<p>\r\n	1、库存初始化:是将商品列表中的商品进行入库，并自动生成入库单。只有商品列表中是否计算库存为是的才能入库。 <br />\r\n2、库存清单:是库存初始化完成后生成。主要记录了入库产品的编号，名称，型号，规格，库存数量，仓库，类型，图片等信息。 <br />\r\n3、入库单:是产品入库后生成的单据。记录了产品的入库时间，数量，仓库，状态等信息。这里主要是进行采购入库的确认入库操作。 <br />\r\n4、出库单:是用户添加销售订单并进行生成出库单操作后生成的单据。生成出库单后，需要仓库管理员进行确认出库操作。 <br />\r\n5、发货单:主要实现对已确认出库的单据进行发货操作，并生成发货单据。若是商品还没有发货，则状态为“未发货”，需要相关人员进行“确认发货”操作。 <br />\r\n6、库存盘点单:是对正在进行盘点的仓库信息的记录，并将仓库盘点的信息记录下来。该模块只有仓库管理员有权限管辖。 <br />\r\n7、库存挑拨单:是对商品调换仓库信息的记录。新建库存挑拨单后，需对挑拨仓库的商品的基本信息进行编辑并保存。 <br />\r\n8、生产组装单:是对一种或多种产品组装成另一种或多种产品信息的记录。此模块和库存挑拨单模块相似。\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<h3>\r\n	<strong>销售管理 </strong> \r\n</h3>\r\n<span style=\"color:#ff0000;\">销售流程：完善客户信息（客户管理）---销售机会---跟踪----记录客户需求，制定相关的解决方案----分析竞争产品----报价---项目报备----订单----编辑出库商品信息---生成出库单---仓库管理员确认出库----发货。 </span><br />\r\n<br />\r\n1、销售机会主要管理销售过程中的售前部分，或者说从一个销售机会的确立到签署合同之间的过程管理。 <br />\r\n2、跟踪记录 是对员工与客户之间的联系信息及效果进行记录。对客户的跟踪是一个延续性的工作，在这期间很多数据会不断地变化，比如阶段、可能性、状态等，只有及时地更新这些数据，系统才能正常的发挥作用，比如销售漏斗、销售预测等。<br />\r\n3、需求与方案 是在与客户联系中，记录下客户的各种需求，并为其制定相关的解决方案，以便后期公司内部人员查询跟踪。 <br />\r\n4、竞争产品 主要是记录和分析公司竞争对手的产品信息，我方的竞争优势和劣势及应对策略，以便在竞争中立于不败之地。 <br />\r\n5、产品报价主要实现操作人员对客户需要的产品及服务进行初步的价格评估，记录报价信息后以便后期使用或查询。 <br />\r\n6、项目报备主要实现公司员工申请项目信息及所需支持的记录。 <br />\r\n7、合同管理主要实现公司与客户已达成的某种利润关系进行文字的记录以便后期的跟踪与维护。 <br />\r\n8、订单管理主要是实现客户对产品及服务数量及质量的需求，操作人员记录后方便公司后期查询与跟踪。<br />\r\n<h3>\r\n	<strong>财务管理 </strong> \r\n</h3>\r\n1、资金注入抽取:主要实现公司银行账户资金的注入和资金的抽取信息的管理，方便管理公司资金。 <br />\r\n2、付款管理:付款计划 是针对供应商制定的付款计划。记录了公司每个其次所付款额，日期等信息。同时进行付款操作，确认付款。付款记录 \r\n是在付款计划模块中点击付款后生成的付款记录，也可以在本页面新建完成。收票记录 是对公司采购产品付款后所开票据信息的管理，便于后期查询。 <br />\r\n3、收入开支:报销单审核 是管理公司内部员工申请报销所支出款项的信息，实现了对已通过审核的报销信息的进行支付的操作。费用支出单是对公司对外开支信息的记录。用户可新建，删除费用支出信息。 <br />\r\n4、预收预付款:预付款 \r\n是记录公司采购产品的预付款的信息，如供应商，收款人，付款账户，上次余额，预付金额，冲抵货款，帐户余额，操作类型，关联单号，创建人，创建时间等，便于后期查询。预收款是对公司销售产品的预收款信息的记录，其涉及字段主要有交款人，客户，收款账户，上次余额，预收金额，冲抵货款，账户余额，操作类型，关联单号。 <br />\r\n5、账户操作记录:对公司银行账户各项收入和支出信息的管理。主要涉及字段有银行账户，期初，收入，支出，余额，操作类型，关联单号，创建人，创建时间。', '', '1587366405', '1627440318', '0', '');
+INSERT INTO `#@__arctype` VALUES ('33', '36', '0', '50', '帮助手册', 'help', '74', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_index.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', 'crm帮助手册，crm帮助文档', '', 'CRM帮助手册', '0', '', '', '1', '0', '', '<p>\r\n	V1帮助手册：\r\n</p>\r\n<p>\r\n	<br />\r\n</p>', '', '1587366446', '1627369806', '0', '');
+INSERT INTO `#@__arctype` VALUES ('34', '2', '0', '50', '版本下载', 'down', '24', '0', 'index.html', '0', '1', '-1', '1', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '本栏目提供CRM的版本下载和升级包的下载', '', 'CRM版本下载 CRM升级包下载', '0', '', '', '1', '0', '', '<p>\r\n	源码下载地址：\r\n</p>\r\n<p>\r\n	https://gitee.com/07fly/FLY-CRM\r\n</p>', '', '1587366470', '1627440309', '0', '');
+INSERT INTO `#@__arctype` VALUES ('36', '0', '0', '7', '技术文档', 'doc', '73', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '企业愿景是组织在未来所能达到的一种状态的蓝图，阐述的是企业存在的最终目的。', '', '', '0', '', '', '1', '0', '', '<span>企业愿景是组织在未来所能达到的一种状态的蓝图，阐述的是企业存在的最终目的。回答的是“去哪里”的问题。愿景是关于理想的一幅独特的画面，它面向未来，可以为众人带来共同利益</span>', '', '1587367054', '1719040641', '0', '');
+INSERT INTO `#@__arctype` VALUES ('37', '35', '0', '50', '商业授权(V版)', 'business_v2', '0', '0', 'index.html', '0', '1', '-1', '1', '0', 'auth_index.html', 'auth_index.html', 'auth_index.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '企业价值观是指企业及其员工的价值取向，是指企业在追求经营成功过程中所推崇的基本信念和奉行的目标', '', '', '0', '', '', '1', '0', '', '应广大开发者与软件公司的要求，07FLY-CRM正式推出商业授权。使用低价授权，解决大家在07FLY-CRM框架使用过程中的各种版权纠纷。\r\n<p>\r\n	取得商业后，不再受07FLY-CRM开源版本的License限制，可以去掉著作权申明，可以有偿提供给第三方。\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<table style=\"text-align:center;width:100%;\" class=\"\" height=\"491\" cellspacing=\"0\" cellpadding=\"5\" border=\"1\" align=\"center\">\r\n	<tbody>\r\n		<tr>\r\n			<td colspan=\"5\" class=\"et2\" width=\"687\" height=\"27\">\r\n				07FLY-CRM框架商业授权\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et3\" width=\"100\" height=\"23\" align=\"center\">\r\n				模块\r\n			</td>\r\n			<td class=\"et5\" width=\"157\">\r\n				产品功能\r\n			</td>\r\n			<td class=\"et6\" width=\"122\">\r\n				免费版\r\n			</td>\r\n			<td class=\"et6\" width=\"136\">\r\n				标准版\r\n			</td>\r\n			<td class=\"et6\" width=\"158\">\r\n				高级版\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td rowspan=\"7\" class=\"et3\" height=\"188\">\r\n				产品授权\r\n			</td>\r\n			<td class=\"et5\" width=\"157\">\r\n				授权有效期\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				永久\r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				永久\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				永久\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				授权价格\r\n			</td>\r\n			<td class=\"et10\" width=\"122\">\r\n				<span style=\"color:#FF9900;\">￥0</span> \r\n			</td>\r\n			<td class=\"et11\" width=\"136\">\r\n				<span style=\"color:#E56600;\">￥500</span><span class=\"font0\"></span> \r\n			</td>\r\n			<td class=\"et11\" width=\"158\">\r\n				<span style=\"color:#E56600;\">￥2880</span><span class=\"font0\"></span> \r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				技术服务费和升级费用（可选）\r\n			</td>\r\n			<td class=\"et5\" width=\"122\">\r\n				不支持\r\n			</td>\r\n			<td class=\"et5\" width=\"136\">\r\n				1000元/年\r\n			</td>\r\n			<td class=\"et5\" width=\"158\">\r\n				1000元/年\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				授权域名\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				无需授权\r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				1个\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				无限制\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				商业用途\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\"></span>不支持\r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				允许\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				允许\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				去除版权信息\r\n			</td>\r\n			<td class=\"et12\" width=\"122\">\r\n				<span style=\"color:#E53333;\">禁止去除版权</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				允许\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				允许\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				官方插件模块\r\n			</td>\r\n			<td class=\"et12\" width=\"122\">\r\n				<span style=\"color:#E53333;\">按域名授权</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				部分应用无限域名\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				全免费/无限制\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td rowspan=\"8\" class=\"et3\" height=\"253\">\r\n				服务内容\r\n			</td>\r\n			<td class=\"et5\" width=\"157\">\r\n				技术支持服务(售后服务期限一年，不包括二开)\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				支持\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				支持\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				升级服务(授权用户可在服务期限内免费多次升级系统)\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				支持\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				支持\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				系统安装部署\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				支持\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				支持\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				产品使用手册\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				支持\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				支持\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				授权源码提供\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				支持\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				支持\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				在线技术支持(包括QQ、微信等)\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et8\" width=\"136\">\r\n				支持\r\n			</td>\r\n			<td class=\"et9\" width=\"158\">\r\n				支持\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				项目定制服务\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et13\" width=\"136\">\r\n				咨询\r\n			</td>\r\n			<td class=\"et14\" width=\"158\">\r\n				咨询\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td class=\"et5\" width=\"157\">\r\n				功能二次开发\r\n			</td>\r\n			<td class=\"et7\" width=\"122\">\r\n				<span style=\"color:#999999;\">不支持</span> \r\n			</td>\r\n			<td class=\"et13\" width=\"136\">\r\n				咨询\r\n			</td>\r\n			<td class=\"et14\" width=\"158\">\r\n				咨询\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n<p>\r\n	说明：\r\n</p>\r\n<p>\r\n	1、权限说明：07FLY-CRM所有版本，你只有使用权，没有著作权，二开的源码内容所有权归属于你。<br />\r\n2、禁止任何人在07FLY-CRM整体或任何部分基础上发展任何派生版本、修改版本或第三方版本用于重新分发。<br />\r\n3、禁止任何人以任何形式出售或转让07FLY-CRM源码或授权。高级版用户可以用07FLY-CRM开发项目给客户使用，前提是不损害到07FLY-CRM利益，且不得在线上售卖源代码，可以发展自己的线下客户。<br />\r\n4、07FLY-CRM受国家计算机软件著作权保护，不得恶意分享产品源代码、二次转售等，违者必究。<br />\r\n5、授权版的价格并不是永恒不变的，后续随着功能的增加，费用将不断的上调（注：已购买授权的用户主版本号内升级免费）。\r\n</p>\r\n<p>\r\n	6、以上价格均不含税。\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<p>\r\n	零起飞衷心的祝愿各位财源广进！\r\n</p>\r\n<br />\r\n<br />\r\n<br />', '', '1587367081', '1593569445', '0', '');
+INSERT INTO `#@__arctype` VALUES ('38', '3', '0', '50', '最新公告', 'note', '0', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '', '', '1587370361', '1591581395', '0', '');
+INSERT INTO `#@__arctype` VALUES ('39', '36', '0', '50', '常见问题', 'faq', '75', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_index.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '提高市场占有率的有效行为，一份可执行、可操作、创意突出的活动策划案，可有效提升企业的知名度及品牌美誉度', '', 'CRM常见问题', '0', '', '', '1', '0', '', '提高市场占有率的有效行为，一份可执行、可操作、创意突出的活动策划案，可有效提升企业的知名度及品牌美誉度', '', '1587370818', '1627369818', '0', '');
+INSERT INTO `#@__arctype` VALUES ('40', '3', '0', '50', '行业资讯', 'hangye', '0', '0', 'index.html', '0', '1', '-1', '0', '0', 'news_list.html', 'news_list.html', 'news_show.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '', '', '1587451565', '1627440909', '0', '');
+INSERT INTO `#@__arctype` VALUES ('41', '1', '0', '2', '管理团队', 'tema', '0', '0', 'index.html', '0', '1', '-1', '1', '0', 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '', '', '1587522683', '1587522772', '0', '');
+INSERT INTO `#@__arctype` VALUES ('42', '1', '0', '1', '公司简介', 'about', '0', '0', 'index.html', '0', '1', '-1', '1', '0', 'about.html', 'about.html', 'about.html', '{typedir}/{Y}/{M}{D}/{aid}.html', '{typedir}/list_{tid}_{page}.html', '', '', '', '', '0', '', '', '1', '0', '', '', '', '1587522764', '1627440386', '0', '');
 
 -- -----------------------------
 -- Table structure for `#@__channel`
@@ -1375,35 +1409,34 @@ INSERT INTO `#@__channel_field` VALUES ('17', 'archives', 'archives_article', '�
 INSERT INTO `#@__channel_field` VALUES ('18', 'archives', 'archives_case', '跳转网址', 'goto_url', 'varchar', 'http://www.baidu.com', '250', '0', '1', '0', '0', '100', '1581772028', '1581772050', '0', '24');
 
 -- -----------------------------
--- Table structure for `#@__friendlink`
+-- Table structure for `#@__riendlink`
 -- -----------------------------
-DROP TABLE IF EXISTS `#@__friendlink`;
+DROP TABLE IF EXISTS `#@__riendlink`;
 CREATE TABLE `#@__friendlink` (
-                                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                                  `type` tinyint(1) DEFAULT '1' COMMENT '类型：1=文字链接，2=图片链接',
-                                  `title` varchar(50) DEFAULT '' COMMENT '网站标题',
-                                  `url` varchar(100) DEFAULT '' COMMENT '网站地址',
-                                  `logo` varchar(255) DEFAULT '' COMMENT '网站LOGO',
-                                  `sort` int(11) DEFAULT '0' COMMENT '排序号',
-                                  `target` tinyint(1) DEFAULT '0' COMMENT '是否开启浏览器新窗口',
-                                  `email` varchar(50) DEFAULT '',
-                                  `intro` text COMMENT '网站简况',
-                                  `visible` tinyint(1) DEFAULT '1' COMMENT '状态(1=显示，0=屏蔽)',
-                                  `lang` varchar(50) DEFAULT 'cn' COMMENT '语言标识',
-                                  `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
-                                  `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-                                  PRIMARY KEY (`id`)
+                                 `id` int(11) NOT NULL AUTO_INCREMENT,
+                                 `type` tinyint(1) DEFAULT '1' COMMENT '类型：1=文字链接，2=图片链接',
+                                 `title` varchar(50) DEFAULT '' COMMENT '网站标题',
+                                 `url` varchar(100) DEFAULT '' COMMENT '网站地址',
+                                 `logo` varchar(255) DEFAULT '' COMMENT '网站LOGO',
+                                 `sort` int(11) DEFAULT '0' COMMENT '排序号',
+                                 `target` tinyint(1) DEFAULT '0' COMMENT '是否开启浏览器新窗口',
+                                 `email` varchar(50) DEFAULT '',
+                                 `intro` text COMMENT '网站简况',
+                                 `visible` tinyint(1) DEFAULT '1' COMMENT '状态(1=显示，0=屏蔽)',
+                                 `lang` varchar(50) DEFAULT 'cn' COMMENT '语言标识',
+                                 `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
+                                 `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
+                                 PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='[cms]友情链接表';
 
 -- -----------------------------
--- Records of `lqf_ffriendlink`
+-- Records of `lqf_friendlink`
 -- -----------------------------
 INSERT INTO `#@__friendlink` VALUES ('1', '1', '07FLY.com', 'http://www.07fly.com', '10', '50', '1', '', '', '1', 'cn', '1524975826', '1587869798');
 INSERT INTO `#@__friendlink` VALUES ('11', '1', '成都网站建设', 'http://www.07fly.com', '', '0', '0', '', '', '1', 'cn', '1596426819', '0');
 INSERT INTO `#@__friendlink` VALUES ('12', '1', '成都智能建站', 'http://www.07fly.cn', '', '0', '0', '', '', '1', 'cn', '1596426839', '0');
 INSERT INTO `#@__friendlink` VALUES ('13', '1', '成都建站素材', 'http://www.07fly.net', '', '0', '0', '', '', '1', 'cn', '1596426872', '0');
 INSERT INTO `#@__friendlink` VALUES ('14', '1', '开源CRM', 'http://www.07fly.top', '', '0', '0', '', '', '1', 'cn', '1596426893', '1596426906');
-INSERT INTO `#@__friendlink` VALUES ('15', '1', '成都软件定制开发', 'http://www.lingqifei.com', '', '0', '0', '', '', '1', 'cn', '1596435691', '0');
 
 -- -----------------------------
 -- Table structure for `#@__guestbook`
@@ -1522,12 +1555,12 @@ CREATE TABLE `#@__tagindex` (
                                 KEY `typeid` (`typeid`) USING BTREE,
                                 KEY `count` (`count`,`total`,`weekcc`,`monthcc`,`weekup`,`monthup`,`create_time`) USING BTREE,
                                 KEY `tag` (`tag`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COMMENT='[cms]标签索引表';
+) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COMMENT='[cms]标签索引表';
 
 -- -----------------------------
 -- Records of `lqf_tagindex`
 -- -----------------------------
-INSERT INTO `#@__tagindex` VALUES ('1', '付款', '33', '0', '0', '0', '0', '0', '0', 'cn', '1608708340', '0');
+INSERT INTO `#@__tagindex` VALUES ('1', '付款', '33', '6', '3', '5', '1717126438', '1717126044', '0', 'cn', '1608708340', '1717126438');
 INSERT INTO `#@__tagindex` VALUES ('2', '供应商', '33', '0', '0', '0', '0', '0', '0', 'cn', '1608708340', '0');
 INSERT INTO `#@__tagindex` VALUES ('3', '采购订单', '33', '0', '0', '0', '0', '0', '0', 'cn', '1608708340', '0');
 INSERT INTO `#@__tagindex` VALUES ('4', '系统', '5', '0', '0', '0', '0', '0', '0', 'cn', '1608792839', '0');
@@ -1556,24 +1589,24 @@ INSERT INTO `#@__tagindex` VALUES ('26', '联系人', '33', '0', '0', '0', '0', 
 INSERT INTO `#@__tagindex` VALUES ('27', '沟通', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442599', '0');
 INSERT INTO `#@__tagindex` VALUES ('28', '服务', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442599', '0');
 INSERT INTO `#@__tagindex` VALUES ('29', '合同', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442599', '0');
-INSERT INTO `#@__tagindex` VALUES ('30', '信息', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442626', '0');
+INSERT INTO `#@__tagindex` VALUES ('30', '信息', '33', '2', '2', '1', '1717128253', '1717128251', '0', 'cn', '1627442626', '1717128253');
 INSERT INTO `#@__tagindex` VALUES ('31', '管理', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442626', '0');
 INSERT INTO `#@__tagindex` VALUES ('32', '财务', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442640', '0');
 INSERT INTO `#@__tagindex` VALUES ('33', '财务项目', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442640', '0');
 INSERT INTO `#@__tagindex` VALUES ('34', '收款', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442640', '0');
 INSERT INTO `#@__tagindex` VALUES ('35', '银行帐号', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442640', '0');
-INSERT INTO `#@__tagindex` VALUES ('36', '产品', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442652', '0');
+INSERT INTO `#@__tagindex` VALUES ('36', '产品', '33', '6', '1', '5', '1717128140', '1717124273', '0', 'cn', '1627442652', '1717128140');
 INSERT INTO `#@__tagindex` VALUES ('37', '商品', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442652', '0');
 INSERT INTO `#@__tagindex` VALUES ('38', '', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442652', '0');
 INSERT INTO `#@__tagindex` VALUES ('39', '部门管理', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442664', '0');
 INSERT INTO `#@__tagindex` VALUES ('40', '组织结构', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442664', '0');
 INSERT INTO `#@__tagindex` VALUES ('41', '员工', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442664', '0');
 INSERT INTO `#@__tagindex` VALUES ('42', '角色', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442664', '0');
-INSERT INTO `#@__tagindex` VALUES ('43', '字段', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442674', '0');
+INSERT INTO `#@__tagindex` VALUES ('43', '字段', '33', '1', '1', '0', '1717126666', '1717126666', '0', 'cn', '1627442674', '1717126666');
 INSERT INTO `#@__tagindex` VALUES ('44', '业务', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442674', '0');
 INSERT INTO `#@__tagindex` VALUES ('45', '表单', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442674', '0');
 INSERT INTO `#@__tagindex` VALUES ('46', '修改', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442674', '0');
-INSERT INTO `#@__tagindex` VALUES ('47', '扩展', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442674', '0');
+INSERT INTO `#@__tagindex` VALUES ('47', '扩展', '33', '5', '1', '4', '1717124268', '1717124220', '0', 'cn', '1627442674', '1717124268');
 INSERT INTO `#@__tagindex` VALUES ('48', '选择', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627442674', '0');
 INSERT INTO `#@__tagindex` VALUES ('49', 'nbsp', '40', '0', '0', '0', '0', '0', '0', 'cn', '1627442699', '0');
 INSERT INTO `#@__tagindex` VALUES ('50', '技术', '40', '0', '0', '0', '0', '0', '0', 'cn', '1627442699', '0');
@@ -1588,8 +1621,9 @@ INSERT INTO `#@__tagindex` VALUES ('58', '备份', '33', '0', '0', '0', '0', '0'
 INSERT INTO `#@__tagindex` VALUES ('59', '恢复', '33', '0', '0', '0', '0', '0', '0', 'cn', '1627461765', '0');
 INSERT INTO `#@__tagindex` VALUES ('60', '404', '39', '0', '0', '0', '0', '0', '0', 'cn', '1691115095', '0');
 INSERT INTO `#@__tagindex` VALUES ('61', '07FLY-CRM-V2', '39', '0', '0', '0', '0', '0', '0', 'cn', '1691115095', '0');
-INSERT INTO `#@__tagindex` VALUES ('62', '安装', '33', '0', '0', '0', '0', '0', '0', 'cn', '1691115122', '0');
-INSERT INTO `#@__tagindex` VALUES ('63', '环境', '33', '0', '0', '0', '0', '0', '0', 'cn', '1691115122', '0');
+INSERT INTO `#@__tagindex` VALUES ('62', '安装', '33', '1', '1', '0', '1717126037', '1717126037', '0', 'cn', '1691115122', '1717126037');
+INSERT INTO `#@__tagindex` VALUES ('63', '环境', '33', '1', '1', '0', '1717124045', '1717124045', '0', 'cn', '1691115122', '1717124045');
+INSERT INTO `#@__tagindex` VALUES ('64', '零起飞案例测试', '5', '0', '0', '0', '0', '0', '0', 'cn', '1719043391', '0');
 
 -- -----------------------------
 -- Table structure for `#@__taglist`
@@ -1607,7 +1641,7 @@ CREATE TABLE `#@__taglist` (
                                `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
                                PRIMARY KEY (`id`) USING BTREE,
                                KEY `aid` (`aid`,`typeid`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=124 DEFAULT CHARSET=utf8 COMMENT='[cms]文章标签表';
+) ENGINE=MyISAM AUTO_INCREMENT=133 DEFAULT CHARSET=utf8 COMMENT='[cms]文章标签表';
 
 -- -----------------------------
 -- Records of `lqf_taglist`
@@ -1622,14 +1656,13 @@ INSERT INTO `#@__taglist` VALUES ('8', '9', '124', '5', '销售', '0', 'cn', '0'
 INSERT INTO `#@__taglist` VALUES ('9', '10', '121', '5', '旅行社ERP管理', '0', 'cn', '0', '1608792849');
 INSERT INTO `#@__taglist` VALUES ('111', '1', '140', '33', '付款', '0', 'cn', '0', '1691115317');
 INSERT INTO `#@__taglist` VALUES ('11', '11', '141', '38', '11', '0', 'cn', '0', '1617962705');
-INSERT INTO `#@__taglist` VALUES ('117', '13', '142', '2', '07fly-cms', '0', 'cn', '0', '1691115326');
-INSERT INTO `#@__taglist` VALUES ('116', '12', '142', '2', 'cms', '0', 'cn', '0', '1691115326');
-INSERT INTO `#@__taglist` VALUES ('120', '16', '143', '2', '客户管理', '0', 'cn', '0', '1691115331');
-INSERT INTO `#@__taglist` VALUES ('119', '15', '143', '2', '零起飞', '0', 'cn', '0', '1691115331');
-INSERT INTO `#@__taglist` VALUES ('118', '14', '143', '2', 'CRM', '0', 'cn', '0', '1691115331');
-INSERT INTO `#@__taglist` VALUES ('123', '14', '144', '2', 'CRM', '0', 'cn', '0', '1691115336');
-INSERT INTO `#@__taglist` VALUES ('122', '15', '144', '2', '零起飞', '0', 'cn', '0', '1691115336');
-INSERT INTO `#@__taglist` VALUES ('121', '5', '144', '2', 'ERP', '0', 'cn', '0', '1691115336');
+INSERT INTO `#@__taglist` VALUES ('131', '13', '142', '2', '07fly-cms', '0', 'cn', '0', '1717126595');
+INSERT INTO `#@__taglist` VALUES ('130', '12', '142', '2', 'cms', '0', 'cn', '0', '1717126595');
+INSERT INTO `#@__taglist` VALUES ('128', '15', '143', '2', '零起飞', '0', 'cn', '0', '1717126589');
+INSERT INTO `#@__taglist` VALUES ('127', '14', '143', '2', 'CRM', '0', 'cn', '0', '1717126589');
+INSERT INTO `#@__taglist` VALUES ('126', '14', '144', '2', 'CRM', '0', 'cn', '0', '1717126584');
+INSERT INTO `#@__taglist` VALUES ('125', '15', '144', '2', '零起飞', '0', 'cn', '0', '1717126584');
+INSERT INTO `#@__taglist` VALUES ('124', '5', '144', '2', 'ERP', '0', 'cn', '0', '1717126584');
 INSERT INTO `#@__taglist` VALUES ('107', '18', '139', '33', '出库单', '0', 'cn', '0', '1691115299');
 INSERT INTO `#@__taglist` VALUES ('106', '17', '139', '33', '出库', '0', 'cn', '0', '1691115299');
 INSERT INTO `#@__taglist` VALUES ('105', '20', '138', '33', '创建入库单', '0', 'cn', '0', '1691115285');
@@ -1686,6 +1719,8 @@ INSERT INTO `#@__taglist` VALUES ('78', '55', '128', '33', '系统设置', '0', 
 INSERT INTO `#@__taglist` VALUES ('90', '42', '131', '33', '角色', '0', 'cn', '0', '1691115214');
 INSERT INTO `#@__taglist` VALUES ('96', '38', '132', '33', '', '0', 'cn', '0', '1691115254');
 INSERT INTO `#@__taglist` VALUES ('113', '3', '140', '33', '采购订单', '0', 'cn', '0', '1691115317');
+INSERT INTO `#@__taglist` VALUES ('129', '16', '143', '2', '客户管理', '0', 'cn', '0', '1717126589');
+INSERT INTO `#@__taglist` VALUES ('132', '64', '340', '5', '零起飞案例测试', '0', 'cn', '0', '1719043391');
 
 -- -----------------------------
 -- Table structure for `#@__website`
@@ -1724,421 +1759,5 @@ INSERT INTO `#@__website` VALUES ('74', 'web_theme', 'varchar', '网站主题', 
 INSERT INTO `#@__website` VALUES ('75', 'web_address', 'varchar', '联系地址', '成都市量力钢材城A区4栋-3号', '1', '', '', '1587699544', '1591578590', '1', '0');
 INSERT INTO `#@__website` VALUES ('76', 'web_tel', 'textarea', '联系电话', '028-61833149', '1', '', '', '1589706491', '1591578590', '1', '100');
 INSERT INTO `#@__website` VALUES ('77', 'web_email', 'textarea', '联系邮箱', 'web@07fly.com', '1', '', '', '1589706491', '1591578590', '1', '100');
-INSERT INTO `#@__website` VALUES ('78', 'web_mobile', 'textarea', '联系手机', '1871720801', '1', '', '', '1589706491', '1591578590', '1', '100');
+INSERT INTO `#@__website` VALUES ('78', 'web_mobile', 'textarea', '联系手机', '18030402705', '1', '', '', '1589706491', '1591578590', '1', '100');
 INSERT INTO `#@__website` VALUES ('79', 'web_qq', 'varchar', '联系QQ', '1871720801', '1', '', '', '1589706491', '1591578590', '1', '100');
-
-
--- -----------------------------
--- Table structure for `#@__member`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member`;
-CREATE TABLE `#@__member` (
-                              `id` int(16) NOT NULL AUTO_INCREMENT COMMENT '关键id',
-                              `username` varchar(30) NOT NULL DEFAULT '' COMMENT '用户名',
-                              `password` varchar(32) NOT NULL DEFAULT '' COMMENT '登录密码',
-                              `nickname` varchar(50) NOT NULL DEFAULT '' COMMENT '昵称',
-                              `is_mobile` tinyint(1) DEFAULT '0' COMMENT '绑定手机号，0为不绑定，1为绑定',
-                              `mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号码（仅用于登录）',
-                              `is_email` tinyint(1) DEFAULT '0' COMMENT '绑定邮箱，0为不绑定，1为绑定',
-                              `email` varchar(60) NOT NULL DEFAULT '' COMMENT '电子邮件（仅用于登录）',
-                              `qicq` varchar(60) NOT NULL DEFAULT '' COMMENT 'QQ',
-                              `paypwd` varchar(50) DEFAULT '' COMMENT '支付密码，暂时未用到，可保留。',
-                              `member_money` decimal(10,2) DEFAULT '0.00' COMMENT '用户金额',
-                              `frozen_money` decimal(10,2) DEFAULT '0.00' COMMENT '冻结金额',
-                              `member_integral` decimal(10,0) DEFAULT '0' COMMENT '会员积分',
-                              `last_login` int(11) unsigned DEFAULT '0' COMMENT '最后登录时间',
-                              `last_ip` varchar(15) DEFAULT '' COMMENT '最后登录ip',
-                              `login_count` int(11) DEFAULT '0' COMMENT '登陆次数',
-                              `head_pic` varchar(255) DEFAULT '' COMMENT '头像',
-                              `remark` varchar(255) DEFAULT '' COMMENT '说明备注',
-                              `province_id` int(6) DEFAULT '0' COMMENT '省份',
-                              `city_id` int(6) DEFAULT '0' COMMENT '市区',
-                              `county_id` int(6) DEFAULT '0' COMMENT '县',
-                              `level_id` smallint(5) DEFAULT '1' COMMENT '会员等级，默认为1，注册会员 ',
-                              `open_level_time` int(11) unsigned DEFAULT '0' COMMENT '开通会员级别时间',
-                              `level_maturity_days` varchar(20) DEFAULT '' COMMENT '会员级别到期天数',
-                              `discount` decimal(10,2) DEFAULT '1.00' COMMENT '会员折扣，默认1不享受',
-                              `total_amount` decimal(10,2) DEFAULT '0.00' COMMENT '消费累计额度',
-                              `is_activation` tinyint(1) DEFAULT '0' COMMENT '是否激活，0否，1是。\\r\\n后台注册默认为1激活。\\r\\n前台注册时，当会员功能设置选择后台审核，需后台激活才可以登陆。',
-                              `register_place` tinyint(1) DEFAULT '2' COMMENT '注册位置。后台注册不受注册验证影响，1为后台注册，2为前台注册。默认为2。',
-                              `open_id` varchar(50) NOT NULL DEFAULT '' COMMENT '第三方唯一标识openid',
-                              `talk_code` varchar(256) NOT NULL DEFAULT '' COMMENT '第三方洽谈代码',
-                              `thirdparty` tinyint(1) DEFAULT '0' COMMENT '第三方注册类型：0=普通，1=微信，2=QQ',
-                              `is_lock` tinyint(1) DEFAULT '0' COMMENT '是否被锁定冻结',
-                              `admin_id` int(10) DEFAULT '0' COMMENT '关联管理员ID',
-                              `is_del` tinyint(1) DEFAULT '0' COMMENT '伪删除，1=是，0=否',
-                              `real_status` tinyint(1) DEFAULT '0' COMMENT '0未实名，1=实名',
-                              `update_time` int(11) unsigned DEFAULT '0' COMMENT '更新时间',
-                              `create_time` int(11) unsigned DEFAULT '0' COMMENT '创建时间',
-                              `is_recharge` int(2) NOT NULL DEFAULT '0' COMMENT '0=未充值，1=充值过',
-                              `expire_level_time` datetime DEFAULT NULL COMMENT 'vip会员到期时间',
-                              PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COMMENT='[会员]会员信息表';
-
--- -----------------------------
--- Table structure for `#@__member_adv`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_adv`;
-CREATE TABLE `#@__member_adv` (
-                                  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '广告id',
-                                  `ad_type` tinyint(1) DEFAULT '0' COMMENT '广告类型0=图片，1=文本，2=html',
-                                  `name` varchar(60) DEFAULT '' COMMENT '广告名称',
-                                  `links` varchar(255) DEFAULT '' COMMENT '广告链接',
-                                  `mappic` varchar(255) DEFAULT '' COMMENT '示意图',
-                                  `litpic` varchar(255) DEFAULT '' COMMENT '图片地址',
-                                  `wappic` varchar(255) DEFAULT '' COMMENT '手机图片地址',
-                                  `body` varchar(1024) DEFAULT '' COMMENT '到期后显示内容',
-                                  `width` varchar(32) DEFAULT '' COMMENT '宽度',
-                                  `height` varchar(32) DEFAULT '' COMMENT '高度',
-                                  `price` decimal(10,2) DEFAULT '0.00' COMMENT '价格',
-                                  `click` int(11) DEFAULT '1' COMMENT '点击量',
-                                  `view` int(11) DEFAULT '1' COMMENT '展示量',
-                                  `bgcolor` varchar(30) DEFAULT '' COMMENT '背景颜色',
-                                  `visible` tinyint(1) unsigned DEFAULT '1' COMMENT '1=显示，0=屏蔽',
-                                  `sort` int(11) DEFAULT '0' COMMENT '排序',
-                                  `target` varchar(50) DEFAULT '' COMMENT '是否开启浏览器新窗口',
-                                  `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
-                                  `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-                                  PRIMARY KEY (`id`),
-                                  KEY `status` (`visible`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='[会员]广告位';
-
--- -----------------------------
--- Records of `lqf_member_adv`
--- -----------------------------
-INSERT INTO `#@__member_adv` VALUES ('17', '0', '幻灯片广告', '', '', '20210127/cb0f8ae82cbc50177de0343fdff49092.jpg', '', '', '600', '300', '5.00', '1', '1', '', '1', '0', '', '0', '0');
-INSERT INTO `#@__member_adv` VALUES ('18', '0', 'Banner广告', '', '', '20210127/cb0f8ae82cbc50177de0343fdff49092.jpg', '', '', '750', '90', '3.00', '1', '1', '', '1', '0', '', '0', '0');
-
--- -----------------------------
--- Table structure for `#@__member_adv_dis`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_adv_dis`;
-CREATE TABLE `#@__member_adv_dis` (
-                                      `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '广告id',
-                                      `member_id` int(10) DEFAULT '0' COMMENT '会员idID',
-                                      `adv_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '广告位置ID',
-                                      `title` varchar(60) DEFAULT '' COMMENT '广告名称',
-                                      `litpic` varchar(255) DEFAULT '' COMMENT '图片地址',
-                                      `wappic` varchar(255) DEFAULT '' COMMENT '手机图片地址',
-                                      `start_date` date DEFAULT NULL COMMENT '投放时间',
-                                      `stop_date` date DEFAULT NULL COMMENT '结束时间',
-                                      `links` varchar(255) DEFAULT '' COMMENT '到期广告链接',
-                                      `body` varchar(1024) DEFAULT '' COMMENT '到期广告描述',
-                                      `linkman` varchar(60) DEFAULT '' COMMENT '添加人',
-                                      `email` varchar(60) DEFAULT '' COMMENT '添加人邮箱',
-                                      `phone` varchar(60) DEFAULT '' COMMENT '添加人联系电话',
-                                      `click` int(11) DEFAULT '1' COMMENT '点击量',
-                                      `view` int(11) DEFAULT '1' COMMENT '展示量',
-                                      `period` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '购买周期',
-                                      `order_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '关联订单',
-                                      `money` decimal(10,2) DEFAULT '0.00' COMMENT '广告金额',
-                                      `status` tinyint(1) unsigned DEFAULT '0' COMMENT '0=待付款，1=待审核，2=待上线，3=展示中，4=已经到期，5=拒绝中',
-                                      `sort` int(11) DEFAULT '0' COMMENT '排序',
-                                      `target` varchar(50) DEFAULT '0' COMMENT '是否开启浏览器新窗口',
-                                      `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
-                                      `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-                                      PRIMARY KEY (`id`),
-                                      KEY `position_id` (`adv_id`) USING BTREE,
-                                      KEY `status` (`status`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COMMENT='[会员]广告列表';
-
--- -----------------------------
--- Table structure for `#@__member_company`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_company`;
-CREATE TABLE `#@__member_company` (
-                                      `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '会员ID',
-                                      `member_id` int(10) DEFAULT '0' COMMENT '会员表ID',
-                                      `category_id` int(10) DEFAULT '0' COMMENT '公司分类',
-                                      `province_id` int(10) DEFAULT '0' COMMENT '省id',
-                                      `city_id` int(10) DEFAULT '0' COMMENT '市',
-                                      `county_id` int(10) DEFAULT '0' COMMENT '区',
-                                      `click` int(10) DEFAULT '1' COMMENT '点击数',
-                                      `name` varchar(50) DEFAULT '' COMMENT '公司名称',
-                                      `linkman` varchar(50) DEFAULT '' COMMENT '联系人',
-                                      `tel` varchar(50) DEFAULT '' COMMENT '电话',
-                                      `weixin` varchar(50) DEFAULT '',
-                                      `qicq` varchar(50) DEFAULT '',
-                                      `address` varchar(128) DEFAULT '' COMMENT '联系地址',
-                                      `litpic` varchar(128) DEFAULT '' COMMENT '公司logo',
-                                      `intro` text COMMENT '公司介绍',
-                                      `status` tinyint(1) DEFAULT '0' COMMENT '状态，0=未审核，1=审核',
-                                      `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
-                                      `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-                                      PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='[会员]会员公司列表';
-
--- -----------------------------
--- Table structure for `#@__member_config`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_config`;
-CREATE TABLE `#@__member_config` (
-                                     `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '会员功能配置表ID',
-                                     `name` varchar(50) DEFAULT '' COMMENT '配置的key键名',
-                                     `value` text COMMENT '配置的value值',
-                                     `desc` varchar(100) DEFAULT '' COMMENT '键名说明',
-                                     `inc_type` varchar(64) DEFAULT '' COMMENT '配置分组',
-                                     `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-                                     `create_time` int(11) DEFAULT '0' COMMENT '创建时间',
-                                     PRIMARY KEY (`id`),
-                                     UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='[会员]会员功能配置表';
-
--- -----------------------------
--- Records of `lqf_member_config`
--- -----------------------------
-INSERT INTO `#@__member_config` VALUES ('1', 'member_reg', '30', '初始注册激活', 'member', '1563498415', '0');
-INSERT INTO `#@__member_config` VALUES ('2', 'member_login', '1', '24小时登录一次', 'member', '1563498414', '0');
-INSERT INTO `#@__member_config` VALUES ('3', 'info_pass', '2', '信息发布审核通过', 'info', '1547890773', '0');
-INSERT INTO `#@__member_config` VALUES ('4', 'info_reject', '-2', '信息发布审核拒绝后', 'info', '1564555772', '0');
-INSERT INTO `#@__member_config` VALUES ('5', 'member_realname', '20', '实名认证通过后', 'member', '1564555773', '0');
-INSERT INTO `#@__member_config` VALUES ('6', 'info_refresh', '-1', '刷新信息扣出积分', 'info', '1588948593', '0');
-INSERT INTO `#@__member_config` VALUES ('7', 'info_askfor_view', '-2', '查看报名信息', 'infoaskfor', '1588948593', '0');
-INSERT INTO `#@__member_config` VALUES ('8', 'info_askfor_find', '-5', '找学员', 'infoaskfor', '1588948593', '0');
-
--- -----------------------------
--- Table structure for `#@__member_integral`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_integral`;
-CREATE TABLE `#@__member_integral` (
-                                       `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '明细表ID',
-                                       `member_id` int(10) DEFAULT '0' COMMENT '会员表ID',
-                                       `integral` decimal(10,0) DEFAULT '0' COMMENT '积分',
-                                       `member_integral` decimal(10,0) DEFAULT '0' COMMENT '此条记录的账户积分',
-                                       `cause` text COMMENT '事由，暂时在升级消费中使用到，以serialize序列化后存入，用于后续查询。',
-                                       `cause_type` varchar(50) DEFAULT '' COMMENT '数据类型',
-                                       `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
-                                       `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-                                       PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COMMENT='[会员]会员积分明细表';
-
--- -----------------------------
--- Table structure for `#@__member_level`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_level`;
-CREATE TABLE `#@__member_level` (
-                                    `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-                                    `level_name` varchar(30) DEFAULT '' COMMENT '级别名称',
-                                    `level_value` int(10) DEFAULT '0' COMMENT '会员等级值',
-                                    `is_system` tinyint(1) DEFAULT '0' COMMENT '类型，1=系统，0=用户',
-                                    `amount` decimal(10,2) DEFAULT '0.00' COMMENT '消费额度',
-                                    `down_count` int(10) DEFAULT '0' COMMENT '每天下载次数限制',
-                                    `upload_img` int(10) DEFAULT '0' COMMENT '上传图片数量',
-                                    `discount` float(10,2) DEFAULT '100.00' COMMENT '折扣率，初始值为100即100%，无折扣',
-  `posts_count` int(10) DEFAULT '5' COMMENT '会员投稿次数限制',
-  `ask_is_release` tinyint(1) DEFAULT '1' COMMENT '允许在问答中发布问题，1=是，0=否',
-  `ask_is_review` tinyint(1) DEFAULT '0' COMMENT '在问答中发布问题或回答是否需要审核，1=是，0=否',
-  `remark` varchar(256) DEFAULT 'cn' COMMENT '备注说明',
-  `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
-  `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='[会员]会员级别表';
-
--- -----------------------------
--- Records of `lqf_member_level`
--- -----------------------------
-INSERT INTO `#@__member_level` VALUES ('1', '注册会员', '10', '1', '0.00', '100', '100', '100', '5', '1', '0', 'cn', '0', '1609900542');
-INSERT INTO `#@__member_level` VALUES ('2', '白银会员', '51', '0', '0.00', '100', '300', '100', '10', '1', '0', 'cn', '1564532901', '1618536831');
-INSERT INTO `#@__member_level` VALUES ('3', '黄金会员', '100', '0', '0.00', '100', '500', '100', '20', '1', '0', 'cn', '1564532901', '1611725089');
-INSERT INTO `#@__member_level` VALUES ('4', '钻石会员', '500', '0', '0.00', '0', '1000', '60', '5', '1', '0', '比较好的', '1609853985', '0');
-
--- -----------------------------
--- Table structure for `#@__member_list`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_list`;
-CREATE TABLE `#@__member_list` (
-                                   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-                                   `member_id` int(10) NOT NULL DEFAULT '0' COMMENT '会员ID',
-                                   `para_id` int(10) NOT NULL DEFAULT '0' COMMENT '属性ID',
-                                   `info` text COMMENT '属性值',
-                                   `lang` varchar(50) NOT NULL DEFAULT 'cn' COMMENT '语言标识',
-                                   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '新增时间',
-                                   `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-                                   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='[会员]会员属性表(信息）';
-
--- -----------------------------
--- Table structure for `#@__member_menu`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_menu`;
-CREATE TABLE `#@__member_menu` (
-                                   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-                                   `title` varchar(30) DEFAULT '' COMMENT '导航名称',
-                                   `mca` varchar(50) DEFAULT '' COMMENT '分组/控制器/操作名',
-                                   `is_userpage` tinyint(1) DEFAULT '0' COMMENT '默认会员首页',
-                                   `sort_order` int(10) DEFAULT '0' COMMENT '排序号',
-                                   `status` tinyint(1) DEFAULT '1' COMMENT '状态，1=显示，0=隐藏',
-                                   `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
-                                   `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-                                   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='[会员]会员菜单表';
-
--- -----------------------------
--- Records of `lqf_member_menu`
--- -----------------------------
-INSERT INTO `#@__member_menu` VALUES ('1', '个人信息', 'user/Users/index', '1', '100', '1', '1555904190', '1555917737');
-INSERT INTO `#@__member_menu` VALUES ('2', '账户充值', 'user/Pay/pay_consumer_details', '0', '100', '1', '1555904190', '1563498414');
-INSERT INTO `#@__member_menu` VALUES ('3', '商城中心', 'user/Shop/shop_centre', '0', '100', '1', '1555904190', '1563498415');
-INSERT INTO `#@__member_menu` VALUES ('4', '会员升级', 'user/Level/level_centre', '0', '100', '1', '1555904190', '1564555772');
-INSERT INTO `#@__member_menu` VALUES ('5', '会员投稿', 'user/UsersRelease/release_centre', '0', '100', '1', '1555904190', '1564555773');
-INSERT INTO `#@__member_menu` VALUES ('6', '我的下载', 'user/Download/index', '0', '100', '1', '1590484667', '1609817872');
-
--- -----------------------------
--- Table structure for `#@__member_money`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_money`;
-CREATE TABLE `#@__member_money` (
-                                    `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '金额明细表ID',
-                                    `member_id` int(10) DEFAULT '0' COMMENT '会员表ID',
-                                    `money` decimal(10,2) DEFAULT '0.00' COMMENT '金额',
-                                    `member_money` decimal(10,2) DEFAULT '0.00' COMMENT '此条记录的账户金额',
-                                    `cause` text COMMENT '事由，暂时在升级消费中使用到，以serialize序列化后存入，用于后续查询。',
-                                    `cause_type` tinyint(1) DEFAULT '0' COMMENT '数据类型，0为消费，1为充值。其余后续添加。',
-                                    `status` tinyint(1) DEFAULT '1' COMMENT '是否成功，默认1，0失败，1未付款，2已付款，3已完成，4订单取消。',
-                                    `pay_method` varchar(10) DEFAULT '' COMMENT '支付方式，wechat为微信支付，alipay为支付宝支付',
-                                    `wechat_pay_type` varchar(20) NOT NULL DEFAULT '' COMMENT '微信支付时，标记使用的支付类型（扫码支付，微信内部，微信H5页面）',
-                                    `pay_details` text COMMENT '支付时返回的数据，以serialize序列化后存入，用于后续查询。',
-                                    `order_number` varchar(30) DEFAULT '' COMMENT '订单号',
-                                    `lang` varchar(50) DEFAULT 'cn' COMMENT '语言标识',
-                                    `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
-                                    `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-                                    PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='[会员]会员金额明细表';
-
-
--- -----------------------------
--- Table structure for `#@__member_order`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_order`;
-CREATE TABLE `#@__member_order` (
-                                    `id` int(16) NOT NULL AUTO_INCREMENT COMMENT '关键id',
-                                    `name` varchar(256) NOT NULL DEFAULT '' COMMENT '订单名称',
-                                    `order_code` varchar(20) NOT NULL DEFAULT '' COMMENT '订单编号',
-                                    `member_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
-                                    `payment_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '订单状态：0未付款(已下单)，1已付款(待发货)',
-                                    `payment_method` tinyint(1) DEFAULT '0' COMMENT '订单支付方式，0为在线支付，1为线下付款，默认0',
-                                    `pay_time` datetime DEFAULT NULL COMMENT '支付时间',
-                                    `pay_name` varchar(20) NOT NULL DEFAULT '' COMMENT '支付方式名称',
-                                    `pay_details` mediumtext COMMENT '支付时返回的数据，以serialize序列化后存入，用于后续查询。',
-                                    `wechat_pay_type` varchar(20) NOT NULL DEFAULT '' COMMENT '微信支付时，标记使用的支付类型（扫码支付，微信内部，微信H5页面）',
-                                    `order_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '应付款金额',
-                                    `bus_type` varchar(50) DEFAULT NULL COMMENT '订单类型：level升级订单、integral、info',
-                                    `bus_id` tinyint(1) unsigned DEFAULT '0' COMMENT '订单关联产品编号',
-                                    `admin_remark` mediumtext COMMENT '管理员操作备注',
-                                    `remark` mediumtext COMMENT '订单备注',
-                                    `member_remark` mediumtext COMMENT '会员备注',
-                                    `update_time` int(11) unsigned DEFAULT '0' COMMENT '更新时间',
-                                    `create_time` int(11) unsigned DEFAULT '0' COMMENT '创建时间',
-                                    `pay_transaction_no` varchar(256) NOT NULL DEFAULT '0' COMMENT '支付渠道单号',
-                                    PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='[会员]订单主表';
-
--- -----------------------------
--- Table structure for `#@__member_parameter`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_parameter`;
-CREATE TABLE `#@__member_parameter` (
-                                        `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'id',
-                                        `title` varchar(100) NOT NULL DEFAULT '' COMMENT '标题',
-                                        `name` varchar(100) NOT NULL DEFAULT '' COMMENT '名称',
-                                        `dtype` varchar(32) NOT NULL DEFAULT '' COMMENT '字段类型',
-                                        `dfvalue` varchar(1000) NOT NULL DEFAULT '' COMMENT '默认值',
-                                        `is_system` tinyint(1) DEFAULT '0' COMMENT '是否为系统属性，系统属性不可删除，1为是，0为否，默认0。',
-                                        `is_hidden` tinyint(1) DEFAULT '0' COMMENT '是否禁用属性，1为是，0为否',
-                                        `is_required` tinyint(1) DEFAULT '0' COMMENT '是否为必填属性，1为是，0为否，默认0。',
-                                        `is_reg` tinyint(1) DEFAULT '1' COMMENT '是否为注册表单，1为是，0为否',
-                                        `sort_order` smallint(5) NOT NULL DEFAULT '0' COMMENT '排序',
-                                        `lang` varchar(50) NOT NULL DEFAULT 'cn' COMMENT '语言标识',
-                                        `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '新增时间',
-                                        `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-                                        PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='[会员]会员属性表(字段)';
-
-
--- -----------------------------
--- Table structure for `#@__member_picture`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_picture`;
-CREATE TABLE `#@__member_picture` (
-                                      `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id自增',
-                                      `member_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
-                                      `name` varchar(255) NOT NULL DEFAULT '' COMMENT '图片名称',
-                                      `path` varchar(255) NOT NULL DEFAULT '' COMMENT '路径',
-                                      `url` varchar(255) NOT NULL DEFAULT '' COMMENT '图片链接',
-                                      `sha1` char(40) NOT NULL DEFAULT '' COMMENT '文件 sha1编码',
-                                      `reply_remark` varchar(255) NOT NULL DEFAULT '' COMMENT '回复备注',
-                                      `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态0待审，1=审核，2=拒绝',
-                                      `issave` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否保存',
-                                      `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-                                      `update_time` int(11) unsigned NOT NULL DEFAULT '0',
-                                      PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='[会员]会员图片管理表';
-
--- -----------------------------
--- Table structure for `#@__member_product_integral`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_product_integral`;
-CREATE TABLE `#@__member_product_integral` (
-                                               `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-                                               `name` varchar(30) DEFAULT '' COMMENT '类型名称',
-                                               `integral` int(10) DEFAULT '0' COMMENT '积分值',
-                                               `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '价格',
-                                               `sort` smallint(5) NOT NULL DEFAULT '0' COMMENT '排序',
-                                               `remark` varchar(30) DEFAULT '',
-                                               `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
-                                               `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-                                               PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='[会员]会员产品积表';
-
--- -----------------------------
--- Records of `lqf_member_product_integral`
--- -----------------------------
-INSERT INTO `#@__member_product_integral` VALUES ('3', '10积分', '10', '10.00', '100', '', '1609902409', '1610367870');
-INSERT INTO `#@__member_product_integral` VALUES ('4', '110积分(赠送10分)', '110', '100.00', '110', '', '1609903516', '0');
-INSERT INTO `#@__member_product_integral` VALUES ('5', '200积分(赠送40分)', '240', '200.00', '240', '', '1609903516', '0');
-
--- -----------------------------
--- Table structure for `#@__member_product_level`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_product_level`;
-CREATE TABLE `#@__member_product_level` (
-                                            `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-                                            `name` varchar(30) DEFAULT '' COMMENT '类型名称',
-                                            `level_id` int(10) DEFAULT '0' COMMENT '会员等级ID',
-                                            `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '价格',
-                                            `period` int(10) DEFAULT '0' COMMENT '会员周期值，默认单位为月',
-                                            `sort` smallint(5) NOT NULL DEFAULT '0' COMMENT '排序',
-                                            `remark` varchar(30) DEFAULT '',
-                                            `create_time` int(11) DEFAULT '0' COMMENT '新增时间',
-                                            `update_time` int(11) DEFAULT '0' COMMENT '更新时间',
-                                            PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='[会员]会员产品升级';
-
--- -----------------------------
--- Records of `lqf_member_product_level`
--- -----------------------------
-INSERT INTO `#@__member_product_level` VALUES ('1', '升级为本站白银会员', '2', '150.00', '12', '88', '', '1564532901', '1611725131');
-INSERT INTO `#@__member_product_level` VALUES ('2', '升级为本站黄金会员', '3', '200.00', '12', '100', '', '1564532901', '1611725148');
-INSERT INTO `#@__member_product_level` VALUES ('3', '升级为本站钻石会员', '4', '100.00', '12', '100', '', '1609897320', '1611725292');
-
--- -----------------------------
--- Table structure for `#@__member_realname`
--- -----------------------------
-DROP TABLE IF EXISTS `#@__member_realname`;
-CREATE TABLE `#@__member_realname` (
-       `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
-       `status` int(11) NOT NULL DEFAULT '0' COMMENT '0=未审核，1=审核,2=拒绝',
-       `name` varchar(256) NOT NULL DEFAULT '' COMMENT '真实名称',
-       `real_type` varchar(256) NOT NULL DEFAULT '1' COMMENT '实名类型、1=个人，2=公司',
-       `cert_type` varchar(256) NOT NULL DEFAULT '' COMMENT '证件类型、1=身份证、2=营业执照',
-       `cert_code` varchar(256) NOT NULL DEFAULT '' COMMENT '证件号',
-       `cert_pic` varchar(256) NOT NULL DEFAULT '' COMMENT '证件图片列',
-       `cert_pic1` varchar(256) NOT NULL DEFAULT '' COMMENT '证件图片',
-       `cert_pic2` varchar(256) NOT NULL DEFAULT '' COMMENT '证件图片2',
-       `member_id` varchar(256) NOT NULL DEFAULT '' COMMENT '会员编号',
-       `reply_remark` varchar(256) NOT NULL DEFAULT '' COMMENT '回复备注',
-       `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
-       `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-       `org_id` int(11) NOT NULL DEFAULT '0',
-       PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='[会员]会员实名认证';

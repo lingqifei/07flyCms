@@ -26,25 +26,37 @@ class Upload extends AddonBase
      */
     public function pictureUpload()
     {
-        
+        $param = $this->param;
         $UploadLogic = new LogicUpload();
-        
-        $result = $UploadLogic->pictureUpload();
-        
+        if (!empty($param['dir'])) {
+            switch ($param['dir']) {
+                case 'media':
+                    $result = $UploadLogic->fileUpload();
+                    break;
+                case 'file':
+                    $result = $UploadLogic->fileUpload();
+                    break;
+                case 'image':
+                    $result = $UploadLogic->pictureUpload();
+                    break;
+                default:
+                    $result = $UploadLogic->pictureUpload();
+                    break;
+            }
+        } else {
+            $result = $UploadLogic->pictureUpload();
+        }
         return throw_response_exception($result);
     }
 
     /**
+     * markdown.html 图片上传=.editormd
      * 图片上传=.editormd
      */
     public function pictureUploadEditormd()
     {
-
         $UploadLogic = new LogicUpload();
-
         $result = $UploadLogic->pictureUploadEditormd();
-
         return throw_response_exception($result);
     }
-
 }

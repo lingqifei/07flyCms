@@ -62,7 +62,6 @@ class Editor extends AddonBase implements AddonInterface
      */
     public function addonInstall()
     {
-
         return [RESULT_SUCCESS, '安装成功'];
     }
 
