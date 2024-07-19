@@ -130,7 +130,13 @@ class Archives extends CmsBase
     {
         $this->jump($this->logicCmsBase->setSort('Archives', $this->param));
     }
-
+    /**
+     * 启用
+     */
+    public function set_visible()
+    {
+        $this->jump($this->logicCmsBase->setField('Archives', $this->param));
+    }
     /**
      *加载公共参数
      */

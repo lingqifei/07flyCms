@@ -50,13 +50,14 @@
                         <thead>
                         <tr>
                             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
-                            <th width="50"><span>ID号</span></th>
+                            <th width="30"><span>ID号</span></th>
                             <th width="200"><span>文章标题</span></th>
                             <th width="100"><span>栏目名称</span></th>
                             <th width="80"><span>点击</span></th>
                             <th width="80"><span>作者</span></th>
-                            <th width="100"><span>更新时间</span></th>
+                            <th width="100" class="text-center"><span>更新时间</span></th>
                             <th width="80" class="text-center"><span>排序</span></th>
+                            <th width="60" class="text-center"><span>发布</span></th>
                             <th width="80" class="text-center">操作</th>
                         </tr>
                         </thead>
@@ -74,7 +75,10 @@
     </div>
 </div>
 <script id="tableListTpl" type="text/html">
-    <% for(var i=0;i<data.length;i++) { %>
+    <% for(var i=0;i<data.length;i++) {
+    visible='';
+    if(data[i]['visible']=='1') visible='checked';
+    %>
     <tr>
         <td><input name="id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
         <td><%=data[i]['id']%></td>
@@ -86,14 +90,19 @@
         <td><%=data[i]['typename']%></td>
         <td><%=data[i]['click']%></td>
         <td><%=data[i]['writer']%></td>
-        <td><%=data[i]['pubdate']%></td>
+        <td class="text-center"><%=data[i]['pubdate']%></td>
         <td class="text-center"><input type="text" class="w50 ajax-sort text-center" data-url="{:url('Archives/set_sort')}" data-ids="{'id':'<%=data[i]['id']%>'}" value="<%=data[i]['sort']%>"></td>
+        <td class="text-center">
+            <input name="visible" class="ajax-checkbox" type="checkbox"
+                   data-url="{:url('Archives/set_visible',array('name'=>'visible'))}" data-id="<%=data[i]['id']%>"
+            <%=visible%> >
+        </td>
         <td class="text-center">
                 <lqf_link><a class="ajax-open" data-url="{:url('Archives/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改">修改</a></lqf_link>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('Archives/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
-        <%if(data[i]['arcext_id']>0){%>
-                <lqf_link><a class="ajax-open" data-url="{:url('ArcextInfo/show')}" data-ids="{'archives_id':'<%=data[i]['id']%>','channel_id':'<%=data[i]['channel_id']%>'}">扩展</a></lqf_link>
-       <%}%>
+            <%if(data[i]['arcext_id']>0){%>
+            <lqf_link><a class="ajax-open" data-url="{:url('ArcextInfo/show')}" data-ids="{'archives_id':'<%=data[i]['id']%>','channel_id':'<%=data[i]['channel_id']%>'}">扩展</a></lqf_link>
+           <%}%>
         </td>
     </tr>
     <% } %>

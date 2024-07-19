@@ -55,7 +55,6 @@ class Archives extends ControllerBase
         }
     }
 
-
     /**
      * 信息添加
      * @return mixed|string
@@ -71,7 +70,6 @@ class Archives extends ControllerBase
      */
     public function add()
     {
-
         $this->chklogin();
         //d($this->param);
         //dlog($this->param);
@@ -95,82 +93,33 @@ class Archives extends ControllerBase
         }
     }
 
-
-    /**
-     * 地图创建
-     *
-     * @return mixed
-     * created by Administrator at 2020/2/24 0024 15:15
-     */
-    public function sitemap()
+    //在线投稿添加
+    public function addTouGao()
     {
-
-        $siteStr = '<?xml version="1.0" encoding="utf-8"?><urlset>';
-        $arctypelist = Db::name('arctype')->field('id,litpic,ispart,typedir')->select();
-        foreach ($arctypelist as &$row) {
-            $typeurl = $this->getArctypeUrl($row);
-            $siteStr .= '<url><loc>' . DOMAIN . $typeurl . '</loc></url>';
-        }
-
-        $arclist = Db::name('archives')->field('id,litpic,is_jump,type_id')->select();
-        foreach ($arclist as $row) {
-            $arcurl = $this->getArchivesUrl($row);
-            $siteStr .= '<url><loc>' . DOMAIN . $arcurl . '</loc></url>';
-        }
-        $siteStr .= '</urlset>';
-        file_put_contents(PATH_PUBLIC . 'sitemap.xml', $siteStr);
-        //d($siteStr);
+        //d($this->param);
+        //dlog($this->param);
+        $data = $this->param;
+        $data['title'] = $this->param['title'];
+        $data['shorttitle'] = empty($this->param['shorttitle']) ? '' : $this->param['shorttitle'];
+        $data['keywords'] = empty($this->param['keywords']) ? '' : $this->param['keywords'];
+        $data['description'] =empty($this->param['description']) ? '' : $this->param['description'];
+        $data['source'] =empty($this->param['source']) ? '' : $this->param['source'];
+        $data['body'] = $this->param['body'];
+        $data['type_id'] = $this->param['typeid'];
+        $data['type_id2'] = 0;
+        $data['litpic'] = empty($this->param['litpic']) ? '' : $this->param['litpic'];
+        $data['click'] = 1;
+        $data['writer'] = empty($this->param['writer']) ? 'admin' : $this->param['writer'];
+        $data['pubdate'] = format_time();
+        $result = $this->logicArchives->archivesAdd($data);
+        return $result;
     }
 
-
-    /**获得所有指定id所有父级
-     * @param int $typeid
-     * @param array $data
-     * @return array
-     */
-    public function getArctypeUrl($data = [])
-    {
-        if ($data['ispart'] == 2) {
-            $data['typeurl'] = $data['typedir'];
-            if (!is_http_url($data['typeurl'])) {
-                $typeurl = '//' . request()->host();
-                $typeurl .= '/' . trim($data['typeurl'], '/');
-            }
-        } else {
-            if ($data['typedir']) {
-                $typeurl = url('index/lists/index', array('tid' => $data['typedir']));
-            } else {
-                $typeurl = url('index/lists/index', array('tid' => $data['id']));
-            }
-        }
-        return $typeurl;
+    //获取栏目
+    public function getArctype(){
+        $where['issend']=['=','1'];//是否支持投稿
+        $listtree= $this->logicArctype->getArctypeListTree($where);
+        $arctypelist= $this->logicArctype->getArctypeListSelect($listtree);
+        return $arctypelist;
     }
-
-    /**
-     * 转换一条文章的实际地址
-     * @param array $data
-     * @return mixed|string
-     * Author: lingqifei created by at 2020/2/27 0027
-     */
-    public function getArchivesUrl($data = [])
-    {
-        if ($data['is_jump'] == 1 && $data['jump_url']) {
-            $arcurl = $data['jump_url'];
-        } else {
-            $typeid = $this->getTrueTypedir($data['type_id']);
-            $arcurl = url('index/view/index', array('typeid' => $typeid, 'aid' => $data['id']));
-        }
-        return $arcurl;
-    }
-
-    /**
-     * 在typeid传值为目录名称的情况下，获取栏目ID
-     */
-    public function getTrueTypedir($typeid = '')
-    {
-        $typedir = Db::name('arctype')->where(['id' => $typeid])->value('typedir');
-        if (empty($typedir)) return $typeid;
-        return $typedir;
-    }
-
 }

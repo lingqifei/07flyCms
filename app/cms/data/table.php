@@ -41,7 +41,30 @@ return [
             'primary' => ['id'],
             //索引
             'index' => [
-                'tid' => ['type' => "normal", 'columns' => ['tid','aid','typeid']],
+                //'tid' => ['type' => "normal", 'columns' => ['tid','aid','typeid']],
+                //'ind_age' => ['type' => "normal", 'columns' => ['test002']],
+            ],
+        ],
+
+        'archives' => [
+            //表名
+            'table_name' => 'archives',
+            //表注释
+            'comment' => '[系统]文章信息主表',
+            //'engine' => 'InnoDB',
+            'engine' => 'InnoDB',
+            'charset' => 'utf8mb4',
+            'collate' => 'utf8mb4_general_ci',
+            //字段信息
+            'columns' => [
+                'id' => ['type' => 'int', 'length' => 16, 'unsigned' => false, 'autoincrement' => true, 'comment' => '主id',],
+                'visible' => ['type' => 'int', 'length' => 2, 'required' => true, 'default' => '1', 'comment' => '状态(1=显示，0=隐藏)',],
+            ],
+            //主键 多个主键['user_id','name']
+            'primary' => ['id'],
+            //索引
+            'index' => [
+                //'tid' => ['type' => "normal", 'columns' => ['tid','aid','typeid']],
                 //'ind_age' => ['type' => "normal", 'columns' => ['test002']],
             ],
         ],

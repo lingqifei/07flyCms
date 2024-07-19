@@ -151,7 +151,7 @@ class Arctype extends CmsBase
     }
 
     /**
-     * 排序
+     * 启用
      */
     public function set_visible()
     {

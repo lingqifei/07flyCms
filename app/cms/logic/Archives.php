@@ -69,7 +69,9 @@ class Archives extends CmsBase
             $keywords=preg_replace("/(\n)|(\s)|(\t)|(\')|(')|(，)/" ,',' ,$data['keywords']);
         }else{
             $keywords=getKeywords($data['title'],html_msubstr($data['body'],0));
-            $keywords && $keywords=arr2str($keywords,',');
+            if(is_array($keywords)){
+                $keywords=arr2str($keywords,',');
+            }
         }
         //简介处理
         if(!empty($data['description'])){
@@ -173,7 +175,7 @@ class Archives extends CmsBase
             'channel_id'=>$arctype['channel_id'],
             'type_id'=>$data['type_id'],
             'type_id2'=>$data['type_id2'],
-           'sys_area_id'=>empty($data['sys_area_id'])?'0':$data['sys_area_id'],
+            'sys_area_id'=>empty($data['sys_area_id'])?'0':$data['sys_area_id'],
             'title'=>$data['title'],
             'shorttitle'=>$data['shorttitle'],
             'flag'=>(!empty($data['flag']))?implode(",",$data['flag']):'',
@@ -183,6 +185,7 @@ class Archives extends CmsBase
             'click'=>$data['click'],
             'writer'=>$data['writer'],
             'pubdate'=>$data['pubdate'],
+            'visible'=>$data['visible'],
             'is_jump'=>empty($data['is_jump'])?'0':'1',
             'jump_url'=>empty($data['jump_url'])?'0':$data['jump_url'],
         ];
