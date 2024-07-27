@@ -2,9 +2,11 @@
 <link rel="stylesheet" href="__STATIC__/addon/editor/editormd/css/editormd.css" >
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 <script src="__STATIC__/addon/editor/editormd/editormd.js" ></script>
+
 <div id="{$addons_data.name}">
     <textarea id="inp-content" style="display:none;"> {$addons_data['value']}</textarea>
 </div>
+
 <script>
     $(function() {
         var editor = editormd("{$addons_data.name}", {

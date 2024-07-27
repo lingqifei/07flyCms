@@ -26,6 +26,7 @@ class Upload extends AddonBase
      */
     public function pictureUpload()
     {
+
         $param = $this->param;
         $UploadLogic = new LogicUpload();
         if (!empty($param['dir'])) {
@@ -50,13 +51,16 @@ class Upload extends AddonBase
     }
 
     /**
-     * markdown.html 图片上传=.editormd
      * 图片上传=.editormd
      */
     public function pictureUploadEditormd()
     {
+
         $UploadLogic = new LogicUpload();
+
         $result = $UploadLogic->pictureUploadEditormd();
+
         return throw_response_exception($result);
     }
+
 }
