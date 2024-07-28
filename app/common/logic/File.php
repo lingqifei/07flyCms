@@ -28,6 +28,11 @@ class File extends LogicBase
     {
 
         $object_info = request()->file($name);
+        //没有文件上传
+        if (empty($object_info)) {
+            return false;
+        }
+
         $sha1 = $object_info->hash();
         $picture_info = $this->modelPicture->getInfo(['sha1' => $sha1], 'id,name,path,sha1');
         if (!empty($picture_info)) {
