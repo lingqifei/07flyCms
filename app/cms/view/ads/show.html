@@ -11,7 +11,7 @@
                 <div class="ibox-content">
                     <div class="row">
                         <form id="pagerForm" method="post" class="form-inline searchForm">
-                            <div class="col-sm-12 m-b-xs text-right">
+                            <div class="col-sm-12">
                                 <div class="input-group">
                                     <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
                                 </div>
@@ -45,7 +45,7 @@
                             <th width="50"><span>宽度</span></th>
                             <th width="50"><span>高度</span></th>
                             <th width="200"><span>介绍</span></th>
-                            <th width="100">操作</th>
+                            <th width="100" class="text-center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -70,12 +70,10 @@
         <td><%=data[i]['width']%></td>
         <td><%=data[i]['height']%></td>
         <td><%=data[i]['intro']%></td>
-        <td>
-            <p>
+        <td class="text-center">
                 <lqf_link><a class="ajax-goto" data-url="{:url('AdsList/show')}" data-ids="{'id':'<%=data[i]['id']%>'}">广告</a></lqf_link>
                 <lqf_link><a class="ajax-open" data-url="{:url('Ads/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}">修改</a></lqf_link>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('Ads/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
-            </p>
         </td>
     </tr>
     <% } %>
