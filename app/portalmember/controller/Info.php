@@ -53,8 +53,6 @@ class Info extends MemberBaseAuth
                 $where['istop'] = ['=', '1'];
                 break;
         }
-
-
         $list = $this->logicInfo->getInfoList($where);
         $pages = $list->render('info,pre,next,pageno', DB_LIST_ROWS);
         $this->assign('pages', $pages);
@@ -116,8 +114,6 @@ class Info extends MemberBaseAuth
         $this->assign('info', $info);
         return $this->fetch('info_istop');
     }
-
-
 }
 
 ?>
