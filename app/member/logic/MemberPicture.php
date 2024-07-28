@@ -37,7 +37,7 @@ class MemberPicture extends MemberBase
         if($paginate===false) $list['data']=$list;
         foreach ($list['data'] as &$row){
             $row['status_arr']=$this->modelMemberPicture->status($row['status']);
-            $row['path_img']=get_picture_url2($row['path']);
+            $row['path_img']=get_picture_url($row['path']);
         }
         return $list;
     }
