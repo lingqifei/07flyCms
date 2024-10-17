@@ -21,13 +21,36 @@
  * comment  注释
  */
 return [
-	'tables' => [
+    'tables' => [
+
+        'ads_list' => [
+            //表名
+            'table_name' => 'ads_list',
+            //表注释
+            'comment' => '[cms]广告列表',
+            //'engine' => 'InnoDB',
+            'engine' => 'InnoDB',
+            'charset' => 'utf8mb4',
+            'collate' => 'utf8mb4_general_ci',
+            //字段信息
+            'columns' => [
+                'id' => ['type' => 'int', 'length' => 16, 'unsigned' => false, 'autoincrement' => true, 'comment' => '主id',],
+                'litpic2' => ['type' => 'varchar', 'length' => 256, 'required' => true, 'default' => '', 'comment' => '手机广告图片',],
+            ],
+            //主键 多个主键['user_id','name']
+            'primary' => ['id'],
+            //索引
+            'index' => [
+                //'tid' => ['type' => "normal", 'columns' => ['tid','aid','typeid']],
+                //'ind_age' => ['type' => "normal", 'columns' => ['test002']],
+            ],
+        ],
 
         'arctype' => [
             //表名
             'table_name' => 'arctype',
             //表注释
-            'comment' => '[系统]文章分类',
+            'comment' => '[cms]文章分类',
             //'engine' => 'InnoDB',
             'engine' => 'InnoDB',
             'charset' => 'utf8mb4',
@@ -50,7 +73,7 @@ return [
             //表名
             'table_name' => 'archives',
             //表注释
-            'comment' => '[系统]文章信息主表',
+            'comment' => '[cms]文章信息主表',
             //'engine' => 'InnoDB',
             'engine' => 'InnoDB',
             'charset' => 'utf8mb4',
@@ -69,6 +92,6 @@ return [
             ],
         ],
 
-	],//end tables;
+    ],//end tables;
 
 ];

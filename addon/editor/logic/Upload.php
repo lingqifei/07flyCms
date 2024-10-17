@@ -55,11 +55,8 @@ class Upload
      */
     public function pictureUploadEditormd()
     {
-
         $fileLogic = get_sington_object('fileLogic', LogicFile::class);
-
         $result = $fileLogic->pictureUpload('editormd-image-file');
-
         if (false === $result) {
             $data['success'] = 0;
             $data['message'] = '上传失败';
