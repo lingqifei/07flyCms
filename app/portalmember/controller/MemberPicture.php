@@ -116,7 +116,7 @@ class MemberPicture extends MemberBaseAuth
             $tmp[$key]['filesize']=100;
             $tmp[$key]['dir_path']='';
             $tmp[$key]['is_photo']=true;
-            $tmp[$key]['filename']=get_picture_url2($row['path']);
+            $tmp[$key]['filename']=get_picture_url($row['path']);
             //$tmp[$key]['filename']=$row['path'];
             $tmp[$key]['datetime']=format_time();
         }

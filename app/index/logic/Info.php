@@ -43,7 +43,7 @@ class Info extends IndexBase
         $list= $this->modelInfo->getList($where, $field, $order, $paginate);
         $city=$this->logicRegion->getRegionListName();
         foreach ($list as &$row){
-            $row['litpic'] =get_picture_url2($row['litpic']);
+            $row['litpic'] =get_picture_url($row['litpic']);
             $row['infourl'] =$this->getInfoUrl($row);
             $row['city_name'] =$city[$row['city_id']];
         }

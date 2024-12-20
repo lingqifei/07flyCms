@@ -35,7 +35,7 @@ class MemberAdvDis extends IndexBase
         $list = $this->modelMemberAdvDis->getList($where, $field, $order, $paginate)->toArray();
         $paginate === false && $this->modelMemberAdvDis->limit($limit);
         foreach ($list as &$row) {
-            $row['litpic'] = get_picture_url2($row['litpic']);
+            $row['litpic'] = get_picture_url($row['litpic']);
             $row['target'] = ($row['target'] == 1) ? 'target="_blank"' : 'target="_self"';
         }
         return $list;

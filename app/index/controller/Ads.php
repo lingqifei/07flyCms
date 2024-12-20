@@ -187,7 +187,7 @@ class Ads extends IndexBase
                 $text = '';
                 switch ($adv['ad_type']) {
                     case '0':
-                        $text = '<a href="' . $ads['links'] . '" ><img src="' . get_picture_url2($ads['litpic']) . '" width="' . $adv['width'] . '" height="' . $adv['height'] . '"></a>';
+                        $text = '<a href="' . $ads['links'] . '" ><img src="' . get_picture_url($ads['litpic']) . '" width="' . $adv['width'] . '" height="' . $adv['height'] . '"></a>';
                         break;
                     case '1':
                         $text = '<a href="' . $ads['links'] . '" ' . $ads['target'] . '>' . $ads['body'] . '</a>';
@@ -208,7 +208,7 @@ class Ads extends IndexBase
                 $adbody = str_replace("\n", "\\n", $adbody);
                 $adbody = "<!--\r\ndocument.write(\"{$adbody}\");\r\n-->\r\n";
             } else {
-                $adbody = '<a href="' . $adv['links'] . '" ><img src="' . get_picture_url2($adv['litpic']) . '" width="' . $adv['width'] . '" height="' . $adv['height'] . '"></a>';
+                $adbody = '<a href="' . $adv['links'] . '" ><img src="' . get_picture_url($adv['litpic']) . '" width="' . $adv['width'] . '" height="' . $adv['height'] . '"></a>';
                 $adbody = str_replace('"', '\"', $adbody);
                 $adbody = str_replace("\r", "\\r", $adbody);
                 $adbody = str_replace("\n", "\\n", $adbody);

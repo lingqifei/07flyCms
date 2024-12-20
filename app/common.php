@@ -694,7 +694,16 @@ function get_picture_url($id = 0, $member = 'picture')
         }
     }
 }
+/**
+ * 获取图片url=>根据地址
+ */
+function get_picture_url2($path = '')
+{
 
+    $fileLogic = get_sington_object('fileLogic', LogicFile::class);
+
+    return $fileLogic->getPictureWebUrl($path);
+}
 /**
  * 获取文件url=>根据 file id
  */
