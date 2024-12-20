@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | 07FLY系统 [基于ThinkPHP5.0开发]
+// | 07FLYCRM系统 [基于ThinkPHP5.0开发]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016-2021 http://www.07fly.xyz
 // +----------------------------------------------------------------------
-// | 07FLY承诺基础框架永久免费开源，您可用于学习和商用，但必须保留软件版权信息。
+// |  以质量求生存，以服务谋发展，以信誉创品牌 !
 // +----------------------------------------------------------------------
 // | Author: 开发人生 <574249366@qq.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ return [
     // 模块名[必填]
     'name'        => 'cms',
     // 模块标题[必填]
-    'title'       => '系统安装模块',
+    'title'       => 'cms内容管理系统',
     // 模块唯一标识[必填]，格式：module.[应用市场ID].模块名[应用市场分支ID]
     'identifier'  => 'module.lingqifei.install',
     // 主题模板[必填]，默认default
@@ -23,17 +23,34 @@ return [
     // 模块图标[选填]
     'icon'        => '',
     // 模块简介[选填]
-    'intro' => '系统安装模块，勿动。',
+    'intro' => 'cms管理系统，本模块为后台管理模块，前台访问需要安装前台访问的门户模块（index）',
     // 开发者[必填]
     'author'      => 'lingqifei',
     // 开发者网址[选填]
-    'author_url'  => 'http://www.07fly.top',
+    'author_url'  => 'http://www.07fly.xyz',
     // 版本[必填],格式采用三段式：主版本号.次版本号.修订版本号
     // 主版本号【位数变化：1-99】：当模块出现大更新或者很大的改动，比如整体架构发生变化。此版本号会变化。
     // 次版本号【位数变化：0-999】：当模块功能有新增或删除，此版本号会变化，如果仅仅是补充原有功能时，此版本号不变化。
     // 修订版本号【位数变化：0-999】：一般是 Bug 修复或是一些小的变动，功能上没有大的变化，修复一个严重的bug即发布一个修订版。
-    'version'     => '1.0.0',
+    'version'     => '1.1.1',
     //关联数据表是指模块所需要的数据表名称，如果有多个表用英文逗号（,）分隔。如：table1,table2
-    'tables'     => 'ads,ads_list,arcatt,arcext,arcext_field,archives,archives_article,archives_case,arctype,channel,channel_field,friendlink,guestbook,guestbook_field,guestbook_online,guestbook_type,
-tagindex,taglist,website',
+    'tables'     => 'ads,
+ads_list,
+arcatt,
+arcext,
+arcext_field,
+archives,
+archives_article,
+archives_case,
+arctype,
+channel,
+channel_field,
+friendlink,
+guestbook,
+guestbook_field,
+guestbook_online,
+guestbook_type,
+tagindex,
+taglist,
+website',
 ];

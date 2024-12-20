@@ -75,15 +75,16 @@ class Archives extends ControllerBase
         //dlog($this->param);
         $data = $this->param;
         $data['title'] = $this->param['title'];
-        $data['shorttitle'] = $this->param['shorttitle'];
+        $data['shorttitle'] = empty($this->param['shorttitle'])?'' : $this->param['shorttitle'];
         $data['keywords'] = $this->param['keywords'];
         $data['description'] = $this->param['description'];
         $data['body'] = $this->param['body'];
         $data['type_id'] = $this->param['typeid'];
         $data['type_id2'] = 0;
         $data['litpic'] = empty($this->param['litpic']) ? '' : $this->param['litpic'];
-        $data['click'] = $this->param['click'];
-        $data['writer'] = empty($this->param['writer']) ? '07fly' : $this->param['writer'];
+        $data['click'] = empty($this->param['click'])?1 : $this->param['click'];
+        $data['writer'] = empty($this->param['writer']) ? '管理' : $this->param['writer'];
+        $data['source'] = empty($this->param['source']) ? '未知' : $this->param['source'];
         $data['pubdate'] = format_time();
         $res = $this->logicArchives->archivesAdd($data);
         if ($res[0] == RESULT_SUCCESS) {
@@ -92,7 +93,6 @@ class Archives extends ControllerBase
             d($res);
         }
     }
-
     //在线投稿添加
     public function addTouGao()
     {
@@ -114,7 +114,6 @@ class Archives extends ControllerBase
         $result = $this->logicArchives->archivesAdd($data);
         return $result;
     }
-
     //获取栏目
     public function getArctype(){
         $where['issend']=['=','1'];//是否支持投稿
