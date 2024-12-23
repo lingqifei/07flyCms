@@ -1,3 +1,4 @@
 /.idea
 /app/admin/controller/Package.php
 /app/admin/logic/Package.php
+/app/index/data
