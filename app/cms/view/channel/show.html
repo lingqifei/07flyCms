@@ -54,10 +54,18 @@
         <td><%=data[i]['maintable']%></td>
         <td><%=data[i]['addtable']%></td>
         <td class="text-center">
-                <lqf_link><a class="ajax-open" data-url="{:url('Channel/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改">修改</a></lqf_link>
-                <lqf_link><a class="ajax-del confirm" data-url="{:url('Channel/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
-                <lqf_link><a class="ajax-goto" data-url="{:url('ChannelField/show')}" data-ids="{'id':'<%=data[i]['id']%>'}">字段</a></lqf_link>
-                <lqf_link><a class="ajax-goto" data-url="{:url('Arcext/show')}" data-ids="{'channel_id':'<%=data[i]['id']%>'}">扩展表</a></lqf_link>
+        <lqf_link><a class="ajax-goto" data-url="{:url('ChannelField/show')}"
+             data-ids="{'id':'<%=data[i]['id']%>'}" title="模型扩展字段">
+                    <i class="fa fa-file-excel-o"></i>字段</a></lqf_link>&nbsp;&nbsp;
+        <lqf_link><a class="ajax-goto" data-url="{:url('Arcext/show')}"
+             data-ids="{'channel_id':'<%=data[i]['id']%>'}" title="模型文章扩展表">
+                    <i class="fa fa-tasks"></i>扩展表</a></lqf_link>&nbsp;&nbsp;
+        <lqf_link><a class="ajax-open" data-url="{:url('Channel/edit')}"
+                     data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改" width="600" height="400">
+                <i class="fa fa-edit"></i>修改</a></lqf_link>&nbsp;&nbsp;
+        <lqf_link><a class="ajax-del confirm text-danger" data-url="{:url('Channel/del')}"
+                     data-ids="{'id':'<%=data[i]['id']%>'}">
+                <i class="fa fa-remove"></i>删除</a></lqf_link>&nbsp;&nbsp;
         </td>
     </tr>
     <% } %>

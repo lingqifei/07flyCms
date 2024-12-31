@@ -24,7 +24,6 @@ function action_log($name = '', $describe = '')
     $logLogic->logAdd($name, $describe);
 }
 
-
 //得到把列表数据=》数形参数
  function list2tree($list, $pId = 0, $level = 0, $pk='id', $pidk = 'pid',$name='name')
 {
@@ -64,5 +63,17 @@ if (!function_exists("list2select")) {
             }
         }
         return $data;
+    }
+}
+
+//去除非本地链接
+if (!function_exists("remove_not_local_links")) {
+    function remove_not_local_links($content, $localDomain)
+    {
+        // 正则表达式匹配非本地域名的链接
+        $pattern = '/<a\s+(?:[^>]*?\s+)?href=["\'](https?:\/\/)(?!' . preg_quote($localDomain, '/') . ')[^"\'>]+["\'][^>]*>/i';
+        // 替换匹配到的链接为纯文本
+        $result = preg_replace($pattern, '', $content);
+        return $result;
     }
 }

@@ -735,9 +735,7 @@ function get_file_url($id = 0)
  */
 function get_picture_body($body = '')
 {
-
     $fileLogic = get_sington_object('fileLogic', LogicFile::class);
-
     return $fileLogic->pictureDown($body);
 }
 

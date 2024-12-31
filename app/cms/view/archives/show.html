@@ -16,13 +16,15 @@
                         <form id="pagerForm" method="post" class="form-inline searchForm">
                             <input type="hidden" name="type_id" id="type_id" value="">
                             <div class="col-sm-4 m-b-xs">
-                                <a href="?" class="btn btn-default"> <i class="fa fa-refresh"> 刷新</i></a>
                                 <lqf_link><a id="archives_add" class="btn btn-info ajax-open" data-url="{:url('Archives/add')}" data-ids="" data-title="添加文章"><i class="fa fa-plus"></i>添加</a></lqf_link>
                                 <div class="btn-group">
                                     <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">批量操作 <span class="caret"></span> </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="ajax-open-more"  data-url="{:url('Archives/move')}"  >移动栏目</a></li>
                                         <li><a  class="ajax-get-more"  data-url="{:url('Archives/del')}"  >批量删除</a></li>
+                                        <li class="divider"></li>
+                                        <li><a  class="ajax-get-more"  data-url="{:url('Archives/visible',array('visible'=>1))}"  >批量审核</a></li>
+                                        <li><a  class="ajax-get-more"  data-url="{:url('Archives/visible',array('visible'=>0))}"  >取消审核</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -94,8 +96,7 @@
         <td class="text-center"><input type="text" class="w50 ajax-sort text-center" data-url="{:url('Archives/set_sort')}" data-ids="{'id':'<%=data[i]['id']%>'}" value="<%=data[i]['sort']%>"></td>
         <td class="text-center">
             <input name="visible" class="ajax-checkbox" type="checkbox"
-                   data-url="{:url('Archives/set_visible',array('name'=>'visible'))}" data-id="<%=data[i]['id']%>"
-            <%=visible%> >
+                   data-url="{:url('Archives/set_visible',array('name'=>'visible'))}" data-id="<%=data[i]['id']%>" <%=visible%>>
         </td>
         <td class="text-center">
                 <lqf_link><a class="ajax-open" data-url="{:url('Archives/edit')}" data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改">修改</a></lqf_link>

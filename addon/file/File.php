@@ -29,7 +29,6 @@ class File extends AddonBase implements AddonInterface
         }
         $this->assign('addons_data', $param);
         $this->assign('addons_config', $this->addonConfig($param));
-
         $this->fetch('index/' . $param['type']);
     }
 
@@ -56,7 +55,6 @@ class File extends AddonBase implements AddonInterface
     {
         return ['name' => 'File', 'title' => '文件上传', 'describe' => '文件上传插件', 'author' => 'niaomuniao', 'version' => '1.0'];
     }
-
     /**
      * 插件配置信息
      */
@@ -64,7 +62,6 @@ class File extends AddonBase implements AddonInterface
     {
         $addons_config['maxwidth'] = '150px';
         $addons_config['height'] = '85px';
-
         //图片类型
         $imgsTypes = array('img', 'imgs', 'imgpath');
         //判断上传类型,判断是否是图片类型
@@ -77,13 +74,10 @@ class File extends AddonBase implements AddonInterface
         //1、模板指定了固定的地址
         //2、模板没有指定地址，则自动判断,默认为
         if (!empty($param['url'])) {
-
             $addons_config['upload_url'] = url($param['url'], array('session_id' => session_id()));
-
         } else {
             //自动判断,默认为admin
             $model = empty($param['addons_model']) ? 'admin' : $param['addons_model'];
-
             //判断上传类型,判断是否是图片类型,还是文件上传
             if (in_array($param['type'], $imgsTypes)) {
                 $methodName = 'pictureUpload';

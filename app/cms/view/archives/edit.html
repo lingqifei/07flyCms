@@ -74,6 +74,11 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">文章描述</label>
                 <div class="col-sm-10">
+                    <p>
+                        <input type="checkbox" name="down_remote_img" checked>远程图片本地化
+                        <input type="checkbox" name="clear_link" checked>清除非本站链接
+                        <input type="checkbox" name="get_first_pic" checked>无缩略图提取内容第一张图片
+                    </p>
                     <textarea name="description" class="form-control">{$info.description|default=''}</textarea>
                     <span class="help-block m-b-none"></span></div>
             </div>

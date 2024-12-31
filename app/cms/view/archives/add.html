@@ -21,7 +21,6 @@
 <!--                </div>-->
 <!--            </div>-->
 <!--        </div>-->
-
         <div class="form-group">
             <label class="col-sm-2 control-label">文章属性</label>
             <div class="col-sm-6">
@@ -94,6 +93,11 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">文章内容</label>
             <div class="col-sm-10">
+                <p>
+                    <input type="checkbox" name="down_remote_img" checked>远程图片本地化
+                    <input type="checkbox" name="clear_link" checked>清除非本站链接
+                    <input type="checkbox" name="get_first_pic" checked>无缩略图提取内容第一张图片
+                </p>
                 <textarea class="body" name="body"></textarea>
                 {:hook('ArticleEditor', ['name' => 'body'])}
                 <span class="help-block m-b-none"></span>
@@ -101,21 +105,18 @@
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">点击次数</label>
-            <div class="col-sm-10">
+            <div class="col-sm-2">
                 <input name="click" class="form-control" value="100" type="text" placeholder="请输入点击次数"/>
-                <span class="help-block m-b-none">这功能是提供给管理员作弊用的。不过尽量不要用呀！^_^</span></div>
-        </div>
-        <div class="form-group">
+                <span class="help-block m-b-none">默认文章点击次数</span>
+            </div>
             <label class="col-sm-2 control-label">发布时间</label>
-            <div class="col-sm-10">
+            <div class="col-sm-2">
                 <input name="pubdate" class="form-control datetimepicker-now" id="datetimeStart" type="text"
                        placeholder="选择发布时间"/>
                 <span class="help-block m-b-none">文档发布时间，默认为当前系统时间</span>
             </div>
-        </div>
-        <div class="form-group">
             <label class="col-sm-2 control-label">是否发布</label> </label>
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 <div class="radio radio-info radio-inline">
                     <input type="radio" id="visible1" value="1" name="visible" checked>
                     <label for="visible1"> 是 </label>
@@ -126,6 +127,7 @@
                 </div>
             </div>
         </div>
+        <hr>
         {$ext_field}
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-8">

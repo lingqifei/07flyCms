@@ -23,7 +23,6 @@ use think\db;
 
 class Archives extends CmsBase
 {
-
     /**
      * 列表
      */
@@ -61,7 +60,6 @@ class Archives extends CmsBase
     public function add()
     {
         IS_POST && $this->jump($this->logicArchives->archivesAdd($this->param));
-
         $this->comm();
         if(empty($this->param['type_id'])){
             return $this->fetch('typelist');
@@ -76,20 +74,17 @@ class Archives extends CmsBase
         }
         return $this->fetch('add');
     }
-
     /**
      * 编辑
      */
     public function edit()
     {
         IS_POST && $this->jump($this->logicArchives->archivesEdit($this->param));
-
         $info = $this->logicArchives->getArchivesInfo(['id' => $this->param['id']]);
-
         if(empty($info)){
             $this->jump( [RESULT_ERROR, 'id参数出错',url('archives/show')]);
         }
-
+        //栏目信息
         $channel=$this->logicChannel->getChannelInfo(['id'=>$info['channel_id']],'addtable');
         $ext_field= $this->logicChannelField->channelExtFieldHtml($channel['addtable'],$info);
 
@@ -113,13 +108,21 @@ class Archives extends CmsBase
         $this->comm();
         return $this->fetch('move');
     }
+    public function visible()
+    {
+        IS_POST && $this->jump($this->logicArchives->archivesVisible($this->param));
+        if (!empty($this->param['id'])) {
+            $this->assign('id', $this->param['id']);
+        }
+        $this->comm();
+        return $this->fetch('move');
+    }
 
     /**
      * 删除
      */
     public function del()
     {
-        $where = empty($this->param['id']) ? ['id' => 0] : ['id' => $this->param['id']];
         $this->jump($this->logicArchives->archivesDel($this->param));
     }
 
@@ -148,7 +151,5 @@ class Archives extends CmsBase
 
         $sys_area_list= $this->logicSysArea->getSysAreaTreeSelect();
         $this->assign('sys_area_list', $sys_area_list);
-
     }
-
 }

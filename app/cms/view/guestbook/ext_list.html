@@ -34,7 +34,7 @@
                             <th><span>内容</span></td>
                             <th width="300">回复</th>
                             <th width="150">时间</th>
-                            <th width="120">操作</th>
+                            <th width="120" class="text-center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -59,11 +59,9 @@
         <td><%:=data[i]['extcontent']%></td>
         <td><%:=data[i]['reply']%></td>
         <td><%=data[i]['create_time']%></td>
-        <td>
-            <p>
+        <td class="text-center">
                 <lqf_link><a class="ajax-open" data-url="{:url('Guestbook/ext_reply')}"  data-ids="{'id':'<%=data[i]['id']%>','gid':'<%=data[i]['gid']%>'}" data-title="回复">回复</a></lqf_link>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('Guestbook/ext_del')}" data-ids="{'id':'<%=data[i]['id']%>','gid':'<%=data[i]['gid']%>'}">删除</a></lqf_link>
-            </p>
         </td>
     </tr>
     <% } %>

@@ -493,7 +493,8 @@ nav {
 	margin-bottom: 20px;
 	overflow: hidden;
 }
-.ad.whitebg{padding: 0px;}
+.ad.whitebg{padding: 0px;position:relative;}
+.ad .ad-title{display:inline-block;position:absolute;top:1px;right:1px;background:#efeff0;padding:2px 5px;}
 .tab_box {
 	clear: both;
 	position: relative;
