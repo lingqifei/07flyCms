@@ -9,7 +9,8 @@
             <img src="__STATIC__/addon/file/uploadify-cancel.png" />
         </div>
         <a target="_blank" href="{$info[$addons_data['name']]|default='0'|get_picture_url=$addons_data.addons_model}">
-            <img  style="max-width:{$addons_config['maxwidth']};" src="{$info[$addons_data['name']]|default='0'|get_picture_url=$addons_data.addons_model}"/>
+            <img  style="max-width:{$addons_config['maxwidth']};"
+                  src="{$info[$addons_data['name']]|default='0'|get_picture_url=$addons_data.addons_model}"/>
         </a>
     </div>
     {/notempty}
@@ -18,7 +19,6 @@
 
 <script type="text/javascript">
     var maxwidth = "{$addons_config['maxwidth']}";
-
     $("#upload_picture_{$addons_data.name}").Huploadify({
         auto: true,
         height: 30,
@@ -31,21 +31,14 @@
         fileTypeExts: "{$addons_config['allow_postfix']}",
         onUploadComplete: uploadPicture{$addons_data.name}
     });
-
     function uploadPicture{$addons_data.name}(file, data)
     {
-
         var data = $.parseJSON(data);
-
         $("#{$addons_data['name']}").val(data.path);
-
         var src ='__STATIC__/upload/picture/' + data.path;
-        
         var src =src.replace(/\/static/g, '');
-
         $(".upload-img-box{$addons_data['name']}").html('<div class="upload-pre-item"> <a target="_blank" href="' + src + '"> <img style="max-width: ' + maxwidth + ';" src="' + src + '"/></a></div>');
     }
-
     function picDel{$addons_data.name}(obj)
     {
         var addons_name = "{$addons_data.name}";
