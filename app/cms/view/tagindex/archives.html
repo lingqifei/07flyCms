@@ -1,17 +1,15 @@
-<body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5> {$page_title}</h5>
+                       <h5> {$page_title}</h5>
                     <div class="ibox-tools"><a href="javascript:void(0);" class="btn btn-xs btn-default btn-help-detail"  data-type="cst_customer"> <i class="fa fa-question-circle"> 操作说明</i></a>
                     </div>
                 </div>
                 <div class="ibox-content">
                     <div class="row">
                         <form id="pagerForm" method="post" class="form-inline searchForm">
-                            <input type="hidden" name="channel_id" value="{$channel_id}">
                             <div class="col-sm-12">
                                 <div class="input-group">
                                     <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
@@ -24,23 +22,28 @@
                     </div>
                 </div>
             </div>
+
             <div class="ibox float-e-margins">
-                <div class="ibox-content table-responsive">
+                <div class="ibox-content">
                     <div class="row">
-                        <div class="col-sm-12">
-                            <a class="btn btn-default btn-history"  data-title="模型添加" ><i class="fa fa-history"></i> 返回</a>
-                            <lqf_link><a class="btn btn-info ajax-open"  data-url="{:url('Arcext/add',array('channel_id'=>$channel_id))}" data-title="添加" ><i class="fa fa-plus"></i>添加</a></lqf_link>
+                        <div class="col-sm-10">
+                        </div>
+                        <div class="col-sm-2 text-right">
+                            <a href="javascript:void(0);" class="btn btn-default btn-outline btn-field-set" data-id="{$page_title|default=''}"> <i class="fa fa-columns"></i> 列</a>
                         </div>
                     </div>
-                    <table class="table table-hover sorttable ajax-list-table" data-url="{:url('Arcext/show_json')}" width="100%">
+                </div>
+                <div class="ibox-content table-responsive">
+                    <table class="table table-hover sorttable ajax-list-table" data-url="{:url('Tagindex/archives',array('tid'=>$param.id))}" width="100%">
                         <thead>
                         <tr>
                             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
-                            <th width="22" orderField="by_name" class="sort-filed"><span>ID</span></th>
-                            <th width="100" orderField="by_name" class="sort-filed"><span>名称</span></th>
-                            <th width="100" orderField="by_nid" class="sort-filed"><span>标识</span></th>
-                            <th width="100" orderField="by_maintable" class="sort-filed"><span>主表</span></th>
-                            <th width="100" orderField="by_addtable" class="sort-filed"><span>附加表名</span></th>
+                            <th width="60"><span>文章ID</span></th>
+                            <th width="200"><span>文章标题</span></th>
+                            <th width="100"><span>文章栏目</span></th>
+                            <th width="100" orderField="count" class="sort-filed"><span>点击</span></th>
+                            <th width="100" orderField="total" class="sort-filed"><span>作者</span></th>
+                            <th width="100" class="text-center">创建时间</th>
                             <th width="100" class="text-center">操作</th>
                         </tr>
                         </thead>
@@ -61,15 +64,16 @@
     <% for(var i=0;i<data.length;i++) { %>
     <tr>
         <td><input name="user_id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
-        <td><%=data[i]['id']%></td>
-        <td><%=data[i]['name']%></td>
-        <td><%=data[i]['nid']%></td>
-        <td><%=data[i]['maintable']%></td>
-        <td><%=data[i]['addtable']%></td>
+        <td><%=data[i]['aid']%></td>
+        <td><a class="ajax-goto" data-url="{:url('index/view/adminindex')}"
+               data-ids="{'aid':'<%=data[i]['aid']%>'}" target="_blank"><%=data[i]['title']%></a></td>
+        <td><%=data[i]['typename']%></td>
+        <td><%=data[i]['click']%></td>
+        <td><%=data[i]['writer']%></td>
+        <td class="text-center"><%=data[i]['create_time']%></td>
         <td class="text-center">
-            <lqf_link><a class="ajax-goto" data-url="{:url('ArcextField/show')}" data-ids="{'id':'<%=data[i]['id']%>'}" title="扩展字段"><i class="fa fa-tablet">扩展字段</i></a></lqf_link>
-            <lqf_link><a class="ajax-open" data-url="{:url('Arcext/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}" title="修改"><i class="fa fa-edit"></i>修改</a></lqf_link>
-            <lqf_link><a class="ajax-del confirm" data-url="{:url('Arcext/del')}" data-ids="{'id':'<%=data[i]['id']%>'}" title="删除"><i class="fa fa-remove ">删除</i></a></lqf_link>
+                <lqf_link><a class="ajax-open" data-url="{:url('Archives/edit')}"  data-ids="{'id':'<%=data[i]['aid']%>'}">编辑文章</a></lqf_link>
+                <lqf_link><a class="ajax-del confirm" data-url="{:url('Archives/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
         </td>
     </tr>
     <% } %>

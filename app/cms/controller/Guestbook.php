@@ -29,7 +29,6 @@ class Guestbook extends CmsBase
      */
     public function show()
     {
-
         if(IS_POST){
             $where=[];
             if (!empty($this->param['keywords'])) {
@@ -39,7 +38,6 @@ class Guestbook extends CmsBase
             $list = $this->logicGuestbook->getGuestbookList($where, true, $order_by);
             return $list;
         }
-
         return $this->fetch('show');
     }
 

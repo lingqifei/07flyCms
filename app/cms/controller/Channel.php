@@ -39,7 +39,7 @@ class Channel extends CmsBase
     {
         $where = [];
         if (!empty($this->param['keywords'])) {
-            $where['name|remark'] = ['like', '%' . $this->param['keywords'] . '%'];
+            $where['name'] = ['like', '%' . $this->param['keywords'] . '%'];
         }
         //排序操作
         //排序操作
@@ -52,14 +52,6 @@ class Channel extends CmsBase
         }
         if ($orderField == 'by_name') {
             $order_by = "name $orderDirection";
-        } else if ($orderField == 'by_mobile') {
-            $order_by = "mobile $orderDirection";
-        } else if ($orderField == 'by_linkman') {
-            $order_by = "linkman $orderDirection";
-        } else if ($orderField == 'by_tel') {
-            $order_by = "tel $orderDirection";
-        } else if ($orderField == 'by_sort') {
-            $order_by = "sort $orderDirection";
         } else {
             $order_by = "sort asc";
         }

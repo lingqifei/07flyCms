@@ -39,7 +39,7 @@ class Friendlink extends CmsBase
     {
         $where = [];
         if (!empty($this->param['keywords'])) {
-            $where['title|intro'] = ['like', '%' . $this->param['keywords'] . '%'];
+            $where['title|intro|url'] = ['like', '%' . $this->param['keywords'] . '%'];
         }
         //排序操作
         if (!empty($this->param['orderField'])) {

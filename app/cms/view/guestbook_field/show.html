@@ -3,16 +3,17 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
-                <div class="ibox-content table-responsive">
+                <div class="ibox-title">
+                    <h5> {$page_title}</h5>
+                    <div class="ibox-tools"><a href="javascript:void(0);" class="btn btn-xs btn-default btn-help-detail"  data-type="cst_customer"> <i class="fa fa-question-circle"> 操作说明</i></a>
+                    </div>
+                </div>
+                <div class="ibox-content">
                     <div class="row">
                         <form id="pagerForm" method="post" class="form-inline searchForm">
                             <input type="hidden" name="main_table" id="main_table" value="{$info.maintable}">
                             <input type="hidden" name="ext_table" id="ext_table" value="{$info.addtable}">
-                            <div class="col-sm-3 m-b-xs">
-                                <a class="btn btn-default btn-history"  ><i class="fa fa-history"></i> 返回</a>
-                                <lqf_link><a class="btn btn-info ajax-open"  data-url="{:url('GuestbookField/add',array('guestbook_id'=>$info.id))}" data-title="模型添加" ><i class="fa fa-plus"></i>添加</a></lqf_link>
-                            </div>
-                            <div class="col-sm-9 m-b-xs text-right">
+                            <div class="col-sm-12">
                                 <div class="input-group">
                                     <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
                                 </div>
@@ -21,6 +22,16 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-content table-responsive">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <a class="btn btn-default btn-history"  ><i class="fa fa-history"></i> 返回</a>
+                            <lqf_link><a class="btn btn-info ajax-open"  data-url="{:url('GuestbookField/add',array('guestbook_id'=>$info.id))}" data-title="模型添加" ><i class="fa fa-plus"></i>添加</a></lqf_link>
+                        </div>
                     </div>
                     <table class="table table-hover sorttable ajax-list-table" data-url="{:url('GuestbookField/show_json',array('id'=>$info['id']))}" width="100%">
                         <thead>
@@ -33,7 +44,7 @@
                             <th width="80">最大值</th>
                             <th width="100" orderField="by_sort" class="sort-filed"><span>排序</span></th>
                             <th width="80">启用</th>
-                            <th width="80">操作</th>
+                            <th width="80" class="text-center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -65,11 +76,9 @@
         <td>
             <input name="visible" class="ajax-checkbox" type="checkbox"   data-url="{:url('GuestbookField/set_visible',array('name'=>'visible'))}"  data-id="<%=data[i]['id']%>" <%=visible%> >
         </td>
-        <td>
-            <p>
+        <td class="text-center">
                 <lqf_link><a class="ajax-open" data-url="{:url('GuestbookField/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}" data-title="修改">修改</a></lqf_link>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('GuestbookField/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
-            </p>
         </td>
     </tr>
     <% } %>

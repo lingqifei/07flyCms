@@ -15,13 +15,14 @@ namespace app\cms\logic;
 
 use app\common\logic\TableField;
 use think\Db;
+
 /**
  * 网站管理=》逻辑层
  */
 class Tagindex extends CmsBase
 {
     /**
-     * 网站列表
+     * 列表
      * @param array $where
      * @param bool $field
      * @param string $order
@@ -34,16 +35,23 @@ class Tagindex extends CmsBase
     }
 
     /**
-     * 标签添加
+     * 标签文章
      */
-    public function tagindexAdd($data = [])
+    public function getTagindexArchives($data = [])
     {
-
-        $reg_txt=preg_replace("/(\n)|(\s)|(\t)|(\')|(')|(，)/" ,',' ,$data['keywords']);
-        $result = $this->modelTagindex->setInfo($data);
-        $result && action_log('新增', '新增配置，name：' . $data['name']);
-        $url = url('tagindexList', array('group' => $data['group'] ? $data['group'] : 0));
-        return $result ? [RESULT_SUCCESS, '配置添加成功', $url] : [RESULT_ERROR, $this->modelTagindex->getError()];
+        $where['a.tid'] = ['=', $data['tid']];
+        if (!empty($data['keywords'])) {
+            $where['arc.title|arc.description'] = ['like', '%' . $data['keywords'] . '%'];
+        }
+        $this->modelTaglist->alias('a');
+        $join = [
+            [SYS_DB_PREFIX . 'archives arc', 'arc.id = a.aid', 'LEFT'],
+            [SYS_DB_PREFIX . 'arctype t', 't.id = a.typeid', 'LEFT'],
+        ];
+        $this->modelTaglist->join = $join;
+        $field = 'a.aid,arc.title,arc.create_time,arc.update_time,arc.click,arc.writer,t.typename';
+        $list = $this->modelTaglist->getList($where, $field, 'arc.id desc', DB_LIST_ROWS);
+        return $list;
     }
 
     /**
@@ -51,66 +59,83 @@ class Tagindex extends CmsBase
      */
     public function tagindexEdit($data = [])
     {
-
         $validate_result = $this->validateTagindex->scene('edit')->check($data);
-
         if (!$validate_result) {
-
             return [RESULT_ERROR, $this->validateTagindex->getError()];
         }
-
         $result = $this->modelTagindex->setInfo($data);
-
-        $result && action_log('编辑', '编辑配置，name：' . $data['name']);
+        $result && action_log('编辑', '编辑标签，name：' . $data['name']);
         $url = url('tagindexList', array('group' => $data['group'] ? $data['group'] : 0));
-        return $result ? [RESULT_SUCCESS, '配置编辑成功', $url] : [RESULT_ERROR, $this->modelTagindex->getError()];
+        return $result ? [RESULT_SUCCESS, '编辑成功', $url] : [RESULT_ERROR, $this->modelTagindex->getError()];
     }
 
     /**
      * 配置删除
      */
-    public function tagindexDel($where = [])
+    public function tagindexDel($data = [])
     {
-        $result = $this->modelTagindex->deleteInfo($where);
-        $result && action_log('删除', '删除配置，where：' . http_build_query($where));
-        return $result ? [RESULT_SUCCESS, '菜单删除成功'] : [RESULT_ERROR, $this->modelTagindex->getError()];
+        if (empty($data['id'])) {
+            throw_response_error('参数错误');
+        }
+        $where['id'] = ['in', $data['id']];
+        $result = $this->modelTagindex->deleteInfo($where, true);
+
+        $where2['tid'] = ['in', $data['id']];
+        $result && $this->modelTaglist->deleteInfo($where2, true);
+        $result && action_log('删除', '删除标签，where：' . http_build_query($where));
+        return $result ? [RESULT_SUCCESS, '删除成功'] : [RESULT_ERROR, $this->modelTagindex->getError()];
     }
 
-    public function getTagindexInfo($where = [],$field=true){
+    public function getTagindexInfo($where = [], $field = true)
+    {
         return $this->modelTagindex->getInfo($where, $field);
     }
 
-
     /**
-     * 文章标签添加接口，针对文档编辑关键字时调用
-     * @param $keywords
-     * @param $aid
-     * @param $typeid
-     * @return array
-     * Author: kfrs <goodkfrs@QQ.com> created by at 2020/11/3 0003
+     * 获取列表搜索条件
      */
-    public function tagindexAddArchives($keywords, $aid, $typeid)
+    public function getWhere($data = [])
     {
-        $tagindex_list=$this->modelTagindex->getColumn('','tag','id');
-        $keywords=preg_replace("/(\n)|(\s)|(\t)|(\')|(')|(，)/" ,',' ,$keywords);
-        $key_array=str2arr($keywords);
-        foreach ($key_array as $onetag){
-            if(in_array($onetag,$tagindex_list)){
-                $tagid=array_search($onetag,$tagindex_list);
-            }else{
-                $tagid=$this->modelTagindex->setInfo(['tag'=>$onetag,'typeid'=>$typeid]);
-            }
-            $taglistdata[]=[
-                'aid'=>$aid,
-                'tid'=>$tagid,
-                'typeid'=>$typeid,
-                'tag'=>$onetag,
-            ];
-        }
-        $this->modelTaglist->deleteInfo(['aid'=>$aid],true);
-        $result = $this->modelTaglist->setList($taglistdata);
-        $result && action_log('新增', '文档新增tag标签' . $keywords);
-        return $result ? [RESULT_SUCCESS, '配置添加成功'] : [RESULT_ERROR, $this->modelTagindex->getError()];
+        $where = [];
+        //关键字查
+        !empty($data['keywords']) && $where['tag'] = ['like', '%' . $data['keywords'] . '%'];
+
+        !empty($data['date_s']) && !empty($data['date_e']) && $where['a.driver_date'] = ['between', [$data['date_s'], $data['date_e']]];
+        return $where;
     }
 
+    /**
+     * 获取排序条件
+     */
+    public function getOrderBy($data = [])
+    {
+        $order_by = 'create_time desc';
+        //排序操作
+        if (!empty($data['orderField'])) {
+            $orderField = $data['orderField'];
+            $orderDirection = $data['orderDirection'];
+            if ($orderField == 'count') {
+                $order_by = "count $orderDirection";
+            } else if ($orderField == 'total') {
+                $order_by = "total $orderDirection";
+            }
+        }
+        return $order_by;
+    }
+
+
+    public function tagindexArchivesCount($data = [])
+    {
+        if (empty($data['id'])) {
+            throw_response_error('参数错误');
+        }
+        $where['id'] = ['in', $data['id']];
+        $tagindexList = $this->modelTagindex->getColumn('', 'tag', 'id');
+        foreach ($tagindexList as $tagId => $tagName) {
+            $archivesCount = $this->modelTaglist->stat(['tid' => $tagId]);
+            $result = $this->modelTagindex->updateInfo(['id' => $tagId], ['total' => $archivesCount]);
+        }
+        $result && action_log('标签文章数量统计', '标签文章数量统计，where：' . http_build_query($where));
+        return $result ? [RESULT_SUCCESS, '操作成功'] : [RESULT_ERROR, $this->modelTagindex->getError()];
+    }
 }

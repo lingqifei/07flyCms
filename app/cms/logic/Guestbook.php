@@ -189,25 +189,20 @@ ENGINE=MyISAM;";
 
         //扩展数据处理
         $where['gid'] = ['=', $data['gid']];
-
-        if (!empty($data['bdate'])) {
-            $where['create_time'] = ['>=', strtotime($data['bdate'])];
+        if (!empty($data['create_time'])) {
+            $dateRange = rangedate2arr($data['create_time'], '-', 'int');
+            $where['create_time'] = ['between', $dateRange];
         }
 
-        if (!empty($data['edate'])) {
-            $where['create_time'] = ['<', strtotime($data['edate'])];
+        if (!empty($data['keywords'])) {
+            $where['content|reply|realname|mobile'] = ['like', '%'.$data['keywords'].'%'];
         }
 
-        if (!empty($data['bdate']) && !empty($data['edate'])) {
-            $date_range = [strtotime($data['bdate']), strtotime($data['edate'])];
-            $where['create_time'] = ['between', $date_range];
-        }
         $list = Db::table(SYS_DB_PREFIX . $table['addtable'])
             ->where($where)
             ->order('create_time desc')
             ->paginate($paginate)
             ->ToArray();
-
         foreach ($list['data'] as &$row) {
             $extcontent = '';
             $dwtcontent = '';
@@ -255,11 +250,11 @@ ENGINE=MyISAM;";
         $titles = "手机号,内容,时间,回复";
         $fields = "mobile,content,create_time,rereply";
         foreach ($extfieldlist as $item) {
-            $titles .= ','.$item['show_name'];
-            $fields .= ','.$item['field_name'];
+            $titles .= ',' . $item['show_name'];
+            $fields .= ',' . $item['field_name'];
         }
         action_log('下载', '留言表单列表');
-        export_excel($titles, $fields, $list, '表单列表-'.$table['name']);
+        export_excel($titles, $fields, $list, '表单列表-' . $table['name']);
     }
 
     /**
@@ -281,13 +276,10 @@ ENGINE=MyISAM;";
      */
     public function guestbookExtDel($data = [])
     {
-
         $table = $this->getGuesbookExtTableInfo($data['gid']);
-
         $where['gid'] = ['=', $data['gid']];
         $where['id'] = ['=', $data['id']];
         $result = Db::table(SYS_DB_PREFIX . $table['addtable'])->where($where)->delete();
-
         $result && action_log('删除', '删除 留言表单，where：' . http_build_query($data));
         return $result ? [RESULT_SUCCESS, ' 删除成功'] : [RESULT_ERROR, $this->modelGuestbook->getError()];
     }
@@ -300,9 +292,7 @@ ENGINE=MyISAM;";
         if (empty($data['gid'])) {
             return [RESULT_ERROR, '选择表单'];
         }
-
         $table = $this->getGuesbookExtTableInfo($data['gid']);
-
         $where['gid'] = ['=', $data['gid']];
         $where['id'] = ['=', $data['id']];
         $info = Db::table(SYS_DB_PREFIX . $table['addtable'])
@@ -311,7 +301,8 @@ ENGINE=MyISAM;";
         return $info;
     }
 
-    /**获取表单数据表信息
+    /**
+     * 获取表单数据表信息
      * @param int $gid
      * @return mixed
      * Author: lingqifei created by at 2020/3/2 0002
@@ -321,5 +312,4 @@ ENGINE=MyISAM;";
         $info = $this->modelGuestbook->getInfo(['id' => $gid], 'name,addtable,maintable');
         return $info;
     }
-
 }

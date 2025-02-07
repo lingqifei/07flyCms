@@ -121,7 +121,7 @@ class Archives extends CmsBase
         $aid = $this->modelArchives->setInfo($main_data);
 
         //调用Tag标签接口
-        $this->logicTagindex->tagindexAddArchives($keywords, $aid, $data['type_id']);
+        $this->modelTagindex->tagindexAddArchives($keywords, $aid, $data['type_id']);
 
         //3、添加附加表
         $ext_field = $this->logicChannelField->getExtTableFieldList($arctype['maintable'], $arctype['addtable']);
@@ -161,7 +161,8 @@ class Archives extends CmsBase
         }
 
         //调用tag标签接口
-        $this->logicTagindex->tagindexAddArchives($keywords, $data['id'], $data['type_id']);
+        $this->modelTagindex->tagindexAddArchives($keywords, $data['id'], $data['type_id']);
+
         //简介处理
         if (!empty($data['description'])) {
             $description = $data['description'];

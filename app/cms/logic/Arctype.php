@@ -137,18 +137,15 @@ class Arctype extends CmsBase
     public function getArctypeInfoDetail($typeid=0)
     {
         $where['a.id']=['=',$typeid];
-
         $this->modelArctype->alias('a');
         $join = [
             [SYS_DB_PREFIX . 'channel c', 'c.id = a.channel_id'],
         ];
-
         $this->modelArctype->join = $join;
         $info=$this->modelArctype->getInfo($where, 'a.*,c.nid,c.maintable,c.addtable');
         is_object($info) && $info->toArray();
         return $info;
     }
-
 
     //得到数形参数
     public function getArctypeListTree($where='')

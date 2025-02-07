@@ -3,13 +3,15 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
-                <div class="ibox-content table-responsive">
+                <div class="ibox-title">
+                    <h5> {$page_title}</h5>
+                    <div class="ibox-tools"><a href="javascript:void(0);" class="btn btn-xs btn-default btn-help-detail"  data-type="cst_customer"> <i class="fa fa-question-circle"> 操作说明</i></a>
+                    </div>
+                </div>
+                <div class="ibox-content">
                     <div class="row">
                         <form id="pagerForm" method="post" class="form-inline searchForm">
-                            <div class="col-sm-3 m-b-xs">
-                                <lqf_link><a class="btn btn-info ajax-open"  data-url="{:url('Guestbook/add')}" data-title="添加" width="600" height="400"><i class="fa fa-plus"></i>添加</a></lqf_link>
-                            </div>
-                            <div class="col-sm-9 m-b-xs text-right">
+                            <div class="col-sm-12">
                                 <div class="input-group">
                                     <input type="text" name="keywords" placeholder="输入关键字搜索" class="form-control">
                                 </div>
@@ -18,6 +20,15 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-content table-responsive">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <lqf_link><a class="btn btn-info ajax-open"  data-url="{:url('Guestbook/add')}" data-title="添加" width="600" height="400"><i class="fa fa-plus"></i>添加</a></lqf_link>
+                        </div>
                     </div>
                     <table class="table table-hover sorttable ajax-list-table" data-url="{:url('Guestbook/show')}" width="100%">
                         <thead>
@@ -54,9 +65,9 @@
         <td><%=data[i]['maintable']%></td>
         <td><%=data[i]['addtable']%></td>
         <td class="text-center">
-                <lqf_link><a class="ajax-open" data-url="{:url('Guestbook/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}" title="修改" width="600" height="400"><i class="fa fa-edit"></i>修改</a></lqf_link>
-                <lqf_link><a class="ajax-del confirm" data-url="{:url('Guestbook/del')}" data-ids="{'id':'<%=data[i]['id']%>'}" title="删除"><i class="fa fa-remove ">删除</i></a></lqf_link>
-                <lqf_link><a class="ajax-goto" data-url="{:url('GuestbookField/show')}" data-ids="{'id':'<%=data[i]['id']%>'}" title="字段管理"><i class="fa fa-tablet">字段</i></a></lqf_link>
+            <lqf_link><a class="ajax-goto" data-url="{:url('GuestbookField/show')}" data-ids="{'id':'<%=data[i]['id']%>'}" title="字段管理"><i class="fa fa-tablet">扩展字段</i></a></lqf_link>
+            &nbsp;&nbsp;<lqf_link><a class="ajax-open" data-url="{:url('Guestbook/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}" title="修改" width="600" height="400"><i class="fa fa-edit"></i>修改</a></lqf_link>
+            &nbsp;&nbsp;<lqf_link><a class="ajax-del confirm" data-url="{:url('Guestbook/del')}" data-ids="{'id':'<%=data[i]['id']%>'}" title="删除"><i class="fa fa-remove ">删除</i></a></lqf_link>
         </td>
     </tr>
     <% } %>
