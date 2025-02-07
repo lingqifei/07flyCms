@@ -673,6 +673,7 @@ function get_picture_url($id = 0, $member = 'picture')
     if (is_numeric($id)) {
         return $fileLogic->getPictureUrl($id, $member);
     } else {
+
         //1、表示为多张图的id 如：1，2，3，4
         if (strpos($id, '/') === false) {
             return $fileLogic->getPictureUrl($id, $member);

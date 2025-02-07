@@ -62,10 +62,11 @@
                             <th width="100"><span>会员帐号</span></th>
                             <th width="100"><span>真实名称</span></th>
                             <th width="100"><span>认证类型</span></th>
-                            <th width="150"><span>证件类型</span></th>
-                            <th width="200"><span>证件图片</span></th>
-                            <th width="60"><span>状态</span></th>
-                            <th width="80">操作</th>
+                            <th width="100"><span>证件类型</span></th>
+                            <th width="100"><span>证件号码</span></th>
+                            <th width="100" class="text-center"><span>证件图片</span></th>
+                            <th width="60" class="text-center"><span>状态</span></th>
+                            <th width="80" class="text-center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -89,17 +90,15 @@
         <td><%=data[i]['username']%></td>
         <td><%=data[i]['realname']%></td>
         <td><%:=data[i]['real_type_arr']['html']%></td>
-        <td><%=data[i]['cert_type']%><br><%=data[i]['cert_code']%></td>
-        <td>
-            <img src="<%=data[i]['cert_pic']%>" width="90" height="60">
+        <td><%=data[i]['cert_type']%></td>
+        <td><%=data[i]['cert_code']%></td>
+        <td class="text-center">
+            <img src="<%=data[i]['cert_pic']%>" width="60">
         </td>
-        <td><%:=data[i]['status_arr']['html']%></td>
-        <td>
-            <p>
+        <td class="text-center"><%:=data[i]['status_arr']['html']%></td>
+        <td class="text-center">
                 <lqf_link><a class="ajax-get" data-url="{:url('admin.MemberRealname/pass')}"  data-ids="{'id':'<%=data[i]['id']%>','status':'1'}">通过</a></lqf_link>
                 <lqf_link><a class="ajax-open" data-url="{:url('admin.MemberRealname/reject')}"  data-ids="{'id':'<%=data[i]['id']%>','status':'2'}">拒绝</a></lqf_link>
-            </p>
-            <p>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('admin.MemberRealname/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
             </p>
         </td>

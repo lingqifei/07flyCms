@@ -51,9 +51,9 @@
                             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
                             <th width="50"><span>ID</span></th>
                             <th width="100"><span>会员</span></th>
-                            <th width="100"><span>图片</span></th>
-                            <th width="100"><span>状态</span></th>
-                            <th width="80">操作</th>
+                            <th width="100" class="text-center"><span>图片</span></th>
+                            <th width="100" class="text-center"><span>状态</span></th>
+                            <th width="80" class="text-center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -75,16 +75,14 @@
         <td><input name="user_id" class="checkboxCtrlId" value="<%=data[i]['id']%>" type="checkbox"></td>
         <td><%=data[i]['id']%></td>
         <td><%=data[i]['username']%></td>
-        <td>
+        <td class="text-center">
             <img src="<%=data[i]['path_img']%>" width="90" height="60">
         </td>
-        <td><%:=data[i]['status_arr']['html']%></td>
-        <td>
-            <p>
-                <lqf_link><a class="ajax-get" data-url="{:url('admin.MemberPicture/pass')}"  data-ids="{'id':'<%=data[i]['id']%>','status':'1'}">通过</a></lqf_link>
-                <lqf_link><a class="ajax-open" data-url="{:url('admin.MemberPicture/reject')}"  data-ids="{'id':'<%=data[i]['id']%>','status':'2'}">拒绝</a></lqf_link>
-                <lqf_link><a class="ajax-del confirm" data-url="{:url('admin.MemberPicture/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
-            </p>
+        <td class="text-center"><%:=data[i]['status_arr']['html']%></td>
+        <td class="text-center">
+            <lqf_link><a class="ajax-get" data-url="{:url('admin.MemberPicture/pass')}"  data-ids="{'id':'<%=data[i]['id']%>','status':'1'}">通过</a></lqf_link>
+            <lqf_link><a class="ajax-open" data-url="{:url('admin.MemberPicture/reject')}"  data-ids="{'id':'<%=data[i]['id']%>','status':'2'}">拒绝</a></lqf_link>
+            <lqf_link><a class="ajax-del confirm" data-url="{:url('admin.MemberPicture/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
         </td>
     </tr>
     <% } %>

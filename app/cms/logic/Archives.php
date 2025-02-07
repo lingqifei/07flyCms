@@ -49,6 +49,12 @@ class Archives extends CmsBase
         foreach ($list as &$row) {
             $row['flag_name'] = $this->logicArcatt->getArcattName($row['flag']);
             $row['arcext_id'] = $this->modelArcext->getValue(['channel_id' => $row['channel_id']], 'id');
+            //$row['litpicpath']=get_picture_url($row['litpic']);
+
+//            $litpicpath=$this->modelPicture->getValue(['id'=>$row['litpic']],'path');
+//            if(!empty($litpicpath)){
+//                $this->modelArchives->setFieldValue(['id' => $row['id']],'litpic',$litpicpath);
+//            }
         }
         return $list;
     }

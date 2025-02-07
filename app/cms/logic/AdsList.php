@@ -27,11 +27,9 @@ class AdsList extends CmsBase
      */
     public function getAdsListList($where = [], $field = true, $order = '', $paginate = DB_LIST_ROWS)
     {
-        $list=$this->modelAdsList->getList($where, $field, $order, $paginate)->toArray();
-        if($paginate===false) $list['data']=$list;
-        foreach ($list['data'] as &$row){
+        $list=$this->modelAdsList->getList($where, $field, $order, $paginate);
+        foreach ($list as &$row){
             $row['litpic']=get_picture_url($row['litpic']);
-            //兼容手机图片
             if(!empty($row['litpic2'])){
                 $row['litpic2'] =get_picture_url($row['litpic2']);
             }else{
@@ -49,7 +47,6 @@ class AdsList extends CmsBase
      */
     public function getAdsListInfo($where = [], $field = true)
     {
-
         return $this->modelAdsList->getInfo($where, $field);
     }
 
@@ -58,13 +55,10 @@ class AdsList extends CmsBase
      */
     public function adsListAdd($data = [])
     {
-
         $validate_result = $this->validateAdsList->scene('add')->check($data);
-
         if (!$validate_result) {
             return [RESULT_ERROR, $this->validateAdsList->getError()];
         }
-
         $result = $this->modelAdsList->setInfo($data);
         $url = url('show');
         $result && action_log('新增', '新增广告列表内容：' . $data['title']);
@@ -76,19 +70,13 @@ class AdsList extends CmsBase
      */
     public function adsListEdit($data = [])
     {
-
         $validate_result = $this->validateAdsList->scene('edit')->check($data);
-
         if (!$validate_result) {
             return [RESULT_ERROR, $this->validateAdsList->getError()];
         }
-
         $url = url('show');
-
         $result = $this->modelAdsList->setInfo($data);
-
         $result && action_log('编辑', '编辑广告列表内容：' .$data['title']);
-
         return $result ? [RESULT_SUCCESS, '编辑成功', $url] : [RESULT_ERROR, $this->modelAdsList->getError()];
     }
     /**
@@ -96,12 +84,8 @@ class AdsList extends CmsBase
      */
     public function adsListDel($where = [])
     {
-
         $result = $this->modelAdsList->deleteInfo($where,true);
-
         $result && action_log('删除', '广告列表内容，where：' . http_build_query($where));
-
         return $result ? [RESULT_SUCCESS, '删除成功'] : [RESULT_ERROR, $this->modelAdsList->getError()];
     }
-
 }

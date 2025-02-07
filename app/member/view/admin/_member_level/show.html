@@ -46,7 +46,7 @@
                             <th width=""><span>级别名称</span></th>
                             <th width="100"><span>会员等级值</span></th>
                             <th width="100"><span>折扣率</span></th>
-                            <th width="80">操作</th>
+                            <th width="80" class="text-center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -70,12 +70,10 @@
         <td><%=data[i]['level_name']%></td>
         <td><%=data[i]['level_value']%></td>
         <td><%=data[i]['discount']%></td>
-        <td>
+        <td  class="text-center">
             <% if(data[i]['is_system']==0) {%>
-            <p>
                 <lqf_link><a class="ajax-open" data-url="{:url('admin.MemberLevel/edit')}"  data-ids="{'id':'<%=data[i]['id']%>'}">修改</a></lqf_link>
                 <lqf_link><a class="ajax-del confirm" data-url="{:url('admin.MemberLevel/del')}" data-ids="{'id':'<%=data[i]['id']%>'}">删除</a></lqf_link>
-            </p>
             <%}else{%>
                 系统内置
             <%}%>
