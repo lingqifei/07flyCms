@@ -23,8 +23,11 @@
                                         <li><a class="ajax-open-more"  data-url="{:url('Archives/move')}"  >移动栏目</a></li>
                                         <li><a  class="ajax-get-more"  data-url="{:url('Archives/del')}"  >批量删除</a></li>
                                         <li class="divider"></li>
-                                        <li><a  class="ajax-get-more"  data-url="{:url('Archives/visible',array('visible'=>1))}"  >批量审核</a></li>
-                                        <li><a  class="ajax-get-more"  data-url="{:url('Archives/visible',array('visible'=>0))}"  >取消审核</a></li>
+                                        <li><a  class="ajax-get-more"  data-url="{:url('Archives/visible',array('visible'=>1))}">批量审核</a></li>
+                                        <li><a  class="ajax-get-more"  data-url="{:url('Archives/visible',array('visible'=>0))}">取消审核</a></li>
+                                        <li class="divider"></li>
+                                        <li><a  class="ajax-open-more"  data-url="{:url('Archives/editFlag',array('type'=>1))}" width="800" height="300">添加属性</a></li>
+                                        <li><a  class="ajax-open-more"  data-url="{:url('Archives/editFlag',array('type'=>0))}"  width="800" height="300">删除属性</a></li>
                                     </ul>
                                 </div>
                             </div>

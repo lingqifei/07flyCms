@@ -88,7 +88,7 @@ class Archives extends CmsBase
         //内容处理,把内容中图片地址下载到本地
         !empty($data['down_remote_img']) && $data['body'] = get_picture_body($data['body']);
         //清除非本站链接
-        !empty($data['clear_link']) && $data['body'] = remove_not_local_links($data['body'],DOMAIN);
+        !empty($data['clear_link']) && $data['body'] = remove_not_local_links($data['body'], DOMAIN);
         //没有缩略图提取内容第一张
         if (empty($data['litpic']) && !empty($data['down_remote_img'])) {
             $pattern = "/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png]))[\'|\"].*?[\/]?>/";
@@ -172,7 +172,7 @@ class Archives extends CmsBase
         //内容处理,把内容中图片地址下载到本地
         !empty($data['down_remote_img']) && $data['body'] = get_picture_body($data['body']);
         //清除非本站链接
-        !empty($data['clear_link']) && $data['body'] = remove_not_local_links($data['body'],DOMAIN);
+        !empty($data['clear_link']) && $data['body'] = remove_not_local_links($data['body'], DOMAIN);
         //没有缩略图提取内容第一张
         if (empty($data['litpic']) && !empty($data['down_remote_img'])) {
             $pattern = "/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png]))[\'|\"].*?[\/]?>/";
@@ -248,6 +248,7 @@ class Archives extends CmsBase
         $result && action_log('移动', '移动文档，name：' . $data['id']);
         return $result ? [RESULT_SUCCESS, '操作成功', $url] : [RESULT_ERROR, $this->modelArchives->getError()];
     }
+
     //文章显示隐藏
     public function archivesVisible($data = [])
     {
@@ -264,6 +265,7 @@ class Archives extends CmsBase
         $result && action_log('审核', '移动文档，name：' . $msgLog);
         return $result ? [RESULT_SUCCESS, '操作成功', $url] : [RESULT_ERROR, $this->modelArchives->getError()];
     }
+
     /**
      * 文档删除
      */
@@ -305,6 +307,34 @@ class Archives extends CmsBase
         }
     }
 
+    public function archivesEditFlag($data = [])
+    {
+        if (empty($data['id']) || empty($data['flag'])) {
+            return [RESULT_ERROR, '选择操作数据'];
+            exit;
+        }
+        $where["id"] = ['in', $data['id']];
+        $arclist = $this->modelArchives->getList($where, 'id,flag', true, false);
+        foreach ($arclist as $row) {
+            $flagArr = empty($row['flag']) ? [] : str2arr($row['flag']); //c,h,y,
+            if (!empty($data['type'])) {
+                // 添加元素
+                $flagArr[] = $data['flag'];
+                $flagArr = array_unique($flagArr);
+            } else {
+                // 删除元素
+                $flagArr = array_filter($flagArr, function ($value) use ($data) {
+                    return $value !== $data['flag'];
+                });
+            }
+            // 更新数据库中的 flag 字段
+            $newFlag = arr2str($flagArr);
+            $result = $this->modelArchives->setFieldValue(['id' => $row['id']], 'flag', $newFlag);
+        }
+        $result && action_log('更新', '更新文章属性，where：' . http_build_query($where));
+        return $result ? [RESULT_SUCCESS, '操作成功'] : [RESULT_ERROR, $this->modelArchives->getError()];
+    }
+
     /**
      * 获取列表搜索条件
      */
@@ -318,7 +348,6 @@ class Archives extends CmsBase
             $typeid[] = $data['type_id'];
             $where['a.type_id'] = ['in', $typeid];
         }
-
         //地区
         !empty($data['sys_area_id']) && $where['a.sys_area_id'] = ['=', $data['sys_area_id']];
         !empty($data['date_s']) && $where['a.driver_date'] = ['>=', $data['date_s']];
@@ -332,7 +361,7 @@ class Archives extends CmsBase
      */
     public function getOrderBy($data = [])
     {
-        $order_by='a.create_time desc';
+        $order_by = 'a.create_time desc';
         //排序操作
         if (!empty($data['orderField'])) {
             $orderField = $data['orderField'];

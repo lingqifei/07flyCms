@@ -20,21 +20,16 @@ class Arcatt extends CmsBase
 {
 
     /**
-     * 模型管理处列表
+     * 文章属性
      */
     public function getArcattList($where = [], $field = true, $order = '', $paginate = DB_LIST_ROWS)
     {
-        $list=$this->modelArcatt->getList($where, $field, $order, $paginate)->toArray();
-
-        if($paginate===false) $list['data']=$list;
-
-        foreach ($list['data'] as &$row){
-            $row['ispart_text']=$this->modelArctype->ispart_text($row['ispart']);
-        }
+        $list=$this->modelArcatt->getList($where, $field, $order, $paginate);
         return $list;
     }
 
     /**
+     *
      * 得到文章属性文本
      * @param int $att
      * @return string
@@ -48,7 +43,8 @@ class Arcatt extends CmsBase
         return empty($attArr)?'':implode(',',$attArr);
     }
 
-    /**文章属性的checkboxhtml
+    /**
+     * 文章属性的checkboxhtml
      * @param $inputname
      * @param null $stxt
      * @return string  htmlText

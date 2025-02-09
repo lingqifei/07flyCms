@@ -13,14 +13,14 @@
 * @version ：1.0
 * @link ：http://www.07fly.xyz
 */
+
 namespace app\cms\controller;
 
 use think\db;
 
 /**
-* 内容发布系统-内容管理-控制器
-*/
-
+ * 内容发布系统-内容管理-控制器
+ */
 class Archives extends CmsBase
 {
     /**
@@ -30,11 +30,11 @@ class Archives extends CmsBase
     {
         //请求页左边栏目数据
         if (!empty($this->param['data_type'])) {
-            if($this->param['data_type']=='get_arctype_tree'){
-                $where=[];
-                $listtree=$this->logicArctype->getArctypeListTree($where);
+            if ($this->param['data_type'] == 'get_arctype_tree') {
+                $where = [];
+                $listtree = $this->logicArctype->getArctypeListTree($where);
                 return $listtree;
-            }else if($this->param['data_type']=='get_arctype_info'){
+            } else if ($this->param['data_type'] == 'get_arctype_info') {
                 $info = $this->logicArctype->getArctypeInfo(['id' => $this->param['id']]);
                 return $info;
             }
@@ -48,8 +48,8 @@ class Archives extends CmsBase
      */
     public function show_json()
     {
-        $where      =$this->logicArchives->getWhere($this->param);
-        $order_by  =$this->logicArchives->getOrderBy($this->param);
+        $where = $this->logicArchives->getWhere($this->param);
+        $order_by = $this->logicArchives->getOrderBy($this->param);
         $list = $this->logicArchives->getArchivesList($where, 'a.*,t.typename', $order_by);
         return $list;
     }
@@ -61,19 +61,20 @@ class Archives extends CmsBase
     {
         IS_POST && $this->jump($this->logicArchives->archivesAdd($this->param));
         $this->comm();
-        if(empty($this->param['type_id'])){
+        if (empty($this->param['type_id'])) {
             return $this->fetch('typelist');
-            $this->jump([RESULT_SUCCESS, '选择左侧栏目',url('archives/show')]);
-        }else{
-            $arctype=$this->logicArctype->getArctypeInfoDetail($this->param['type_id']);
-            $ext_field= $this->logicChannelField->channelExtFieldHtml($arctype['addtable']);
-            $checkbox= $this->logicArcatt->getArcattCheckbox('flag');//属性
+            $this->jump([RESULT_SUCCESS, '选择左侧栏目', url('archives/show')]);
+        } else {
+            $arctype = $this->logicArctype->getArctypeInfoDetail($this->param['type_id']);
+            $ext_field = $this->logicChannelField->channelExtFieldHtml($arctype['addtable']);
+            $checkbox = $this->logicArcatt->getArcattCheckbox('flag');//属性
             $this->assign('arcatt_checkbox_html', $checkbox);
             $this->assign('ext_field', $ext_field);
             $this->assign('type_id', $this->param['type_id']);
         }
         return $this->fetch('add');
     }
+
     /**
      * 编辑
      */
@@ -81,14 +82,14 @@ class Archives extends CmsBase
     {
         IS_POST && $this->jump($this->logicArchives->archivesEdit($this->param));
         $info = $this->logicArchives->getArchivesInfo(['id' => $this->param['id']]);
-        if(empty($info)){
-            $this->jump( [RESULT_ERROR, 'id参数出错',url('archives/show')]);
+        if (empty($info)) {
+            $this->jump([RESULT_ERROR, 'id参数出错', url('archives/show')]);
         }
         //栏目信息
-        $channel=$this->logicChannel->getChannelInfo(['id'=>$info['channel_id']],'addtable');
-        $ext_field= $this->logicChannelField->channelExtFieldHtml($channel['addtable'],$info);
+        $channel = $this->logicChannel->getChannelInfo(['id' => $info['channel_id']], 'addtable');
+        $ext_field = $this->logicChannelField->channelExtFieldHtml($channel['addtable'], $info);
 
-        $checkbox= $this->logicArcatt->getArcattCheckbox('flag',$info['flag']);//属性
+        $checkbox = $this->logicArcatt->getArcattCheckbox('flag', $info['flag']);//属性
         $this->assign('arcatt_checkbox_html', $checkbox);
         $this->assign('info', $info);
         $this->assign('ext_field', $ext_field);
@@ -108,6 +109,22 @@ class Archives extends CmsBase
         $this->comm();
         return $this->fetch('move');
     }
+
+    /**
+     * 文章的属性
+     * @return array|mixed|string|string[]
+     * @author: 开发人生 goodkfrs@qq.com
+     * @Time: 2025/2/8 15:15
+     */
+    public function editFlag()
+    {
+        IS_POST && $this->jump($this->logicArchives->archivesEditFlag($this->param));
+        $flagList=$this->logicArcatt->getArcattList([],'');
+        $this->assign('flag_list', $flagList);
+        $this->assign('param', $this->param);
+        return $this->fetch('edit_flag');
+    }
+
     public function visible()
     {
         IS_POST && $this->jump($this->logicArchives->archivesVisible($this->param));
@@ -133,6 +150,7 @@ class Archives extends CmsBase
     {
         $this->jump($this->logicCmsBase->setSort('Archives', $this->param));
     }
+
     /**
      * 启用
      */
@@ -140,16 +158,18 @@ class Archives extends CmsBase
     {
         $this->jump($this->logicCmsBase->setField('Archives', $this->param));
     }
+
     /**
      *加载公共参数
      */
-    public function comm(){
+    public function comm()
+    {
         //l加载下拉栏目
-        $listtree= $this->logicArctype->getArctypeListTree($where='');
-        $arctypelist= $this->logicArctype->getArctypeListSelect($listtree);
+        $listtree = $this->logicArctype->getArctypeListTree($where = '');
+        $arctypelist = $this->logicArctype->getArctypeListSelect($listtree);
         $this->assign('arctypelist', $arctypelist);
 
-        $sys_area_list= $this->logicSysArea->getSysAreaTreeSelect();
+        $sys_area_list = $this->logicSysArea->getSysAreaTreeSelect();
         $this->assign('sys_area_list', $sys_area_list);
     }
 }
