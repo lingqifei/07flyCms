@@ -1,13 +1,13 @@
 <div class="ibox-content">
     <form class="form-horizontal" method="post" action="{:url('Package/addsys')}">
         <div class="form-group">
-            <label class="col-sm-2 control-label">打包{:lang('version')}</label>
+            <label class="col-sm-2 control-label">{:lang('打包')}{:lang('version')}</label>
             <div class="col-sm-4">
-                <input name="version" class="form-control" type="text" placeholder="输入{:lang('version')}"
+                <input name="version" class="form-control" type="text" placeholder="{:lang('输入')}{:lang('version')}"
                        value="{$version|default=''}"/>
-                <span class="help-block m-b-none">系统当前的{:lang('version')}为：{$version|default='1.0.1'}</span>
+                <span class="help-block m-b-none">{:lang('系统当前的')}{:lang('version')}{:lang('为')}：{$version|default='1.0.1'}</span>
             </div>
-            <label class="col-sm-1 control-label">是否安装包</label>
+            <label class="col-sm-1 control-label">{:lang('是否安装包')}</label>
             <div class="col-sm-2">
                 <div class="checkbox ">
                     <input type="checkbox" id="visible1" value="1" name="install">
@@ -18,22 +18,22 @@
         </div>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label">升级包文件</label>
+            <label class="col-sm-2 control-label">{:lang('升级包文件')}</label>
             <div class="col-sm-10">
                 <textarea name="upgrade_list" class="form-control" cols="80" rows="15">{$upgrade_list|default=''}</textarea>
-                <span class="help-block m-b-none">一行一个文件或者目录</span></div>
+                <span class="help-block m-b-none">{:lang('一行一个文件或者目录')}</span></div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">安装包文件</label>
+            <label class="col-sm-2 control-label">{:lang('安装包文件')}</label>
             <div class="col-sm-10">
                 <textarea name="install_list" class="form-control" cols="80" rows="15">{$install_list|default=''}</textarea>
-                <span class="help-block m-b-none">一行一个文件或者目录,生成安装包会加载</span></div>
+                <span class="help-block m-b-none">{:lang('一行一个文件或者目录')},{:lang('生成安装包会加载')}</span></div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-8">
                 <button type="button" class="btn  btn-info ajax-save-post" target-form="form-horizontal"
                         data-loading-text="Loading...">
-                    <span class="ladda-label"> 确定打包 </span>
+                    <span class="ladda-label"> {:lang('确定打包')} </span>
                 </button>
             </div>
         </div>
@@ -41,7 +41,7 @@
 </div>
 
 <div class="ibox-title">
-    打包信息
+    {:lang('打包信息')}
 </div>
 
 <div class="ibox-content">
@@ -66,7 +66,7 @@
                 data: query,
                 dataType: "json",
                 beforeSend: function(){
-                    $('.fakeloader').html('<div class="ibox-content">正在打包中请务操作其它</div>');
+                    $('.fakeloader').html('<div class="ibox-content">{:lang('正在打包中请务操作其它')}</div>');
                     fakeloaderBox=layer.open({
                         type: 1,
                         shade: [0.2, '#393D49'],

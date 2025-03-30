@@ -5,7 +5,7 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-sm-6">
-                            <a class="btn btn-info ajax-open"  data-url="{:url('Package/addsys')}"><i class="fa fa-plus"></i>系统打包</a>
+                            <a class="btn btn-info ajax-open"  data-url="{:url('Package/addsys')}"><i class="fa fa-plus"></i>{:lang('系统打包')}</a>
                         </div>
                         <div class="col-sm-6 text-right">
                             <div class="row">
@@ -32,10 +32,10 @@
                         <thead>
                         <tr>
                             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
-                            <th width="80">模块标题</th>
+                            <th width="80">{:lang('模块标题')}</th>
                             <th width="80">{:lang('module name')}</th>
-                            <th width="200">模块描述</th>
-                            <th width="80">服务商</th>
+                            <th width="200">{:lang('模块描述')}</th>
+                            <th width="80">{:lang('服务商')}</th>
                             <th width="60">{:lang('version')}</th>
                             <th width="50">{:lang('operate')}</th>
                         </tr>
@@ -67,13 +67,13 @@
         <td><%=data[i]['author']%></td>
         <td><%=data[i]['version']%></td>
         <td>
-            <lqf_link><a  class="ajax-open" data-url="{:url('Package/addpack')}"  data-ids="{'id':'<%=data[i]['id']%>'}" >打包</a> </lqf_link>
+            <lqf_link><a  class="ajax-open" data-url="{:url('Package/addpack')}"  data-ids="{'id':'<%=data[i]['id']%>'}" >{:lang('打包')}</a> </lqf_link>
         </td>
     </tr>
     <% } %>
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
-        turnPage(1);//页面加载时初始化分页
+        turnPage(1);
     });
 </script>

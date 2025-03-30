@@ -670,19 +670,27 @@ function get_picture_url($id = 0, $member = 'picture')
 {
 
     $fileLogic = get_sington_object('fileLogic', LogicFile::class);
+
     if (is_numeric($id)) {
         return $fileLogic->getPictureUrl($id, $member);
     } else {
-
         //1、表示为多张图的id 如：1，2，3，4
         if (strpos($id, '/') === false) {
+
             return $fileLogic->getPictureUrl($id, $member);
+
         } else if (strpos($id, 'http') === 0) {//表示外网路路不要转换 如：http://www.07fly.com/upload/img/demo.jpg
+
             return $id;
+
         } else if (strpos($id, '/') === 0) {//表示路径为绝对路路不要转换 如：/upload/img/demo.jpg
+
             return $id;
+
         } else {//表示为相对路径：imgaes/demo.jpg
+
             return $fileLogic->getPictureWebUrl($id);
+
         }
     }
 }
@@ -727,7 +735,9 @@ function get_file_url($id = 0)
  */
 function get_picture_body($body = '')
 {
+
     $fileLogic = get_sington_object('fileLogic', LogicFile::class);
+
     return $fileLogic->pictureDown($body);
 }
 

@@ -179,7 +179,6 @@ function build_auth_key()
 
 function register_administrator($db_object, $prefix, $admin, $auth)
 {
-
     //执行删除
     $sql="DELETE FROM  `[PREFIX]sys_user`   WHERE  id='1'";
     $sql = str_replace(array('[PREFIX]'),array($prefix),$sql);

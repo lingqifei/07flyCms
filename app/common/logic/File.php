@@ -26,6 +26,7 @@ class File extends LogicBase
      */
     public function pictureUpload($name = 'file', $thumb_config = ['small' => 100, 'medium' => 500, 'big' => 1000])
     {
+
         $object_info = request()->file($name);
         //没有文件上传
         if (empty($object_info)) {
